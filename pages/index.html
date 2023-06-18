@@ -33,6 +33,7 @@
         }
         let j = 0;
         let yValues2 = [];
+      document.getElementById("getData").innerText = "Loaded";
     for(let i = 1; i < data.length ; i++){
             yValues2[(i - 1) % 21] = yValues[i -1];                  
                   if(i % 21 == 0 || i == data.length -1){
@@ -67,7 +68,8 @@
     <script type="text/javascript">
 
 function getData() {
-      const xhr = new XMLHttpRequest();
+document.getElementById("getData").innerText = "Loading...";
+const xhr = new XMLHttpRequest();
 xhr.open("GET", "/g");
 xhr.send();
 xhr.responseType = "json";
@@ -91,6 +93,9 @@ xhr.onload = () => {
    .charts{
     margin: auto;
     width: fit-content;
+    }
+    #getData{
+    background-color: #FFD700;
     }
   </style>
 </body>
