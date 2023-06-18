@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+   </head>
+    <body>
+      <button id="getData" onclick="getData();" type="button">Get Data</button>
+    
+      <div class="charts">
+
+      </div>
+    <script>
+
+  function createChart(data,  CompanyData){
+
+    const yValues  = data;
+    let xValues = [];
+    for(let i = 0; i < 21; i++){
+      xValues.push(i)
+    }
+
+    let ids = data.length / 21;
+        for(let i=0; i < ids ; i++){
+         let canvas = document.createElement("canvas");
+         canvas.setAttribute("id", i);
+         canvas.setAttribute("class", "chart");
+          document.querySelector(".charts").appendChild(canvas);
+              
+        }
+        let j = 0;
+        let yValues2 = [];
+    for(let i = 1; i < data.length ; i++){
+            yValues2[(i - 1) % 21] = yValues[i -1];                  
+                  if(i % 21 == 0 || i == data.length -1){
+                    // console.log( yValues2);
+                    canvas = document.getElementById(j);
+                    
+                    let yValues3 = [];
+                    yValues3 =  [...yValues2];
+                    new Chart(canvas, {
+                            type: "line",
+                            data: {
+                              labels: xValues,
+                              
+                              datasets: [{
+                              // backgroundColor:"rgba(0,0,255,1.0)",
+                              label: CompanyData[j].split(".")[0],
+                              borderColor: "rgba(0,0,255,0.1)",
+                              data: yValues3,
+                              }]
+                            }
+                            
+                          });
+                          j++;
+            }
+          
+
+    }
+
+}
+    </script>
+
+    <script type="text/javascript">
+
+function getData() {
+      const xhr = new XMLHttpRequest();
+xhr.open("GET", "http://localhost:5000/g");
+xhr.send();
+xhr.responseType = "json";
+xhr.onload = () => {
+  if (xhr.readyState == 4 && xhr.status == 200) {
+    // console.log(xhr.response.company, xhr.response.values );
+    createChart( xhr.response.values , xhr.response.company );
+  } else {
+    console.log(`Error: ${xhr.status}`);
+  }
+};
+  }
+
+    </script>
+  <style type="text/css">
+  .chart{
+    width: 300px !important;
+    height: 150px !important;
+    align-items: center;
+
+  } 
+  </style>
+</body>
+</html>
