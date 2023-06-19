@@ -38,7 +38,9 @@ for (let key in companyObject) {
                       labels: xValues,
                       datasets: [{
                               label: key,
-                              borderColor: "rgba(0,0,255,0.1)",
+                              pointRadius: 0,
+                              borderWidth : 0.5,
+                              borderColor: "rgba(0,0,0,0.9)",
                               data: [...yValues],
                               }]
                             }   
