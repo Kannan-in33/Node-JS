@@ -7,20 +7,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
    </head>
     <body>
-      <button id="getData50" onclick="getData(50);" type="button">Get Data 50</button>
-      <button id="getData101" onclick="getData(101);" type="button">Get Data 101</button>
-      <button id="getData201" onclick="getData(201);" type="button">Get Data 201</button>
+      <div class="static">
+      <button id="getData50" class="50" onclick="getData(50);" type="button">Get Data 50</button>
+      <button id="getData101" class="101" onclick="getData(101);" type="button">Get Data 101</button>
+      <button id="getData201" class="201" onclick="getData(201);" type="button">Get Data 201</button>
       <label for="search">Search</label><input type="text" id="filter" name="filter" />
+      </div>
       <div class="charts">
 
       </div>
-    <script>
+<script>
 
-function createChart(companyObject, data,  CompanyData, valueList, max, e){
-let compCount = CompanyData.length;
-document.getElementById("getData" + e).innerText = "Loaded "+ e;
+function createChart(companyObject, e){
 for (let key in companyObject) {
-      console.log(key +'    ' + companyObject[key]);  
       let yValues  = companyObject[key];
       let xValues = [];
 
@@ -28,29 +27,30 @@ for (let key in companyObject) {
             xValues.push(i);
           }
           xValues.reverse();
-
               let canvas = document.createElement("canvas");
               canvas.setAttribute("id", key);
               canvas.setAttribute("class", key);
               document.querySelector(".charts").appendChild(canvas);
 
                   new Chart(canvas, {
-                  type: "line",
-                  data: {
-                  labels: xValues,
+                      type: "line",
+                      data: {
+                      labels: xValues,
+                      datasets: [{
+                              label: key,
+                              borderColor: "rgba(0,0,255,0.1)",
+                              data: [...yValues],
+                              }]
+                            }   
+                      });
 
-                  datasets: [{
-                  label: key,
-                  borderColor: "rgba(0,0,255,0.1)",
-                  data: [...yValues],
-                  }]
-                  }
+      }
+let idlst = document.querySelectorAll("[id^='getData']");
+idlst.forEach( element => {
+  element.innerText = "Get Data " + element.classList[0];
+})
 
-                  });
-
-}
-
-
+document.getElementById("getData" + e).innerText = "Loaded "+ e;
 }
 
     </script>
@@ -69,8 +69,7 @@ xhr.send();
 xhr.responseType = "json";
 xhr.onload = () => {
   if (xhr.readyState == 4 && xhr.status == 200) {
-    console.log(xhr.response.companyObject['5PAISA']);
-    createChart( xhr.response.companyObject, xhr.response.values , xhr.response.company, xhr.response.valueList, xhr.response.max , e);
+    createChart( xhr.response.companyObject, e);
   } else {
     console.log(`Error: ${xhr.status}`);
   }
@@ -83,19 +82,21 @@ xhr.onload = () => {
    .charts{
     margin: auto;
     width: fit-content;
+    margin-top: 178px;
     }
     [id^='getData']{
     background-color: #FFD700;
     border: none;
-    border-radius: 10%;
+    border-radius: 10px;
     height: 30px;
     margin: auto;
     width: -webkit-fill-available;
-    margin:10px;
+    margin:8px;
     }
     body{
-        margin: auto;
-        width: fit-content;
+      min-width: 350px;
+      margin: auto;
+      max-width: 450px;
     }
     canvas{
       margin: 15px 0;
@@ -103,6 +104,58 @@ xhr.onload = () => {
       min-width: 360px !important;
       height: 150px !important;
     }
+    .static{
+      position: fixed;
+      opacity: 1;
+      background-color: #fff;
+      top: 0;
+      margin: auto;
+    }
+    .hide{
+      display: none !important;
+    }
+    label{
+      margin-left: 10px;
+      display: inline-block;
+      width: 50px;
+    }
+    #filter{
+      width: 80%;
+    }
   </style>
+
+  <script>
+
+function setFilter(){
+  // console.log("setFilter");
+  let filterData = (document.querySelector("#filter").value).toUpperCase();
+  if ( filterData.length > 0) {
+      
+      var lst = Array.from(document.getElementsByTagName("canvas"));
+      lst.forEach( (ele) => ele.style.display = "none" );
+      lst = Array.from(document.querySelectorAll("[class^= '" + filterData + "']"));
+        lst.forEach( ele => ele.style.display = "block" ); 
+        console.log(filterData);
+}
+
+else{
+let lst = document.querySelectorAll("canvas");
+lst.forEach( ele => ele.style.display = "block" );
+}
+}
+
+let myFunc = letsDebounce(setFilter,1000);
+
+function letsDebounce(fn,d){
+  let timer;
+  return function(){
+    clearTimeout(timer);
+    timer=setTimeout(fn,d);
+  }
+}
+
+document.getElementById("filter").addEventListener('input', myFunc);
+
+  </script>
 </body>
 </html>
