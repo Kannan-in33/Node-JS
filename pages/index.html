@@ -18,7 +18,7 @@
 
     const yValues  = data;
     let xValues = [];
-    for(let i = 0; i < 21; i++){
+    for(let i = 0; i < 41; i++){
       xValues.push(i)
     }
       xValues.reverse();
@@ -35,8 +35,8 @@
         let yValues2 = [];
       document.getElementById("getData").innerText = "Loaded";
     for(let i = 1; i < data.length ; i++){
-            yValues2[(i - 1) % 21] = yValues[i -1];                  
-                  if(i % 21 == 0 || i == data.length -1){
+            yValues2[(i - 1) % 41] = yValues[i -1];                  
+                  if(i % 41 == 0 || i == data.length -1){
                     // console.log( yValues2);
                     canvas = document.getElementById(j);
                     
