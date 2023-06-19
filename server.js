@@ -20,85 +20,47 @@ server.use( (req, res)=>{
     let company =[];
     let obj3 = {};
     let valueList = {};
+    companyObject = {};
+    companyList =[];
     let i = 0;
     let max = 0;
             if(req.path !== '/favicon.ico'){
                 console.log(req.path);
-                        // if(req.path == '/k'){        
-                        //             const directorypath = path.join(__dirname, 'src');
-                        //             fs.readdir(directorypath , function (err, files) {
-                        //                 if (err) throw err;
-                        //                 files.forEach( (file) => {
-                        //                     fs.readFile(path.join(directorypath , file), 'utf8', function (err2, data) {
-                        //                         if (err2) throw err2;
-                        //                         obj = JSON.parse(data);
-                                            
-                        //                         i++;
-                        //                         // res.send(obj['datasets'][0]['values']);
-                        //                         for (let key in obj['datasets'][0]['values']) {
-                        //                             obj2.push(obj['datasets'][0]['values'][key][1]);
+                const directorypath = path.join(__dirname, req.path.replace('/', ''));
+                fs.readdir(directorypath , function (err, files) {
+                if (err) throw err;
+                files.forEach( (file) => {
+                    fs.readFile(path.join(directorypath , file), 'utf8', function (err2, data) {
+                    if (err2) throw err2;
+                        obj = JSON.parse(data);
+                        company.push(file);
 
-                        //                         }
-                        //                         if (i == files.length){  
-                        //                             console.log(obj2.length / files.length); 
-                        //                             res.send(obj2);
-                        //                         }
+                        valueList[file.split('.')[0]] = obj['datasets'][0]['values'].length
+                        max = max < obj['datasets'][0]['values'].length ? obj['datasets'][0]['values'].length : max
+                        i++;
+                    for (let key in obj['datasets'][0]['values']) {
+                        obj2.push(obj['datasets'][0]['values'][key][1]);                           
+                    }
+                    companyObject[file.split('.')[0]] = [...obj2];
+                    obj2 =[];
 
-                        //                     });
-
-                        //                 });
-
-                        //             });
-                        //         }
-
-                        // if(req.path == '/company'){        
-                        // const directorypath = path.join(__dirname, 'src');
-                        // fs.readdir(directorypath , function (err, files) {
-                        //             if (err) throw err;
-                        //             files.forEach( (file) => {
-                        //                 obj2.push(file);
-                        //                 });
-                        //                 if(obj2.length > 0){
-                        //                     res.send(obj2);
-                        //                 }
-                                            
-                        //                 });
-
-                        //             };
-
-
-                        // if(req.path == '/g'){   
-                            
-                            
-                            const directorypath = path.join(__dirname, req.path.replace('/', ''));
-                            fs.readdir(directorypath , function (err, files) {
-                            if (err) throw err;
-                            files.forEach( (file) => {
-                            fs.readFile(path.join(directorypath , file), 'utf8', function (err2, data) {
-                            if (err2) throw err2;
-                                obj = JSON.parse(data);
-                                company.push(file);
-                                valueList[file.split('.')[0]] = obj['datasets'][0]['values'].length
-                                max = max < obj['datasets'][0]['values'].length ? obj['datasets'][0]['values'].length : max
-                                i++;
-                            for (let key in obj['datasets'][0]['values']) {
-                                obj2.push(obj['datasets'][0]['values'][key][1]);                            
+                    if (i == files.length ){
+                    obj3 = { "company" : company,
+                            "values" : obj2,
+                            "valueList" : valueList,
+                            "max" : max,
+                            "companyObject" : companyObject
                             }
-                            if (i == files.length ){
-                            obj3 = { "company" : company,
-                                    "values" : obj2,
-                                    "valueList" : valueList,
-                                    "max" : max
-                                    }
-                            res.send(obj3);
-                            }
-                            
-                            });
-                            
-                            });
-                            
-                            });
-                        // }
+                    // console.log(companyObject['ASTRAMICRO']);
+                    
+                    res.send(obj3);
+                }
+                
+                });
+                
+                });
+                
+                });
                         
                     
             }

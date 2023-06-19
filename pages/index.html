@@ -10,78 +10,67 @@
       <button id="getData50" onclick="getData(50);" type="button">Get Data 50</button>
       <button id="getData101" onclick="getData(101);" type="button">Get Data 101</button>
       <button id="getData201" onclick="getData(201);" type="button">Get Data 201</button>
-    
+      <label for="search">Search</label><input type="text" id="filter" name="filter" />
       <div class="charts">
 
       </div>
     <script>
 
-  function createChart(data,  CompanyData, valueList, max){
-    let compCount = CompanyData.length;
-    const yValues  = data;
-    let xValues = [];
-    for(let i = 0; i < max ; i++){
-      xValues.push(i)
-    }
-      xValues.reverse();
-      
+function createChart(companyObject, data,  CompanyData, valueList, max, e){
+let compCount = CompanyData.length;
+document.getElementById("getData" + e).innerText = "Loaded "+ e;
+for (let key in companyObject) {
+      console.log(key +'    ' + companyObject[key]);  
+      let yValues  = companyObject[key];
+      let xValues = [];
 
-    let ids = data.length / compCount;
-        for(let i=0; i < compCount ; i++){
-         let canvas = document.createElement("canvas");
-         canvas.setAttribute("id", i);
-         canvas.setAttribute("class", "chart");
-          document.querySelector(".charts").appendChild(canvas);
-              
-        }
-        let j = 0;
-        let yValues2 = [];
-      document.getElementById("getData").innerText = "Loaded";
-      let numOfValues = valueList[CompanyData[j].split(".")[0]];
-    for(let i = 1; i < data.length ; i++){
-            yValues2[(i - 1) % numOfValues ] = yValues[i -1];                  
-                  if(i % numOfValues == 0 || i == data.length -1){
-                    // console.log( yValues2);
-                    canvas = document.getElementById(j);
-                    
-                    let yValues3 = [];
-                    yValues3 =  [...yValues2];
-                    new Chart(canvas, {
-                            type: "line",
-                            data: {
-                              labels: xValues,
-                              
-                              datasets: [{
-                              // backgroundColor:"rgba(0,0,255,1.0)",
-                              label: CompanyData[j].split(".")[0],
-                              borderColor: "rgba(0,0,255,0.1)",
-                              data: yValues3,
-                              }]
-                            }
-                            
-                          });
-                          j++;
-                      numOfValues = valueList[CompanyData[j].split(".")[0]];
-            }
-          
+          for (let i = 0; i < companyObject[key].length ; i++) {
+            xValues.push(i);
+          }
+          xValues.reverse();
 
-    }
+              let canvas = document.createElement("canvas");
+              canvas.setAttribute("id", key);
+              canvas.setAttribute("class", key);
+              document.querySelector(".charts").appendChild(canvas);
+
+                  new Chart(canvas, {
+                  type: "line",
+                  data: {
+                  labels: xValues,
+
+                  datasets: [{
+                  label: key,
+                  borderColor: "rgba(0,0,255,0.1)",
+                  data: [...yValues],
+                  }]
+                  }
+
+                  });
 
 }
+
+
+}
+
     </script>
 
     <script type="text/javascript">
 
 function getData(e) {
-document.getElementById("getData").innerText = "Loading...";
+let lst = document.querySelectorAll("canvas");
+  lst.forEach(element => {
+    element.remove();    
+  });
+document.getElementById("getData" + e).innerText = "Loading...";
 const xhr = new XMLHttpRequest();
 xhr.open("GET", "/" + e.toString());
 xhr.send();
 xhr.responseType = "json";
 xhr.onload = () => {
   if (xhr.readyState == 4 && xhr.status == 200) {
-    // console.log(xhr.response.valueList);
-    createChart( xhr.response.values , xhr.response.company, xhr.response.valueList, xhr.response.max );
+    console.log(xhr.response.companyObject['5PAISA']);
+    createChart( xhr.response.companyObject, xhr.response.values , xhr.response.company, xhr.response.valueList, xhr.response.max , e);
   } else {
     console.log(`Error: ${xhr.status}`);
   }
@@ -90,26 +79,29 @@ xhr.onload = () => {
 
     </script>
   <style type="text/css">
-  .chart{
-    max-width: 500px !important;
-    min-width: 360px !important;
-    height: 150px !important;
-  }
+
    .charts{
     margin: auto;
     width: fit-content;
     }
-    #getData{
+    [id^='getData']{
     background-color: #FFD700;
     border: none;
     border-radius: 10%;
     height: 30px;
     margin: auto;
     width: -webkit-fill-available;
+    margin:10px;
     }
     body{
         margin: auto;
         width: fit-content;
+    }
+    canvas{
+      margin: 15px 0;
+      max-width: 500px !important;
+      min-width: 360px !important;
+      height: 150px !important;
     }
   </style>
 </body>
