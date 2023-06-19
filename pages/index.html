@@ -7,24 +7,27 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
    </head>
     <body>
-      <button id="getData" onclick="getData();" type="button">Get Data</button>
+      <button id="getData50" onclick="getData(50);" type="button">Get Data 50</button>
+      <button id="getData101" onclick="getData(101);" type="button">Get Data 101</button>
+      <button id="getData201" onclick="getData(201);" type="button">Get Data 201</button>
     
       <div class="charts">
 
       </div>
     <script>
 
-  function createChart(data,  CompanyData){
-
+  function createChart(data,  CompanyData, valueList, max){
+    let compCount = CompanyData.length;
     const yValues  = data;
     let xValues = [];
-    for(let i = 0; i < 41; i++){
+    for(let i = 0; i < max ; i++){
       xValues.push(i)
     }
       xValues.reverse();
+      
 
-    let ids = data.length / 21;
-        for(let i=0; i < ids ; i++){
+    let ids = data.length / compCount;
+        for(let i=0; i < compCount ; i++){
          let canvas = document.createElement("canvas");
          canvas.setAttribute("id", i);
          canvas.setAttribute("class", "chart");
@@ -34,9 +37,10 @@
         let j = 0;
         let yValues2 = [];
       document.getElementById("getData").innerText = "Loaded";
+      let numOfValues = valueList[CompanyData[j].split(".")[0]];
     for(let i = 1; i < data.length ; i++){
-            yValues2[(i - 1) % 41] = yValues[i -1];                  
-                  if(i % 41 == 0 || i == data.length -1){
+            yValues2[(i - 1) % numOfValues ] = yValues[i -1];                  
+                  if(i % numOfValues == 0 || i == data.length -1){
                     // console.log( yValues2);
                     canvas = document.getElementById(j);
                     
@@ -57,6 +61,7 @@
                             
                           });
                           j++;
+                      numOfValues = valueList[CompanyData[j].split(".")[0]];
             }
           
 
@@ -67,16 +72,16 @@
 
     <script type="text/javascript">
 
-function getData() {
+function getData(e) {
 document.getElementById("getData").innerText = "Loading...";
 const xhr = new XMLHttpRequest();
-xhr.open("GET", "/g");
+xhr.open("GET", "/" + e.toString());
 xhr.send();
 xhr.responseType = "json";
 xhr.onload = () => {
   if (xhr.readyState == 4 && xhr.status == 200) {
-    // console.log(xhr.response.company, xhr.response.values );
-    createChart( xhr.response.values , xhr.response.company );
+    // console.log(xhr.response.valueList);
+    createChart( xhr.response.values , xhr.response.company, xhr.response.valueList, xhr.response.max );
   } else {
     console.log(`Error: ${xhr.status}`);
   }
