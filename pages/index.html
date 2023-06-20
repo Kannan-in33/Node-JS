@@ -8,9 +8,9 @@
    </head>
     <body>
       <div class="static">
-      <button id="getData50" class="50" onclick="getData(50);" type="button">Get Data 50</button>
-      <button id="getData101" class="101" onclick="getData(101);" type="button">Get Data 101</button>
-      <button id="getData201" class="201" onclick="getData(201);" type="button">Get Data 201</button>
+      <button id="getData50" class="50" onclick="getData(50);" type="button">Stocks 50</button>
+      <button id="getData101" class="101" onclick="getData(101);" type="button">Stocks 101</button>
+      <button id="getData201" class="201" onclick="getData(201);" type="button">Stocks 201</button>
       <label for="search">Search </label><input type="text" id="filter" name="filter" />
       
       
@@ -78,7 +78,7 @@ function createChart(companyObject, e, days = 1000){
       }
 let idlst = document.querySelectorAll("[id^='getData']");
 idlst.forEach( element => {
-  element.innerText = "Get Data " + element.classList[0];
+  element.innerText = "Stocks " + element.classList[0];
 })
 
 document.getElementById("getData" + e).innerText = "Loaded "+ e;
