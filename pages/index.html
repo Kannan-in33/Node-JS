@@ -15,7 +15,7 @@
       
       
       <div class="Range">
-        <!-- <button id="days20" class="d20" onclick="getDay(20);" type="button">20 Days</button> -->
+        <button id="days20" class="d20" onclick="getDay(20);" type="button">20 Days</button>
         <button id="days50 class="d50"  onclick="getDay(50);" type="button">50 Days</button>
       </div>
     </div>
@@ -41,7 +41,7 @@ function createChart(companyObject, e, days = 1000){
    
       for (let key in companyObject) {
             let yValues  = [];
-            yValues  = companyObject[key];
+            yValues  = [...companyObject[key]];
             let xValues = [];
             let yValues2 = [];
 
@@ -55,7 +55,7 @@ function createChart(companyObject, e, days = 1000){
                   for (let i = 0; i < Math.min(companyObject[key].length, days) ; i++) {
                     xValues.push(i);
                   }
-                  // xValues.reverse();
+                  xValues.reverse();
                       let canvas = document.createElement("canvas");
                       canvas.setAttribute("id", key);
                       canvas.setAttribute("class", key);
@@ -70,7 +70,7 @@ function createChart(companyObject, e, days = 1000){
                                       pointRadius: 0,
                                       borderWidth : 0.5,
                                       borderColor: "rgba(0,0,0,0.9)",
-                                      data: [...yValues2],
+                                      data: [...yValues2].reverse(),
                                       }]
                                     }   
                               });
@@ -110,9 +110,9 @@ xhr.onload = () => {
    .charts{
     margin: auto;
     width: fit-content;
-    margin-top: 178px;
+    margin-top: 250px;
     }
-    [id^='getData']{
+    [id^='getData'], button{
     background-color: #FFD700;
     border: none;
     border-radius: 10px;
@@ -130,14 +130,18 @@ xhr.onload = () => {
       margin: 15px 0;
       max-width: 500px !important;
       min-width: 360px !important;
-      height: 150px !important;
+      height: 200px !important;
     }
     .static{
       position: fixed;
       opacity: 1;
       background-color: #fff;
       top: 0;
-      margin: auto;
+      margin: 0;
+      display: flex;
+      left: 20%;
+      right: 20%;
+      flex-wrap: wrap;
     }
     .hide{
       display: none !important;
@@ -152,7 +156,8 @@ xhr.onload = () => {
       max-width: 80%;
     }
     .Range{
-      position: absolute;
+      position: relative;
+      display: flex;
     }
   </style>
 
