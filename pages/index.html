@@ -11,40 +11,69 @@
       <button id="getData50" class="50" onclick="getData(50);" type="button">Get Data 50</button>
       <button id="getData101" class="101" onclick="getData(101);" type="button">Get Data 101</button>
       <button id="getData201" class="201" onclick="getData(201);" type="button">Get Data 201</button>
-      <label for="search">Search</label><input type="text" id="filter" name="filter" />
+      <label for="search">Search </label><input type="text" id="filter" name="filter" />
+      
+      
+      <div class="Range">
+        <!-- <button id="days20" class="d20" onclick="getDay(20);" type="button">20 Days</button> -->
+        <button id="days50 class="d50"  onclick="getDay(50);" type="button">50 Days</button>
       </div>
+    </div>
       <div class="charts">
 
       </div>
 <script>
+let dCompanyObject = {};
+let dE;
 
-function createChart(companyObject, e){
-for (let key in companyObject) {
-      let yValues  = companyObject[key];
-      let xValues = [];
+function getDay(days){
 
-          for (let i = 0; i < companyObject[key].length ; i++) {
-            xValues.push(i);
-          }
-          xValues.reverse();
-              let canvas = document.createElement("canvas");
-              canvas.setAttribute("id", key);
-              canvas.setAttribute("class", key);
-              document.querySelector(".charts").appendChild(canvas);
+  createChart(dCompanyObject, dE, days = days)
 
-                  new Chart(canvas, {
-                      type: "line",
-                      data: {
-                      labels: xValues,
-                      datasets: [{
-                              label: key,
-                              pointRadius: 0,
-                              borderWidth : 0.5,
-                              borderColor: "rgba(0,0,0,0.9)",
-                              data: [...yValues],
-                              }]
-                            }   
-                      });
+}
+
+function createChart(companyObject, e, days = 1000){
+  let lst = document.querySelectorAll("canvas");
+  lst.forEach(element => {
+    element.remove();    
+  });
+  dE = e;
+   
+      for (let key in companyObject) {
+            let yValues  = [];
+            yValues  = companyObject[key];
+            let xValues = [];
+            let yValues2 = [];
+
+              yValues.reverse();
+              for(let y = 0; y < Math.min(companyObject[key].length, days) ; y++){
+                yValues2[y] =  yValues[y] ;
+              }
+              if(key == '5PAISA'){
+                console.log( '5PAISA' + yValues2);
+              }
+                  for (let i = 0; i < Math.min(companyObject[key].length, days) ; i++) {
+                    xValues.push(i);
+                  }
+                  // xValues.reverse();
+                      let canvas = document.createElement("canvas");
+                      canvas.setAttribute("id", key);
+                      canvas.setAttribute("class", key);
+                      document.querySelector(".charts").appendChild(canvas);
+
+                          new Chart(canvas, {
+                              type: "line",
+                              data: {
+                              labels: xValues,
+                              datasets: [{
+                                      label: key,
+                                      pointRadius: 0,
+                                      borderWidth : 0.5,
+                                      borderColor: "rgba(0,0,0,0.9)",
+                                      data: [...yValues2],
+                                      }]
+                                    }   
+                              });
 
       }
 let idlst = document.querySelectorAll("[id^='getData']");
@@ -60,10 +89,6 @@ document.getElementById("getData" + e).innerText = "Loaded "+ e;
     <script type="text/javascript">
 
 function getData(e) {
-let lst = document.querySelectorAll("canvas");
-  lst.forEach(element => {
-    element.remove();    
-  });
 document.getElementById("getData" + e).innerText = "Loading...";
 const xhr = new XMLHttpRequest();
 xhr.open("GET", "/" + e.toString());
@@ -71,6 +96,7 @@ xhr.send();
 xhr.responseType = "json";
 xhr.onload = () => {
   if (xhr.readyState == 4 && xhr.status == 200) {
+    dCompanyObject = xhr.response.companyObject;
     createChart( xhr.response.companyObject, e);
   } else {
     console.log(`Error: ${xhr.status}`);
@@ -124,6 +150,9 @@ xhr.onload = () => {
     #filter{
       min-width: 70%;
       max-width: 80%;
+    }
+    .Range{
+      position: absolute;
     }
   </style>
 
