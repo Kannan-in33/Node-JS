@@ -69,13 +69,16 @@ function createChart(companyObject, e, days = 1000){
                       canvas.setAttribute("id", key);
                       canvas.setAttribute("class", key);
                       document.querySelector(".charts").appendChild(canvas);
-
+                        let cmax = Math.max(...yValues2);
+                        let cmin = Math.min(...yValues2);
+                        // console.log(cmax );
+                        // console.log( );
                           new Chart(canvas, {
                               type: "line",
                               data: {
                               labels: xValues,
                               datasets: [{
-                                      label: key,
+                                      label: key + '   ' + ( ((cmax-cmin)/cmax) * 100).toFixed(2).toString() + ' %' ,
                                       pointRadius: 0,
                                       borderWidth : 0.5,
                                       borderColor: "rgba(0,0,0,0.9)",
