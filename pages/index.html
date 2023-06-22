@@ -14,7 +14,7 @@
       <button id="getData401" class="401" onclick="getData(401);" type="button">Stocks 401+</button>
       <button id="getData601" class="601" onclick="getData(601);" type="button">Stocks 601+</button>
       <div class="search">
-      <label for="search">Search </label><input type="text" id="filter" name="filter" />
+      <input placeholder="Search..." type="text" id="filter" name="filter" />
       </div>
       
       <div class="Range">
@@ -274,6 +274,7 @@ document.getElementById("filter").addEventListener('input', myFunc);
    .search{
      display: flex;
      width: 45%;
+     margin-left: 15px;
    }
    .search input{
      height: 30px;
