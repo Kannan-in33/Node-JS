@@ -13,9 +13,9 @@
       <button id="getData201" class="201" onclick="getData(201);" type="button">Stocks 201+</button>
       <button id="getData401" class="401" onclick="getData(401);" type="button">Stocks 401+</button>
       <button id="getData601" class="601" onclick="getData(601);" type="button">Stocks 601+</button>
-      
+      <div class="search">
       <label for="search">Search </label><input type="text" id="filter" name="filter" />
-      
+      </div>
       
       <div class="Range">
         <button id="days20" class="d20" onclick="getDay(20);" type="button">20 Days</button>
@@ -159,8 +159,8 @@ document.getElementById("getData" + e).classList.add('active');
 
 function getData(e) {
         removeActive();
-        let lst = document.querySelectorAll("[id^='getData']");
-        lst.forEach( element => element.classList.add('hide') );
+        // let lst = document.querySelectorAll("[id^='getData']");
+        // lst.forEach( element => element.classList.add('hide') );
 
         event.target.classList.remove('hide');
         // event.target.addEventListener("mousemove", displayButtons, false);
@@ -186,7 +186,8 @@ function getData(e) {
 
    .charts{
     margin: auto;
-    width: fit-content;
+    text-align: -webkit-center;
+    max-width: 500px;
     margin-top: 330px;
     }
     [id^='getData'], button{
@@ -195,12 +196,18 @@ function getData(e) {
     border-radius: 10px;
     height: 30px;
     margin: auto;
-    width: -webkit-fill-available;
+    width: 45%;
     margin:8px;
     }
     body{
       min-width: 350px;
-      max-width: 450px;
+    }
+    .search{
+      display: flex;
+      width: 45%;
+    }
+    .search input{
+      height: 30px;
     }
     canvas{
       margin: 15px 0;
@@ -231,6 +238,8 @@ function getData(e) {
     #filter{
       min-width: 70%;
       max-width: 80%;
+      width: auto;
+      height: 30px;
     }
     .Range{
       position: relative;
@@ -263,9 +272,9 @@ function getData(e) {
     #results{
       width: 70%;
     }
-    .hide{
+    /* .hide{
       display: none;
-    }
+    } */
     /* .drop-options button{
         width: 20%;
         margin: 0;
@@ -306,4 +315,4 @@ document.getElementById("filter").addEventListener('input', myFunc);
 
   </script>
 </body>
-</html
+</html>
