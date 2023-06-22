@@ -22,7 +22,7 @@
         <button id="days50" class="d50"  onclick="getDay(50);" type="button">50 Days</button>
         <button id="days70" class="d20" onclick="getDay(70);" type="button">70 Days</button>
         <button id="days100" class="100"  onclick="getDay(100);" type="button">100 Days</button>
-        <button id="results">Stocks Result</button>
+        <button id="results" onclick="get10x();">Stocks Result</button>
         <div class="dropdown">
             <button id="daysbuy" class="buy-main"  onclick="getBuyMain();" type="button">Buy List</button>
               <div id="BuyDropdown" class="drop-options">
@@ -34,15 +34,19 @@
         
       </div>
     </div>
-      <div class="charts">
-
-      </div>
+    
+      <div class="charts"></div>
+      <div class="volume"></div>
 <script>
 let dCompanyObject = {};
+let x10dCompanyObject = {};
 let dE;
 let BuyObject40 = {};
 let BuyObject30 = {};
 let BuyObject20 = {};
+
+
+
 
 function getDay(days){
   removeActive();
@@ -53,27 +57,27 @@ function removeActive(){
   let lst = document.querySelectorAll("[id^='days']");
   lst.forEach( element => element.classList.remove('active') );
 }
-function getBuyMain(){
-  let lst = document.querySelectorAll(".buy");
-  lst.forEach(element => {
-    element.classList.toggle('show');    
-  });
+// function getBuyMain(){
+//   let lst = document.querySelectorAll(".buy");
+//   lst.forEach(element => {
+//     element.classList.toggle('show');    
+//   });
 
-}
+// }
 function getBuy(margin){
-removeActive();
-event.target.classList.add('active');
-switch(margin) {
-  case 40:
-    createChart(BuyObject40, dE);
-    break;
-  case 30:
-    createChart(BuyObject30, dE);
-    break;
-  default:
-    createChart(BuyObject20, dE);
-}
-getBuyMain(); 
+              removeActive();
+              event.target.classList.add('active');
+              switch(margin) {
+                case 40:
+                  createChart(BuyObject40, dE);
+                  break;
+                case 30:
+                  createChart(BuyObject30, dE);
+                  break;
+                default:
+                  createChart(BuyObject20, dE);
+              }
+        getBuyMain(); 
 }
 
 function createChart(companyObject, e, days = 1000){
@@ -83,7 +87,7 @@ function createChart(companyObject, e, days = 1000){
   });
   dE = e;
   let resultCount = 0;
-   
+   console.log(companyObject['TATASTEEL'])
       for (let key in companyObject) {
         resultCount++;
             let yValues  = [];
@@ -152,19 +156,14 @@ document.getElementById("getData" + e).classList.add('active');
     </script>
 <script type="text/javascript">
 
-  function displayButtons() {
-    let lst = document.querySelectorAll("[id^='getData']");
-        lst.forEach( element => element.classList.remove('hide') );
-  }
+  // function displayButtons() {
+  //   let lst = document.querySelectorAll("[id^='getData']");
+  //       lst.forEach( element => element.classList.remove('hide') );
+  // }
 
+  // initial script to fetch data
 function getData(e) {
         removeActive();
-        // let lst = document.querySelectorAll("[id^='getData']");
-        // lst.forEach( element => element.classList.add('hide') );
-
-        event.target.classList.remove('hide');
-        // event.target.addEventListener("mousemove", displayButtons, false);
-
         document.getElementById("getData" + e).innerText = "Loading...";
         event.target.classList.add('active');
         const xhr = new XMLHttpRequest();
@@ -175,144 +174,180 @@ function getData(e) {
           if (xhr.readyState == 4 && xhr.status == 200) {
             dCompanyObject = xhr.response.companyObject;
             createChart( xhr.response.companyObject, e);
-          } else {
+          } 
+          else {
             console.log(`Error: ${xhr.status}`);
+            }
+          };
   }
-};
+
+
+  function get10x() {
+        removeActive();
+        event.target.innerText = "Loading...";
+        event.target.classList.add('active');
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", "/10x" );
+        xhr.send();
+        xhr.responseType = "json";
+        xhr.onload = () => {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            x10dCompanyObject = xhr.response.companyObject;
+            let nam = "";
+            let cal = [];
+            for(let key in x10dCompanyObject) {
+
+              cal.push(x10dCompanyObject[key] + "      " + key )
+
+              // nam = nam + x10dCompanyObject[key] + "      " + key + "\n";
+
+
+            // document.querySelector(".charts").innerText = JSON.parse(x10dCompanyObject);
+            // x10createChart( xhr.response.companyObject, e);
+          } 
+          document.querySelector(".volume").innerText = cal.sort().reverse();
+        }
+         
+          else {
+            console.log(`Error: ${xhr.status}`);
+            }
+          };
   }
 
     </script>
-  <style type="text/css">
-
-   .charts{
-    margin: auto;
-    text-align: -webkit-center;
-    max-width: 500px;
-    margin-top: 330px;
-    }
-    [id^='getData'], button{
-    background-color: #FFD700;
-    border: none;
-    border-radius: 10px;
-    height: 30px;
-    margin: auto;
-    width: 45%;
-    margin:8px;
-    }
-    body{
-      min-width: 350px;
-    }
-    .search{
-      display: flex;
-      width: 45%;
-    }
-    .search input{
-      height: 30px;
-    }
-    canvas{
-      margin: 15px 0;
-      /* max-width: 400px !important; */
-      min-width: 320px !important;
-      height: 200px !important;
-      max-width: 99%;
-    }
-    .static{
-      position: fixed;
-      opacity: 1;
-      background-color: #fff;
-      top: 0;
-      margin: 0;
-      display: flex;
-      /* left: 20%;
-      right: 20%; */
-      flex-wrap: wrap;
-    }
-    .hide{
-      display: none !important;
-    }
-    label{
-      margin: 5px 10px;
-      display: inline-block;
-      width: 50px;
-    }
-    #filter{
-      min-width: 70%;
-      max-width: 80%;
-      width: auto;
-      height: 30px;
-    }
-    .Range{
-      position: relative;
-      display: flex;
-      width: 100%;
-      flex-wrap: wrap;
-      justify-content: space-between;
-    }
-
-    .Range button{
-      width:20% ;
-    }
-    .active{
-      background-Color : rgb(0, 168, 0);
-    }
-
-    .buy{
-      position: relative;
-      display: none;
-    }
-    .show{
-      display: block;
-    }
-    .dropdown{
-      width: 20%;
-    }
-    .dropdown button{
-      width: 90%;
-    }
-    #results{
-      width: 70%;
-    }
-    /* .hide{
-      display: none;
-    } */
-    /* .drop-options button{
-        width: 20%;
-        margin: 0;
-    } */
-  </style>
+  
 
   <script>
-
+// Search Bar Script to filter charts matching the typed text
 function setFilter(){
-  // console.log("setFilter");
-  let filterData = (document.querySelector("#filter").value).toUpperCase();
-  if ( filterData.length > 0) {
-      
-      var lst = Array.from(document.getElementsByTagName("canvas"));
-      lst.forEach( (ele) => ele.style.display = "none" );
-      lst = Array.from(document.querySelectorAll("[class^= '" + filterData + "']"));
+    let filterData = (document.querySelector("#filter").value).toUpperCase();
+    if ( filterData.length > 0) {
+        var lst = Array.from(document.getElementsByTagName("canvas"));
+        lst.forEach( (ele) => ele.style.display = "none" );
+        lst = Array.from(document.querySelectorAll("[class^= '" + filterData + "']"));
         lst.forEach( ele => ele.style.display = "block" ); 
-        console.log(filterData);
-}
+    }
 
-else{
-let lst = document.querySelectorAll("canvas");
-lst.forEach( ele => ele.style.display = "block" );
-}
-}
+    else{
+      let lst = document.querySelectorAll("canvas");
+      lst.forEach( ele => ele.style.display = "block" );
+    }
+    }
 
-let myFunc = letsDebounce(setFilter,1000);
+    let myFunc = letsDebounce(setFilter,1000);
 
 function letsDebounce(fn,d){
-  let timer;
-  return function(){
+    let timer;
+    return function(){
     clearTimeout(timer);
     timer=setTimeout(fn,d);
-  }
+    }
 }
 
 document.getElementById("filter").addEventListener('input', myFunc);
 
   </script>
+
+<style type="text/css">
+.volume{
+  text-align: left;
+  margin-left: 50px;
+}
+  .charts{
+   margin: auto;
+   text-align: -webkit-center;
+   max-width: 500px;
+   margin-top: 330px;
+   }
+   [id^='getData'], button{
+   background-color: #FFD700;
+   border: none;
+   border-radius: 10px;
+   height: 30px;
+   margin: auto;
+   width: 45%;
+   margin:8px;
+   }
+   body{
+     min-width: 350px;
+   }
+   .search{
+     display: flex;
+     width: 45%;
+   }
+   .search input{
+     height: 30px;
+   }
+   canvas{
+     margin: 15px 0;
+     /* max-width: 400px !important; */
+     min-width: 320px !important;
+     height: 200px !important;
+     max-width: 99%;
+   }
+   .static{
+     position: fixed;
+     opacity: 1;
+     background-color: #fff;
+     top: 0;
+     margin: 0;
+     display: flex;
+     /* left: 20%;
+     right: 20%; */
+     flex-wrap: wrap;
+   }
+   .hide{
+     display: none !important;
+   }
+   label{
+     margin: 5px 10px;
+     display: inline-block;
+     width: 50px;
+   }
+   #filter{
+     min-width: 70%;
+     max-width: 80%;
+     width: auto;
+     height: 30px;
+   }
+   .Range{
+     position: relative;
+     display: flex;
+     width: 100%;
+     flex-wrap: wrap;
+     justify-content: space-between;
+   }
+
+   .Range button{
+     width:20% ;
+   }
+   .active{
+     background-Color : rgb(0, 168, 0);
+   }
+
+   .buy{
+     position: relative;
+     display: none;
+   }
+   .show{
+     display: block;
+   }
+   .dropdown{
+     width: 20%;
+   }
+   .dropdown button{
+     width: 90%;
+   }
+   #results{
+     width: 70%;
+   }
+   /* .hide{
+     display: none;
+   } */
+   /* .drop-options button{
+       width: 20%;
+       margin: 0;
+   } */
+ </style>
 </body>
 </html>
