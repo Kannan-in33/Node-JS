@@ -57,13 +57,13 @@ function removeActive(){
   let lst = document.querySelectorAll("[id^='days']");
   lst.forEach( element => element.classList.remove('active') );
 }
-// function getBuyMain(){
-//   let lst = document.querySelectorAll(".buy");
-//   lst.forEach(element => {
-//     element.classList.toggle('show');    
-//   });
+function getBuyMain(){
+  let lst = document.querySelectorAll(".buy");
+  lst.forEach(element => {
+    element.classList.toggle('show');    
+  });
 
-// }
+}
 function getBuy(margin){
               removeActive();
               event.target.classList.add('active');

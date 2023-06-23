@@ -55,21 +55,9 @@ server.use( (req, res)=>{
                         console.log(max);
                        }
 
-                    // for (let key in obj['datasets'][1]['values']) {
 
-                        
-                    //     obj2.push(obj['datasets'][1]['values'][key][1]);
 
-                    //     k++;
-                    //     if(k == 2){
-                            if(file.split('.')[0] == 'ANANTRAJ'){
-                                console.log(obj2[0] + "   "+ obj2[1]);
-                                }
-                    //         break;
-                    //     }                         
-                    // }
-
-                    if((obj2[0]/obj2[1]) > 1){
+                    if((obj2[0]/obj2[1]) > 3){
                     companyObject[file.split('.')[0]] = (obj2[0]/obj2[1]).toFixed(2);
                     }
                     // [...obj2];
