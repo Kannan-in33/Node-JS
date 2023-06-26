@@ -105,20 +105,6 @@ function createChart(companyObject, e, days = 1000){
                     xValues.push(i);
                   }
                   xValues.reverse();
-<<<<<<< HEAD
-                      let anchoreTag =  document.createElement("a");
-                      anchoreTag.href = "https://www.screener.in/company/" + key + "/consolidated/";
-                      anchoreTag.setAttribute("target", "_blank");
-
-                      let divtg = document.createElement("div");
-                      let canvas = document.createElement("canvas");
-                      canvas.setAttribute("id", key);
-                      canvas.setAttribute("class", key);
-                      divtg.appendChild(canvas);
-                      anchoreTag.appendChild(divtg);
-
-                      document.querySelector(".charts").appendChild(anchoreTag);
-=======
           let divtag = document.createElement("div");
           let anchortag = document.createElement("a");
           anchortag.setAttribute("href", "https://www.screener.in/company/" + key + "/");
@@ -129,7 +115,6 @@ function createChart(companyObject, e, days = 1000){
                       canvas.setAttribute("class", key);
           divtag.appendChild(canvas);
                       document.querySelector(".charts").appendChild(anchortag);
->>>>>>> 8c998411d269911d4132ef76dacb611957bd2920
                         // let cmax = Math.max(...yValues2);
                         let ccurrect = yValues2[0];
                         let cmin = Math.min(...yValues2);
