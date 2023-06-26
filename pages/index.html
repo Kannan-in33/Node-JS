@@ -105,10 +105,18 @@ function createChart(companyObject, e, days = 1000){
                     xValues.push(i);
                   }
                   xValues.reverse();
+                      let anchoreTag =  document.createElement("a");
+                      anchoreTag.href = "https://www.screener.in/company/" + key + "/consolidated/";
+                      anchoreTag.setAttribute("target", "_blank");
+
+                      let divtg = document.createElement("div");
                       let canvas = document.createElement("canvas");
                       canvas.setAttribute("id", key);
                       canvas.setAttribute("class", key);
-                      document.querySelector(".charts").appendChild(canvas);
+                      divtg.appendChild(canvas);
+                      anchoreTag.appendChild(divtg);
+
+                      document.querySelector(".charts").appendChild(anchoreTag);
                         // let cmax = Math.max(...yValues2);
                         let ccurrect = yValues2[0];
                         let cmin = Math.min(...yValues2);
@@ -123,11 +131,10 @@ function createChart(companyObject, e, days = 1000){
                           else if (Math.floor(((cmax-ccurrect)/cmax) * 100) > 20 && ccurrect < cmax){
                             BuyObject20[key] = companyObject[key];
                           }
-
-                          if ((buyAvg[29] <= (ccurrect * 1.02)) && (((cmax-ccurrect)/cmax) * 100) > 30 ){
+                            
+                          if (( ( (Number(buyAvg[20]) + Number(buyAvg[29]) + Number(buyAvg[15])) / 3) < (ccurrect * 1.09 )) && (((cmax-ccurrect)/cmax) * 100) > 30 ){
                             BuyObject3Avg[key] = companyObject[key];
-                            console.log(key + "    " + buyAvg[29] + "    " + ccurrect);
-                            console.log((buyAvg[29] * 1.05).toFixed(2));
+                            console.log(key + "    " + ( (Number(buyAvg[20]) + Number(buyAvg[29]) + Number(buyAvg[15]) )/3).toFixed(2) + "    " + ccurrect);
                           }
 
                         
