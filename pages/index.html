@@ -33,6 +33,8 @@
         <button id="days70" class="d20" onclick="getDay(70);" type="button">70 Days</button>
         <button id="days100" class="100"  onclick="getDay(100);" type="button">100 Days</button>
         <button id="results" onclick="get10x();">Stocks Result</button>
+        <button id="fav" onclick="getFav();">Favourits</button>
+        <img src="/images/add.jpg" />
         <div class="dropdown">
             <button id="daysbuy" class="buy-main"  onclick="getBuyMain();" type="button">Buy List</button>
               <div id="BuyDropdown" class="drop-options">
@@ -116,6 +118,9 @@ function createChart(companyObject, e, days = 1000){
                   }
                   xValues.reverse();
           let divtag = document.createElement("div");
+          // let imgtag = document.createElement("img");
+          // imgtag.setAttribute("src",'/images/add.jpg');
+          // divtag.appendChild(imgtag);
           let anchortag = document.createElement("a");
           anchortag.setAttribute("href", "https://www.screener.in/company/" + key + "/");
           anchortag.setAttribute("target", "_blank");
@@ -194,6 +199,23 @@ function getData(e) {
           if (xhr.readyState == 4 && xhr.status == 200) {
             dCompanyObject = xhr.response.companyObject;
             createChart( xhr.response.companyObject, e);
+          } 
+          else {
+            console.log(`Error: ${xhr.status}`);
+            }
+          };
+  }
+
+  function getFav() {
+        
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", "/add" );
+        xhr.send();
+        xhr.responseType = "image/jpeg";
+        xhr.onload = () => {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            dCompanyObject = xhr.response;
+            console.log(xhr.response);
           } 
           else {
             console.log(`Error: ${xhr.status}`);
@@ -383,14 +405,15 @@ document.getElementById("filter").addEventListener('input', myFunc);
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5WRLND4"
   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- End Google Tag Manager (noscript) -->
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-RKL0GJ3DQR"></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1FNLLPDQHW"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', 'G-RKL0GJ3DQR');
+  gtag('config', 'G-1FNLLPDQHW');
+</script>
 </script>
 </body>
 </html>
