@@ -20,6 +20,8 @@
       <div class="static">
         <div class="search">
       <input placeholder="Search Sector..." type="text" id="filter" name="filter" />
+      <button id="clear" onclick="clea();" type="button">Clear</button>
+        
       <ul id="SectorList">
 
       </ul>
@@ -56,6 +58,10 @@ let BuyObject40 = {};
 let BuyObject30 = {};
 let BuyObject20 = {};
 let BuyObject3Avg = {};
+
+function clea() {
+    document.getElementById("filter").value = '';
+}
 
 function getDay(days){
   removeActive();
@@ -266,7 +272,7 @@ margin: 5px;
    }
    .search{
      display: flex;
-     width: 45%;
+     width: 100%;
      margin-left: 15px;
    }
    .search input{
@@ -288,8 +294,8 @@ margin: 5px;
     line-height: 1.5;
     border: 1px #000 solid;
     margin-top: 40px;
-    /* display: none; */
-    width: 200px;
+    padding-left: 3px;
+    width: 80%;
    }
    .static{
      position: fixed;
