@@ -23,6 +23,7 @@
       <button id="getData201" class="201" onclick="getData(201);" type="button">Stocks 201+</button>
       <button id="getData401" class="401" onclick="getData(401);" type="button">Stocks 401+</button>
       <button id="getData601" class="601" onclick="getData(601);" type="button">Stocks 601+</button>
+      <a href="/Sector">Sector</a>
       <div class="search">
       <input placeholder="Search..." type="text" id="filter" name="filter" />
       </div>
@@ -305,7 +306,7 @@ document.getElementById("filter").addEventListener('input', myFunc);
    max-width: 500px;
    margin-top: 330px;
    }
-   [id^='getData'], button{
+   [id^='getData'], button, a{
    background-color: #FFD700;
    border: none;
    border-radius: 10px;
@@ -313,6 +314,8 @@ document.getElementById("filter").addEventListener('input', myFunc);
    margin: auto;
    width: 45%;
    margin:8px;
+   text-align: center;
+    text-decoration-line: none;
    }
    body{
      min-width: 350px;

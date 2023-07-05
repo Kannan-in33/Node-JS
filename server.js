@@ -11,6 +11,10 @@ server.get('/', (req, res) => {
 
 });
 
+server.get('/sector', (req, res) => {
+    res.sendFile(path.join(__dirname, './pages/sector.html'));
+
+});
         
 server.use( (req, res)=>{
     let obj ={};
@@ -35,10 +39,12 @@ if(req.path !== '/favicon.ico'){
         let foldersPath = fs.readdirSync(path.resolve(__dirname, 'src'));
 
                 foldersPath.forEach( (folder, j) => {
+
                     const directorypath = path.join(__dirname, 'src/' + folder);
                     fs.readdir(directorypath , function (err, files) {
                     if (err) throw err;
                     files.forEach( (file, i) => {
+                        
                             fs.readFile(path.join(directorypath , file), 'utf8', function (err2, data) {
                             if (err2) throw err2;
                             obj = JSON.parse(data);
@@ -57,7 +63,6 @@ if(req.path !== '/favicon.ico'){
                                     obj3 = { 
                                     "companyObject" : companyObject
                                     }
-                                    console.log(obj3);
                                     res.send(obj3);
                                     }
 
@@ -65,14 +70,16 @@ if(req.path !== '/favicon.ico'){
 
 
 }
-// 10x Condition Ends here
+
 
                 else{
-               
-                const directorypath = path.join(__dirname, req.path.replace('/', 'src/' + ''));
+
+                const directorypath = path.join(__dirname, req.path.replace('/', 'src/'));
+
                 fs.readdir(directorypath , function (err, files) {
                 if (err) throw err;
                 files.forEach( (file, i) => {
+ 
                     fs.readFile(path.join(directorypath , file), 'utf8', function (err2, data) {
                     if (err2) throw err2;
                         obj = JSON.parse(data);
