@@ -62,6 +62,7 @@ let BuyObject3Avg = {};
 function clea() {
     document.getElementById("filter").value = '';
     document.getElementById("SectorList").style.display = "";
+    myFunction();
 }
 
 function getDay(days){
@@ -361,9 +362,9 @@ function letsDebounce(fn,d){
               for (i = 0; i < li.length; i++) {
                 txtValue = li[i].innerText;
                 if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                  ul.style.display = "";
+                    li[i].style.display = "";
                 } else {
-                  ul.style.display = "none";
+                    li[i].style.display = "none";
                 }
               }
             }
@@ -388,7 +389,7 @@ document.getElementById("filter").addEventListener('input', myFunc);
        margin: auto;
        text-align: -webkit-center;
        max-width: 500px;
-       margin-top: 330px;
+       margin-top: 200px;
        }
        [id^='getData'], button{
        background-color: #FFD700;
