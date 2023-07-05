@@ -61,6 +61,7 @@ let BuyObject3Avg = {};
 
 function clea() {
     document.getElementById("filter").value = '';
+    document.getElementById("SectorList").style.display = "";
 }
 
 function getDay(days){
@@ -360,9 +361,9 @@ function letsDebounce(fn,d){
               for (i = 0; i < li.length; i++) {
                 txtValue = li[i].innerText;
                 if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                  li[i].style.display = "";
+                  ul.style.display = "";
                 } else {
-                  li[i].style.display = "none";
+                  ul.style.display = "none";
                 }
               }
             }
