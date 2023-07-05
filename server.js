@@ -74,8 +74,8 @@ if(req.path !== '/favicon.ico'){
 
                 else{
 
-                const directorypath = path.join(__dirname, req.path.replace('/', 'src/'));
-
+                const directorypath = path.join(__dirname, req.path.replace('/', 'src/').replaceAll('%20', ' '));
+                        console.log(directorypath);
                 fs.readdir(directorypath , function (err, files) {
                 if (err) throw err;
                 files.forEach( (file, i) => {
