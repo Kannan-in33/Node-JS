@@ -241,130 +241,7 @@ function letsDebounce(fn,d){
 
   </script>
 
-<style type="text/css">
-#SectorList li{
-font-size: 20px;
-font-family: 'Courier New', Courier, monospace;
-margin: 5px;
 
-}
-.volume{
-  text-align: left;
-  margin-left: 50px;
-}
-  .charts{
-   margin: auto;
-   text-align: -webkit-center;
-   max-width: 500px;
-   margin-top: 330px;
-   }
-   [id^='getData'], button{
-   background-color: #FFD700;
-   border: none;
-   border-radius: 10px;
-   height: 30px;
-   margin: auto;
-   width: 45%;
-   margin:8px;
-   }
-   body{
-     min-width: 350px;
-   }
-   .search{
-     display: flex;
-     width: 100%;
-     margin-left: 15px;
-   }
-   .search input{
-     height: 30px;
-   }
-   canvas{
-     margin: 15px 0;
-     /* max-width: 400px !important; */
-     min-width: 320px !important;
-     height: 200px !important;
-     max-width: 99%;
-   }
-   #SectorList{
-    display: block;
-    z-index: 100;
-    position: absolute;
-    list-style: none;
-    background-color: aliceblue;
-    line-height: 1.5;
-    border: 1px #000 solid;
-    margin-top: 40px;
-    padding-left: 3px;
-    width: 80%;
-   }
-   .static{
-     position: fixed;
-     opacity: 1;
-     background-color: #fff;
-     top: 0;
-     margin: 0;
-     display: flex;
-     flex-wrap: wrap;
-    justify-content: space-betweenq;
-   }
-   .hide{
-     display: none !important;
-   }
-   label{
-     margin: 5px 10px;
-     display: inline-block;
-     width: 50px;
-   }
-   #filter{
-     min-width: 70%;
-     max-width: 80%;
-     width: auto;
-     height: 30px;
-   }
-   .Range{
-     position: relative;
-     display: flex;
-     width: 100%;
-     flex-wrap: wrap;
-     justify-content: space-between;
-   }
-
-   .Range button{
-     width:20% ;
-   }
-   .active{
-     /* background-Color : rgb(0, 168, 0); */
-   }
-
-   .buy{
-     position: relative;
-     display: none;
-   }
-   .show{
-     display: block;
-   }
-   .dropdown{
-     width: 20%;
-   }
-   .dropdown button{
-     width: 90%;
-   }
-   #results{
-     width: 70%;
-   }
-   .volume li{
-      margin: 20px 50px;
-      padding: 0 30px;
-
-   }
-   /* .hide{
-     display: none;
-   } */
-   /* .drop-options button{
-       width: 20%;
-       margin: 0;
-   } */
- </style>
  <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5WRLND4"
   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -382,81 +259,82 @@ margin: 5px;
 
 <script>
 
-    const SectList = [  'Metals',
-                        'Finance',
-                        'Computers',
-                        'Diversified',
-                        'Engineering',
-                        'Oil Drilling',
-                        'Pharmaceuticals ',
-                        'Chemicals',
-                        'Textiles',
-                        'Miscellaneous',
-                        'Electric Equipment',
-                        'Cement ',
-                        'Trading',
-                        'Power Generation And Supply',
-                        'Food ',
-                        'Electrodes ',
-                        'Hotels',
-                        'Petrochemicals',
-                        'Packaging',
-                        'Fertilizers',
-                        'Steel ',
-                        'Construction',
-                        'Castings ',
-                        'Leather ',
-                        'Dyes And Pigments',
-                        'Cables ',
-                        'Paints ',
-                        'Auto Ancillaries',
-                        'Electronics ',
-                        'Paper',
-                        'Aquaculture',
-                        'Healthcare',
-                        'Plastics Products',
-                        'Tyres',
-                        'Glass ',
-                        'Breweries ',
-                        'Mining ',
-                        'Engineering ',
-                        'Automobiles ',
-                        'Ceramics ',
-                        'Pesticides ',
-                        'Telecommunications ',
-                        'Solvent Extraction',
-                        'Banks ',
-                        'Sugar',
-                        'Entertainment ',
-                        'Personal Care ',
-                        'Domestic Appliances',
-                        'Cement Products',
-                        'Couriers',
+    const SectList = [  'Abrasives And Grinding Wheels',
                         'Air',
-                        'Refineries',
-                        'Abrasives And Grinding Wheels',
-                        'Tea',
                         'Aluminium and Aluminium Products',
-                        'Engines',
-                        'Diamond Cutting ',
-                        'Travel Agencies',
-                        'Compressors ',
-                        'Shipping',
-                        'Dry Cells',
-                        'Detergents ',
-                        'Transport ',
-                        'Cigarettes',
-                        'Chlor Alkali ',
-                        'Refractories ',
-                        'Recreation ',
-                        'Textile Machinery',
-                        'Transmisson Line Towers ',
-                        'Pumps',
-                        'Printing ',
+                        'Aquaculture',
+                        'Auto Ancillaries',
+                        'Automobiles ',
+                        'Banks ',
                         'Bearings',
-                        'Moulded Luggage',
+                        'Breweries ',
+                        'Cables ',
+                        'Castings ',
+                        'Cement ',
+                        'Cement Products',
+                        'Ceramics ',
+                        'Chemicals',
+                        'Chlor Alkali ',
+                        'Cigarettes',
+                        'Compressors ',
+                        'Computers ',
+                        'Construction',
+                        'Couriers',
+                        'Detergents ',
+                        'Diamond Cutting ',
+                        'Diversified ',
+                        'Domestic Appliances',
+                        'Dry Cells',
+                        'Dyes And Pigments',
+                        'Electric Equipment',
+                        'Electrodes ',
+                        'Electronics ',
+                        'Engineering',
+                        'Engineering ',
+                        'Engines',
+                        'Entertainment ',
                         'Fasteners',
-                        'Photographic And Allied Products'
+                        'Fertilizers',
+                        'Finance ',
+                        'Food ',
+                        'Glass ',
+                        'Healthcare',
+                        'Hotels',
+                        'Leather ',
+                        'Metals',
+                        'Mining ',
+                        'Miscellaneous',
+                        'Moulded Luggage',
+                        'Oil Drilling ',
+                        'Packaging',
+                        'Paints ',
+                        'Paper',
+                        'Personal Care ',
+                        'Pesticides ',
+                        'Petrochemicals',
+                        'Pharmaceuticals ',
+                        'Photographic And Allied Products',
+                        'Plastics Products',
+                        'Power Generation And Supply',
+                        'Printing ',
+                        'Pumps',
+                        'Recreation ',
+                        'Refineries',
+                        'Refractories ',
+                        'Shipping',
+                        'Solvent Extraction',
+                        'Steel ',
+                        'Sugar',
+                        'Tea',
+                        'Telecommunications ',
+                        'Textile Machinery',
+                        'Textiles ',
+                        'Trading',
+                        'Transmisson Line Towers ',
+                        'Transport ',
+                        'Travel Agencies',
+                        'Tyres'
+
 
                     ];
     
@@ -491,5 +369,131 @@ margin: 5px;
 let myFunc = letsDebounce(myFunction,1000);
 document.getElementById("filter").addEventListener('input', myFunc);
             </script>
+
+
+<style type="text/css">
+    #SectorList li{
+    font-size: 20px;
+    font-family: 'Courier New', Courier, monospace;
+    border: #000 0.5px solid;
+    padding: 5px;
+    
+    }
+    .volume{
+      text-align: left;
+      margin-left: 50px;
+    }
+      .charts{
+       margin: auto;
+       text-align: -webkit-center;
+       max-width: 500px;
+       margin-top: 330px;
+       }
+       [id^='getData'], button{
+       background-color: #FFD700;
+       border: none;
+       border-radius: 10px;
+       height: 30px;
+       margin: auto;
+       width: 45%;
+       margin:8px;
+       }
+       body{
+         min-width: 350px;
+       }
+       .search{
+         display: flex;
+         width: 100%;
+         margin-left: 15px;
+       }
+       .search input{
+         height: 30px;
+       }
+       canvas{
+         margin: 15px 0;
+         /* max-width: 400px !important; */
+         min-width: 320px !important;
+         height: 200px !important;
+         max-width: 99%;
+       }
+       #SectorList{
+        display: block;
+        z-index: 100;
+        position: absolute;
+        list-style: none;
+        background-color: aliceblue;
+        line-height: 1.5;
+        margin-top: 40px;
+        padding-left: 3px;
+        width: 80%;
+       }
+       .static{
+         position: fixed;
+         opacity: 1;
+         background-color: #fff;
+         top: 0;
+         margin: 0;
+         display: flex;
+         flex-wrap: wrap;
+        justify-content: space-betweenq;
+       }
+       .hide{
+         display: none !important;
+       }
+       label{
+         margin: 5px 10px;
+         display: inline-block;
+         width: 50px;
+       }
+       #filter{
+         min-width: 70%;
+         max-width: 80%;
+         width: auto;
+         height: 30px;
+       }
+       .Range{
+         position: relative;
+         display: flex;
+         width: 100%;
+         flex-wrap: wrap;
+         justify-content: space-between;
+       }
+    
+       .Range button{
+         width:20% ;
+       }
+       .active{
+         /* background-Color : rgb(0, 168, 0); */
+       }
+    
+       .buy{
+         position: relative;
+         display: none;
+       }
+       .show{
+         display: block;
+       }
+       .dropdown{
+         width: 20%;
+       }
+       .dropdown button{
+         width: 90%;
+       }
+       #results{
+         width: 70%;
+       }
+       .volume li{
+          margin: 20px 50px;
+          padding: 0 30px;
+    
+       }
+       /* .hide{
+         display: none;
+       } */
+       /* .drop-options button{
+           width: 20%;
+           margin: 0;
+       } */
+     </style>
 </body>
 </html>
