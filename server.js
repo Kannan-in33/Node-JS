@@ -71,11 +71,53 @@ if(req.path !== '/favicon.ico'){
 
 }
 
+else if(req.path == '/All') {
+    let j = 0;
+    let foldersPath = fs.readdirSync(path.resolve(__dirname, 'src'));
+
+    foldersPath.forEach( (folder, j) => {
+
+    const directorypath = path.join(__dirname, 'src/' + folder);
+
+    // const directorypath = path.join(__dirname, req.path.replace('/', 'src/').replaceAll('%20', ' '));
+    fs.readdir(directorypath , function (err, files) {
+    if (err) throw err;
+    files.forEach( (file, i) => {
+
+        fs.readFile(path.join(directorypath , file), 'utf8', function (err2, data) {
+        if (err2) throw err2;
+            obj = JSON.parse(data);
+            company.push(file);
+
+            valueList[file.split('.')[0]] = obj['datasets'][0]['values'].length
+            max = max < obj['datasets'][0]['values'].length ? obj['datasets'][0]['values'].length : max
+        for (let key in obj['datasets'][0]['values']) {
+            obj2.push(obj['datasets'][0]['values'][key][1]);                           
+        }
+        companyObject[file.split('.')[0]] = [...obj2];
+        obj2 =[];
+
+        if (i == files.length -1 ){
+        obj3 = { "company" : company,
+                "values" : obj2,
+                "valueList" : valueList,
+                "max" : max,
+                "companyObject" : companyObject
+                }
+        res.send(obj3);
+    }
+    
+    });
+    
+    });
+    
+    });
+});  
+}
+
 
                 else{
-
                 const directorypath = path.join(__dirname, req.path.replace('/', 'src/').replaceAll('%20', ' '));
-                        console.log(directorypath);
                 fs.readdir(directorypath , function (err, files) {
                 if (err) throw err;
                 files.forEach( (file, i) => {

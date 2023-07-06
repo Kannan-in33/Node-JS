@@ -96,10 +96,11 @@ function getBuy(margin){
 
 function createChart(companyObject, e, days = 1000){
 
-  let lst = document.querySelectorAll("canvas");
-  lst.forEach(element => {
-    element.remove();    
-  });
+  let lst = [];
+  lst = document.querySelectorAll(".charts a");
+  if(lst.length > 1){
+        Array.from(lst).forEach( (element) =>  element.remove() );
+}
   dE = e;
   let resultCount = 0;
       for (let key in companyObject) {
@@ -147,7 +148,7 @@ function createChart(companyObject, e, days = 1000){
                             
                           if (( ( (Number(buyAvg[20]) + Number(buyAvg[29]) + Number(buyAvg[15])) / 3) < (ccurrect * 1.09 )) && (((cmax-ccurrect)/cmax) * 100) > 30 ){
                             BuyObject3Avg[key] = companyObject[key];
-                            console.log(key + "    " + ( (Number(buyAvg[20]) + Number(buyAvg[29]) + Number(buyAvg[15]) )/3).toFixed(2) + "    " + ccurrect);
+                            // console.log(key + "    " + ( (Number(buyAvg[20]) + Number(buyAvg[29]) + Number(buyAvg[15]) )/3).toFixed(2) + "    " + ccurrect);
                           }
 
                         
@@ -215,7 +216,6 @@ function getData(e) {
         xhr.onload = () => {
           if (xhr.readyState == 4 && xhr.status == 200) {
             dCompanyObject = xhr.response;
-            console.log(xhr.response);
           } 
           else {
             console.log(`Error: ${xhr.status}`);

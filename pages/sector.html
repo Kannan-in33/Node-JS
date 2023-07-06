@@ -23,6 +23,7 @@
       <button id="clear" onclick="clea();" type="button">Clear</button>
         
       <ul id="SectorList">
+        <li id="All" onclick="getData();">All</li>
 
       </ul>
       </div>
@@ -102,7 +103,7 @@ function getBuy(margin){
 
 function createChart(companyObject, e, days = 1000){
 
-  let lst = document.querySelectorAll("canvas");
+  let lst = document.querySelectorAll(".charts a");
   lst.forEach(element => {
     element.remove();    
   });
