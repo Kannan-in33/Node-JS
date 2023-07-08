@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sector</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <!-- Google Tag Manager -->
+    <script>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-5WRLND4');
+      </script>
+  <!-- End Google Tag Manager -->
+  
+   </head>
+    <body>
+        <div class="static">
+            <div class="search">
+                <input placeholder="Search Sector..." type="text" id="filter" name="filter" />
+                <button id="clear" onclick="getData();" type="button">Get Data</button>
+                <ul id="SectorList">
+                    <li id="All" onclick="getData();">All</li>
+                </ul>
+            </div>
+        </div>
+    
+      <div class="charts"></div>
+      <ol class="volume"> </ol>
+<script>
+let dCompanyObject = {};
+let x10dCompanyObject = {};
+let dE;
+let BuyObject40 = {};
+let BuyObject30 = {};
+let BuyObject20 = {};
+let BuyObject3Avg = {};
+
+        function printId(){
+            console.log(event.target.id);
+        }
+
+        function createChart(companyObject, e, days = 1000){
+
+        let lst = document.querySelectorAll(".charts a");
+        lst.forEach(element => {
+            element.remove();    
+        });
+        dE = e;
+        let resultCount = 0;
+            for (let key in companyObject) {
+                resultCount++;
+                    let yValues  = [];
+                    yValues  = [...companyObject[key]];
+                    let xValues = [];
+                    let yValues2 = [];
+
+                    yValues.reverse();
+                    for(let y = 0; y < Math.min(companyObject[key].length, days) ; y++){
+                        yValues2[y] =  yValues[y] ;
+                    }
+                        for (let i = 0; i < Math.min(companyObject[key].length, days) ; i++) {
+                            xValues.push(i);
+                        }
+                        xValues.reverse();
+                        let divtag = document.createElement("div");
+                        let checkBox = document.createElement("input");
+                            checkBox.setAttribute("type", "checkbox");
+                            checkBox.setAttribute("id", key);
+                            checkBox.addEventListener("click", printId);
+                            divtag.appendChild(checkBox);
+                        let anchortag = document.createElement("a");
+                            anchortag.setAttribute("href", "https://www.screener.in/company/" + key + "/");
+                            anchortag.setAttribute("target", "_blank");
+                            anchortag.appendChild(divtag);
+                        let canvas = document.createElement("canvas");                            
+                            canvas.setAttribute("class", key);
+                        divtag.appendChild(canvas);
+                            document.querySelector(".charts").appendChild(anchortag);
+                                let ccurrect = yValues2[0];
+                                let cmin = Math.min(...yValues2);
+                                let cmax = Math.max(...yValues2);
+                                let buyAvg = [...yValues2]; 
+                                new Chart(canvas, {
+                                    type: "line",
+                                    data: {
+                                    labels: xValues,
+                                    datasets: [{
+                                            label: key + '   FL ' + ( ((cmax-cmin)/cmax) * 100).toFixed(2).toString() + ' %  FC (' + ( ((cmax-ccurrect)/cmax) * 100).toFixed(2).toString() + ' )'  ,
+                                            pointRadius: 0,
+                                            borderWidth : 0.5,
+                                            borderColor: "rgba(0,0,0,0.9)",
+                                            data: [...yValues2].reverse(),
+                                            }]
+                                            }   
+                                    });
+
+            }
+
+}
+
+
+        function getData() {
+                const xhr = new XMLHttpRequest();
+                xhr.open("GET", "/IDFC+ITC+SBIN");
+                xhr.send();
+                xhr.responseType = "json";
+                xhr.onload = () => {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    console.log("Success");
+                    dCompanyObject = xhr.response.companyObject;
+                    createChart( xhr.response.companyObject, event.target.id);
+                } 
+                else {
+                    console.log(`Error: ${xhr.status}`);
+                    }
+                };
+        }
+
+</script>
+  
+
+
+
+
+
+
+
+<style type="text/css">
+    .charts{
+        display: flex;
+    }
+    .charts > a > div{
+        display : flex;
+    }
+
+    .charts > a > div input{
+        align-self: self-start;
+    }
+
+    #SectorList li{
+    font-size: 20px;
+    font-family: 'Courier New', Courier, monospace;
+    border: #000 0.5px solid;
+    padding: 5px;
+    
+    }
+    .volume{
+      text-align: left;
+      margin-left: 50px;
+    }
+      .charts{
+       margin: auto;
+       text-align: -webkit-center;
+       max-width: 500px;
+       margin-top: 200px;
+       }
+       [id^='getData'], button{
+       background-color: #FFD700;
+       border: none;
+       border-radius: 10px;
+       height: 30px;
+       margin: auto;
+       width: 45%;
+       margin:8px;
+       }
+       body{
+         min-width: 350px;
+       }
+       .search{
+         display: flex;
+         width: 100%;
+         margin-left: 15px;
+       }
+       .search input{
+         height: 30px;
+       }
+       canvas{
+         margin: 15px 0;
+         /* max-width: 400px !important; */
+         min-width: 320px !important;
+         height: 200px !important;
+         max-width: 99%;
+       }
+       #SectorList{
+        display: block;
+        z-index: 100;
+        position: absolute;
+        list-style: none;
+        background-color: aliceblue;
+        line-height: 1.5;
+        margin-top: 40px;
+        padding-left: 3px;
+        width: 80%;
+        height: 500%;
+        overflow: scroll;
+       }
+       .static{
+         position: fixed;
+         opacity: 1;
+         background-color: #fff;
+         top: 0;
+         margin: 0;
+         display: flex;
+         flex-wrap: wrap;
+        justify-content: space-betweenq;
+       }
+       .hide{
+         display: none !important;
+       }
+       label{
+         margin: 5px 10px;
+         display: inline-block;
+         width: 50px;
+       }
+       #filter{
+         min-width: 70%;
+         max-width: 80%;
+         width: auto;
+         height: 30px;
+       }
+       .Range{
+         position: relative;
+         display: flex;
+         width: 100%;
+         flex-wrap: wrap;
+         justify-content: space-between;
+       }
+    
+       .Range button{
+         width:20% ;
+       }
+    
+       .buy{
+         position: relative;
+         display: none;
+       }
+       .show{
+         display: block;
+       }
+       .dropdown{
+         width: 20%;
+       }
+       .dropdown button{
+         width: 90%;
+       }
+       #results{
+         width: 70%;
+       }
+       .volume li{
+          margin: 20px 50px;
+          padding: 0 30px;
+    
+       }
+       /* .hide{
+         display: none;
+       } */
+       /* .drop-options button{
+           width: 20%;
+           margin: 0;
+       } */
+     </style>
+
+      <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5WRLND4"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1FNLLPDQHW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-1FNLLPDQHW');
+  </script>
+
+</body>
+</html>

@@ -15,6 +15,11 @@ server.get('/sector', (req, res) => {
     res.sendFile(path.join(__dirname, './pages/sector.html'));
 
 });
+
+server.get('/compare', (req, res) => {
+    res.sendFile(path.join(__dirname, './pages/compare.html'));
+
+});
         
 server.use( (req, res)=>{
     let obj ={};
@@ -33,7 +38,7 @@ server.use( (req, res)=>{
 
 
 if(req.path !== '/favicon.ico'){
-
+console.log(req.path);
  if(req.path == '/10x'){
         let j = 0;
         let foldersPath = fs.readdirSync(path.resolve(__dirname, 'src'));
@@ -68,6 +73,63 @@ if(req.path !== '/favicon.ico'){
 
         });   });  });  })
 
+
+}
+
+else if(req.path.includes('+') || req.path.includes('compare')) {
+    let companies = req.path.replace('/',"").split('+');
+
+    let j = 0;
+    let c= 0;
+    let foldersPath = fs.readdirSync(path.resolve(__dirname, 'src'));
+
+for(let k = 0; k < companies.length; k++){ 
+
+foldersPath.forEach( (folder, j) => {
+
+const directorypath = path.join(__dirname, 'src/' + folder);
+fs.readdir(directorypath , function (err, files) {
+if (err) throw err;
+
+files.forEach( (file, i) => {
+if(file.split('.')[0] == companies[k]){
+console.log(file + "    " +  companies[0]);
+c++;
+
+
+fs.readFile(path.join(directorypath , file), 'utf8', function (err2, data) {
+if (err2) throw err2;
+obj = JSON.parse(data);
+company.push(file);
+
+valueList[file.split('.')[0]] = obj['datasets'][0]['values'].length
+max = max < obj['datasets'][0]['values'].length ? obj['datasets'][0]['values'].length : max
+for (let key in obj['datasets'][0]['values']) {
+obj2.push(obj['datasets'][0]['values'][key][1]);                           
+}
+companyObject[file.split('.')[0]] = [...obj2];
+obj2 =[];
+
+if (k == companies.length -1 ){
+obj3 = { "company" : company,
+"values" : obj2,
+"valueList" : valueList,
+"max" : max,
+"companyObject" : companyObject
+}
+res.send(obj3);
+k++;
+}
+
+});
+}
+
+});
+
+});
+});  
+
+}
 
 }
 

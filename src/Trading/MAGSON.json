@@ -1,0 +1,1 @@
+{"datasets": [{"metric": "Price", "label": "Price on NSE", "values": [["2023-07-06", "95.70"], ["2023-07-07", "91.55"]], "meta": {"exchange": "nse", "unit": "day"}}, {"metric": "Volume", "label": "Volume", "values": [["2023-07-06", 942000, {"delivery": 99}], ["2023-07-07", 220000, {"delivery": 95}]], "meta": {}}]}
