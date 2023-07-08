@@ -22,7 +22,7 @@
                 <input placeholder="Search Sector..." type="text" id="filter" name="filter" />
                 <button id="clear" onclick="getData();" type="button">Get Data</button>
                 <ul id="SectorList">
-                    <li id="All" onclick="getData();">All</li>
+                    <li id="All" onclick="getCompare();">All</li>
                 </ul>
             </div>
         </div>
@@ -102,7 +102,7 @@ let BuyObject3Avg = {};
 }
 
 
-        function getData() {
+function getData() {
                 const xhr = new XMLHttpRequest();
                 xhr.open("GET", "/IDFC+ITC+SBIN");
                 xhr.send();
@@ -112,6 +112,23 @@ let BuyObject3Avg = {};
                     console.log("Success");
                     dCompanyObject = xhr.response.companyObject;
                     createChart( xhr.response.companyObject, event.target.id);
+                } 
+                else {
+                    console.log(`Error: ${xhr.status}`);
+                    }
+                };
+        }
+
+function getCompare() {
+                const xhr = new XMLHttpRequest();
+                xhr.open("GET", "/getcompare");
+                xhr.send();
+                xhr.responseType = "json";
+                xhr.onload = () => {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    console.log("Success");
+                    getCompareObject = xhr.response;
+                    console.log(getCompareObject);
                 } 
                 else {
                     console.log(`Error: ${xhr.status}`);

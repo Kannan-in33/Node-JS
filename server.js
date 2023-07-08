@@ -76,7 +76,18 @@ console.log(req.path);
 
 }
 
-else if(req.path.includes('+') || req.path.includes('compare')) {
+else if(req.path.includes('getcompare')) {
+
+    const directorypath = path.join(__dirname, 'SectorData');
+    fs.readFile(path.join(directorypath , 'Comparison.json'), 'utf8', function (err2, data) {
+        if (err2) throw err2;
+        // console.log(data);
+        obj = JSON.parse(data);
+        res.send(data);
+    });
+}
+
+else if(req.path.includes('+')) {
     let companies = req.path.replace('/',"").split('+');
 
     let j = 0;
@@ -150,7 +161,7 @@ else if(req.path == '/All') {
         if (err2) throw err2;
             obj = JSON.parse(data);
             company.push(file);
-
+            if(obj['datasets'].length > 0 ){
             valueList[file.split('.')[0]] = obj['datasets'][0]['values'].length
             max = max < obj['datasets'][0]['values'].length ? obj['datasets'][0]['values'].length : max
         for (let key in obj['datasets'][0]['values']) {
@@ -158,7 +169,7 @@ else if(req.path == '/All') {
         }
         companyObject[file.split('.')[0]] = [...obj2];
         obj2 =[];
-
+    }
         if (i == files.length -1 ){
         obj3 = { "company" : company,
                 "values" : obj2,
@@ -178,43 +189,45 @@ else if(req.path == '/All') {
 }
 
 
-                else{
-                const directorypath = path.join(__dirname, req.path.replace('/', 'src/').replaceAll('%20', ' '));
-                fs.readdir(directorypath , function (err, files) {
+else{
+const directorypath = path.join(__dirname, req.path.replace('/', 'src/').replaceAll('%20', ' '));
+           console.log(directorypath    );     
+fs.readdir(directorypath , function (err, files) {
                 if (err) throw err;
                 files.forEach( (file, i) => {
- 
-                    fs.readFile(path.join(directorypath , file), 'utf8', function (err2, data) {
-                    if (err2) throw err2;
-                        obj = JSON.parse(data);
-                        company.push(file);
 
-                        valueList[file.split('.')[0]] = obj['datasets'][0]['values'].length
-                        max = max < obj['datasets'][0]['values'].length ? obj['datasets'][0]['values'].length : max
+                fs.readFile(path.join(directorypath , file), 'utf8', 
+                function (err2, data) {
+                if (err2) throw err2;
+                obj = JSON.parse(data);
+
+                company.push(file);
+                if(obj['datasets'].length > 0 ){
+                    valueList[file.split('.')[0]] = obj['datasets'][0]['values'].length
+                    max = max < obj['datasets'][0]['values'].length ? obj['datasets'][0]['values'].length : max
                     for (let key in obj['datasets'][0]['values']) {
-                        obj2.push(obj['datasets'][0]['values'][key][1]);                           
+                    obj2.push(obj['datasets'][0]['values'][key][1]);                           
                     }
                     companyObject[file.split('.')[0]] = [...obj2];
                     obj2 =[];
-
-                    if (i == files.length -1 ){
-                    obj3 = { "company" : company,
-                            "values" : obj2,
-                            "valueList" : valueList,
-                            "max" : max,
-                            "companyObject" : companyObject
-                            }
-                    res.send(obj3);
-                }
-                
-                });
-                
-                });
-                
-                });
-            }         
-                    
             }
+                if (i == files.length -1 ){
+                obj3 = { "company" : company,
+                "values" : obj2,
+                "valueList" : valueList,
+                "max" : max,
+                "companyObject" : companyObject
+                }
+                res.send(obj3);
+                }
+                });
+                });
+
+                });
+
+                }
+
+}
 
 });
 

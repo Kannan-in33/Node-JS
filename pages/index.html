@@ -26,6 +26,8 @@
       <a href="/Sector">Sector</a>
       <div class="search">
       <input placeholder="Search..." type="text" id="filter" name="filter" />
+      <button id="compare" class="compare" onclick="compareStocks();" type="button">Compare</button>
+      
       </div>
       
       <div class="Range">
@@ -47,7 +49,8 @@
         
       </div>
     </div>
-    
+    <div id="comparel" class="comparel"></div>
+
       <div class="charts"></div>
       <ol class="volume"> </ol>
 <script>
@@ -58,6 +61,97 @@ let BuyObject40 = {};
 let BuyObject30 = {};
 let BuyObject20 = {};
 let BuyObject3Avg = {};
+let compareList =[];
+function compareStocks(){
+
+  let divtag = document.createElement("div");
+        divtag.setAttribute("class", "block");
+        document.getElementById("comparel").appendChild(divtag);
+       
+  let   divtagc = document.createElement("div");
+        divtagc.setAttribute("class", "company");
+        divtagc.innerText = "Company";
+        divtag.appendChild(divtagc);
+
+        divtagc = document.createElement("div");
+        divtagc.setAttribute("class", "MarketCap");
+        divtagc.innerText = "Market Cap";
+        divtag.appendChild(divtagc);
+
+        divtagc = document.createElement("div");
+        divtagc.setAttribute("class", "High");
+        divtagc.innerText = "High";
+        divtag.appendChild(divtagc);
+
+        divtagc = document.createElement("div");
+        divtagc.setAttribute("class", "Low");
+        divtagc.innerText = "Low";
+        divtag.appendChild(divtagc);
+
+        divtagc = document.createElement("div");
+        divtagc.setAttribute("class", "Reserve");
+        divtagc.innerText = "Reserve";
+        divtag.appendChild(divtagc);
+
+        divtagc = document.createElement("div");
+        divtagc.setAttribute("class", "Barrowing");
+        divtagc.innerText = "Barrowing";
+        divtag.appendChild(divtagc);
+      
+
+  if ( compareList.length > 0) {
+    for(let d =0; d < compareList.length ; d++) {
+
+      let divtag0 = document.createElement("div");
+        divtag0.setAttribute("class", "block1");
+        document.getElementById("comparel").appendChild(divtag0);
+      
+      let divtag = document.createElement("div");
+      divtag.setAttribute("class", "Company");
+      divtag.innerText = compareList[d];
+      divtag0.appendChild(divtag);
+
+        divtag = document.createElement("div");
+        divtag.setAttribute("class", "MarketCap");
+        divtag.innerText = getCompareObject[compareList[d]]['Market Cap'];
+        divtag0.appendChild(divtag);
+
+      divtag = document.createElement("div");
+      divtag.setAttribute("class", "High");
+      divtag.innerText = getCompareObject[compareList[d]].High;
+      divtag0.appendChild(divtag);
+
+      divtag = document.createElement("div");
+      divtag.setAttribute("class", "Low");
+      divtag.innerText = getCompareObject[compareList[d]].Low;
+      divtag0.appendChild(divtag);
+
+      divtag = document.createElement("div");
+      divtag.setAttribute("class", "Reserve");
+      divtag.innerText = getCompareObject[compareList[d]].Reserves;
+      divtag0.appendChild(divtag);
+
+      divtag = document.createElement("div");
+      divtag.setAttribute("class", "Barrowing");
+      divtag.innerText = getCompareObject[compareList[d]].Borrowings;
+      divtag0.appendChild(divtag);
+
+
+
+    }
+
+
+    //     var lst = Array.from(document.getElementsByTagName("canvas"));
+    //     lst.forEach( (ele) => ele.style.display = "none" );
+    //     lst = Array.from(document.querySelectorAll("[class^= '" + filterData + "']"));
+    //     lst.forEach( ele => ele.style.display = "block" ); 
+    }
+
+    // else{
+    //   let lst = document.querySelectorAll("canvas");
+    //   lst.forEach( ele => ele.style.display = "block" );
+    // }
+}
 
 function getDay(days){
   removeActive();
@@ -94,6 +188,20 @@ function getBuy(margin){
         getBuyMain(); 
 }
 
+function printId(){
+
+            if (event.target.checked){
+              compareList.push(event.target.id);
+            }
+            else{
+              let index = compareList.indexOf(event.target.id);
+              compareList.splice(index,1)
+
+            }
+
+        }
+
+
 function createChart(companyObject, e, days = 1000){
 
   let lst = [];
@@ -119,9 +227,11 @@ function createChart(companyObject, e, days = 1000){
                   }
                   xValues.reverse();
           let divtag = document.createElement("div");
-          // let imgtag = document.createElement("img");
-          // imgtag.setAttribute("src",'/images/add.jpg');
-          // divtag.appendChild(imgtag);
+          let checkBox = document.createElement("input");
+                            checkBox.setAttribute("type", "checkbox");
+                            checkBox.setAttribute("id", key);
+                            checkBox.addEventListener("click", printId);
+                            divtag.appendChild(checkBox);
           let anchortag = document.createElement("a");
           anchortag.setAttribute("href", "https://www.screener.in/company/" + key + "/");
           anchortag.setAttribute("target", "_blank");
@@ -296,6 +406,13 @@ document.getElementById("filter").addEventListener('input', myFunc);
   </script>
 
 <style type="text/css">
+
+  #comparel{
+    position: absolute;
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+  }
 .volume{
   text-align: left;
   margin-left: 50px;
@@ -336,7 +453,7 @@ document.getElementById("filter").addEventListener('input', myFunc);
      max-width: 99%;
    }
    .static{
-     position: fixed;
+     /* position: fixed; */
      opacity: 1;
      background-color: #fff;
      top: 0;
@@ -416,6 +533,25 @@ document.getElementById("filter").addEventListener('input', myFunc);
 
   gtag('config', 'G-1FNLLPDQHW');
 </script>
+</script>
+
+<script>
+ ( function getCompare() {
+                const xhr = new XMLHttpRequest();
+                xhr.open("GET", "/getcompare");
+                xhr.send();
+                xhr.responseType = "json";
+                xhr.onload = () => {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    console.log("Success");
+                    getCompareObject = xhr.response;
+                    console.log(getCompareObject);
+                } 
+                else {
+                    console.log(`Error: ${xhr.status}`);
+                    }
+                };
+        })();
 </script>
 </body>
 </html>
