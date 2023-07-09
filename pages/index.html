@@ -65,11 +65,17 @@ let BuyObject3Avg = {};
 let compareList =[];
 let companyDetails = [];
 
+
+let rupee = new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency: 'INR',
+    maximumSignificantDigits: 3,
+});
+
 function updateCompantDeatils(){
   for(let d = 0 ; d < companyDetails.length ; d++) {
 
-    if (document.querySelectorAll('#'+ companyDetails[d].toString().replace("&"," ")     ).length > 0 ){
-
+if (document.querySelectorAll('#'+ companyDetails[d].toString().replace("&"," ")).length > 0 &&  document.querySelectorAll('#'+ companyDetails[d] + " .right .block1").length == 0){
 let divtag0 = document.createElement("div");
   divtag0.setAttribute("class", "block1");
   document.querySelector('#'+ companyDetails[d] + " .right").appendChild(divtag0);
@@ -81,7 +87,7 @@ divtag0.appendChild(divtag);
 
   divtag = document.createElement("div");
   divtag.setAttribute("class", "MarketCap");
-  divtag.innerText = "M  :  " + getCompareObject[companyDetails[d]]['Market Cap'];
+  divtag.innerText = "M  :  " + rupee.format(getCompareObject[companyDetails[d]]['Market Cap']);
   divtag0.appendChild(divtag);
 
   divtag = document.createElement("div");
@@ -101,12 +107,12 @@ divtag0.appendChild(divtag);
 
 divtag = document.createElement("div");
 divtag.setAttribute("class", "Reserve");
-divtag.innerText = "R  :  " + getCompareObject[companyDetails[d]].Reserves;
+divtag.innerText = "R  :  " + rupee.format(getCompareObject[companyDetails[d]].Reserves);
 divtag0.appendChild(divtag);
 
 divtag = document.createElement("div");
 divtag.setAttribute("class", "Barrowing");
-divtag.innerText = "B  :  " + getCompareObject[companyDetails[d]].Borrowings;
+divtag.innerText = "B  :  " + rupee.format(getCompareObject[companyDetails[d]].Borrowings);
 divtag0.appendChild(divtag);
 }
 }
@@ -586,6 +592,7 @@ document.getElementById("filter").addEventListener('input', myFunc);
    }
    .right .block1{
     width: 100px;
+    letter-spacing: 0.10rem;
    }
    .MarketCap, .High, .Reserve {
         background-color: #FFD750;
