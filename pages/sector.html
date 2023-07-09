@@ -270,7 +270,7 @@ function createChart(companyObject, e, days = 1000){
                             
                           if (( ( (Number(buyAvg[20]) + Number(buyAvg[29]) + Number(buyAvg[15])) / 3) < (ccurrect * 1.09 )) && (((cmax-ccurrect)/cmax) * 100) > 30 ){
                             BuyObject3Avg[key] = companyObject[key];
-                            console.log(key + "    " + ( (Number(buyAvg[20]) + Number(buyAvg[29]) + Number(buyAvg[15]) )/3).toFixed(2) + "    " + ccurrect);
+                            // console.log(key + "    " + ( (Number(buyAvg[20]) + Number(buyAvg[29]) + Number(buyAvg[15]) )/3).toFixed(2) + "    " + ccurrect);
                           }
 
                         
@@ -307,7 +307,7 @@ function getData() {
         // removeActive();
         document.getElementById("filter").value = event.target.innerText;
         event.target.parentElement.style.display = 'none';
-        // document.getElementById("getData" + e).innerText = "Loading...";
+        document.getElementById("results").innerText = "Loading...";
         event.target.classList.add('active');
         const xhr = new XMLHttpRequest();
         xhr.open("GET", "/" + event.target.id.toString());
@@ -383,79 +383,77 @@ function letsDebounce(fn,d){
                         'Aluminium and Aluminium Products',
                         'Aquaculture',
                         'Auto Ancillaries',
-                        'Automobiles ',
-                        'Banks ',
+                        'Automobiles',
+                        'Banks',
                         'Bearings',
-                        'Breweries ',
-                        'Cables ',
-                        'Castings ',
-                        'Cement ',
+                        'Breweries',
+                        'Cables',
+                        'Castings',
+                        'Cement',
                         'Cement Products',
-                        'Ceramics ',
+                        'Ceramics',
                         'Chemicals',
-                        'Chlor Alkali ',
+                        'Chlor Alkali',
                         'Cigarettes',
-                        'Compressors ',
-                        'Computers ',
+                        'Compressors',
+                        'Computers',
                         'Construction',
                         'Couriers',
                         'Cycles And Accessories',
-                        'Detergents ',
-                        'Diamond Cutting ',
-                        'Diversified ',
+                        'Detergents',
+                        'Diamond Cutting',
+                        'Diversified',
                         'Domestic Appliances',
                         'Dry Cells',
                         'Dyes And Pigments',
                         'Electric Equipment',
-                        'Electrodes ',
-                        'Electronics ',
+                        'Electrodes',
+                        'Electronics',
                         'Engineering',
-                        'Engineering ',
+                        'Engineering',
                         'Engines',
-                        'Entertainment ',
+                        'Entertainment',
                         'Fasteners',
                         'Fertilizers',
-                        'Finance ',
-                        'Food ',
-                        'Glass ',
+                        'Finance',
+                        'Food',
+                        'Glass',
                         'Healthcare',
                         'Hotels',
-                        'Leather ',
-                        'Mining ',
+                        'Leather',
+                        'Mining',
                         'Miscellaneous',
                         'Moulded Luggage',
-                        'Oil Drilling ',
+                        'Oil Drilling',
                         'Packaging',
-                        'Paints ',
+                        'Paints',
                         'Paper',
-                        'Personal Care ',
-                        'Pesticides ',
+                        'Personal Care',
+                        'Pesticides',
                         'Petrochemicals',
-                        'Pharmaceuticals ',
+                        'Pharmaceuticals',
                         'Photographic And Allied Products',
                         'Plastics Products',
                         'Power Generation And Supply',
-                        'Printing ',
+                        'Printing',
                         'Pumps',
-                        'Recreation ',
+                        'Recreation',
                         'Refineries',
-                        'Refractories ',
+                        'Refractories',
                         'Shipping',
                         'Solvent Extraction',
-                        'Steel ',
+                        'Steel',
                         'Stock Exchanges',
                         'Sugar',
                         'Tea',
-                        'Telecommunications ',
+                        'Telecommunications',
                         'Textile Machinery',
-                        'Textiles ',
+                        'Textiles',
                         'Trading',
-                        'Transmisson Line Towers ',
-                        'Transport ',
+                        'Transmisson Line Towers',
+                        'Transport',
                         'Travel Agencies',
                         'Tyres'
-
-
                     ];
     
                         SectList.forEach( element =>{
@@ -551,6 +549,7 @@ document.getElementById("filter").addEventListener('input', myFunc);
        margin: auto;
        width: 45%;
        margin:8px;
+       cursor: pointer;
        }
        body{
          min-width: 350px;
@@ -687,7 +686,6 @@ else{
                  if (xhr.readyState == 4 && xhr.status == 200) {
                      console.log("Success");
                      getCompareObject = xhr.response;
-                     console.log(getCompareObject);
                  } 
                  else {
                      console.log(`Error: ${xhr.status}`);

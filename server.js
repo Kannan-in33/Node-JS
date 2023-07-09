@@ -147,22 +147,26 @@ k++;
 
 else if(req.path == '/All') {
     let j = 0;
-    let foldersPath = fs.readdirSync(path.resolve(__dirname, 'src'));
+    let k = 0;
+    let foldersPath = fs.readdirSync(path.resolve(__dirname, 'src/sector/'));
+
+    // console.log(foldersPath);
 
     foldersPath.forEach( (folder, j) => {
 
-    const directorypath = path.join(__dirname, 'src/' + folder);
+        
+    const directorypath = path.join(__dirname, 'src/sector/' + folder);
 
     // const directorypath = path.join(__dirname, req.path.replace('/', 'src/').replaceAll('%20', ' '));
     fs.readdir(directorypath , function (err, files) {
     if (err) throw err;
     files.forEach( (file, i) => {
-
+        k++;
         fs.readFile(path.join(directorypath , file), 'utf8', function (err2, data) {
         if (err2) throw err2;
             obj = JSON.parse(data);
             company.push(file);
-            if(obj['datasets'].length > 0 ){
+     if(obj['datasets'].length > 0 ){
             valueList[file.split('.')[0]] = obj['datasets'][0]['values'].length
             max = max < obj['datasets'][0]['values'].length ? obj['datasets'][0]['values'].length : max
         for (let key in obj['datasets'][0]['values']) {
@@ -171,13 +175,15 @@ else if(req.path == '/All') {
         companyObject[file.split('.')[0]] = [...obj2];
         obj2 =[];
     }
-        if (i == files.length -1 ){
+        if ( folder == 'Tyres' && i == 1){
+            console.log(folder + " " + i );
         obj3 = { "company" : company,
                 "values" : obj2,
                 "valueList" : valueList,
                 "max" : max,
                 "companyObject" : companyObject
                 }
+                
         res.send(obj3);
     }
     
