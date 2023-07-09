@@ -292,6 +292,8 @@ function createChart(companyObject, e, days = 1000){
                                     }   
                               });
 
+                              setTimeout(updateFavourite, 1000);
+
       }
 document.getElementById("results").innerText = resultCount.toString();
 let idlst = document.querySelectorAll("[id^='getData']");
@@ -307,6 +309,17 @@ document.getElementById("getData" + e).classList.add('active');
 
     </script>
 <script type="text/javascript">
+
+  function updateFavourite(){
+           for( let i = 0; i < localStorage.length; i++ ){
+if (document.querySelectorAll("#" + localStorage[i]).length > 0 ){
+          let ele =  document.querySelectorAll("#" + localStorage[i])[1];
+           ele.checked = true;
+
+           }
+          }
+
+  }
 
   // function displayButtons() {
   //   let lst = document.querySelectorAll("[id^='getData']");

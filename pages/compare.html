@@ -217,11 +217,14 @@ function getData() {
         xhr.onload = () => {
           if (xhr.readyState == 4 && xhr.status == 200) {
             dCompanyObject = xhr.response.companyObject;
+
+            setTimeout(compareStocks, 1000 );
           } 
           else {
             console.log(`Error: ${xhr.status}`);
             }
           };
+          
   }
 
   

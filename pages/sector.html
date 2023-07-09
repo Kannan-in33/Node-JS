@@ -287,6 +287,7 @@ function createChart(companyObject, e, days = 1000){
                                       }]
                                     }   
                               });
+                                setTimeout(updateFavourite, 1000);
 
       }
 document.getElementById("results").innerText = resultCount.toString();
@@ -300,12 +301,61 @@ idlst.forEach( element => {
 // document.getElementById(event.target.id).classList.add('active');
 }
 
+
+function updateFavourite(){
+           for( let i = 0; i < localStorage.length; i++ ){
+if (document.querySelectorAll("#" + localStorage[i]).length > 0 ){
+          let ele =  document.querySelectorAll("#" + localStorage[i])[1];
+           ele.checked = true;
+
+           }
+          }
+
+  }
     </script>
 <script type="text/javascript">
 
   function setFav(){
-    localStorage.setItem(localStorage.length, event.target.id.toString());
-  }
+    let AFL = [...Array.from(localStorage)];
+
+    if(!AFL.includes(event.target.id.toString())){
+      localStorage.setItem(localStorage.length, event.target.id.toString());
+    }
+    else{
+      for(let i = 0; i < localStorage.length -1 ; i++){
+
+        if(localStorage[i] == event.target.id.toString()){
+          localStorage.removeItem(i);
+          let AFL2 = [];
+
+          for(let key in localStorage){
+            if(AFL2.length < AFL.length - 1){
+              AFL2.push(localStorage[key]);
+            }
+          }
+
+          localStorage.clear();
+
+          for(let j = 0; j < AFL2.length ; j++){
+
+            if(AFL2[j] != undefined){
+              localStorage.setItem(j , AFL2[j]);
+            }
+          }
+        }
+
+      }
+    }
+    
+
+
+
+    }
+
+
+  function getKeyByValue(object, value) {
+  return Object.keys(object).find(key => object[key] === value);
+}
 
 function getData() {
         // removeActive();

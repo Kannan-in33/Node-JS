@@ -38,7 +38,7 @@ server.use( (req, res)=>{
 
 
 if(req.path !== '/favicon.ico'){
-console.log(req.path);
+// console.log(req.path);
  if(req.path == '/10x'){
         let j = 0;
         let foldersPath = fs.readdirSync(path.resolve(__dirname, 'src'));
@@ -104,7 +104,7 @@ if (err) throw err;
 
 files.forEach( (file, i) => {
 if(file.split('.')[0] == companies[k]){
-console.log(file + "    " +  companies[0]);
+// console.log(file + "    " +  companies[0]);
 c++;
 
 
@@ -153,10 +153,10 @@ else if(req.path == '/All') {
     // console.log(foldersPath);
 
     foldersPath.forEach( (folder, j) => {
-console.log(folder);
+// console.log(folder);
     if(folder != '50' && folder != '101' &&  folder != '201' &&  folder != '401' &&  folder != '601'){
     const directorypath = path.join(__dirname, 'src/' + folder);
-    console.log(folder);
+    // console.log(folder);
     // const directorypath = path.join(__dirname, req.path.replace('/', 'src/').replaceAll('%20', ' '));
     fs.readdir(directorypath , function (err, files) {
     if (err) throw err;
@@ -176,7 +176,7 @@ console.log(folder);
         obj2 =[];
     }
         if ( folder == 'Tyres' && i == 1){
-            console.log(folder + " " + i );
+            // console.log(folder + " " + i );
         obj3 = { "company" : company,
                 "values" : obj2,
                 "valueList" : valueList,
