@@ -227,12 +227,26 @@ function createChart(companyObject, e, days = 1000){
                     xValues.push(i);
                   }
                   xValues.reverse();
-          let divtag = document.createElement("div");
+                  let lbl = document.createElement("label");
+                  lbl.setAttribute("for", key);
+                  lbl.setAttribute("value", 'compare');
+                  lbl.innerText = 'Compare';
+                  divtag.appendChild(lbl);
           let checkBox = document.createElement("input");
                             checkBox.setAttribute("type", "checkbox");
                             checkBox.setAttribute("id", key);
-                            checkBox.addEventListener("click", printId);
+                            checkBox.addEventListener("click", setComp);
                             divtag.appendChild(checkBox);
+          let lblF = document.createElement("label");
+                  lblF.setAttribute("for", key);
+                  lblF.setAttribute("value", 'favourite');
+                  lblF.innerText = 'Favourite';
+                  divtag.appendChild(lblF);
+          let checkBoxF = document.createElement("input");
+                            checkBoxF.setAttribute("type", "checkbox");
+                            checkBoxF.setAttribute("id", key);
+                            checkBoxF.addEventListener("click", setFav);
+                            divtag.appendChild(checkBoxF);
           let anchortag = document.createElement("a");
           anchortag.setAttribute("href", "https://www.screener.in/company/" + key + "/");
           anchortag.setAttribute("target", "_blank");
@@ -402,6 +416,11 @@ function letsDebounce(fn,d){
     }
 }
 
+function setFav(){
+    localStorage.setItem(localStorage.length, event.target.id.toString());
+  }
+
+  
 document.getElementById("filter").addEventListener('input', myFunc);
 
   </script>
