@@ -227,6 +227,7 @@ function createChart(companyObject, e, days = 1000){
                     xValues.push(i);
                   }
                   xValues.reverse();
+                  let divtag = document.createElement("div");
                   let lbl = document.createElement("label");
                   lbl.setAttribute("for", key);
                   lbl.setAttribute("value", 'compare');
@@ -313,6 +314,20 @@ document.getElementById("getData" + e).classList.add('active');
   // }
 
   // initial script to fetch data
+
+  function setComp(){
+
+if (event.target.checked){
+  compareList.push(event.target.id);
+}
+else{
+  let index = compareList.indexOf(event.target.id);
+  compareList.splice(index,1)
+
+}
+
+}
+
 function getData(e) {
         removeActive();
         document.getElementById("getData" + e).innerText = "Loading...";
@@ -420,7 +435,7 @@ function setFav(){
     localStorage.setItem(localStorage.length, event.target.id.toString());
   }
 
-  
+
 document.getElementById("filter").addEventListener('input', myFunc);
 
   </script>
