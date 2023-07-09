@@ -148,15 +148,15 @@ k++;
 else if(req.path == '/All') {
     let j = 0;
     let k = 0;
-    let foldersPath = fs.readdirSync(path.resolve(__dirname, 'src/sector/'));
+    let foldersPath = fs.readdirSync(path.resolve(__dirname, 'src/'));
 
     // console.log(foldersPath);
 
     foldersPath.forEach( (folder, j) => {
-
-        
-    const directorypath = path.join(__dirname, 'src/sector/' + folder);
-
+console.log(folder);
+    if(folder != '50' && folder != '101' &&  folder != '201' &&  folder != '401' &&  folder != '601'){
+    const directorypath = path.join(__dirname, 'src/' + folder);
+    console.log(folder);
     // const directorypath = path.join(__dirname, req.path.replace('/', 'src/').replaceAll('%20', ' '));
     fs.readdir(directorypath , function (err, files) {
     if (err) throw err;
@@ -192,14 +192,17 @@ else if(req.path == '/All') {
     });
     
     });
+
+}
 });  
 }
 
 
 else{
-const directorypath = path.join(__dirname, req.path.replace('/', 'src/').replaceAll('%20', ' '));
-           console.log(directorypath    );     
+    
+const directorypath = path.join(__dirname, (req.path.replace('/', 'src/').replaceAll('%20', ' ') ));
 fs.readdir(directorypath , function (err, files) {
+    
                 if (err) throw err;
                 files.forEach( (file, i) => {
 

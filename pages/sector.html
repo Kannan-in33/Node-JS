@@ -231,7 +231,7 @@ function createChart(companyObject, e, days = 1000){
           let checkBox = document.createElement("input");
                             checkBox.setAttribute("type", "checkbox");
                             checkBox.setAttribute("id", key);
-                            checkBox.addEventListener("click", printId);
+                            checkBox.addEventListener("click", setComp);
                             divtag.appendChild(checkBox);
           let lblF = document.createElement("label");
                   lblF.setAttribute("for", key);
@@ -241,7 +241,7 @@ function createChart(companyObject, e, days = 1000){
           let checkBoxF = document.createElement("input");
                             checkBoxF.setAttribute("type", "checkbox");
                             checkBoxF.setAttribute("id", key);
-                            checkBoxF.addEventListener("click", printId);
+                            checkBoxF.addEventListener("click", setFav);
                             divtag.appendChild(checkBoxF);
           let anchortag = document.createElement("a");
           anchortag.setAttribute("href", "https://www.screener.in/company/" + key + "/");
@@ -302,6 +302,10 @@ idlst.forEach( element => {
 
     </script>
 <script type="text/javascript">
+
+  function setFav(){
+    localStorage.setItem(localStorage.length, event.target.id.toString());
+  }
 
 function getData() {
         // removeActive();
@@ -457,15 +461,13 @@ function letsDebounce(fn,d){
                     ];
     
                         SectList.forEach( element =>{
-                        // let btn = document.createElement('button');
-                        // btn.addEventListener('click', getData)
                           let ls =   document.createElement("li");
                           ls.addEventListener('click', getData);
                           ls.innerText = element.trim();
                           ls.id = element.trim();
                           document.getElementById("SectorList").appendChild(ls);
                         })
-            function myFunction() {
+function myFunction() {
                 document.getElementById("SectorList").style.display = 'block';
               // Declare variables
               var input, filter, ul, li, a, i, txtValue;
@@ -483,7 +485,8 @@ function letsDebounce(fn,d){
                     li[i].style.display = "none";
                 }
               }
-            }
+}
+
 let myFunc = letsDebounce(myFunction,1000);
 document.getElementById("filter").addEventListener('input', myFunc);
             </script>
@@ -664,7 +667,7 @@ document.getElementById("filter").addEventListener('input', myFunc);
 
 <script>
 
-function printId(){
+function setComp(){
 
 if (event.target.checked){
   compareList.push(event.target.id);
