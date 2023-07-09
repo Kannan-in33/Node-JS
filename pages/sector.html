@@ -36,6 +36,8 @@
         <button id="days70" class="d20" onclick="getDay(70);" type="button">70 Days</button>
         <button id="days100" class="100"  onclick="getDay(100);" type="button">100 Days</button>
         <button id="results" onclick="get10x();">Stocks Result</button>
+        <a href="/">Home</a>
+        <a href="/compare">Compare</a>
         
         <div class="dropdown">
             <button id="daysbuy" class="buy-main"  onclick="getBuyMain();" type="button">Buy List</button>
@@ -60,10 +62,58 @@ let BuyObject40 = {};
 let BuyObject30 = {};
 let BuyObject20 = {};
 let BuyObject3Avg = {};
-
 let compareList =[];
+let companyDetails = [];
+
+function updateCompantDeatils(){
+  for(let d = 0 ; d < companyDetails.length ; d++) {
+
+    if (document.querySelectorAll('#'+ companyDetails[d].toString().replace("&"," ")     ).length > 0 ){
+
+let divtag0 = document.createElement("div");
+  divtag0.setAttribute("class", "block1");
+  document.querySelector('#'+ companyDetails[d] + " .right").appendChild(divtag0);
+
+let divtag = document.createElement("div");
+divtag.setAttribute("class", "Company");
+divtag.innerText = companyDetails[d];
+divtag0.appendChild(divtag);
+
+  divtag = document.createElement("div");
+  divtag.setAttribute("class", "MarketCap");
+  divtag.innerText = "M  :  " + getCompareObject[companyDetails[d]]['Market Cap'];
+  divtag0.appendChild(divtag);
+
+divtag = document.createElement("div");
+divtag.setAttribute("class", "bookvalue");
+divtag.innerText = "BK:  " + getCompareObject[companyDetails[d]]['Book Value'];
+divtag0.appendChild(divtag);
+
+divtag = document.createElement("div");
+divtag.setAttribute("class", "High");
+divtag.innerText = "H   :  " + getCompareObject[companyDetails[d]].High;
+divtag0.appendChild(divtag);
+
+divtag = document.createElement("div");
+divtag.setAttribute("class", "Low");
+divtag.innerText = "L   :  " +getCompareObject[companyDetails[d]].Low;
+divtag0.appendChild(divtag);
+
+divtag = document.createElement("div");
+divtag.setAttribute("class", "Reserve");
+divtag.innerText = "R  :  " + getCompareObject[companyDetails[d]].Reserves;
+divtag0.appendChild(divtag);
+
+divtag = document.createElement("div");
+divtag.setAttribute("class", "Barrowing");
+divtag.innerText = "B  :  " + getCompareObject[companyDetails[d]].Borrowings;
+divtag0.appendChild(divtag);
+}
+}
+}
+
 function compareStocks(){
-  let lst = document.querySelectorAll(".charts a");
+  let lst = document.querySelectorAll(".charts div");
   lst.forEach(element => {
     element.remove();    
   });
@@ -201,105 +251,123 @@ function getBuy(margin){
 
 function createChart(companyObject, e, days = 1000){
 
-  let lst = document.querySelectorAll(".charts a");
-  lst.forEach(element => {
-    element.remove();    
-  });
-  dE = e;
-  let resultCount = 0;
-      for (let key in companyObject) {
-        resultCount++;
-            let yValues  = [];
-            yValues  = [...companyObject[key]];
-            let xValues = [];
-            let yValues2 = [];
+let lst = [];
+lst = document.querySelectorAll(".charts div");
+if(lst.length > 1){
+      Array.from(lst).forEach( (element) =>  element.remove() );
+}
+dE = e;
+let resultCount = 0;
+    for (let key in companyObject) {
+      resultCount++;
+          let yValues  = [];
+          yValues  = [...companyObject[key]];
+          let xValues = [];
+          let yValues2 = [];
 
-              yValues.reverse();
-              for(let y = 0; y < Math.min(companyObject[key].length, days) ; y++){
-                yValues2[y] =  yValues[y] ;
-              }
-                  for (let i = 0; i < Math.min(companyObject[key].length, days) ; i++) {
-                    xValues.push(i);
-                  }
-                  xValues.reverse();
-          let divtag = document.createElement("div");
-          let lbl = document.createElement("label");
-                  lbl.setAttribute("for", key);
-                  lbl.setAttribute("value", 'compare');
-                  lbl.innerText = 'Compare';
-                  divtag.appendChild(lbl);
-          let checkBox = document.createElement("input");
-                            checkBox.setAttribute("type", "checkbox");
-                            checkBox.setAttribute("id", key);
-                            checkBox.addEventListener("click", setComp);
-                            divtag.appendChild(checkBox);
-          let lblF = document.createElement("label");
-                  lblF.setAttribute("for", key);
-                  lblF.setAttribute("value", 'favourite');
-                  lblF.innerText = 'Favourite';
-                  divtag.appendChild(lblF);
-          let checkBoxF = document.createElement("input");
-                            checkBoxF.setAttribute("type", "checkbox");
-                            checkBoxF.setAttribute("id", key);
-                            checkBoxF.addEventListener("click", setFav);
-                            divtag.appendChild(checkBoxF);
-          let anchortag = document.createElement("a");
-          anchortag.setAttribute("href", "https://www.screener.in/company/" + key + "/");
-          anchortag.setAttribute("target", "_blank");
-          anchortag.appendChild(divtag);
-          anchortag.setAttribute("class", key);
-                      let canvas = document.createElement("canvas");
-                      canvas.setAttribute("id", key);
-                      canvas.setAttribute("class", key);
-          divtag.appendChild(canvas);
-                      document.querySelector(".charts").appendChild(anchortag);
-                        // let cmax = Math.max(...yValues2);
-                        let ccurrect = yValues2[0];
-                        let cmin = Math.min(...yValues2);
-                        let cmax = Math.max(...yValues2);
-                        let buyAvg = [...yValues2];                        
-                          if (Math.floor(((cmax-ccurrect)/cmax) * 100) > 40 && ccurrect < cmax){
-                            BuyObject40[key] = companyObject[key];
-                          }
-                          else if (Math.floor(((cmax-ccurrect)/cmax) * 100) > 30 && ccurrect < cmax){
-                            BuyObject30[key] = companyObject[key];
-                          }
-                          else if (Math.floor(((cmax-ccurrect)/cmax) * 100) > 20 && ccurrect < cmax){
-                            BuyObject20[key] = companyObject[key];
-                          }
-                            
-                          if (( ( (Number(buyAvg[20]) + Number(buyAvg[29]) + Number(buyAvg[15])) / 3) < (ccurrect * 1.09 )) && (((cmax-ccurrect)/cmax) * 100) > 30 ){
-                            BuyObject3Avg[key] = companyObject[key];
-                            // console.log(key + "    " + ( (Number(buyAvg[20]) + Number(buyAvg[29]) + Number(buyAvg[15]) )/3).toFixed(2) + "    " + ccurrect);
-                          }
+            yValues.reverse();
+            for(let y = 0; y < Math.min(companyObject[key].length, days) ; y++){
+              yValues2[y] =  yValues[y] ;
+            }
+                for (let i = 0; i < Math.min(companyObject[key].length, days) ; i++) {
+                  xValues.push(i);
+                }
+                xValues.reverse();
+        let divtag = document.createElement("div");                  
+                let lbl = document.createElement("label");
+                lbl.setAttribute("for", key);
+                lbl.setAttribute("value", 'compare');
+                lbl.innerText = 'Compare';
+                divtag.appendChild(lbl);
+        let checkBox = document.createElement("input");
+                  checkBox.setAttribute("type", "checkbox");
+                  checkBox.setAttribute("id", key);
+                  checkBox.addEventListener("click", setComp);
+                  divtag.appendChild(checkBox);
+        let lblF = document.createElement("label");
+                lblF.setAttribute("for", key);
+                lblF.setAttribute("value", 'favourite');
+                lblF.innerText = 'Favourite';
+                divtag.appendChild(lblF);
+        let checkBoxF = document.createElement("input");
+                  checkBoxF.setAttribute("type", "checkbox");
+                  checkBoxF.setAttribute("id", key);
+                  checkBoxF.addEventListener("click", setFav);
+                  divtag.appendChild(checkBoxF);
+                  companyDetails.push(key);
 
-                        
-                          new Chart(canvas, {
-                              type: "line",
-                              data: {
-                              labels: xValues,
-                              datasets: [{
-                                      label: key + '   FL ' + ( ((cmax-cmin)/cmax) * 100).toFixed(2).toString() + ' %  FC (' + ( ((cmax-ccurrect)/cmax) * 100).toFixed(2).toString() + ' )'  ,
-                                      pointRadius: 0,
-                                      borderWidth : 0.5,
-                                      borderColor: "rgba(0,0,0,0.9)",
-                                      data: [...yValues2].reverse(),
-                                      }]
-                                    }   
-                              });
-                                setTimeout(updateFavourite, 1000);
 
-      }
+        let anchortag = document.createElement("a");
+              anchortag.setAttribute("href", "https://www.screener.in/company/" + key + "/");
+              anchortag.setAttribute("target", "_blank");
+              anchortag.appendChild(divtag);
+        let canvas = document.createElement("canvas");
+                    canvas.setAttribute("id", key);
+                    canvas.setAttribute("class", key);
+        
+        
+        let divtagMain = document.createElement("div"); 
+                  divtagMain.setAttribute("id", key);
+        let divtagLeft = document.createElement("div"); 
+                  divtagMain.appendChild(divtagLeft);
+                  divtagLeft.appendChild(anchortag);
+        let divtagRight = document.createElement("div"); 
+                divtagRight.setAttribute("class", "right");
+                  divtagMain.appendChild(divtagRight);
+
+        divtag.appendChild(canvas);
+                    document.querySelector(".charts").appendChild(divtagMain);
+                      // let cmax = Math.max(...yValues2);
+                      let ccurrect = yValues2[0];
+                      let cmin = Math.min(...yValues2);
+                      let cmax = Math.max(...yValues2);
+                      let buyAvg = [...yValues2];                        
+                        if (Math.floor(((cmax-ccurrect)/cmax) * 100) > 40 && ccurrect < cmax){
+                          BuyObject40[key] = companyObject[key];
+                        }
+                        else if (Math.floor(((cmax-ccurrect)/cmax) * 100) > 30 && ccurrect < cmax){
+                          BuyObject30[key] = companyObject[key];
+                        }
+                        else if (Math.floor(((cmax-ccurrect)/cmax) * 100) > 20 && ccurrect < cmax){
+                          BuyObject20[key] = companyObject[key];
+                        }
+                          
+                        if (( ( (Number(buyAvg[20]) + Number(buyAvg[29]) + Number(buyAvg[15])) / 3) < (ccurrect * 1.09 )) && (((cmax-ccurrect)/cmax) * 100) > 30 ){
+                          BuyObject3Avg[key] = companyObject[key];
+                          // console.log(key + "    " + ( (Number(buyAvg[20]) + Number(buyAvg[29]) + Number(buyAvg[15]) )/3).toFixed(2) + "    " + ccurrect);
+                        }
+
+                      
+                        new Chart(canvas, {
+                            type: "line",
+                            data: {
+                            labels: xValues,
+                            datasets: [{
+                                    label: key + '   FL ' + ( ((cmax-cmin)/cmax) * 100).toFixed(2).toString() + ' %  FC (' + ( ((cmax-ccurrect)/cmax) * 100).toFixed(2).toString() + ' )'  ,
+                                    pointRadius: 0,
+                                    borderWidth : 0.5,
+                                    borderColor: "rgba(0,0,0,0.9)",
+                                    data: [...yValues2].reverse(),
+                                    }]
+                                  }   
+                            });
+
+
+
+    }
 document.getElementById("results").innerText = resultCount.toString();
-let idlst = document.querySelectorAll(".sector");
+let idlst = document.querySelectorAll("[id^='getData']");
 idlst.forEach( element => {
-//   element.classList.remove('active');
+element.innerText = "Stocks " + element.classList[0] +'+';
+element.classList.remove('active');
 })
 
 
+setTimeout(updateFavourite, 1000);
+setTimeout(updateCompantDeatils, 1000);
 
-// document.getElementById(event.target.id).classList.add('active');
 }
+
 
 
 function updateFavourite(){
@@ -315,42 +383,7 @@ if (document.querySelectorAll("#" + localStorage[i]).length > 0 ){
     </script>
 <script type="text/javascript">
 
-  function setFav(){
-    let AFL = [...Array.from(localStorage)];
-
-    if(!AFL.includes(event.target.id.toString())){
-      localStorage.setItem(localStorage.length, event.target.id.toString());
-    }
-    else{
-      for(let i = 0; i < localStorage.length -1 ; i++){
-
-        if(localStorage[i] == event.target.id.toString()){
-          localStorage.removeItem(i);
-          let AFL2 = [];
-
-          for(let key in localStorage){
-            if(AFL2.length < AFL.length - 1){
-              AFL2.push(localStorage[key]);
-            }
-          }
-
-          localStorage.clear();
-
-          for(let j = 0; j < AFL2.length ; j++){
-
-            if(AFL2[j] != undefined){
-              localStorage.setItem(j , AFL2[j]);
-            }
-          }
-        }
-
-      }
-    }
-    
-
-
-
-    }
+  
 
 
   function getKeyByValue(object, value) {
@@ -389,18 +422,24 @@ function getData() {
 function setFilter(){
     let filterData = (document.querySelector("#filter").value).toUpperCase();
     if ( filterData.length > 0) {
-        var lst = Array.from(document.getElementsByTagName("canvas"));
-        lst.forEach( (ele) => ele.style.display = "none" );
-        lst = Array.from(document.querySelectorAll("[class^= '" + filterData + "']"));
-        lst.forEach( ele => ele.style.display = "block" ); 
+        let lst = document.querySelectorAll(".charts a");
+        lst.forEach( (ele) => {
+          if(!ele.id.toLowerCase().includes(filterData)){
+          ele.style.visibility = "hidden" ;
+          }
+        });
+        
+        // lst = document.querySelectorAll(".charts a[id^= '" + filterData + "']");
+        // lst.forEach( ele => { 
+        //   ele.style.display = "" ;
+        // }); 
     }
 
     else{
-      let lst = document.querySelectorAll("canvas");
-      lst.forEach( ele => ele.style.display = "block" );
+      let lst = document.querySelectorAll(".charts a");
+      lst.forEach( ele => ele.style.display = "" );
     }
     }
-
 
 
 function letsDebounce(fn,d){
@@ -553,15 +592,6 @@ document.getElementById("filter").addEventListener('input', myFunc);
     margin-left: -31px;
   }
 
-  .MarketCap, .Low, .Barrowing{
-      background-color: #FFD700;
-      padding: 0 5% 0 10px;
-      width: 90%;
-  }
-  .company, .High, .Reserve{
-    padding: 0 5% 0 10px;
-  }
-
   .block{
     align-self: end;
   }
@@ -593,9 +623,8 @@ document.getElementById("filter").addEventListener('input', myFunc);
        margin: auto;
        text-align: -webkit-center;
        max-width: 500px;
-       margin-top: 200px;
        }
-       [id^='getData'], button{
+       [id^='getData'], button, a{
        background-color: #FFD700;
        border: none;
        border-radius: 10px;
@@ -605,15 +634,38 @@ document.getElementById("filter").addEventListener('input', myFunc);
        margin:8px;
        cursor: pointer;
        }
+       .Range a{
+        text-decoration: none;
+        width: 20%;
+        padding-top: 5px;
+        margin-bottom: -5px !important;
+        text-align: center;
+        height: 25px;
+        margin-left: -2px;
+          }
        body{
          min-width: 350px;
        }
+       .right{
+    align-self: center;
+    text-align: left;
+   }
+   .right .block1{
+    width: 100px;
+    text-align: left;
+   }
+
+   
        .search{
          display: flex;
          width: 100%;
          margin-left: 15px;
          position: fixed;
         z-index: 200;
+        margin: 0;
+        opacity: 1;
+        margin-top: -8px;
+        background-color: #fff;
        }
        .search input{
          height: 30px;
@@ -692,9 +744,6 @@ document.getElementById("filter").addEventListener('input', myFunc);
        .dropdown button{
          width: 90%;
        }
-       #results{
-         width: 70%;
-       }
        .volume li{
           margin: 20px 50px;
           padding: 0 30px;
@@ -715,7 +764,139 @@ document.getElementById("filter").addEventListener('input', myFunc);
        height: 130px !important;
     }
      </style>
+<style type="text/css">
+  .charts > div{
+    display: flex !important;
+  }
+    #comparel{
+      position: absolute;
+      display: flex;
+      width: 100%;
+      justify-content: space-evenly;
+    }
+  .volume{
+    text-align: left;
+    margin-left: 50px;
+  }
+    .charts{
+     margin: auto;
+     text-align: -webkit-center;
+     max-width: 500px;
+     }
+     [id^='getData'], button, a{
+     background-color: #FFD700;
+     border: none;
+     border-radius: 10px;
+     height: 30px;
+     margin: auto;
+     width: 45%;
+     margin:8px;
+     text-align: center;
+      text-decoration-line: none;
+     }
+     .static a{
+          text-decoration: none;
+          /* width: 20%; */
+          padding-top: 5px;
+          margin-bottom: -5px !important;
+          text-align: center;
+          height: 25px;
+            }
+     body{
+       min-width: 350px;
+     }
+     .right{
+      align-self: center;
+      text-align: left;
+     }
+     .right .block1{
+      width: 100px;
+     }
+     .MarketCap, .High, .Reserve {
+        background-color: #FFD750;
+        padding: 0 5% 0 10px;
+        width: 100%;
+    }
+    .company, .Low, .Barrowing, .bookvalue {
+      padding: 0 5% 0 10px;
+    }
+     .search{
+       display: flex;
+       width: 98%;
+       margin-left: 15px;
+     }
+     .search input{
+       height: 30px;
+     }
+     canvas{
+       margin: 15px 0;
+       /* max-width: 400px !important; */
+       min-width: 320px !important;
+       height: 200px !important;
+       max-width: 99%;
+     }
+     /* .charts a{
+      display: block;
+     } */
+     .static{
+       /* position: fixed; */
+       opacity: 1;
+       background-color: #fff;
+       top: 0;
+       margin: 0;
+       display: flex;
+       flex-wrap: wrap;
+      justify-content: space-betweenq;
+     }
+     .hide{
+       display: none !important;
+     }
+     label{
+       margin: 5px 10px;
+       display: inline-block;
+       width: 50px;
+     }
 
+     .Range{
+       position: relative;
+       display: flex;
+       width: 100%;
+       flex-wrap: wrap;
+       justify-content: space-between;
+       margin-top: 40px;
+     }
+  
+     .Range button{
+       width:20% ;
+     }
+     .active{
+       background-Color : rgb(0, 168, 0);
+     }
+  
+     .buy{
+       position: relative;
+       display: none;
+     }
+     .show{
+       display: block;
+     }
+     .dropdown{
+       width: 20%;
+     }
+     .dropdown button{
+       width: 90%;
+     }
+     #results{
+       width: 20%;
+     }
+     .volume li{
+        margin: 20px 50px;
+        padding: 0 30px;
+  
+     }
+
+
+   </style>
 <script>
 
 function setComp(){
@@ -814,17 +995,17 @@ function createChartMini(companyObject, companyName, divtag0, days = 1000){
 function setFilter2(){
       let filterData = (document.querySelector("#filters").value).toUpperCase();
       if ( filterData.length > 0) {
-          var lst = Array.from(document.querySelectorAll(".charts a"));
+          var lst = Array.from(document.querySelectorAll(".charts div"));
           lst.forEach( (ele) => ele.style.display = "none" );
 
           lst = Array.from(document.querySelectorAll("[class^= '" + filterData + "']"));
-          lst.forEach( ele => ele.style.display = "block" ); 
+          lst.forEach( ele => ele.style.display = "" ); 
 
       }
   
       else{
-        let lst = document.querySelectorAll(".charts a");
-        lst.forEach( ele => ele.style.display = "block" );
+        let lst = document.querySelectorAll(".charts div");
+        lst.forEach( ele => ele.style.display = "" );
       }
       }
   
@@ -839,6 +1020,43 @@ let myFunc2 = letsDebounce(setFilter2,1000);
   }
   
   document.getElementById("filters").addEventListener('input', myFunc2);
+
+  function setFav(){
+    let AFL = [...Array.from(localStorage)];
+
+    if(!AFL.includes(event.target.id.toString())){
+      localStorage.setItem(localStorage.length, event.target.id.toString());
+    }
+    else{
+      for(let i = 0; i < localStorage.length; i++){
+
+        if(localStorage[i] == event.target.id.toString()){
+          localStorage.removeItem(i);
+          let AFL2 = [];
+
+          for(let key in localStorage){
+            if(AFL2.length < AFL.length - 1){
+              AFL2.push(localStorage[key]);
+            }
+          }
+
+          localStorage.clear();
+
+          for(let j = 0; j < AFL2.length ; j++){
+
+            if(AFL2[j] != undefined){
+              localStorage.setItem(j , AFL2[j]);
+            }
+          }
+        }
+
+      }
+    }
+    
+
+
+
+    }
   
     </script>
 </body>

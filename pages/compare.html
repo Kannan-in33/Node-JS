@@ -19,29 +19,11 @@
     <body>
       <div class="static">
         <div class="search">
-      <input placeholder="Search Sector..." type="text" id="filter" name="filter" />
-      <button id="clear" onclick="clea();" type="button"><strong>X</strong></button>
-      <button id="compare" class="compare" onclick="compareStocks();" type="button">Compare</button>
       <input placeholder="Search..." type="text" id="filters" name="filters" />
+      <a href="/">Home</a>
+      <a href="/sector">Compare</a>
       </div>
-      
-      
-      <div class="Range">
-        <button id="days20" class="d20" onclick="getDay(20);" type="button">20 Days</button>
-        <button id="days50" class="d50"  onclick="getDay(50);" type="button">50 Days</button>
-        <button id="days70" class="d20" onclick="getDay(70);" type="button">70 Days</button>
-        <button id="days100" class="100"  onclick="getDay(100);" type="button">100 Days</button>
-        <button id="results" onclick="get10x();">Stocks Result</button>
-        
-        <div class="dropdown">
-            <button id="daysbuy" class="buy-main"  onclick="getBuyMain();" type="button">Buy List</button>
-              <div id="BuyDropdown" class="drop-options">
-                <button id="daysbuy40" class="buy"  onclick="getBuy(40);" type="button">40% +</button>
-                <button id="daysbuy30" class="buy"  onclick="getBuy(30);" type="button">30% +</button>
-                <button id="daysbuy20" class="buy"  onclick="getBuy(20);" type="button">20% +</button>
-                <button id="daysbuyAvg" class="buy"  onclick="getBuy(60);" type="button">30d Avg +</button>
-              </div>
-        </div>
+
         
       </div>
     </div>
@@ -90,26 +72,11 @@ function clea() {
       compareList.pop();
       compareList.splice(0,1)
     });
-    document.getElementById("comparel").innerHTML ="";
+   
     
 }
 
-function getDay(days){
-  removeActive();
-//   event.target.classList.add('active');
-  createChart(dCompanyObject, dE, days = days)
-}
-function removeActive(){
-//   let lst = document.querySelectorAll("[id^='days']");
-//   lst.forEach( element => element.classList.remove('active') );
-}
-function getBuyMain(){
-  let lst = document.querySelectorAll(".buy");
-  lst.forEach(element => {
-    element.classList.toggle('show');    
-  });
 
-}
 
 function createChart(companyObject, e, days = 1000){
 
@@ -209,7 +176,6 @@ function createChart(companyObject, e, days = 1000){
 
 function getData() {
 
-        document.getElementById("results").innerText = "Loading...";
         const xhr = new XMLHttpRequest();
         xhr.open("GET", "/All" );
         xhr.send();
@@ -234,6 +200,43 @@ function getData() {
   
 
   <script>
+      function setFav(){
+    let AFL = [...Array.from(localStorage)];
+
+    if(!AFL.includes(event.target.id.toString())){
+      localStorage.setItem(localStorage.length, event.target.id.toString());
+    }
+    else{
+      for(let i = 0; i < localStorage.length ; i++){
+
+        if(localStorage[i] == event.target.id.toString()){
+          localStorage.removeItem(i);
+          let AFL2 = [];
+
+          for(let key in localStorage){
+            if(AFL2.length < AFL.length - 1){
+              AFL2.push(localStorage[key]);
+            }
+          }
+
+          localStorage.clear();
+
+          for(let j = 0; j < AFL2.length ; j++){
+
+            if(AFL2[j] != undefined){
+              localStorage.setItem(j , AFL2[j]);
+            }
+          }
+        }
+
+      }
+    }
+    
+
+
+
+    }
+
 // Search Bar Script to filter charts matching the typed text
 function setFilter(){
     let filterData = (document.querySelector("#filter").value).toUpperCase();
@@ -283,23 +286,11 @@ function letsDebounce(fn,d){
 
 <style type="text/css">
 
-  #clear{
-    border-radius: 0;
-    background-color: red;
-    width: 30px;
-    margin-top: 0;
-    margin-left: -31px;
-  }
-
   .MarketCap, .Low, .Barrowing{
       background-color: #FFD700;
       padding: 0 5% 0 10px;
       width: 90%;
   }
-  .company, .High, .Reserve{
-    padding: 0 5% 0 10px;
-  }
-
   .block{
     align-self: end;
   }
@@ -312,63 +303,61 @@ function letsDebounce(fn,d){
     width: 100%;
     justify-content: space-evenly;
     flex-wrap: wrap;
+    margin-top: 50px;
   }
 
-    #SectorList li{
-    font-size: 20px;
-    font-family: 'Courier New', Courier, monospace;
-    border: #000 0.5px solid;
-    padding: 5px;
-    
-    }
-    .volume{
-      text-align: left;
-      margin-left: 50px;
-    }
-
-
-      .charts{
+  .charts{
        margin: auto;
        text-align: -webkit-center;
        max-width: 500px;
        margin-top: 200px;
-       }
-       [id^='getData'], button{
+  }
+  [id^='getData'], button, a{
        background-color: #FFD700;
        border: none;
        border-radius: 10px;
        height: 30px;
        margin: auto;
        width: 45%;
-       margin:8px;
        cursor: pointer;
-       }
-       body{
+       text-decoration: none;
+       text-align: center;
+       padding-top: 8px;
+       margin: 0 8px;
+  }
+  .Range a{
+        text-decoration: none;
+        width: 20%;
+        padding-top: 5px;
+        margin-bottom: -5px !important;
+        text-align: center;
+        height: 25px;
+          }
+  body{
          min-width: 350px;
-       }
-       .search{
+  }
+  .search{
          display: flex;
          width: 100%;
          margin-left: 15px;
          position: fixed;
         z-index: 200;
-       }
-       .search input{
+  }
+  .search input{
          height: 30px;
          width: 40%;
-       }
-       #compare{
+  }
+  #compare{
         width: 20%;
        }
-       canvas{
+  canvas{
          margin: 15px 0;
-         /* max-width: 400px !important; */
-         /* min-width: 320px ; */
+
          height: 200px ;
          max-width: 99%;
-       }
+  }
 
-       .static{
+  .static{
          /* position: fixed; */
          opacity: 1;
          background-color: #fff;
@@ -377,62 +366,29 @@ function letsDebounce(fn,d){
          display: flex;
          flex-wrap: wrap;
         justify-content: space-betweenq;
-       }
-       .hide{
-         display: none !important;
-       }
-       label{
+  }
+
+  label{
          margin: 5px 10px;
          display: inline-block;
          width: 50px;
-       }
-       #filter{
-         /* min-width: 70%;
-         max-width: 80%; */
+  }
+  #filter{
          width: 30%;
          height: 30px;
-       }
-       .Range{
+  }
+  .Range{
          position: relative;
          display: flex;
          width: 100%;
          flex-wrap: wrap;
          justify-content: space-between;
          margin-top: 40px;
-       }
+  }
     
-       .Range button{
+  .Range button{
          width:20% ;
-       }
-    
-       .buy{
-         position: relative;
-         display: none;
-       }
-       .show{
-         display: block;
-       }
-       .dropdown{
-         width: 20%;
-       }
-       .dropdown button{
-         width: 90%;
-       }
-       #results{
-         width: 70%;
-       }
-       .volume li{
-          margin: 20px 50px;
-          padding: 0 30px;
-    
-       }
-       /* .hide{
-         display: none;
-       } */
-       /* .drop-options button{
-           width: 20%;
-           margin: 0;
-       } */
+  }
 
   canvas.miniChart{
       margin: auto;
@@ -444,18 +400,6 @@ function letsDebounce(fn,d){
 
 <script>
 
-function printId(){
-
-if (event.target.checked){
-  compareList.push(event.target.id);
-}
-else{
-  let index = compareList.indexOf(event.target.id);
-  compareList.splice(index,1)
-
-}
-
-}
 
   ( function getCompare() {
                  const xhr = new XMLHttpRequest();
@@ -466,6 +410,7 @@ else{
                  if (xhr.readyState == 4 && xhr.status == 200) {
                      console.log("Success");
                      getCompareObject = xhr.response;
+                     setTimeout(getData, 1000 );
                  } 
                  else {
                      console.log(`Error: ${xhr.status}`);
