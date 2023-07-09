@@ -111,6 +111,7 @@ c++;
 fs.readFile(path.join(directorypath , file), 'utf8', function (err2, data) {
 if (err2) throw err2;
 obj = JSON.parse(data);
+if(obj['datasets'].length > 0 ){
 company.push(file);
 
 valueList[file.split('.')[0]] = obj['datasets'][0]['values'].length
@@ -120,7 +121,7 @@ obj2.push(obj['datasets'][0]['values'][key][1]);
 }
 companyObject[file.split('.')[0]] = [...obj2];
 obj2 =[];
-
+}
 if (k == companies.length -1 ){
 obj3 = { "company" : company,
 "values" : obj2,

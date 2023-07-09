@@ -20,9 +20,9 @@
       <div class="static">
         <div class="search">
       <input placeholder="Search Sector..." type="text" id="filter" name="filter" />
-      <button id="clear" onclick="clea();" type="button">Clear</button>
+      <button id="clear" onclick="clea();" type="button"><strong>X</strong></button>
       <button id="compare" class="compare" onclick="compareStocks();" type="button">Compare</button>
-      
+      <input placeholder="Search..." type="text" id="filters" name="filters" />
       <ul id="SectorList">
         <li id="All" onclick="getData();">All</li>
 
@@ -223,15 +223,31 @@ function createChart(companyObject, e, days = 1000){
                   }
                   xValues.reverse();
           let divtag = document.createElement("div");
+          let lbl = document.createElement("label");
+                  lbl.setAttribute("for", key);
+                  lbl.setAttribute("value", 'compare');
+                  lbl.innerText = 'Compare';
+                  divtag.appendChild(lbl);
           let checkBox = document.createElement("input");
                             checkBox.setAttribute("type", "checkbox");
                             checkBox.setAttribute("id", key);
                             checkBox.addEventListener("click", printId);
                             divtag.appendChild(checkBox);
+          let lblF = document.createElement("label");
+                  lblF.setAttribute("for", key);
+                  lblF.setAttribute("value", 'favourite');
+                  lblF.innerText = 'Favourite';
+                  divtag.appendChild(lblF);
+          let checkBoxF = document.createElement("input");
+                            checkBoxF.setAttribute("type", "checkbox");
+                            checkBoxF.setAttribute("id", key);
+                            checkBoxF.addEventListener("click", printId);
+                            divtag.appendChild(checkBoxF);
           let anchortag = document.createElement("a");
           anchortag.setAttribute("href", "https://www.screener.in/company/" + key + "/");
           anchortag.setAttribute("target", "_blank");
           anchortag.appendChild(divtag);
+          anchortag.setAttribute("class", key);
                       let canvas = document.createElement("canvas");
                       canvas.setAttribute("id", key);
                       canvas.setAttribute("class", key);
@@ -476,8 +492,21 @@ document.getElementById("filter").addEventListener('input', myFunc);
 
 <style type="text/css">
 
+  #clear{
+    border-radius: 0;
+    background-color: red;
+    width: 30px;
+    margin-top: 0;
+    margin-left: -31px;
+  }
+
   .MarketCap, .Low, .Barrowing{
       background-color: #FFD700;
+      padding: 0 5% 0 10px;
+      width: 90%;
+  }
+  .company, .High, .Reserve{
+    padding: 0 5% 0 10px;
   }
 
   .block{
@@ -529,9 +558,15 @@ document.getElementById("filter").addEventListener('input', myFunc);
          display: flex;
          width: 100%;
          margin-left: 15px;
+         position: fixed;
+        z-index: 200;
        }
        .search input{
          height: 30px;
+         width: 40%;
+       }
+       #compare{
+        width: 20%;
        }
        canvas{
          margin: 15px 0;
@@ -550,7 +585,7 @@ document.getElementById("filter").addEventListener('input', myFunc);
         margin-top: 40px;
         padding-left: 3px;
         width: 80%;
-        height: 500%;
+        height: 900%;
         overflow: scroll;
        }
        .static{
@@ -572,9 +607,9 @@ document.getElementById("filter").addEventListener('input', myFunc);
          width: 50px;
        }
        #filter{
-         min-width: 70%;
-         max-width: 80%;
-         width: auto;
+         /* min-width: 70%;
+         max-width: 80%; */
+         width: 30%;
          height: 30px;
        }
        .Range{
@@ -583,6 +618,7 @@ document.getElementById("filter").addEventListener('input', myFunc);
          width: 100%;
          flex-wrap: wrap;
          justify-content: space-between;
+         margin-top: 40px;
        }
     
        .Range button{
@@ -622,7 +658,7 @@ document.getElementById("filter").addEventListener('input', myFunc);
       margin: auto;
        text-align: -webkit-center;
        width:90% !important;
-       height: 100px !important;
+       height: 130px !important;
     }
      </style>
 
@@ -674,11 +710,6 @@ function createChartMini(companyObject, companyName, divtag0, days = 1000){
                 }
                 xValues.reverse();
         let divtag = document.createElement("div");
-        let checkBox = document.createElement("input");
-                          checkBox.setAttribute("type", "checkbox");
-                          checkBox.setAttribute("id", companyName);
-                          checkBox.addEventListener("click", printId);
-                          divtag.appendChild(checkBox);
         let anchortag = document.createElement("a");
         anchortag.setAttribute("href", "https://www.screener.in/company/" + companyName + "/");
         anchortag.setAttribute("target", "_blank");
@@ -705,12 +736,57 @@ function createChartMini(companyObject, companyName, divtag0, days = 1000){
                                     borderColor: "rgba(0,0,0,0.9)",
                                     data: [...yValues2].reverse(),
                                     }]
-                                  }   
+                                  },
+                                  options: {
+                                          plugins: {
+                                          legend: {
+                                          labels: {
+                                          font: {
+                                          size: 10
+                                          }
+                                          }
+                                          }
+                                          }
+                                          }  
                             });
 
     }
 
 
  </script>
+
+
+<script>
+  // Search Bar Script to filter charts matching the typed text
+function setFilter2(){
+      let filterData = (document.querySelector("#filters").value).toUpperCase();
+      if ( filterData.length > 0) {
+          var lst = Array.from(document.querySelectorAll(".charts a"));
+          lst.forEach( (ele) => ele.style.display = "none" );
+
+          lst = Array.from(document.querySelectorAll("[class^= '" + filterData + "']"));
+          lst.forEach( ele => ele.style.display = "block" ); 
+
+      }
+  
+      else{
+        let lst = document.querySelectorAll(".charts a");
+        lst.forEach( ele => ele.style.display = "block" );
+      }
+      }
+  
+let myFunc2 = letsDebounce(setFilter2,1000);
+  
+  function letsDebounce(fn,d){
+      let timer;
+      return function(){
+      clearTimeout(timer);
+      timer=setTimeout(fn,d);
+      }
+  }
+  
+  document.getElementById("filters").addEventListener('input', myFunc2);
+  
+    </script>
 </body>
 </html>
