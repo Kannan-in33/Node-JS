@@ -52,5 +52,5 @@ jobs:
         with:
           app-name: 'ck4'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_E9ADC877B49047E4A37EB697C3D153D8 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_6CAE4E2E82AD44D785372ABA5CD7F96C }}
           package: .
