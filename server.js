@@ -20,6 +20,11 @@ server.get('/compare', (req, res) => {
     res.sendFile(path.join(__dirname, './pages/compare.html'));
 
 });
+
+server.get('/style.css', (req, res) => {
+    res.sendFile(path.join(__dirname, './pages/style.css'));
+
+});
         
 server.use( (req, res)=>{
     let obj ={};
