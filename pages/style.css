@@ -3,10 +3,25 @@
       display: flex;
       width: 100%;
       justify-content: space-evenly;
+      flex-wrap: wrap;
     }
+
+    #comparel .block1{
+        display: flex;
+        flex-wrap: wrap;
+        width: 95%;
+        height:300px;
+
+     }
+
   .volume{
     text-align: left;
     margin-left: 50px;
+  }
+
+  #daysbuy, #BuyDropdown{
+    width :100%;
+
   }
 
      [id^='getData'], button, a{
@@ -28,6 +43,8 @@
           text-align: center;
           height: 25px;
             }
+
+
      body{
        min-width: 350px;
      }
@@ -53,9 +70,10 @@
       letter-spacing: 0.08rem;
      }
 
+     
      canvas{
         margin: 15px 0;
-        min-width: 100% ;
+        width: 100% !important;
         height: 300px !important;
       }
 
@@ -108,7 +126,7 @@
        margin-top: 40px;
      }
   
-     .Range button{
+     .Range button, .Range dropdown{
        width:20% ;
      }
      .active{
@@ -123,10 +141,10 @@
        display: block;
      }
      .dropdown{
-       width: 20%;
+       width: 22%;
      }
      .dropdown button{
-       width: 90%;
+       width: 90% !important;
      }
      #results{
        width: 70%;
@@ -137,12 +155,22 @@
   
      }
 
+     #comparel > div > a{
+        height: 0px;
+        width: 100% !important;
+            
+    }
+
      @media only screen and (orientation: landscape){
 
         .charts{
             width: 60%;
             margin: auto;
             }
+
+            #comparel .block1{
+                width: 30%;        
+             }
 
      }
         

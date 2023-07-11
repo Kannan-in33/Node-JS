@@ -588,7 +588,43 @@ document.getElementById("filter").addEventListener('input', myFunc);
             </script>
 
 
-<link rel="stylesheet" type="text/css"  href="/style.css" >
+<style type="text/css">
+
+  #clear{
+    border-radius: 0;
+    background-color: red;
+    width: 30px;
+    margin-top: 0;
+    margin-left: -31px;
+  }
+  #SectorList{
+        display: block;
+        z-index: 100;
+        position: absolute;
+        list-style: none;
+        background-color: aliceblue;
+        line-height: 1.5;
+        margin-top: 40px;
+        padding-left: 3px;
+        width: 80%;
+        height: 900%;
+        overflow: scroll;
+       }
+    #SectorList li{
+        border-bottom: 0.5px solid #000 ;
+        padding-left: 8px;
+       }
+
+    #results {
+      width: 20% !important;
+      }
+    
+      .static > .range  > a, [id^='getData'], button, a {
+
+      width : 20% !important;
+    }
+
+  </style>
 <script>
 
 function setComp(){
@@ -751,5 +787,6 @@ let myFunc2 = letsDebounce(setFilter2,1000);
     }
   
     </script>
+    <link rel="stylesheet" type="text/css"  href="/style.css" >
 </body>
 </html>
