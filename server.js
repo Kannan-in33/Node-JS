@@ -25,6 +25,10 @@ server.get('/style.css', (req, res) => {
     res.sendFile(path.join(__dirname, './pages/style.css'));
 
 });
+server.get('/scripts.js', (req, res) => {
+    res.sendFile(path.join(__dirname, './pages/scripts.js'));
+
+});
         
 server.use( (req, res)=>{
     let obj ={};

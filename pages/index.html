@@ -24,7 +24,8 @@
       <button id="getData401" class="401" onclick="getData(401);" type="button">Stocks 401+</button>
       <button id="getData601" class="601" onclick="getData(601);" type="button">Stocks 601+</button>
       <a href="/Sector">Sector</a>
-      <a href="/compare">Favourits</a>
+      <!-- <a href="/compare">Favourits</a> -->
+      <button id="Favourits" class="Favourits" onclick="getFavourits();" type="button">Favourits</button>
       <div class="search">
       <input placeholder="Search..." type="text" id="filter" name="filter" />
       <button id="compare" class="compare" onclick="compareStocks();" type="button">Compare</button>
@@ -283,7 +284,7 @@ function createChart(companyObject, e, days = 1000){
                   divtag.appendChild(lbl);
           let checkBox = document.createElement("input");
                     checkBox.setAttribute("type", "checkbox");
-                    checkBox.setAttribute("id", key);
+                    checkBox.setAttribute("class", key);
                     checkBox.addEventListener("click", setComp);
                     divtag.appendChild(checkBox);
           let lblF = document.createElement("label");
@@ -377,8 +378,9 @@ setTimeout(updateFavourite, 1000);
 function updateFavourite(){
            for( let i = 0; i < localStorage.length; i++ ){
 if (document.querySelectorAll("#" + localStorage[i]).length > 0 ){
-          let ele =  document.querySelectorAll("#" + localStorage[i])[2];
-           ele.checked = true;
+          let ele =  document.querySelectorAll("#" + localStorage[i])[1];
+          //  ele.checked = true;
+          ele.classList.add("star");
 
            }
           }
@@ -477,21 +479,38 @@ function get10x() {
 function setFilter(){
     let filterData = (document.querySelector("#filter").value).toUpperCase();
     if ( filterData.length > 0) {
-        let lst = document.querySelectorAll(".charts a");
+        let lst = document.querySelectorAll(".charts > div");
         lst.forEach( (ele) => {
           ele.style.display = "none" ;
         });
         
-        lst = document.querySelectorAll(".charts a[id^= '" + filterData + "']");
+        lst = document.querySelectorAll(".charts div[id^= '" + filterData + "']");
         lst.forEach( ele => { 
           ele.style.display = "" ;
         }); 
     }
 
     else{
-      let lst = document.querySelectorAll(".charts a");
+      let lst = document.querySelectorAll(".charts div");
       lst.forEach( ele => ele.style.display = "" );
     }
+    }
+
+    function getFavourits(){
+
+        let lst = document.querySelectorAll(".charts > div");
+        lst.forEach( (ele) => {
+          ele.style.display = "none" ;
+        });
+        
+        lst = document.querySelectorAll(".charts div");
+        lst.forEach( ele => { 
+          if(ele.innerHTML.toString().includes("star")){
+          ele.style.display = "" ;
+          }
+        }); 
+    
+
     }
 
 let myFunc = letsDebounce(setFilter,1000);
@@ -509,9 +528,13 @@ function setFav(){
 
     if(!AFL.includes(event.target.id.toString())){
       localStorage.setItem(localStorage.length, event.target.id.toString());
+      let clr = document.querySelectorAll("#" + event.target.id.toString())[1];
+      clr.classList.add("star");
     }
     else{
-      for(let i = 0; i < localStorage.length ; i++){
+      let clr = document.querySelectorAll("#" + event.target.id.toString())[1];
+      clr.classList.toggle("star");
+      for(let i = 0; i < localStorage.length; i++){
 
         if(localStorage[i] == event.target.id.toString()){
           localStorage.removeItem(i);
@@ -535,11 +558,7 @@ function setFav(){
 
       }
     }
-    
-
-
-
-    }
+  }
 
 document.getElementById("filter").addEventListener('input', myFunc);
 

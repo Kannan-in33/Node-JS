@@ -6,12 +6,17 @@
       flex-wrap: wrap;
     }
 
-    #comparel .block1{
-        display: flex;
-        flex-wrap: wrap;
-        width: 95%;
-        height:300px;
 
+    #comparel .block1{
+        display: block;
+        width: 25%;
+        height:500px;
+        margin: 0 1px;
+
+     }
+
+     .block1 > div{
+      line-height: 1.5;
      }
 
   .volume{
@@ -54,7 +59,7 @@
         margin: auto;
         }
     .charts > div{
-        display: flex !important;
+        display: flex;
         width:100%;
         }
     .charts > div > div{
@@ -86,12 +91,19 @@
         padding: 0 5% 0 10px;
       }
      .search{
-       display: flex;
-       width: 45%;
-       margin-left: 15px;
+      display: flex;
+      margin-left: 15px;
+      position: fixed;
+      background-color: #fff;
+      padding: 10px 5px;
+      left: 0;
+      right: 0;
+      top: 0;
+      z-index: 10;
      }
      .search input{
        height: 30px;
+       width:30%;
      }
  
      .static{
@@ -101,21 +113,20 @@
        margin: 0;
        display: flex;
        flex-wrap: wrap;
-      justify-content: space-betweenq;
      }
      .hide{
-       display: none !important;
+       display: none;
      }
      label{
        margin: 5px 10px;
        display: inline-block;
-       width: 50px;
+       width: fit-content;
      }
-     #filter{
-       min-width: 70%;
-       max-width: 80%;
-       width: auto;
-       height: 30px;
+     #filter, #filters{
+      min-width: 150px;
+      width: 30%;
+      height: 30px;
+      margin-left: 1px;
      }
      .Range{
        position: relative;
@@ -123,7 +134,7 @@
        width: 100%;
        flex-wrap: wrap;
        justify-content: space-between;
-       margin-top: 40px;
+       margin-top: 60px;
      }
   
      .Range button, .Range dropdown{
@@ -141,7 +152,7 @@
        display: block;
      }
      .dropdown{
-       width: 22%;.
+       width: 22%;
      }
      .dropdown button{
        width: 90% !important;
@@ -160,6 +171,66 @@
         width: 100% !important;
             
     }
+    input[type='checkbox']{
+        cursor: pointer;
+    }
+    input[type='checkbox']:nth-of-type(even):before{
+      content: "★";
+      display: inline-block;
+      font-size: 32px;
+      margin-top: -16px;
+      color: rgb(200, 200, 200);
+    }
+
+    input[type='checkbox'].star:before{
+      color: rgb(0, 150, 255);
+    }
+
+    input[type='checkbox']:nth-of-type(even){
+      width: 0;
+    }
+
+
+
+/* Sector style Start */
+
+  #clear{
+    border-radius: 0;
+    background-color: red;
+    margin-top: 0;
+    margin-left: -34px;
+    width: 34px !important;
+  }
+  #SectorList{
+    display: block;
+    z-index: 100;
+    position: absolute;
+    list-style: none;
+    background-color: aliceblue;
+    line-height: 1.5;
+    margin-top: 40px;
+    padding-left: 3px;
+    right: 4px;
+    left: 4px;
+    height: 90%;
+    overflow: scroll;
+       }
+    #SectorList li{
+        border-bottom: 0.5px solid #000 ;
+        padding-left: 8px;
+        line-height: 2;
+       }
+
+    #results {
+      width: 20% !important;
+      }
+    
+      .static > .range  > a, [id^='getData'], button, a {
+
+      width : 20% !important;
+    }
+
+/* Sector Style Ends */
 
      @media only screen and (orientation: landscape){
 
@@ -172,6 +243,10 @@
                 width: 30%;        
              }
 
-     }
-        
+             .static > .range > #clear {
+              margin-left: -34px;
+              width: 34px;
+             }
+
+     }     
      
