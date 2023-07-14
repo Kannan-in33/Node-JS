@@ -175,6 +175,7 @@ function clea() {
 
 function getDay(days){
   removeActive();
+  cleanUpCompare();
 //   event.target.classList.add('active');
   createChart(dCompanyObject, dE, days = days)
 }
@@ -350,6 +351,7 @@ if (document.querySelectorAll("#" + localStorage[i]).length > 0 ){
 
 function getData(e) {
         removeActive();
+        cleanUpCompare();
         document.getElementById("getData" + e).innerText = "Loading...";
         event.target.classList.add('active');
         const xhr = new XMLHttpRequest();
@@ -600,13 +602,25 @@ let myFunc2 = letsDebounce(setFilter2,1000);
   if(document.querySelectorAll("#filters").length > 0){
       document.getElementById("filters").addEventListener('input', myFunc2);
   }
+
+  function cleanUpCompare() {
+    lst = document.querySelectorAll(".comparel .block1");
+    lst.forEach( (ele) => {
+      ele.style.display = "none" ;
+    });
+    
+
+  }
+  // compareStocks
   function getFavourits(){
 
     let lst = document.querySelectorAll(".charts > div");
     lst.forEach( (ele) => {
       ele.style.display = "none" ;
     });
-    
+
+    cleanUpCompare();
+
     lst = document.querySelectorAll(".charts div");
     lst.forEach( ele => { 
       if(ele.innerHTML.toString().includes("star")){
