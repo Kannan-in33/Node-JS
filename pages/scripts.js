@@ -348,7 +348,26 @@ if (document.querySelectorAll("#" + localStorage[i]).length > 0 ){
   return Object.keys(object).find(key => object[key] === value);
 }
 
-function getData() {
+function getData(e) {
+        removeActive();
+        document.getElementById("getData" + e).innerText = "Loading...";
+        event.target.classList.add('active');
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", "/" + e.toString());
+        xhr.send();
+        xhr.responseType = "json";
+        xhr.onload = () => {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            dCompanyObject = xhr.response.companyObject;
+            createChart( xhr.response.companyObject, e);
+          } 
+          else {
+            console.log(`Error: ${xhr.status}`);
+            }
+          };
+  }
+
+function getSectorData(event) {
         // removeActive();
         document.getElementById("filter").value = event.target.innerText;
         event.target.parentElement.style.display = 'none';
@@ -369,41 +388,32 @@ function getData() {
           };
   }
 
-  
+  function getSectorDataAll() {
+    // removeActive();
+    document.getElementById("filter").value = 'All';
+    document.getElementById("results").innerText = "Loading...";
+    document.getElementById("SectorList").style.display = 'none';
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", "/All" );
+    xhr.send();
+    xhr.responseType = "json";
+    xhr.onload = () => {
+      if (xhr.readyState == 4 && xhr.status == 200) {
+        dCompanyObject = xhr.response.companyObject;
+        createChart( xhr.response.companyObject, 'All');
+      } 
+      else {
+        console.log(`Error: ${xhr.status}`);
+        }
+      };
+}
 
  
 
 // Search Bar Script to filter charts matching the typed text
-function setFilter(){
-    let filterData = (document.querySelector("#filter").value).toUpperCase();
-    if ( filterData.length > 0) {
-        let lst = document.querySelectorAll(".charts a");
-        lst.forEach( (ele) => {
-          if(!ele.id.toLowerCase().includes(filterData)){
-          ele.style.visibility = "hidden" ;
-          }
-        });
-        
-        // lst = document.querySelectorAll(".charts a[id^= '" + filterData + "']");
-        // lst.forEach( ele => { 
-        //   ele.style.display = "" ;
-        // }); 
-    }
-
-    else{
-      let lst = document.querySelectorAll(".charts a");
-      lst.forEach( ele => ele.style.display = "" );
-    }
-    }
 
 
-function letsDebounce(fn,d){
-    let timer;
-    return function(){
-    clearTimeout(timer);
-    timer=setTimeout(fn,d);
-    }
-}
+
 
 function setComp(event){
 
@@ -476,9 +486,6 @@ getCompare();
 
 
 
-let myFunc = letsDebounce(myFunction,1000);
-document.getElementById("filter").addEventListener('input', myFunc);
-
 
 function createChartMini(companyObject, companyName, divtag0, days = 1000){
           let yValues  = [];
@@ -540,23 +547,43 @@ function createChartMini(companyObject, companyName, divtag0, days = 1000){
 
  
   // Search Bar Script to filter charts matching the typed text
+
+  function setFilter(){
+    let filterData = (document.querySelector("#filter").value).toUpperCase();
+    if ( filterData.length > 0) {
+        var lst = Array.from(document.querySelectorAll(".charts > div"));
+        lst.forEach( (ele) => ele.style.display = "none" );
+
+        lst = Array.from(document.querySelectorAll("[id^= '" + filterData + "']"));
+        lst.forEach( ele => ele.style.display = "" ); 
+
+    }
+
+    else{
+      let lst = document.querySelectorAll(".charts > div");
+      lst.forEach( ele => ele.style.display = "" );
+    }
+    }
+
 function setFilter2(){
       let filterData = (document.querySelector("#filters").value).toUpperCase();
       if ( filterData.length > 0) {
-          var lst = Array.from(document.querySelectorAll(".charts div"));
+          var lst = Array.from(document.querySelectorAll(".charts > div"));
           lst.forEach( (ele) => ele.style.display = "none" );
 
-          lst = Array.from(document.querySelectorAll("[class^= '" + filterData + "']"));
+          lst = Array.from(document.querySelectorAll("[id^= '" + filterData + "']"));
           lst.forEach( ele => ele.style.display = "" ); 
 
       }
   
       else{
-        let lst = document.querySelectorAll(".charts div");
+        let lst = document.querySelectorAll(".charts > div");
         lst.forEach( ele => ele.style.display = "" );
       }
       }
-  
+
+
+let myFunc1 = letsDebounce(setFilter,1000);
 let myFunc2 = letsDebounce(setFilter2,1000);
   
   function letsDebounce(fn,d){
@@ -566,9 +593,13 @@ let myFunc2 = letsDebounce(setFilter2,1000);
       timer=setTimeout(fn,d);
       }
   }
-  
-  document.getElementById("filters").addEventListener('input', myFunc2);
+  if(document.querySelectorAll("#filter").length > 0){
+    document.getElementById("filter").addEventListener('input', myFunc1);
+}
 
+  if(document.querySelectorAll("#filters").length > 0){
+      document.getElementById("filters").addEventListener('input', myFunc2);
+  }
   function getFavourits(){
 
     let lst = document.querySelectorAll(".charts > div");

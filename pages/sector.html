@@ -18,25 +18,27 @@
    </head>
     <body>
       <div class="static">
-        <div class="search">
-      <input placeholder="Search Sector..." type="text" id="filter" name="filter" />
-      <button id="clear" onclick="clea();" type="button"><strong>X</strong></button>
-      <input placeholder="Search..." type="text" id="filters" name="filters" />
+      <div class="search">
+          <input placeholder="Search Sector..." type="text" id="filter" name="filter" />
+          <button id="clear" onclick="clea();" type="button"><strong>X</strong></button>
+          <input placeholder="Search..." type="text" id="filters" name="filters" />
+          <button id="compare" class="compare" onclick="compareStocks();" type="button">Compare</button>
+          <button id="Favourits" class="Favourits" onclick="getFavourits();" type="button">Favourits</button>
+          <button id="clearFavourits" class="Favourits hide" onclick="clearFavourits();" type="button">Clear Favourits</button>
+        
       </div>
       <ul id="SectorList">
-        <li id="All" onclick="getData();">All</li>
-
+        <li id="All" onclick="getSectorDataAll();">All</li>
       </ul>
       
-      <div class="Range">
-        <button id="compare" class="compare" onclick="compareStocks();" type="button">Compare</button>
+      <div class="range">
+        
         <button id="days50" class="d50"  onclick="getDay(50);" type="button">50 Days</button>
         <button id="days70" class="d20" onclick="getDay(70);" type="button">70 Days</button>
         <button id="days100" class="100"  onclick="getDay(100);" type="button">100 Days</button>
         <button id="results" onclick="get10x();">Stocks Result</button>
         <a href="/">Home</a>
-        <button id="Favourits" class="Favourits" onclick="getFavourits();" type="button">Favourits</button>
-        <button id="clearFavourits" class="Favourits hide" onclick="clearFavourits();" type="button">Clear Favourits</button>
+        
         
         <div class="dropdown">
             <button id="daysbuy" class="buy-main"  onclick="getBuyMain();" type="button">Buy List</button>
@@ -53,6 +55,12 @@
     <div id="comparel" class="comparel"></div>
       <div class="charts"></div>
       <ol class="volume"> </0l>
+
+        <style>
+          .range{
+            margin-top: 90px !important;
+          }
+        </style>
 
 <script src="/scripts.js"></script>
 <link rel="stylesheet" type="text/css"  href="/style.css" >
@@ -157,7 +165,7 @@
   
 SectList.forEach( element =>{
                         let ls =   document.createElement("li");
-                        ls.addEventListener('click', getData);
+                        ls.addEventListener('click', getSectorData);
                         ls.innerText = element.trim();
                         ls.id = element.trim();
                         document.getElementById("SectorList").appendChild(ls);

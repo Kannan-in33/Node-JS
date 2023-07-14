@@ -100,6 +100,7 @@
       right: 0;
       top: 0;
       z-index: 10;
+      flex-wrap: wrap;
      }
      .search input{
        height: 30px;
@@ -123,12 +124,12 @@
        width: fit-content;
      }
      #filter, #filters{
-      min-width: 150px;
-      width: 30%;
+      min-width: 170px;
+      max-width: 200px;
       height: 30px;
       margin-left: 1px;
      }
-     .Range{
+     .range{
        position: relative;
        display: flex;
        width: 100%;
@@ -137,7 +138,7 @@
        margin-top: 60px;
      }
   
-     .Range button, .Range dropdown{
+     .range button, .range dropdown{
        width:20% ;
      }
      .active{
@@ -247,6 +248,10 @@
               margin-left: -34px;
               width: 34px;
              }
+
+             .range {
+              margin-top: 60px;
+            }
 
      }     
      
