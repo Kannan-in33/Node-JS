@@ -1,4 +1,6 @@
 let dCompanyObject = {};
+let dVolumeObject = {};
+let dCompanyDateObject = {};
 let x10dCompanyObject = {};
 let dE;
 let BuyObject40 = {};
@@ -7,6 +9,8 @@ let BuyObject20 = {};
 let BuyObject3Avg = {};
 let compareList =[];
 let companyDetails = [];
+
+const weekday = ["S","M","T","W","Th","F","St"];
 
 let rupee = new Intl.NumberFormat('en-IN', {
     style: 'currency',
@@ -62,51 +66,7 @@ divtag0.appendChild(divtag);
 }
 
 function compareStocks(){
-  let lst = document.querySelectorAll(".charts div");
-  lst.forEach(element => {
-    element.remove();    
-  });
-
-//   let divtag = document.createElement("div");
-//         divtag.setAttribute("class", "block");
-//         document.getElementById("comparel").appendChild(divtag);
-        
-       
-//   let   divtagc = document.createElement("div");
-//         divtagc.setAttribute("class", "company");
-//         divtagc.innerText = "COMPANY";
-//         divtag.appendChild(divtagc);
-
-//         divtagc = document.createElement("div");
-//         divtagc.setAttribute("class", "MarketCap");
-//         divtagc.innerText = "Market Cap";
-//         divtag.appendChild(divtagc);
-
-//         divtagc = document.createElement("div");
-//         divtagc.setAttribute("class", "bookvalue");
-//         divtagc.innerText = "Book Value";
-//         divtag.appendChild(divtagc);
-
-//         divtagc = document.createElement("div");
-//         divtagc.setAttribute("class", "High");
-//         divtagc.innerText = "High";
-//         divtag.appendChild(divtagc);
-
-//         divtagc = document.createElement("div");
-//         divtagc.setAttribute("class", "Low");
-//         divtagc.innerText = "Low";
-//         divtag.appendChild(divtagc);
-
-//         divtagc = document.createElement("div");
-//         divtagc.setAttribute("class", "Reserve");
-//         divtagc.innerText = "Reserve";
-//         divtag.appendChild(divtagc);
-
-//         divtagc = document.createElement("div");
-//         divtagc.setAttribute("class", "Barrowing");
-//         divtagc.innerText = "Barrowing";
-//         divtag.appendChild(divtagc);
-      
+  document.querySelector(".charts").style.display = "none";   
 
   if ( compareList.length > 0) {
     for(let d =0; d < compareList.length ; d++) {
@@ -151,13 +111,20 @@ function compareStocks(){
       divtag.setAttribute("class", "Barrowing");
       divtag.innerText = 'B : ' + getCompareObject[compareList[d]].Borrowings;
       divtag0.appendChild(divtag);
-
-
-
     }
-
     }
+    comparetoggleHide();
+}
 
+function clearcompareStocks(){
+  document.querySelector(".charts").style.display = "block";   
+  document.querySelector("#comparel").innerHTML = "";
+  comparetoggleHide();
+}
+
+function comparetoggleHide(){
+  document.getElementById("compare").classList.toggle("hide");
+  document.getElementById("clearcompare").classList.toggle("hide");
 }
 
 function clea() {
@@ -221,7 +188,9 @@ let resultCount = 0;
     for (let key in companyObject) {
       resultCount++;
           let yValues  = [];
+          let volumeValues = [];
           yValues  = [...companyObject[key]];
+          volumeValues  = [...dVolumeObject[key]];
           let xValues = [];
           let yValues2 = [];
 
@@ -230,6 +199,9 @@ let resultCount = 0;
               yValues2[y] =  yValues[y] ;
             }
                 for (let i = 0; i < Math.min(companyObject[key].length, days) ; i++) {
+                  // let d = new Date(dCompanyDateObject[key][i]);
+                  // xValues.push( weekday[d.getDay()]);
+
                   xValues.push(i);
                 }
                 xValues.reverse();
@@ -264,8 +236,7 @@ let resultCount = 0;
               anchortag.appendChild(divtag);
         let canvas = document.createElement("canvas");
                     canvas.setAttribute("id", key);
-                    canvas.setAttribute("class", key);
-        
+                    canvas.setAttribute("class", key);       
         
         let divtagMain = document.createElement("div"); 
                   divtagMain.setAttribute("id", key);
@@ -312,6 +283,24 @@ let resultCount = 0;
                                     }]
                                   }   
                             });
+                      
+                            let canvas2 = document.createElement("canvas");
+                            divtag.appendChild(canvas2);
+                            new Chart(canvas2, {
+                              type: "line",
+                              data: {
+                              labels: xValues,
+                              datasets: [{
+                                      label: key, // + '   FL ' + ( ((cmax-cmin)/cmax) * 100).toFixed(2).toString() + ' %  FC (' + ( ((cmax-ccurrect)/cmax) * 100).toFixed(2).toString() + ' )'  ,
+                                      pointRadius: 0,
+                                      borderWidth : 0.5,
+                                      borderColor: "rgba(0,0,0,0.9)",
+                                      data: [...volumeValues]
+                                      }]
+                                    }   
+                              });
+
+
 
 
 
@@ -361,6 +350,8 @@ function getData(e) {
         xhr.onload = () => {
           if (xhr.readyState == 4 && xhr.status == 200) {
             dCompanyObject = xhr.response.companyObject;
+            dCompanyDateObject = xhr.response.companyDateObj;
+            dVolumeObject = xhr.response.volumeObject;
             createChart( xhr.response.companyObject, e);
           } 
           else {
@@ -382,6 +373,7 @@ function getSectorData(event) {
         xhr.onload = () => {
           if (xhr.readyState == 4 && xhr.status == 200) {
             dCompanyObject = xhr.response.companyObject;
+            dCompanyDateObject = xhr.response.companyDateObj;
             createChart( xhr.response.companyObject, event.target.id);
           } 
           else {
@@ -402,6 +394,7 @@ function getSectorData(event) {
     xhr.onload = () => {
       if (xhr.readyState == 4 && xhr.status == 200) {
         dCompanyObject = xhr.response.companyObject;
+        dCompanyDateObject = xhr.response.companyDateObj;
         createChart( xhr.response.companyObject, 'All');
       } 
       else {

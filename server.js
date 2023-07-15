@@ -33,13 +33,16 @@ server.get('/scripts.js', (req, res) => {
 server.use( (req, res)=>{
     let obj ={};
     let obj2 = [];
+    let datesObj = [];
     let company =[];
     let obj3 = {};
     let valueList = {};
     let volumeList = {};
     let companyObject = {};
+    let companyDateObj = {};
     let companyList =[];
-    
+    let volumeObj =[];
+    let volumeObject = {};
     
     let max = 0;
     let  companyObject2 ={};
@@ -225,17 +228,24 @@ fs.readdir(directorypath , function (err, files) {
                     valueList[file.split('.')[0]] = obj['datasets'][0]['values'].length
                     max = max < obj['datasets'][0]['values'].length ? obj['datasets'][0]['values'].length : max
                     for (let key in obj['datasets'][0]['values']) {
-                    obj2.push(obj['datasets'][0]['values'][key][1]);                           
+                    obj2.push(obj['datasets'][0]['values'][key][1]);  
+                    // datesObj.push(obj['datasets'][0]['values'][key][0]);
+                    volumeObj.push(obj['datasets'][1]['values'][key][1]);                        
                     }
                     companyObject[file.split('.')[0]] = [...obj2];
+                    // companyDateObj[file.split('.')[0]] = [...datesObj];
+                    volumeObject[file.split('.')[0]] = [...volumeObj];
                     obj2 =[];
+                    datesObj = [];
+                    volumeObj =[];
             }
                 if (i == files.length -1 ){
                 obj3 = { "company" : company,
-                "values" : obj2,
-                "valueList" : valueList,
-                "max" : max,
-                "companyObject" : companyObject
+                "volumeObject" : volumeObject,
+                // "valueList" : valueList,
+                // "max" : max,
+                "companyObject" : companyObject,
+                // "companyDateObj" : companyDateObj
                 }
                 res.send(obj3);
                 }
