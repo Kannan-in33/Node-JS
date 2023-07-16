@@ -29,6 +29,11 @@ server.get('/scripts.js', (req, res) => {
     res.sendFile(path.join(__dirname, './pages/scripts.js'));
 
 });
+
+server.get('/favicon.ico', (req, res) => {
+    res.sendFile(path.join(__dirname, './pages/favicon.ico'));
+
+});
         
 server.use( (req, res)=>{
     let obj ={};
@@ -49,7 +54,7 @@ server.use( (req, res)=>{
 
 
 
-if(req.path !== '/favicon.ico'){
+if(req.path !== '/favicon1.ico'){
 // console.log(req.path);
  if(req.path == '/10x'){
         let j = 0;

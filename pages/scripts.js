@@ -129,7 +129,8 @@ function comparetoggleHide(){
 
 function clea() {
     document.getElementById("filter").value = '';
-    document.getElementById("SectorList").style.display = "";
+    document.getElementById("SectorList").style.display = "block";
+    document.querySelector(".charts").innerHTML = "";
     myFunction();
 
     compareList.forEach(( ) =>{
