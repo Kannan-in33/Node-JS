@@ -103,15 +103,9 @@ else if(req.path == '/All') {
     let j = 0;
     let k = 0;
     let foldersPath = fs.readdirSync(path.resolve(__dirname, 'src/'));
-
-    // console.log(foldersPath);
-
     foldersPath.forEach( (folder, j) => {
-// console.log(folder);
     if(folder != '50' && folder != '101' &&  folder != '201' &&  folder != '401' &&  folder != '601'){
     const directorypath = path.join(__dirname, 'src/' + folder);
-    // console.log(folder);
-    // const directorypath = path.join(__dirname, req.path.replace('/', 'src/').replaceAll('%20', ' '));
     fs.readdir(directorypath , function (err, files) {
     if (err) throw err;
     files.forEach( (file, i) => {
@@ -119,26 +113,32 @@ else if(req.path == '/All') {
         fs.readFile(path.join(directorypath , file), 'utf8', function (err2, data) {
         if (err2) throw err2;
             obj = JSON.parse(data);
+            let j = 0;
             company.push(file);
+            
                 if(obj['datasets'].length > 0 ){
-                    valueList[file.split('.')[0]] = obj['datasets'][0]['values'].length
+                    // valueList[file.split('.')[0]] = obj['datasets'][0]['values'].length
                     max = max < obj['datasets'][0]['values'].length ? obj['datasets'][0]['values'].length : max
                     for (let key in obj['datasets'][0]['values']) {
-                    obj2.push(obj['datasets'][0]['values'][key][1]);  
-                    // datesObj.push(obj['datasets'][0]['values'][key][0]);
-                    volumeObj.push(obj['datasets'][1]['values'][key][1]);                        
+                            obj2.push(obj['datasets'][0]['values'][key][1]);  
+                           
+                            // if(j <  30){
+                                volumeObj.push(obj['datasets'][1]['values'][key][1]); 
+                            // }  
+                            //     j++; 
+                    
                     }
                     companyObject[file.split('.')[0]] = [...obj2];
-                    // companyDateObj[file.split('.')[0]] = [...datesObj];
                     volumeObject[file.split('.')[0]] = [...volumeObj];
                     obj2 =[];
                     datesObj = [];
                     volumeObj =[];
             }
-                if (i == files.length -1 ){
-                obj3 = { "company" : company,
-                "companyObject" : companyObject,
-                "volumeObject" : volumeObject,
+                if (i == files.length -1 && folder == 'Tyres' ){
+                obj3 = { 
+                    "company" : company,
+                    "companyObject" : companyObject,
+                    "volumeObject" : volumeObject,
                 // "valueList" : valueList,
                 // "max" : max,                
                 // "companyDateObj" : companyDateObj
@@ -169,7 +169,7 @@ fs.readdir(directorypath , function (err, files) {
                 function (err2, data) {
                 if (err2) throw err2;
                 obj = JSON.parse(data);
-
+                let j = 0;
                 company.push(file);
                 if(obj['datasets'].length > 0 ){
                     valueList[file.split('.')[0]] = obj['datasets'][0]['values'].length
@@ -177,7 +177,11 @@ fs.readdir(directorypath , function (err, files) {
                     for (let key in obj['datasets'][0]['values']) {
                     obj2.push(obj['datasets'][0]['values'][key][1]);  
                     // datesObj.push(obj['datasets'][0]['values'][key][0]);
-                    volumeObj.push(obj['datasets'][1]['values'][key][1]);                        
+                        // if(j <  30){
+                            volumeObj.push(obj['datasets'][1]['values'][key][1]); 
+                        // }  
+                        //     j++; 
+                        
                     }
                     companyObject[file.split('.')[0]] = [...obj2];
                     // companyDateObj[file.split('.')[0]] = [...datesObj];

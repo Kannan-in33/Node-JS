@@ -285,19 +285,26 @@ let resultCount = 0;
                             });
                       
                             let canvas2 = document.createElement("canvas");
+                            canvas2.setAttribute("class", 'volume');
                             divtag.appendChild(canvas2);
                             new Chart(canvas2, {
                               type: "line",
                               data: {
-                              labels: xValues,
+                              labels: xValues, // .reverse().slice(0,30),
                               datasets: [{
-                                      label: key, // + '   FL ' + ( ((cmax-cmin)/cmax) * 100).toFixed(2).toString() + ' %  FC (' + ( ((cmax-ccurrect)/cmax) * 100).toFixed(2).toString() + ' )'  ,
+                                      label: "",
+                                      tooltip: '',
                                       pointRadius: 0,
                                       borderWidth : 0.5,
                                       borderColor: "rgba(0,0,0,0.9)",
                                       data: [...volumeValues]
                                       }]
-                                    }   
+                                    },
+                              options: {
+                                      plugins: {
+                                          legend: false // Hide legend
+                                      },
+                                    }
                               });
 
 
