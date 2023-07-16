@@ -374,6 +374,7 @@ function getSectorData(event) {
           if (xhr.readyState == 4 && xhr.status == 200) {
             dCompanyObject = xhr.response.companyObject;
             dCompanyDateObject = xhr.response.companyDateObj;
+            dVolumeObject = xhr.response.volumeObject;
             createChart( xhr.response.companyObject, event.target.id);
           } 
           else {
@@ -395,6 +396,7 @@ function getSectorData(event) {
       if (xhr.readyState == 4 && xhr.status == 200) {
         dCompanyObject = xhr.response.companyObject;
         dCompanyDateObject = xhr.response.companyDateObj;
+        dVolumeObject = xhr.response.volumeObject;
         createChart( xhr.response.companyObject, 'All');
       } 
       else {

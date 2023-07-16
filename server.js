@@ -99,64 +99,6 @@ else if(req.path.includes('getcompare')) {
     });
 }
 
-else if(req.path.includes('+')) {
-    let companies = req.path.replace('/',"").split('+');
-
-    let j = 0;
-    let c= 0;
-    let foldersPath = fs.readdirSync(path.resolve(__dirname, 'src'));
-
-for(let k = 0; k < companies.length; k++){ 
-
-foldersPath.forEach( (folder, j) => {
-
-const directorypath = path.join(__dirname, 'src/' + folder);
-fs.readdir(directorypath , function (err, files) {
-if (err) throw err;
-
-files.forEach( (file, i) => {
-if(file.split('.')[0] == companies[k]){
-// console.log(file + "    " +  companies[0]);
-c++;
-
-
-fs.readFile(path.join(directorypath , file), 'utf8', function (err2, data) {
-if (err2) throw err2;
-obj = JSON.parse(data);
-if(obj['datasets'].length > 0 ){
-company.push(file);
-
-valueList[file.split('.')[0]] = obj['datasets'][0]['values'].length
-max = max < obj['datasets'][0]['values'].length ? obj['datasets'][0]['values'].length : max
-for (let key in obj['datasets'][0]['values']) {
-obj2.push(obj['datasets'][0]['values'][key][1]);                           
-}
-companyObject[file.split('.')[0]] = [...obj2];
-obj2 =[];
-}
-if (k == companies.length -1 ){
-obj3 = { "company" : company,
-"values" : obj2,
-"valueList" : valueList,
-"max" : max,
-"companyObject" : companyObject
-}
-res.send(obj3);
-k++;
-}
-
-});
-}
-
-});
-
-});
-});  
-
-}
-
-}
-
 else if(req.path == '/All') {
     let j = 0;
     let k = 0;
@@ -178,25 +120,30 @@ else if(req.path == '/All') {
         if (err2) throw err2;
             obj = JSON.parse(data);
             company.push(file);
-     if(obj['datasets'].length > 0 ){
-            valueList[file.split('.')[0]] = obj['datasets'][0]['values'].length
-            max = max < obj['datasets'][0]['values'].length ? obj['datasets'][0]['values'].length : max
-        for (let key in obj['datasets'][0]['values']) {
-            obj2.push(obj['datasets'][0]['values'][key][1]);                           
-        }
-        companyObject[file.split('.')[0]] = [...obj2];
-        obj2 =[];
-    }
-        if ( folder == 'Tyres' && i == 1){
-            // console.log(folder + " " + i );
-        obj3 = { "company" : company,
-                "values" : obj2,
-                "valueList" : valueList,
-                "max" : max,
-                "companyObject" : companyObject
+                if(obj['datasets'].length > 0 ){
+                    valueList[file.split('.')[0]] = obj['datasets'][0]['values'].length
+                    max = max < obj['datasets'][0]['values'].length ? obj['datasets'][0]['values'].length : max
+                    for (let key in obj['datasets'][0]['values']) {
+                    obj2.push(obj['datasets'][0]['values'][key][1]);  
+                    // datesObj.push(obj['datasets'][0]['values'][key][0]);
+                    volumeObj.push(obj['datasets'][1]['values'][key][1]);                        
+                    }
+                    companyObject[file.split('.')[0]] = [...obj2];
+                    // companyDateObj[file.split('.')[0]] = [...datesObj];
+                    volumeObject[file.split('.')[0]] = [...volumeObj];
+                    obj2 =[];
+                    datesObj = [];
+                    volumeObj =[];
+            }
+                if (i == files.length -1 ){
+                obj3 = { "company" : company,
+                "companyObject" : companyObject,
+                "volumeObject" : volumeObject,
+                // "valueList" : valueList,
+                // "max" : max,                
+                // "companyDateObj" : companyDateObj
                 }
-                
-        res.send(obj3);
+                res.send(obj3);
     }
     
     });
