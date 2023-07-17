@@ -40,7 +40,10 @@
         <button id="days50" class="d50"  onclick="getDay(50);" type="button">50 Days</button>
         <button id="days70" class="d20" onclick="getDay(70);" type="button">70 Days</button>
         <button id="days100" class="100"  onclick="getDay(100);" type="button">100 Days</button>
-        <button id="results" onclick="get10x();">Stocks Result</button>
+        <div class="resultbox">
+          <button class="up" id="results" onclick="getUp();">Up</button>
+          <button class="down" id="resultsd" onclick="getDown();">Dn</button>
+        </div>
         <a href="/">Home</a>
         
         
@@ -62,7 +65,7 @@
 
         <style>
           .range{
-            margin-top: 90px !important;
+            margin-top: 100px !important;
           }
         </style>
 

@@ -61,6 +61,23 @@ divtag = document.createElement("div");
 divtag.setAttribute("class", "Barrowing");
 divtag.innerText = "B  :  " + rupee.format(getCompareObject[companyDetails[d]].Borrowings);
 divtag0.appendChild(divtag);
+
+
+divtag = document.createElement("div");
+divtag.setAttribute("class", "difference");
+let complen = dCompanyObject[companyDetails[d]].length -1 ;
+let tday = (dCompanyObject[companyDetails[d]][complen]);
+let yday = (dCompanyObject[companyDetails[d]][complen -1] );
+if (tday-yday < 0){
+  divtag.classList.add("down");
+}
+else{
+  divtag.classList.add("up");
+}
+divtag.innerText = ":  " +  (((tday - yday) / yday) * 100).toFixed(1) + ' %';
+divtag0.appendChild(divtag);
+
+//[...dCompanyObject['BANKINDIA']];
 }
 }
 }
@@ -283,7 +300,17 @@ let resultCount = 0;
                                     borderColor: "rgba(0,0,0,0.9)",
                                     data: [...yValues2].reverse(),
                                     }]
-                                  }   
+                                  },  
+                                  options: {
+                                      scales: {
+                                          yAxes: [{
+                                              ticks: {
+                                                  fontSize: 14
+                                          }
+                                      }]
+                                  }
+                                  }
+
                             });
                       
                             let canvas2 = document.createElement("canvas");
@@ -306,6 +333,13 @@ let resultCount = 0;
                                       plugins: {
                                           legend: false // Hide legend
                                       },
+                                      scales: {
+                                        yAxes: [{
+                                            ticks: {
+                                                fontSize: 14
+                                            }
+                                        }]
+                                    }
                                     }
                               });
 
@@ -615,6 +649,53 @@ let myFunc2 = letsDebounce(setFilter2,1000);
     
 
   }
+
+
+  function getUp(){
+
+    let lst = document.querySelectorAll(".charts > div");
+    lst.forEach( (ele) => {
+      ele.style.display = "none" ;
+    });
+
+
+    lst = document.querySelectorAll(".charts div");
+    let i = 0;
+    lst.forEach( (ele) => { 
+      if(ele.innerHTML.toString().includes("up")){
+      ele.style.display = "" ;
+      i++;
+      console.log(i);
+      document.getElementById("results").innerText = Math.max(i /3 , 1) ;
+      }
+    }); 
+    
+
+
+}
+
+function getDown(){
+
+  let lst = document.querySelectorAll(".charts > div");
+  lst.forEach( (ele) => {
+    ele.style.display = "none" ;
+  });
+
+
+  lst = document.querySelectorAll(".charts div");
+  let i = 0;
+  lst.forEach( ele => { 
+    if(ele.innerHTML.toString().includes("down")){
+    ele.style.display = "" ;
+    i++;
+    document.getElementById("resultsd").innerText = Math.max(i /3 , 1) ;
+    }
+  }); 
+
+
+}
+
+
   // compareStocks
   function getFavourits(){
 

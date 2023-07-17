@@ -128,7 +128,7 @@ else if(req.path == '/All') {
                             obj2.push(obj['datasets'][0]['values'][key][1]);  
                            
                             // if(j <  30){
-                                volumeObj.push(obj['datasets'][1]['values'][key][1]); 
+                                volumeObj.push((obj['datasets'][1]['values'][key][1])/100000); 
                             // }  
                             //     j++; 
                     
@@ -183,7 +183,7 @@ fs.readdir(directorypath , function (err, files) {
                     obj2.push(obj['datasets'][0]['values'][key][1]);  
                     // datesObj.push(obj['datasets'][0]['values'][key][0]);
                         // if(j <  30){
-                            volumeObj.push(obj['datasets'][1]['values'][key][1]); 
+                            volumeObj.push((obj['datasets'][1]['values'][key][1])/100000); 
                         // }  
                         //     j++; 
                         
