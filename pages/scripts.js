@@ -224,6 +224,7 @@ let resultCount = 0;
                 divtag.appendChild(lblF);
         let checkBoxF = document.createElement("input");
                   checkBoxF.setAttribute("type", "checkbox");
+                  checkBoxF.setAttribute("class", 'favourite');
                   checkBoxF.setAttribute("id", key);
                   // checkBoxF.setAttribute("value", "favourite");
                   checkBoxF.addEventListener("click", setFav);
