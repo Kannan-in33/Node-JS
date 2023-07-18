@@ -25,11 +25,14 @@ let rupee = new Intl.NumberFormat('en-IN', {
 function updateCompantDeatils(){
   let upvalue = 0;
   let downvalue = 0;
-for(let p = 0; p < positive.length; p++) {
+  let positivelength = positive.length;
+for(let p = 0; p < positivelength; p++) {
   positive.pop();
 }
 console.log("p length  : " + positive.length);
-for(let n = 0; n < negativeList.length; n++) {
+
+let negativeListlength = negativeList.length
+for(let n = 0; n < negativeListlength; n++) {
   negativeList.pop();
 }
 
