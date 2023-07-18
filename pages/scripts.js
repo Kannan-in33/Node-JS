@@ -23,6 +23,16 @@ let rupee = new Intl.NumberFormat('en-IN', {
 });
 
 function updateCompantDeatils(){
+  let upvalue = 0;
+  let downvalue = 0;
+for(let p = 0; p < positive.length; p++) {
+  positive.pop();
+}
+console.log("p length  : " + positive.length);
+for(let n = 0; n < negativeList.length; n++) {
+  negativeList.pop();
+}
+
   for(let d = 0 ; d < companyDetails.length ; d++) {
 
     if (document.querySelectorAll('#'+ companyDetails[d].toString().replace("&"," ")).length > 0 &&  document.querySelectorAll('#'+ companyDetails[d] + " .right .block1").length == 0){
@@ -73,12 +83,16 @@ let complen = dCompanyObject[companyDetails[d]].length -1 ;
 let tday = (dCompanyObject[companyDetails[d]][complen]);
 let yday = (dCompanyObject[companyDetails[d]][complen -1] );
 if (tday-yday < 0){
+  downvalue++;
+  document.querySelector("button.downTrend").innerText = downvalue;
   divtag.classList.add("downTrend");
   negativeList.push(((((tday - yday) / yday) * 100).toFixed(6)));
   negativeCompany[(((tday - yday) / yday) * 100).toFixed(6)] = companyDetails[d];
   
 }
 else{
+  upvalue++;
+  document.querySelector("button.upTrend").innerText = upvalue;
   divtag.classList.add("upTrend");
   positive.push(((((tday - yday) / yday) * 100).toFixed(6)));
   positiveCompany[(((tday - yday) / yday) * 100).toFixed(6)] = companyDetails[d];
@@ -669,23 +683,18 @@ let myFunc2 = letsDebounce(setFilter2,1000);
       ele.style.display = "none" ;
     });
    
-      for(let i = 0; i < positive.length; i++){
+      for(let i = 0; i < positive.length;){
       let indx = positiveCompany[positive[i]];
-      console.log(i + "   " + indx);
+      // console.log(i + "   " + indx);
       let elementUp = document.getElementById(indx);
+      if (elementUp != null){
       elementUp.style.display = "";
+      i++;
       elementUp.parentElement.insertBefore(elementUp, elementUp.parentElement.children[i]);
-      document.getElementById("results").innerText = Math.max((i+1) , 1) ;
+      document.getElementById("results").innerText = Math.max(i , 1) ;
       }
-      
-    //   lst = document.querySelectorAll(".charts > div");
-    //   lst.forEach( (ele) => { 
-    //     if(ele.innerHTML.toString().includes("upTrend")){
-    //       ele.style.display = "";
-    //     }
-      
-    // }); 
-    
+      }
+
 
 
 }
@@ -698,13 +707,16 @@ function getDown(){
   });
 
 
-  for(let i = 0; i < negativeList.length; i++){
+  for(let i = 0; i < negativeList.length; ){
     let indx = negativeCompany[negativeList[i]];
-    console.log(i + "   " + indx);
+    // console.log(i + "   " + indx);
     let elementUp = document.getElementById(indx);
+    if (elementUp != null){
     elementUp.style.display = "";
+    i++;
     elementUp.parentElement.insertBefore(elementUp, elementUp.parentElement.children[i]);
-    document.getElementById("resultsd").innerText = Math.max((i+1) , 1) ;
+    document.getElementById("resultsd").innerText = Math.max((i) , 1) ;
+    }
     }
 
 
