@@ -29,7 +29,6 @@ function updateCompantDeatils(){
 for(let p = 0; p < positivelength; p++) {
   positive.pop();
 }
-console.log("p length  : " + positive.length);
 
 let negativeListlength = negativeList.length
 for(let n = 0; n < negativeListlength; n++) {
