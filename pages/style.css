@@ -87,12 +87,18 @@
         height: 150px !important;
       }
 
-     .MarketCap, .High, .Reserve, .difference {
+     .MarketCap, .High, .Reserve, .difference, .difference3 , .difference2 {
           background-color: #FFD750;
           padding: 0 5% 0 10px;
           width: 100%;
       }
-      .upTrend::before{      
+
+      /* .difference2  {
+        padding: 0 5% 0 10px;
+        width: 100%;
+      } */
+
+      .upTrend::before, .upTrend2::before, .upTrend3::before{      
         transform: scale(1.5);
         display: inline-flex;
         margin-left: 5px;
@@ -103,7 +109,7 @@
 
       }
 
-      .downTrend::before{      
+      .downTrend::before, .downTrend2::before, .downTrend3::before{      
         transform: scale(1.5);
         display: inline-flex;
         margin-left: 5px;
@@ -121,9 +127,16 @@
       .difference.down {
         background-color: #ff5e00b2;
       }
-      .company, .Low, .Barrowing, .bookvalue {
+      .company, .Low, .Barrowing, .bookvalue{
         padding: 0 5% 0 10px;
       }
+
+      .currentPrice {
+        padding: 6px 5% 0 15px;
+        font-weight: 600;
+        /* text-align: center; */
+      }
+
      .search{
       display: flex;
       margin-left: 15px;
@@ -193,14 +206,14 @@
        width: 90% !important;
      }
      .resultbox{
-      width: 20%;
+      width: 21%;
       margin: 0 !important;
       padding: 0;
       display: flex;
       justify-content: space-between;
      }
 
-     #results, #resultsd {
+     [id^=results], [id^=resultsd] {
       width: 49% !important;
       margin-left: -5px !important;
       margin-right: -5px;
@@ -295,7 +308,7 @@
               margin-top: 60px;
             }
 
-            #results, #resultsd{
+            [id^=results], [id^=resultsd]{
               margin-left: 10px !important;
               margin-right: -4px;
               

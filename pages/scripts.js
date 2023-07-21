@@ -13,6 +13,14 @@ let positive = [];
 let positiveCompany = {};
 let negativeList = [];
 let negativeCompany = {};
+let positive2 = [];
+let positiveCompany2 = {};
+let negativeList2 = [];
+let negativeCompany2 = {};
+let positive3 = [];
+let positiveCompany3 = {};
+let negativeList3 = [];
+let negativeCompany3 = {};
 
 const weekday = ["S","M","T","W","Th","F","St"];
 
@@ -20,11 +28,17 @@ let rupee = new Intl.NumberFormat('en-IN', {
     style: 'currency',
     currency: 'INR',
     maximumSignificantDigits: 3,
+    
 });
 
 function updateCompantDeatils(){
   let upvalue = 0;
   let downvalue = 0;
+
+  let upvalue2 = 0;
+  let downvalue2 = 0;
+  let upvalue3 = 0;
+  let downvalue3 = 0;
   let positivelength = positive.length;
 for(let p = 0; p < positivelength; p++) {
   positive.pop();
@@ -86,27 +100,100 @@ let tday = (dCompanyObject[companyDetails[d]][complen]);
 let yday = (dCompanyObject[companyDetails[d]][complen -1] );
 if (tday-yday < 0){
   downvalue++;
-  document.querySelector("button.downTrend").innerText = downvalue;
   divtag.classList.add("downTrend");
+  document.querySelector("button.downTrend").innerText = downvalue;
+  
   negativeList.push(((((tday - yday) / yday) * 100).toFixed(6)));
   negativeCompany[(((tday - yday) / yday) * 100).toFixed(6)] = companyDetails[d];
   
 }
 else{
   upvalue++;
-  document.querySelector("button.upTrend").innerText = upvalue;
   divtag.classList.add("upTrend");
+  document.querySelector("button.upTrend").innerText = upvalue;
   positive.push(((((tday - yday) / yday) * 100).toFixed(6)));
   positiveCompany[(((tday - yday) / yday) * 100).toFixed(6)] = companyDetails[d];
+
+
 }
 divtag.innerText = ":  " +  (((tday - yday) / yday) * 100).toFixed(1) + ' %';
 divtag0.appendChild(divtag);
 
-//[...dCompanyObject['BANKINDIA']];
+// Second Symbol
+
+
+divtag = document.createElement("div");
+divtag.setAttribute("class", "difference2");
+complen = dCompanyObject[companyDetails[d]].length -2 ;
+tday = (dCompanyObject[companyDetails[d]][complen]);
+yday = (dCompanyObject[companyDetails[d]][complen -2] );
+if (tday-yday < 0){
+  downvalue2++;
+  divtag.classList.add("downTrend2");
+  document.querySelector("button.downTrend2").innerText = downvalue2;  
+  negativeList2.push(((((tday - yday) / yday) * 100).toFixed(6)));
+  negativeCompany2[(((tday - yday) / yday) * 100).toFixed(6)] = companyDetails[d];
+  
+}
+else{
+  upvalue2++;
+  divtag.classList.add("upTrend2");
+  document.querySelector("button.upTrend2").innerText = upvalue2;
+  positive2.push(((((tday - yday) / yday) * 100).toFixed(6)));
+  positiveCompany2[(((tday - yday) / yday) * 100).toFixed(6)] = companyDetails[d];
+
+
+}
+divtag.innerText = ":  " +  (((tday - yday) / yday) * 100).toFixed(1) + ' %';
+divtag0.appendChild(divtag);
+
+// Third Symbol*****************************************************************************
+
+
+divtag = document.createElement("div");
+divtag.setAttribute("class", "difference3");
+tday = (dCompanyObject[companyDetails[d]][complen]);
+yday = (dCompanyObject[companyDetails[d]][complen -3] );
+complen = dCompanyObject[companyDetails[d]].length -3 ;
+if (tday-yday < 0){
+  downvalue3++;
+  divtag.classList.add("downTrend3");
+  document.querySelector("button.downTrend3").innerText = downvalue3;
+  
+  negativeList3.push(((((tday - yday) / yday) * 100).toFixed(6)));
+  negativeCompany3[(((tday - yday) / yday) * 100).toFixed(6)] = companyDetails[d];
+  
+}
+else{
+  upvalue3++;
+  divtag.classList.add("upTrend3");
+  document.querySelector("button.upTrend3").innerText = upvalue3;
+  positive3.push(((((tday - yday) / yday) * 100).toFixed(6)));
+  positiveCompany3[(((tday - yday) / yday) * 100).toFixed(6)] = companyDetails[d];
+
+
+}
+divtag.innerText = ":  " +  (((tday - yday) / yday) * 100).toFixed(1) + ' %';
+divtag0.appendChild(divtag);
+
+
+divtag = document.createElement("div");
+divtag.setAttribute("class", "currentPrice");
+complen = dCompanyObject[companyDetails[d]].length -1 ;
+tday = (dCompanyObject[companyDetails[d]][complen]);
+divtag.innerText = rupee.format(tday) ;
+divtag0.appendChild(divtag);
+
+// Third symbol END*******************************************************************
+
 }
 }
 positive.sort((a, b) => b - a);
 negativeList.sort((a, b) => a - b);
+positive2.sort((a, b) => b - a);
+negativeList2.sort((a, b) => a - b);
+positive3.sort((a, b) => b - a);
+negativeList3.sort((a, b) => a - b);
 }
 
 function compareStocks(){
@@ -321,7 +408,7 @@ let resultCount = 0;
                             data: {
                             labels: xValues,
                             datasets: [{
-                                    label: key + '   FL ' + ( ((cmax-cmin)/cmax) * 100).toFixed(2).toString() + ' %  FC (' + ( ((cmax-ccurrect)/cmax) * 100).toFixed(2).toString() + ' )'  ,
+                                    label: key + '   FL ' + ( ((cmax-cmin)/cmax) * 100).toFixed(2).toString() + ' %   FC  ' + ( ((cmax-ccurrect)/cmax) * 100).toFixed(2).toString() + ' %' ,
                                     pointRadius: 0,
                                     borderWidth : 0.5,
                                     borderColor: "rgba(0,0,0,0.9)",
@@ -723,6 +810,102 @@ function getDown(){
 
 
 }
+
+// GET UP DOWN DUP WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+
+function getUp2(){
+
+  let lst = document.querySelectorAll(".charts > div");
+  lst.forEach( (ele) => {
+    ele.style.display = "none" ;
+  });
+ 
+    for(let i = 0; i < positive2.length;){
+    let indx = positiveCompany2[positive2[i]];
+    // console.log(i + "   " + indx);
+    let elementUp = document.getElementById(indx);
+    if (elementUp != null){
+    elementUp.style.display = "";
+    i++;
+    elementUp.parentElement.insertBefore(elementUp, elementUp.parentElement.children[i]);
+    // document.getElementById("results2").innerText = Math.max(i , 1) ;
+    }
+    }
+
+
+
+}
+
+function getDown2(){
+
+let lst = document.querySelectorAll(".charts > div");
+lst.forEach( (ele) => {
+  ele.style.display = "none" ;
+});
+
+
+for(let i = 0; i < negativeList2.length; ){
+  let indx = negativeCompany2[negativeList2[i]];
+  // console.log(i + "   " + indx);
+  let elementUp = document.getElementById(indx);
+  if (elementUp != null){
+  elementUp.style.display = "";
+  i++;
+  elementUp.parentElement.insertBefore(elementUp, elementUp.parentElement.children[i]);
+  // document.getElementById("resultsd2").innerText = Math.max((i) , 1) ;
+  }
+  }
+
+
+}
+
+function getUp3(){
+
+  let lst = document.querySelectorAll(".charts > div");
+  lst.forEach( (ele) => {
+    ele.style.display = "none" ;
+  });
+ 
+    for(let i = 0; i < positive3.length;){
+    let indx = positiveCompany3[positive3[i]];
+    // console.log(i + "   " + indx);
+    let elementUp = document.getElementById(indx);
+    if (elementUp != null){
+    elementUp.style.display = "";
+    i++;
+    elementUp.parentElement.insertBefore(elementUp, elementUp.parentElement.children[i]);
+    // document.getElementById("results").innerText = Math.max(i , 1) ;
+    }
+    }
+
+
+
+}
+
+function getDown3(){
+
+let lst = document.querySelectorAll(".charts > div");
+lst.forEach( (ele) => {
+  ele.style.display = "none" ;
+});
+
+
+for(let i = 0; i < negativeList3.length; ){
+  let indx = negativeCompany3[negativeList3[i]];
+  // console.log(i + "   " + indx);
+  let elementUp = document.getElementById(indx);
+  if (elementUp != null){
+  elementUp.style.display = "";
+  i++;
+  elementUp.parentElement.insertBefore(elementUp, elementUp.parentElement.children[i]);
+  // document.getElementById("resultsd").innerText = Math.max((i) , 1) ;
+  }
+  }
+
+
+}
+
+// GET UP DOWN DUP ENDS WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 
 
   // compareStocks
