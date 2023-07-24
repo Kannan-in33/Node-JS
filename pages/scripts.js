@@ -50,8 +50,10 @@ for(let n = 0; n < negativeListlength; n++) {
 }
 
   for(let d = 0 ; d < companyDetails.length ; d++) {
-
+    
     if (document.querySelectorAll('#'+ companyDetails[d].toString().replace("&"," ")).length > 0 &&  document.querySelectorAll('#'+ companyDetails[d] + " .right .block1").length == 0){
+
+    // if (document.querySelectorAll("[id^=" +  companyDetails[d].toString().replace("&"," ") + "]").length > 0 &&  document.querySelectorAll('#'+ companyDetails[d] + " .right .block1").length == 0){
 
 let divtag0 = document.createElement("div");
   divtag0.setAttribute("class", "block1");
@@ -98,7 +100,9 @@ divtag.setAttribute("class", "difference");
 let complen = dCompanyObject[companyDetails[d]].length -1 ;
 let tday = (dCompanyObject[companyDetails[d]][complen]);
 let yday = (dCompanyObject[companyDetails[d]][complen -1] );
-if (tday-yday < 0){
+
+console.log(((tday - yday) / yday) * 100);
+if ((((tday - yday) / yday) * 100) < 0){
   downvalue++;
   divtag.classList.add("downTrend");
   document.querySelector("button.downTrend").innerText = downvalue;
@@ -111,6 +115,7 @@ else{
   upvalue++;
   divtag.classList.add("upTrend");
   document.querySelector("button.upTrend").innerText = upvalue;
+  
   positive.push(((((tday - yday) / yday) * 100).toFixed(6)));
   positiveCompany[(((tday - yday) / yday) * 100).toFixed(6)] = companyDetails[d];
 
@@ -127,7 +132,7 @@ divtag.setAttribute("class", "difference2");
 complen = dCompanyObject[companyDetails[d]].length -2 ;
 tday = (dCompanyObject[companyDetails[d]][complen]);
 yday = (dCompanyObject[companyDetails[d]][complen -2] );
-if (tday-yday < 0){
+if ((((tday - yday) / yday) * 100) < 0){
   downvalue2++;
   divtag.classList.add("downTrend2");
   document.querySelector("button.downTrend2").innerText = downvalue2;  
@@ -155,7 +160,7 @@ divtag.setAttribute("class", "difference3");
 tday = (dCompanyObject[companyDetails[d]][complen]);
 yday = (dCompanyObject[companyDetails[d]][complen -3] );
 complen = dCompanyObject[companyDetails[d]].length -3 ;
-if (tday-yday < 0){
+if ((((tday - yday) / yday) * 100) < 0){
   downvalue3++;
   divtag.classList.add("downTrend3");
   document.querySelector("button.downTrend3").innerText = downvalue3;
@@ -435,7 +440,7 @@ let resultCount = 0;
                               data: {
                               labels: xValues, // .reverse().slice(0,30),
                               datasets: [{
-                                      label: "",
+                                      label: volumeValues[volumeValues.length - 1],
                                       tooltip: '',
                                       pointRadius: 0,
                                       borderWidth : 0.5,
@@ -445,7 +450,7 @@ let resultCount = 0;
                                     },
                               options: {
                                       plugins: {
-                                          legend: false // Hide legend
+                                          legend: true // Hide legend
                                       },
                                       scales: {
                                         yAxes: [{

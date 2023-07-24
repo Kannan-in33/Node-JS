@@ -36,6 +36,7 @@ server.get('/favicon.ico', (req, res) => {
 });
         
 server.use( (req, res)=>{
+
     let obj ={};
     let obj2 = [];
     let datesObj = [];
@@ -54,57 +55,7 @@ server.use( (req, res)=>{
 
 
 
-if(req.path !== '/favicon1.ico'){
-// console.log(req.path);
- if(req.path == '/10x'){
-        let j = 0;
-        let foldersPath = fs.readdirSync(path.resolve(__dirname, 'src'));
-
-                foldersPath.forEach( (folder, j) => {
-
-                    const directorypath = path.join(__dirname, 'src/' + folder);
-                    fs.readdir(directorypath , function (err, files) {
-                    if (err) throw err;
-                    files.forEach( (file, i) => {
-                        
-                            fs.readFile(path.join(directorypath , file), 'utf8', function (err2, data) {
-                            if (err2) throw err2;
-                            obj = JSON.parse(data);
-                            company.push(file);
-                            valueList[file.split('.')[0]] = obj['datasets'][0]['values'].length
-                            max = max < obj['datasets'][1]['values'].length ? obj['datasets'][1]['values'].length : max
-                            try{
-                                obj2[0] = obj['datasets'][1]['values'][max -1][1];
-                                obj2[1] = obj['datasets'][1]['values'][max -2][1];
-                            }catch{ }
-                                    if((obj2[0]/obj2[1]) > 3){
-                                    companyObject[file.split('.')[0]] = (obj2[0]/obj2[1]).toFixed(2);
-                                    }
-
-                                    if( j == foldersPath.length -1 && i == files.length -1){
-                                    obj3 = { 
-                                    "companyObject" : companyObject
-                                    }
-                                    res.send(obj3);
-                                    }
-
-        });   });  });  })
-
-
-}
-
-else if(req.path.includes('getcompare')) {
-
-    const directorypath = path.join(__dirname, 'SectorData');
-    fs.readFile(path.join(directorypath , 'Comparison.json'), 'utf8', function (err2, data) {
-        if (err2) throw err2;
-        // console.log(data);
-        obj = JSON.parse(data);
-        res.send(data);
-    });
-}
-
-else if(req.path == '/All') {
+if(req.path == '/All') {
     let j = 0;
     let k = 0;
     let foldersPath = fs.readdirSync(path.resolve(__dirname, 'src/'));
@@ -161,22 +112,31 @@ else if(req.path == '/All') {
 });  
 }
 
+else if(req.path.includes('getcompare')) {
+
+    const directorypath = path.join(__dirname, 'SectorData');
+    fs.readFile(path.join(directorypath , 'Comparison.json'), 'utf8', function (err2, data) {
+        if (err2) throw err2;
+        obj = JSON.parse(data);
+        res.send(data);
+    });
+    }
 
 else{
-    
+    let j = 0;
 const directorypath = path.join(__dirname, (req.path.replace('/', 'src/').replaceAll('%20', ' ') ));
 fs.readdir(directorypath , function (err, files) {
     
                 if (err) throw err;
-                files.forEach( (file, i) => {
-
+                files.forEach( (file, i) => {    
+                    console.log(file);                
                 fs.readFile(path.join(directorypath , file), 'utf8', 
                 function (err2, data) {
                 if (err2) throw err2;
                 obj = JSON.parse(data);
-                let j = 0;
                 company.push(file);
                 if(obj['datasets'].length > 0 ){
+
                     valueList[file.split('.')[0]] = obj['datasets'][0]['values'].length
                     max = max < obj['datasets'][0]['values'].length ? obj['datasets'][0]['values'].length : max
                     for (let key in obj['datasets'][0]['values']) {
@@ -212,7 +172,6 @@ fs.readdir(directorypath , function (err, files) {
 
                 }
 
-}
 
 });
 
@@ -220,3 +179,57 @@ server.listen(port, () => {
     console.log('Server is listening on port ' + port);
     
 })
+
+
+// OLD Codes
+// if(req.path == '/10x'){
+//     let j = 0;
+//     let foldersPath = fs.readdirSync(path.resolve(__dirname, 'src'));
+
+//             foldersPath.forEach( (folder, j) => {
+
+//                 const directorypath = path.join(__dirname, 'src/' + folder);
+//                 fs.readdir(directorypath , function (err, files) {
+//                 if (err) throw err;
+//                 files.forEach( (file, i) => {
+                    
+//                         fs.readFile(path.join(directorypath , file), 'utf8', function (err2, data) {
+//                         if (err2) throw err2;
+//                         obj = JSON.parse(data);
+//                         company.push(file);
+//                         valueList[file.split('.')[0]] = obj['datasets'][0]['values'].length
+//                         max = max < obj['datasets'][1]['values'].length ? obj['datasets'][1]['values'].length : max
+//                         try{
+//                             obj2[0] = obj['datasets'][1]['values'][max -1][1];
+//                             obj2[1] = obj['datasets'][1]['values'][max -2][1];
+//                         }catch{ }
+//                                 if((obj2[0]/obj2[1]) > 3){
+//                                 companyObject[file.split('.')[0]] = (obj2[0]/obj2[1]).toFixed(2);
+//                                 }
+
+//                                 if( j == foldersPath.length -1 && i == files.length -1){
+//                                 obj3 = { 
+//                                 "companyObject" : companyObject
+//                                 }
+//                                 res.send(obj3);
+//                                 }
+
+//     });   });  });  })
+
+
+// }
+
+// else if(req.path.includes('getcompare')) {
+
+// const directorypath = path.join(__dirname, 'SectorData');
+// fs.readFile(path.join(directorypath , 'Comparison.json'), 'utf8', function (err2, data) {
+//     if (err2) throw err2;
+//     // console.log(data);
+//     obj = JSON.parse(data);
+//     res.send(data);
+// });
+// }
+
+// else 
+
+// END OF OLD CODES
