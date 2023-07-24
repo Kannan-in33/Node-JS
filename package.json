@@ -23,6 +23,7 @@
   "homepage": "https://github.com/Kannan-in33/Node-JS#readme",
   "dependencies": {
     "express": "^4.18.2",
+    "googleapis": "^122.0.0",
     "nodemon": "^2.0.22"
   }
 }

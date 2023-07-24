@@ -87,7 +87,7 @@
         height: 150px !important;
       }
 
-     .MarketCap, .High, .Reserve, .difference, .difference3 , .difference2 {
+     .MarketCap, .High, .Reserve, .difference0, .difference1 , .difference2, .difference3{
           background-color: #FFD750;
           padding: 0 5% 0 10px;
           width: 100%;
@@ -98,7 +98,7 @@
         width: 100%;
       } */
 
-      .upTrend::before, .upTrend2::before, .upTrend3::before{      
+      .upTrend0::before, .upTrend1::before, .upTrend2::before, .upTrend3::before{      
         transform: scale(1.5);
         display: inline-flex;
         margin-left: 5px;
@@ -109,7 +109,7 @@
 
       }
 
-      .downTrend::before, .downTrend2::before, .downTrend3::before{      
+      .downTrend0::before, .downTrend1::before, .downTrend2::before, .downTrend3::before{      
         transform: scale(1.5);
         display: inline-flex;
         margin-left: 5px;

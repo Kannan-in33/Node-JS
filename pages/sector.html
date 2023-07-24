@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,24 +37,30 @@
       
       <div class="range">
         
-        <button id="days50" class="d50"  onclick="getDay(50);" type="button">50 Days</button>
+        <!-- <button id="days50" class="d50"  onclick="getDay(50);" type="button">50 Days</button>
         <button id="days70" class="d20" onclick="getDay(70);" type="button">70 Days</button>
-        <button id="days100" class="100"  onclick="getDay(100);" type="button">100 Days</button>
+        <button id="days100" class="100"  onclick="getDay(100);" type="button">100 Days</button> -->
         <div class="resultbox">
-          <button class="upTrend" id="results" onclick="getUp();">Up</button>
-          <button class="downTrend" id="resultsd" onclick="getDown();">Dn</button>
+          <button class="upTrend0" id="results0" onclick="getUp0();">Up</button>
+          <button class="downTrend0" id="resultsd0" onclick="getDown0();">Dn</button>
   
   
         </div>
-        <div class="resultbox">
-          <button class="upTrend2" id="results2" onclick="getUp2();">2</button>
-          <button class="downTrend2" id="resultsd2" onclick="getDown2();">2</button>
-        </div>
-  
-        <div class="resultbox">
-          <button class="upTrend3" id="results3" onclick="getUp3();">3</button>
-          <button class="downTrend3" id="resultsd3" onclick="getDown3();">3</button>
-        </div>
+      <div class="resultbox">
+        <button class="upTrend1" id="results1" onclick="getUp1();">Up</button>
+        <button class="downTrend1" id="resultsd1" onclick="getDown1();">Dn</button>
+
+
+      </div>
+      <div class="resultbox">
+        <button class="upTrend2" id="results2" onclick="getUp2();">2</button>
+        <button class="downTrend2" id="resultsd2" onclick="getDown2();">2</button>
+      </div>
+
+      <div class="resultbox">
+        <button class="upTrend3" id="results3" onclick="getUp3();">3</button>
+        <button class="downTrend3" id="resultsd3" onclick="getDown3();">3</button>
+      </div>
         <a href="/">Home</a>
         
         
@@ -195,202 +200,4 @@ function myFunction() {
 }
 </script>
 </body>
-=======
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sector</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-  
-    <!-- Google Tag Manager -->
-  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-5WRLND4');</script>
-    <!-- End Google Tag Manager -->
-    
-     </head>
-      <body>
-        <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5WRLND4"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
-
-      <div class="static">
-      <div class="search">
-          <input placeholder="Search Sector..." type="text" id="filter" name="filter" />
-          <button id="clear" onclick="clea();" type="button"><strong>X</strong></button>
-          <input placeholder="Search..." type="text" id="filters" name="filters" />
-          <button id="compare" class="compare" onclick="compareStocks();" type="button">Compare</button>
-          <button id="Favourits" class="Favourits" onclick="getFavourits();" type="button">Favourits</button>
-          <button id="clearFavourits" class="Favourits hide" onclick="clearFavourits();" type="button">Clear Favourits</button>
-        
-      </div>
-      <ul id="SectorList">
-        <li id="All" onclick="getSectorDataAll();">All</li>
-      </ul>
-      
-      <div class="range">
-        
-        <button id="days50" class="d50"  onclick="getDay(50);" type="button">50 Days</button>
-        <button id="days70" class="d20" onclick="getDay(70);" type="button">70 Days</button>
-        <button id="days100" class="100"  onclick="getDay(100);" type="button">100 Days</button>
-        <div class="resultbox">
-          <button class="upTrend" id="results" onclick="getUp();">Up</button>
-          <button class="downTrend" id="resultsd" onclick="getDown();">Dn</button>
-  
-  
-        </div>
-        <div class="resultbox">
-          <button class="upTrend2" id="results2" onclick="getUp2();">2</button>
-          <button class="downTrend2" id="resultsd2" onclick="getDown2();">2</button>
-        </div>
-  
-        <div class="resultbox">
-          <button class="upTrend3" id="results3" onclick="getUp3();">3</button>
-          <button class="downTrend3" id="resultsd3" onclick="getDown3();">3</button>
-        </div>
-        <a href="/">Home</a>
-        
-        
-        <div class="dropdown">
-            <button id="daysbuy" class="buy-main"  onclick="getBuyMain();" type="button">Buy List</button>
-              <div id="BuyDropdown" class="drop-options">
-                <button id="daysbuy40" class="buy"  onclick="getBuy(40);" type="button">40% +</button>
-                <button id="daysbuy30" class="buy"  onclick="getBuy(30);" type="button">30% +</button>
-                <button id="daysbuy20" class="buy"  onclick="getBuy(20);" type="button">20% +</button>
-                <button id="daysbuyAvg" class="buy"  onclick="getBuy(60);" type="button">30d Avg +</button>
-              </div>
-        </div>
-        
-      </div>
-    </div>
-    <div id="comparel" class="comparel"></div>
-      <div class="charts"></div>
-      <ol class="volume"> </0l>
-
-        <style>
-          .range{
-            margin-top: 100px !important;
-          }
-        </style>
-
-<script src="/scripts.js"></script>
-<link rel="stylesheet" type="text/css"  href="/style.css" >
-
-
-    
-
-<script>
-
-  const SectList = [  'Abrasives And Grinding Wheels',
-                      'Air',
-                      'Aluminium and Aluminium Products',
-                      'Aquaculture',
-                      'Auto Ancillaries',
-                      'Automobiles',
-                      'Banks',
-                      'Bearings',
-                      'Breweries',
-                      'Cables',
-                      'Castings',
-                      'Cement',
-                      'Cement Products',
-                      'Ceramics',
-                      'Chemicals',
-                      'Chlor Alkali',
-                      'Cigarettes',
-                      'Compressors',
-                      'Computers',
-                      'Construction',
-                      'Couriers',
-                      'Cycles And Accessories',
-                      'Detergents',
-                      'Diamond Cutting',
-                      'Diversified',
-                      'Domestic Appliances',
-                      'Dry Cells',
-                      'Dyes And Pigments',
-                      'Electric Equipment',
-                      'Electrodes',
-                      'Electronics',
-                      'Engineering',
-                      'Engines',
-                      'Entertainment',
-                      'Fasteners',
-                      'Fertilizers',
-                      'Finance',
-                      'Food',
-                      'Glass',
-                      'Healthcare',
-                      'Hotels',
-                      'Leather',
-                      'Mining',
-                      'Miscellaneous',
-                      'Moulded Luggage',
-                      'Oil Drilling',
-                      'Packaging',
-                      'Paints',
-                      'Paper',
-                      'Personal Care',
-                      'Pesticides',
-                      'Petrochemicals',
-                      'Pharmaceuticals',
-                      'Photographic And Allied Products',
-                      'Plastics Products',
-                      'Power Generation And Supply',
-                      'Printing',
-                      'Pumps',
-                      'Recreation',
-                      'Refineries',
-                      'Refractories',
-                      'Shipping',
-                      'Solvent Extraction',
-                      'Steel',
-                      'Stock Exchanges',
-                      'Sugar',
-                      'Tea',
-                      'Telecommunications',
-                      'Textile Machinery',
-                      'Textiles',
-                      'Trading',
-                      'Transmisson Line Towers',
-                      'Transport',
-                      'Travel Agencies',
-                      'Tyres'
-                  ];
-  
-SectList.forEach( element =>{
-                        let ls =   document.createElement("li");
-                        ls.addEventListener('click', getSectorData);
-                        ls.innerText = element.trim();
-                        ls.id = element.trim();
-                        document.getElementById("SectorList").appendChild(ls);
-                      })
-
-function myFunction() {
-              document.getElementById("SectorList").style.display = 'block';
-            // Declare variables
-            var input, filter, ul, li, a, i, txtValue;
-            input = document.getElementById('filter');
-            filter = input.value.toUpperCase();
-            ul = document.getElementById("SectorList");
-            li = ul.getElementsByTagName('li');
-          
-            // Loop through all list items, and hide those who don't match the search query
-            for (i = 0; i < li.length; i++) {
-              txtValue = li[i].innerText;
-              if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                  li[i].style.display = "";
-              } else {
-                  li[i].style.display = "none";
-              }
-            }
-}
-</script>
-</body>
->>>>>>> 6bd0bc2b7fe94dc1c99842495751ae197a8ee735
 </html>

@@ -1,13 +1,17 @@
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
-
+const {google} = require('googleapis');
 
 const port = process.env.PORT || 5000 ;
 const server = express();
+currentPriceData = {};
 
-server.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, './pages/index.html'));
+const spreadsheetId = "13BOxMT5cUoScurImRrDK0PwwLYAtV7qJiI75Knw44kQ";
+
+server.get('/',  (req, res) => {
+
+res.sendFile(path.join(__dirname, './pages/index.html'));
 
 });
 
@@ -95,6 +99,7 @@ if(req.path == '/All') {
                     "company" : company,
                     "companyObject" : companyObject,
                     "volumeObject" : volumeObject,
+                    "currentPriceData": currentPriceData,
                 // "valueList" : valueList,
                 // "max" : max,                
                 // "companyDateObj" : companyDateObj
@@ -129,7 +134,7 @@ fs.readdir(directorypath , function (err, files) {
     
                 if (err) throw err;
                 files.forEach( (file, i) => {    
-                    console.log(file);                
+                    // console.log(file);                
                 fs.readFile(path.join(directorypath , file), 'utf8', 
                 function (err2, data) {
                 if (err2) throw err2;
@@ -158,6 +163,7 @@ fs.readdir(directorypath , function (err, files) {
                 if (i == files.length -1 ){
                 obj3 = { "company" : company,
                 "volumeObject" : volumeObject,
+                "currentPriceData" : currentPriceData,
                 // "valueList" : valueList,
                 // "max" : max,
                 "companyObject" : companyObject,
@@ -177,8 +183,36 @@ fs.readdir(directorypath , function (err, files) {
 
 server.listen(port, () => {
     console.log('Server is listening on port ' + port);
-    
+    getUpdatedPrice();
+    setInterval(getUpdatedPrice, (1000 * 60  * 30));
 })
+
+getUpdatedPrice =  async () =>{
+    const auth = new google.auth.GoogleAuth({
+        keyFile: "credentials.json",
+        scopes: "https://www.googleapis.com/auth/spreadsheets",
+    });
+
+    const client = await auth.getClient();
+
+    const googleSheets = google.sheets({
+        version: "v4",
+        auth: client
+    });
+
+    // get details of spreadsheet
+
+    const CPdata = await googleSheets.spreadsheets.values.get({
+        auth,
+        spreadsheetId,
+        range: 'NSE Daily', 
+    });
+
+   let cpvalues = (CPdata.data.values);
+   cpvalues.forEach ( ele => {
+   currentPriceData[ele[0].toString().split(",")[0]] = ele[1].toString();
+})
+}
 
 
 // OLD Codes

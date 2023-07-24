@@ -9,10 +9,14 @@ let BuyObject20 = {};
 let BuyObject3Avg = {};
 let compareList =[];
 let companyDetails = [];
-let positive = [];
-let positiveCompany = {};
-let negativeList = [];
-let negativeCompany = {};
+let positive0 = []; 
+let positiveCompany0 = {};
+let positive1 = [];
+let positiveCompany1 = {};
+let negativeList1 = [];
+let negativeCompany1 = {};
+let negativeList0 = [];
+let negativeCompany0 = {};
 let positive2 = [];
 let positiveCompany2 = {};
 let negativeList2 = [];
@@ -21,6 +25,7 @@ let positive3 = [];
 let positiveCompany3 = {};
 let negativeList3 = [];
 let negativeCompany3 = {};
+let CurrentPriceObj = {};
 
 const weekday = ["S","M","T","W","Th","F","St"];
 
@@ -31,30 +36,78 @@ let rupee = new Intl.NumberFormat('en-IN', {
     
 });
 
-function updateCompantDeatils(){
-  let upvalue = 0;
-  let downvalue = 0;
-
+function updateCompanyDeatils(){
+  let upvalue0 = 0;
+  let downvalue0 = 0;
+  let upvalue1 = 0;
+  let downvalue1 = 0;
   let upvalue2 = 0;
   let downvalue2 = 0;
   let upvalue3 = 0;
   let downvalue3 = 0;
-  let positivelength = positive.length;
+  
+  
+let positivelength = positive0.length;
+
 for(let p = 0; p < positivelength; p++) {
-  positive.pop();
+  positive0.pop();
 }
 
-let negativeListlength = negativeList.length
+let negativeListlength = negativeList0.length
+
 for(let n = 0; n < negativeListlength; n++) {
-  negativeList.pop();
+  negativeList0.pop();
 }
+
+// 1***********************
+positivelength = positive1.length;
+
+for(let p = 0; p < positivelength; p++) {
+  positive1.pop();
+}
+
+negativeListlength = negativeList1.length
+
+for(let n = 0; n < negativeListlength; n++) {
+  negativeList1.pop();
+}
+// / END 1***************************
+
+positivelength = positive2.length;
+
+for(let p = 0; p < positivelength; p++) {
+  positive2.pop();
+}
+
+negativeListlength = negativeList2.length
+
+for(let n = 0; n < negativeListlength; n++) {
+  negativeList2.pop();
+}
+
+
+
+// END 2***************************
+
+positivelength = positive3.length;
+
+for(let p = 0; p < positivelength; p++) {
+  positive3.pop();
+}
+
+negativeListlength = negativeList3.length
+
+for(let n = 0; n < negativeListlength; n++) {
+  negativeList3.pop();
+}
+
+// END 3******************************
 
   for(let d = 0 ; d < companyDetails.length ; d++) {
     
-    if (document.querySelectorAll('#'+ companyDetails[d].toString().replace("&"," ")).length > 0 &&  document.querySelectorAll('#'+ companyDetails[d] + " .right .block1").length == 0){
+if (document.querySelectorAll('#'+ companyDetails[d].toString().replace("&"," ")).length > 0 &&  document.querySelectorAll('#'+ companyDetails[d] + " .right .block1").length == 0){
 
-    // if (document.querySelectorAll("[id^=" +  companyDetails[d].toString().replace("&"," ") + "]").length > 0 &&  document.querySelectorAll('#'+ companyDetails[d] + " .right .block1").length == 0){
-
+if (JSON.stringify(getCompareObject).includes([companyDetails[d]])){
 let divtag0 = document.createElement("div");
   divtag0.setAttribute("class", "block1");
   document.querySelector('#'+ companyDetails[d] + " .right").appendChild(divtag0);
@@ -95,33 +148,62 @@ divtag.innerText = "B  :  " + rupee.format(getCompareObject[companyDetails[d]].B
 divtag0.appendChild(divtag);
 
 
-divtag = document.createElement("div");
-divtag.setAttribute("class", "difference");
-let complen = dCompanyObject[companyDetails[d]].length -1 ;
-let tday = (dCompanyObject[companyDetails[d]][complen]);
-let yday = (dCompanyObject[companyDetails[d]][complen -1] );
+//  UPDTAE CURRENT Data************************************************
 
-console.log(((tday - yday) / yday) * 100);
+divtag = document.createElement("div");
+divtag.setAttribute("class", "difference0");
+let complen = dCompanyObject[companyDetails[d]].length -1 ;
+let tday = CurrentPriceObj[companyDetails[d]];
+let yday = (dCompanyObject[companyDetails[d]][complen]);
+
+if(tday !== undefined ){
 if ((((tday - yday) / yday) * 100) < 0){
-  downvalue++;
-  divtag.classList.add("downTrend");
-  document.querySelector("button.downTrend").innerText = downvalue;
-  
-  negativeList.push(((((tday - yday) / yday) * 100).toFixed(6)));
-  negativeCompany[(((tday - yday) / yday) * 100).toFixed(6)] = companyDetails[d];
+  downvalue0++;
+  divtag.classList.add("downTrend0");
+  document.querySelector("button.downTrend0").innerText = downvalue0;  
+  negativeList0.push(((((tday - yday) / yday) * 100).toFixed(6)));
+  negativeCompany0[(((tday - yday) / yday) * 100).toFixed(6)] = companyDetails[d];
   
 }
 else{
-  upvalue++;
-  divtag.classList.add("upTrend");
-  document.querySelector("button.upTrend").innerText = upvalue;
-  
-  positive.push(((((tday - yday) / yday) * 100).toFixed(6)));
-  positiveCompany[(((tday - yday) / yday) * 100).toFixed(6)] = companyDetails[d];
+  upvalue0++;
+  divtag.classList.add("upTrend0");
+  document.querySelector("button.upTrend0").innerText = upvalue0;
+  positive0.push(((((tday - yday) / yday) * 100).toFixed(6)));
+  positiveCompany0[(((tday - yday) / yday) * 100).toFixed(6)] = companyDetails[d];
+}
+// }
+divtag.innerText = "0:  " +  (((tday - yday) / yday) * 100).toFixed(1) + ' %';
+}
+divtag0.appendChild(divtag);
 
+// **************************************update Current data END************************************
+
+divtag = document.createElement("div");
+divtag.setAttribute("class", "difference1");
+complen = dCompanyObject[companyDetails[d]].length -1 ;
+tday = (dCompanyObject[companyDetails[d]][complen]);
+yday = (dCompanyObject[companyDetails[d]][complen -1] );
+
+// console.log(((tday - yday) / yday) * 100);
+if ((((tday - yday) / yday) * 100) < 0){
+  downvalue1++;
+  divtag.classList.add("downTrend1");
+  document.querySelector("button.downTrend1").innerText = downvalue1;
+  
+  negativeList1.push((((((tday - yday) / yday) * 100).toFixed(6))));
+  negativeCompany1[(((tday - yday) / yday) * 100).toFixed(6)] = companyDetails[d];
+  
+}
+else{
+  upvalue1++;
+  divtag.classList.add("upTrend1");
+  document.querySelector("button.upTrend1").innerText = upvalue1;    
+  positive1.push( (((((tday - yday) / yday) * 100).toFixed(6))));
+  positiveCompany1[(((tday - yday) / yday) * 100).toFixed(6)] = companyDetails[d];
 
 }
-divtag.innerText = ":  " +  (((tday - yday) / yday) * 100).toFixed(1) + ' %';
+divtag.innerText = "1:  " +  (((tday - yday) / yday) * 100).toFixed(1) + ' %';
 divtag0.appendChild(divtag);
 
 // Second Symbol
@@ -131,7 +213,7 @@ divtag = document.createElement("div");
 divtag.setAttribute("class", "difference2");
 complen = dCompanyObject[companyDetails[d]].length -2 ;
 tday = (dCompanyObject[companyDetails[d]][complen]);
-yday = (dCompanyObject[companyDetails[d]][complen -2] );
+yday = (dCompanyObject[companyDetails[d]][complen -1] );
 if ((((tday - yday) / yday) * 100) < 0){
   downvalue2++;
   divtag.classList.add("downTrend2");
@@ -149,7 +231,7 @@ else{
 
 
 }
-divtag.innerText = ":  " +  (((tday - yday) / yday) * 100).toFixed(1) + ' %';
+divtag.innerText = "2:  " +  (((tday - yday) / yday) * 100).toFixed(1) + ' %';
 divtag0.appendChild(divtag);
 
 // Third Symbol*****************************************************************************
@@ -157,9 +239,10 @@ divtag0.appendChild(divtag);
 
 divtag = document.createElement("div");
 divtag.setAttribute("class", "difference3");
-tday = (dCompanyObject[companyDetails[d]][complen]);
-yday = (dCompanyObject[companyDetails[d]][complen -3] );
 complen = dCompanyObject[companyDetails[d]].length -3 ;
+tday = (dCompanyObject[companyDetails[d]][complen]);
+yday = (dCompanyObject[companyDetails[d]][complen -1] );
+
 if ((((tday - yday) / yday) * 100) < 0){
   downvalue3++;
   divtag.classList.add("downTrend3");
@@ -178,7 +261,7 @@ else{
 
 
 }
-divtag.innerText = ":  " +  (((tday - yday) / yday) * 100).toFixed(1) + ' %';
+divtag.innerText = "3:  " +  (((tday - yday) / yday) * 100).toFixed(1) + ' %';
 divtag0.appendChild(divtag);
 
 
@@ -190,14 +273,18 @@ divtag.innerText = rupee.format(tday) ;
 divtag0.appendChild(divtag);
 
 // Third symbol END*******************************************************************
+}
 
 }
 }
-positive.sort((a, b) => b - a);
-negativeList.sort((a, b) => a - b);
+positive0.sort((a, b) => b - a);
+positive1.sort((a, b) => b - a);
 positive2.sort((a, b) => b - a);
-negativeList2.sort((a, b) => a - b);
 positive3.sort((a, b) => b - a);
+
+negativeList0.sort((a, b) => a - b);
+negativeList1.sort((a, b) => a - b);
+negativeList2.sort((a, b) => a - b);
 negativeList3.sort((a, b) => a - b);
 }
 
@@ -401,11 +488,11 @@ let resultCount = 0;
                         else if (Math.floor(((cmax-ccurrect)/cmax) * 100) > 20 && ccurrect < cmax){
                           BuyObject20[key] = companyObject[key];
                         }
-                          
-                        if (( ( (Number(buyAvg[20]) + Number(buyAvg[29]) + Number(buyAvg[15])) / 3) < (ccurrect * 1.09 )) && (((cmax-ccurrect)/cmax) * 100) > 30 ){
-                          BuyObject3Avg[key] = companyObject[key];
-                          // console.log(key + "    " + ( (Number(buyAvg[20]) + Number(buyAvg[29]) + Number(buyAvg[15]) )/3).toFixed(2) + "    " + ccurrect);
-                        }
+                        if ((yValues2[1] * 1.05) < ccurrect){
+                          // if (( ( (Number(buyAvg[20]) + Number(buyAvg[29]) + Number(buyAvg[15])) / 3) < (ccurrect * 1.09 )) && (((cmax-ccurrect)/cmax) * 100) > 30 ){
+                            BuyObject3Avg[key] = companyObject[key];
+                            // console.log(key + "    " + ( (Number(buyAvg[20]) + Number(buyAvg[29]) + Number(buyAvg[15]) )/3).toFixed(2) + "    " + ccurrect);
+                          }
 
                       
                         new Chart(canvas, {
@@ -467,7 +554,7 @@ let resultCount = 0;
 
 
     }
-document.getElementById("results").innerText = resultCount.toString();
+document.getElementById("results0").innerText = resultCount.toString();
 let idlst = document.querySelectorAll("[id^='getData']");
 idlst.forEach( element => {
 element.innerText = "Stocks " + element.classList[0] +'+';
@@ -476,7 +563,7 @@ element.classList.remove('active');
 
 
 setTimeout(updateFavourite, 1000);
-setTimeout(updateCompantDeatils, 1000);
+setTimeout(updateCompanyDeatils, 1000);
 // setTimeout(getFav, 100);
 
 }
@@ -514,6 +601,9 @@ function getData(e) {
             dCompanyObject = xhr.response.companyObject;
             dCompanyDateObject = xhr.response.companyDateObj;
             dVolumeObject = xhr.response.volumeObject;
+            if(JSON.stringify(CurrentPriceObj).length == 2) {
+            CurrentPriceObj = xhr.response.currentPriceData;
+            }
             createChart( xhr.response.companyObject, e);
           } 
           else {
@@ -523,10 +613,18 @@ function getData(e) {
   }
 
 function getSectorData(event) {
-        // removeActive();
+
+        document.getElementById("results0").innerText = 0;
+        document.getElementById("results1").innerText = 0;
+        document.getElementById("results2").innerText = 0;
+        document.getElementById("results3").innerText = 0;
+        document.getElementById("resultsd0").innerText = 0;
+        document.getElementById("resultsd1").innerText = 0;
+        document.getElementById("resultsd2").innerText = 0;
+        document.getElementById("resultsd3").innerText = 0;
         document.getElementById("filter").value = event.target.innerText;
         event.target.parentElement.style.display = 'none';
-        document.getElementById("results").innerText = "Loading...";
+        document.getElementById("results0").innerText = "Loading...";
         event.target.classList.add('active');
         const xhr = new XMLHttpRequest();
         xhr.open("GET", "/" + event.target.id.toString());
@@ -537,6 +635,7 @@ function getSectorData(event) {
             dCompanyObject = xhr.response.companyObject;
             dCompanyDateObject = xhr.response.companyDateObj;
             dVolumeObject = xhr.response.volumeObject;
+            CurrentPriceObj = xhr.response.currentPriceData;
             createChart( xhr.response.companyObject, event.target.id);
           } 
           else {
@@ -548,7 +647,7 @@ function getSectorData(event) {
   function getSectorDataAll() {
     // removeActive();
     document.getElementById("filter").value = 'All';
-    document.getElementById("results").innerText = "Loading...";
+    document.getElementById("results0").innerText = "Loading...";
     document.getElementById("SectorList").style.display = 'none';
     const xhr = new XMLHttpRequest();
     xhr.open("GET", "/All" );
@@ -559,6 +658,7 @@ function getSectorData(event) {
         dCompanyObject = xhr.response.companyObject;
         dCompanyDateObject = xhr.response.companyDateObj;
         dVolumeObject = xhr.response.volumeObject;
+        CurrentPriceObj = xhr.response.currentPriceData;
         createChart( xhr.response.companyObject, 'All');
       } 
       else {
@@ -578,7 +678,7 @@ function setComp(event){
 
     if (event.target.checked){
       compareList.push(event.target.classList[0]);
-      console.log(compareList);
+      // console.log(compareList);
     }
     else{
       let index = compareList.indexOf(event.target.classList[0]);
@@ -632,7 +732,7 @@ function setComp(event){
         xhr.responseType = "json";
         xhr.onload = () => {
         if (xhr.readyState == 4 && xhr.status == 200) {
-            console.log("Success");
+            // console.log("Success");
             getCompareObject = xhr.response;
             // console.log(getCompareObject);
         } 
@@ -642,6 +742,26 @@ function setComp(event){
         };
 }
 getCompare();
+
+// let CrLink = 'https://docs.google.com/spreadsheets/u/1/d/e/2PACX-1vSe4LB0TG9QgBjssTYT2uOd_83tl16F1UP0fdBaFMB6fC1lBYMz9y8yQaiokTid2fsQW1M5aZ7oLG8D/pubhtml?gid=0&single=true';
+
+
+
+function getCurrentPrice() {
+  const xhr = new XMLHttpRequest();
+  xhr.open("GET", CrLink);
+  xhr.send();
+  xhr.responseType = "text/html";
+  xhr.onload = () => {
+  if (xhr.readyState == 4 && xhr.status == 200) {
+      CurrentPriceObj = xhr.response;
+      // console.log(CurrentPriceObj);
+  } 
+  else {
+      console.log(`Error: ${xhr.status}`);
+      }
+  };
+}
 
 
 
@@ -770,22 +890,22 @@ let myFunc2 = letsDebounce(setFilter2,1000);
   }
 
 
-  function getUp(){
+  function getUp0(){
 
     let lst = document.querySelectorAll(".charts > div");
     lst.forEach( (ele) => {
       ele.style.display = "none" ;
     });
    
-      for(let i = 0; i < positive.length;){
-      let indx = positiveCompany[positive[i]];
+      for(let i = 0; i < positive0.length;){
+      let indx = positiveCompany0[positive0[i]];
       // console.log(i + "   " + indx);
       let elementUp = document.getElementById(indx);
       if (elementUp != null){
       elementUp.style.display = "";
       i++;
       elementUp.parentElement.insertBefore(elementUp, elementUp.parentElement.children[i]);
-      document.getElementById("results").innerText = Math.max(i , 1) ;
+      document.getElementById("results0").innerText = Math.max(i , 1) ;
       }
       }
 
@@ -793,7 +913,7 @@ let myFunc2 = letsDebounce(setFilter2,1000);
 
 }
 
-function getDown(){
+function getDown0(){
 
   let lst = document.querySelectorAll(".charts > div");
   lst.forEach( (ele) => {
@@ -801,15 +921,15 @@ function getDown(){
   });
 
 
-  for(let i = 0; i < negativeList.length; ){
-    let indx = negativeCompany[negativeList[i]];
+  for(let i = 0; i < negativeList0.length; ){
+    let indx = negativeCompany0[negativeList0[i]];
     // console.log(i + "   " + indx);
     let elementUp = document.getElementById(indx);
     if (elementUp != null){
     elementUp.style.display = "";
     i++;
     elementUp.parentElement.insertBefore(elementUp, elementUp.parentElement.children[i]);
-    document.getElementById("resultsd").innerText = Math.max((i) , 1) ;
+    document.getElementById("resultsd0").innerText = Math.max((i) , 1) ;
     }
     }
 
@@ -817,6 +937,52 @@ function getDown(){
 }
 
 // GET UP DOWN DUP WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+
+function getUp1(){
+
+  let lst = document.querySelectorAll(".charts > div");
+  lst.forEach( (ele) => {
+    ele.style.display = "none" ;
+  });
+ 
+    for(let i = 0; i < positive1.length;){
+    let indx = positiveCompany1[positive1[i]];
+    // console.log(i + "   " + indx);
+    let elementUp = document.getElementById(indx);
+    if (elementUp != null){
+    elementUp.style.display = "";
+    i++;
+    elementUp.parentElement.insertBefore(elementUp, elementUp.parentElement.children[i]);
+    document.getElementById("results1").innerText = Math.max(i , 1) ;
+    }
+    }
+
+
+
+}
+
+function getDown1(){
+
+let lst = document.querySelectorAll(".charts > div");
+lst.forEach( (ele) => {
+  ele.style.display = "none" ;
+});
+
+
+for(let i = 0; i < negativeList1.length; ){
+  let indx = negativeCompany1[negativeList1[i]];
+  // console.log(i + "   " + indx);
+  let elementUp = document.getElementById(indx);
+  if (elementUp != null){
+  elementUp.style.display = "";
+  i++;
+  elementUp.parentElement.insertBefore(elementUp, elementUp.parentElement.children[i]);
+  document.getElementById("resultsd1").innerText = Math.max((i) , 1) ;
+  }
+  }
+
+
+}
 
 function getUp2(){
 
@@ -879,7 +1045,7 @@ function getUp3(){
     elementUp.style.display = "";
     i++;
     elementUp.parentElement.insertBefore(elementUp, elementUp.parentElement.children[i]);
-    // document.getElementById("results").innerText = Math.max(i , 1) ;
+    // document.getElementById("results3").innerText = Math.max(i , 1) ;
     }
     }
 
@@ -903,7 +1069,7 @@ for(let i = 0; i < negativeList3.length; ){
   elementUp.style.display = "";
   i++;
   elementUp.parentElement.insertBefore(elementUp, elementUp.parentElement.children[i]);
-  // document.getElementById("resultsd").innerText = Math.max((i) , 1) ;
+  // document.getElementById("resultsd3").innerText = Math.max((i) , 1) ;
   }
   }
 
