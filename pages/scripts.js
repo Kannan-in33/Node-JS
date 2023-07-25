@@ -45,7 +45,7 @@ function updateCompanyDeatils(){
   let downvalue2 = 0;
   let upvalue3 = 0;
   let downvalue3 = 0;
-  
+  let checknum = 0;
   
 let positivelength = positive0.length;
 
@@ -157,23 +157,24 @@ let tday = CurrentPriceObj[companyDetails[d]];
 let yday = (dCompanyObject[companyDetails[d]][complen]);
 
 if(tday !== undefined ){
+ checknum = checkPercent(tday, yday) ;
 if ((((tday - yday) / yday) * 100) < 0){
   downvalue0++;
   divtag.classList.add("downTrend0");
   document.querySelector("button.downTrend0").innerText = downvalue0;  
-  negativeList0.push(((((tday - yday) / yday) * 100).toFixed(6)));
-  negativeCompany0[(((tday - yday) / yday) * 100).toFixed(6)] = companyDetails[d];
+  negativeList0.push((checkPercent(tday, yday) ));
+  negativeCompany0[checkPercent(tday, yday) ] = companyDetails[d];
   
 }
 else{
   upvalue0++;
   divtag.classList.add("upTrend0");
   document.querySelector("button.upTrend0").innerText = upvalue0;
-  positive0.push(((((tday - yday) / yday) * 100).toFixed(6)));
-  positiveCompany0[(((tday - yday) / yday) * 100).toFixed(6)] = companyDetails[d];
+  positive0.push((checkPercent(tday, yday) ));
+  positiveCompany0[checkPercent(tday, yday) ] = companyDetails[d];
 }
 // }
-divtag.innerText = "0:  " +  (((tday - yday) / yday) * 100).toFixed(1) + ' %';
+divtag.innerText = "0:  " +  checkPercent(tday, yday).toFixed(1) + ' %';
 }
 divtag0.appendChild(divtag);
 
@@ -186,24 +187,25 @@ tday = (dCompanyObject[companyDetails[d]][complen]);
 yday = (dCompanyObject[companyDetails[d]][complen -1] );
 
 // console.log(((tday - yday) / yday) * 100);
-if ((((tday - yday) / yday) * 100) < 0){
+checknum = checkPercent(tday, yday) ;
+if (checknum < 0){
   downvalue1++;
   divtag.classList.add("downTrend1");
   document.querySelector("button.downTrend1").innerText = downvalue1;
   
-  negativeList1.push((((((tday - yday) / yday) * 100).toFixed(6))));
-  negativeCompany1[(((tday - yday) / yday) * 100).toFixed(6)] = companyDetails[d];
+  negativeList1.push(checknum);
+  negativeCompany1[checknum] = companyDetails[d];
   
 }
 else{
   upvalue1++;
   divtag.classList.add("upTrend1");
   document.querySelector("button.upTrend1").innerText = upvalue1;    
-  positive1.push( (((((tday - yday) / yday) * 100).toFixed(6))));
-  positiveCompany1[(((tday - yday) / yday) * 100).toFixed(6)] = companyDetails[d];
+  positive1.push(checknum);
+  positiveCompany1[checknum] = companyDetails[d];
 
 }
-divtag.innerText = "1:  " +  (((tday - yday) / yday) * 100).toFixed(1) + ' %';
+divtag.innerText = "1:  " +  checkPercent(tday, yday).toFixed(1) + ' %';
 divtag0.appendChild(divtag);
 
 // Second Symbol
@@ -214,24 +216,25 @@ divtag.setAttribute("class", "difference2");
 complen = dCompanyObject[companyDetails[d]].length -2 ;
 tday = (dCompanyObject[companyDetails[d]][complen]);
 yday = (dCompanyObject[companyDetails[d]][complen -1] );
-if ((((tday - yday) / yday) * 100) < 0){
+checknum = checkPercent(tday, yday) ;
+if (checknum < 0){
   downvalue2++;
   divtag.classList.add("downTrend2");
   document.querySelector("button.downTrend2").innerText = downvalue2;  
-  negativeList2.push(((((tday - yday) / yday) * 100).toFixed(6)));
-  negativeCompany2[(((tday - yday) / yday) * 100).toFixed(6)] = companyDetails[d];
+  negativeList2.push(checknum);
+  negativeCompany2[checknum] = companyDetails[d];
   
 }
 else{
   upvalue2++;
   divtag.classList.add("upTrend2");
   document.querySelector("button.upTrend2").innerText = upvalue2;
-  positive2.push(((((tday - yday) / yday) * 100).toFixed(6)));
-  positiveCompany2[(((tday - yday) / yday) * 100).toFixed(6)] = companyDetails[d];
+  positive2.push(checknum);
+  positiveCompany2[checknum ] = companyDetails[d];
 
 
 }
-divtag.innerText = "2:  " +  (((tday - yday) / yday) * 100).toFixed(1) + ' %';
+divtag.innerText = "2:  " +  checkPercent(tday, yday).toFixed(1) + ' %';
 divtag0.appendChild(divtag);
 
 // Third Symbol*****************************************************************************
@@ -242,26 +245,27 @@ divtag.setAttribute("class", "difference3");
 complen = dCompanyObject[companyDetails[d]].length -3 ;
 tday = (dCompanyObject[companyDetails[d]][complen]);
 yday = (dCompanyObject[companyDetails[d]][complen -1] );
+checknum = checkPercent(tday, yday) ;
 
-if ((((tday - yday) / yday) * 100) < 0){
+if (checknum < 0){
   downvalue3++;
   divtag.classList.add("downTrend3");
   document.querySelector("button.downTrend3").innerText = downvalue3;
   
-  negativeList3.push(((((tday - yday) / yday) * 100).toFixed(6)));
-  negativeCompany3[(((tday - yday) / yday) * 100).toFixed(6)] = companyDetails[d];
+  negativeList3.push(checknum);
+  negativeCompany3[checknum] = companyDetails[d];
   
 }
 else{
   upvalue3++;
   divtag.classList.add("upTrend3");
   document.querySelector("button.upTrend3").innerText = upvalue3;
-  positive3.push(((((tday - yday) / yday) * 100).toFixed(6)));
-  positiveCompany3[(((tday - yday) / yday) * 100).toFixed(6)] = companyDetails[d];
+  positive3.push(checknum);
+  positiveCompany3[checknum] = companyDetails[d];
 
 
 }
-divtag.innerText = "3:  " +  (((tday - yday) / yday) * 100).toFixed(1) + ' %';
+divtag.innerText = "3:  " +  checkPercent(tday, yday).toFixed(1) + ' %';
 divtag0.appendChild(divtag);
 
 
@@ -286,6 +290,14 @@ negativeList0.sort((a, b) => a - b);
 negativeList1.sort((a, b) => a - b);
 negativeList2.sort((a, b) => a - b);
 negativeList3.sort((a, b) => a - b);
+}
+
+function checkPercent(tday, yday) {
+  if (tday == 0 || tday == undefined || ((Math.abs(((tday - yday) / yday) * 100)) > 25)){
+    return (Math.random() * 0.0005);
+  }
+  
+  return Math.abs(((tday - yday) / yday) * 100);
 }
 
 function compareStocks(){
