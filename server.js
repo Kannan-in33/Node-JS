@@ -10,7 +10,7 @@ currentPriceData = {};
 const spreadsheetId = "13BOxMT5cUoScurImRrDK0PwwLYAtV7qJiI75Knw44kQ";
 
 server.get('/',  (req, res) => {
-
+getUpdatedPrice();
 res.sendFile(path.join(__dirname, './pages/index.html'));
 
 });
@@ -184,7 +184,7 @@ fs.readdir(directorypath , function (err, files) {
 server.listen(port, () => {
     console.log('Server is listening on port ' + port);
     getUpdatedPrice();
-    setInterval(getUpdatedPrice, (1000 * 60  * 30));
+  //  setInterval(getUpdatedPrice, (1000 * 60  * 30));
 })
 
 getUpdatedPrice =  async () =>{
