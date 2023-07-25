@@ -64,7 +64,8 @@ if(req.path == '/All') {
     let k = 0;
     let foldersPath = fs.readdirSync(path.resolve(__dirname, 'src/'));
     foldersPath.forEach( (folder, j) => {
-    if(folder == '50' || folder == '101' || folder == '201' &&  folder == '401'){
+        //  ||  folder == '401'
+    if(folder == '50' || folder == '101' || folder == '201' ){
     const directorypath = path.join(__dirname, 'src/' + folder);
     fs.readdir(directorypath , function (err, files) {
     if (err) throw err;
@@ -94,7 +95,7 @@ if(req.path == '/All') {
                     datesObj = [];
                     volumeObj =[];
             }
-                if (i == files.length -1 && folder == 'Tyres' ){
+                if (i == files.length -1 && folder == '201' ){
                 obj3 = { 
                     "company" : company,
                     "companyObject" : companyObject,

@@ -174,7 +174,7 @@ else{
   positiveCompany0[checkPercent(tday, yday) ] = companyDetails[d];
 }
 // }
-divtag.innerText = "0:  " +  checkPercent(tday, yday).toFixed(1) + ' %';
+divtag.innerText = "0:  " +  Math.abs(checkPercent(tday, yday).toFixed(1)) + ' %';
 }
 divtag0.appendChild(divtag);
 
@@ -205,7 +205,7 @@ else{
   positiveCompany1[checknum] = companyDetails[d];
 
 }
-divtag.innerText = "1:  " +  checkPercent(tday, yday).toFixed(1) + ' %';
+divtag.innerText = "1:  " +  Math.abs(checkPercent(tday, yday).toFixed(1)) + ' %';
 divtag0.appendChild(divtag);
 
 // Second Symbol
@@ -234,7 +234,7 @@ else{
 
 
 }
-divtag.innerText = "2:  " +  checkPercent(tday, yday).toFixed(1) + ' %';
+divtag.innerText = "2:  " +  Math.abs(checkPercent(tday, yday).toFixed(1)) + ' %';
 divtag0.appendChild(divtag);
 
 // Third Symbol*****************************************************************************
@@ -265,7 +265,7 @@ else{
 
 
 }
-divtag.innerText = "3:  " +  checkPercent(tday, yday).toFixed(1) + ' %';
+divtag.innerText = "3:  " +  Math.abs(checkPercent(tday, yday).toFixed(1)) + ' %';
 divtag0.appendChild(divtag);
 
 
@@ -297,7 +297,7 @@ function checkPercent(tday, yday) {
     return (Math.random() * 0.0005);
   }
   
-  return Math.abs(((tday - yday) / yday) * 100);
+  return (((tday - yday) / yday) * 100);
 }
 
 function compareStocks(){
@@ -572,10 +572,10 @@ idlst.forEach( element => {
 element.innerText = "Stocks " + element.classList[0] +'+';
 element.classList.remove('active');
 })
+updateCompanyDeatils();
+// setTimeout(updateCompanyDeatils, 1000);
+// setTimeout(updateFavourite, 5000);
 
-
-setTimeout(updateFavourite, 1000);
-setTimeout(updateCompanyDeatils, 1000);
 // setTimeout(getFav, 100);
 
 }
