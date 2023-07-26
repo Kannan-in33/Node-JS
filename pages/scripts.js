@@ -908,15 +908,15 @@ let myFunc2 = letsDebounce(setFilter2,1000);
     lst.forEach( (ele) => {
       ele.style.display = "none" ;
     });
-   
-      for(let i = 0; i < positive0.length - 1;){
+   //positive0.length - 1;
+      for(let i = 0; i < 30;){
       let indx = positiveCompany0[positive0[i]];
       // console.log(i + "   " + indx);
       let elementUp = document.getElementById(indx);
       if (elementUp != null){
+      elementUp.parentElement.insertBefore(elementUp, elementUp.parentElement.children[i]);
       elementUp.style.display = "";
       i++;
-      elementUp.parentElement.insertBefore(elementUp, elementUp.parentElement.children[i]);
       document.getElementById("results0").innerText = Math.max(i , 1) ;
       }
       }
@@ -932,8 +932,8 @@ function getDown0(){
     ele.style.display = "none" ;
   });
 
-
-  for(let i = 0; i < negativeList0.length  - 1; ){
+// negativeList0.length  - 1
+  for(let i = 0; i < 80; ){
     let indx = negativeCompany0[negativeList0[i]];
     // console.log(i + "   " + indx);
     let elementUp = document.getElementById(indx);
@@ -956,8 +956,8 @@ function getUp1(){
   lst.forEach( (ele) => {
     ele.style.display = "none" ;
   });
- 
-    for(let i = 0; i < positive1.length  - 1;){
+//  positive1.length  - 1
+    for(let i = 0; i < 30;){
     let indx = positiveCompany1[positive1[i]];
     // console.log(i + "   " + indx);
     let elementUp = document.getElementById(indx);
@@ -980,8 +980,8 @@ lst.forEach( (ele) => {
   ele.style.display = "none" ;
 });
 
-
-for(let i = 0; i < negativeList1.length  - 1; ){
+// negativeList1.length  - 1
+for(let i = 0; i < 80; ){
   let indx = negativeCompany1[negativeList1[i]];
   // console.log(i + "   " + indx);
   let elementUp = document.getElementById(indx);
@@ -1002,8 +1002,8 @@ function getUp2(){
   lst.forEach( (ele) => {
     ele.style.display = "none" ;
   });
- 
-    for(let i = 0; i < positive2.length  - 1;){
+//  positive2.length  - 1
+    for(let i = 0; i < 30;){
     let indx = positiveCompany2[positive2[i]];
     // console.log(i + "   " + indx);
     let elementUp = document.getElementById(indx);
@@ -1026,8 +1026,8 @@ lst.forEach( (ele) => {
   ele.style.display = "none" ;
 });
 
-
-for(let i = 0; i < negativeList2.length  - 1; ){
+// negativeList2.length  - 1
+for(let i = 0; i < 80; ){
   let indx = negativeCompany2[negativeList2[i]];
   // console.log(i + "   " + indx);
   let elementUp = document.getElementById(indx);
@@ -1048,8 +1048,8 @@ function getUp3(){
   lst.forEach( (ele) => {
     ele.style.display = "none" ;
   });
- 
-    for(let i = 0; i < positive3.length  - 1;){
+//  positive3.length  - 1
+    for(let i = 0; i < 80;){
     let indx = positiveCompany3[positive3[i]];
     // console.log(i + "   " + indx);
     let elementUp = document.getElementById(indx);
