@@ -909,7 +909,7 @@ let myFunc2 = letsDebounce(setFilter2,1000);
       ele.style.display = "none" ;
     });
    
-      for(let i = 0; i < positive0.length;){
+      for(let i = 0; i < positive0.length - 1;){
       let indx = positiveCompany0[positive0[i]];
       // console.log(i + "   " + indx);
       let elementUp = document.getElementById(indx);
@@ -933,7 +933,7 @@ function getDown0(){
   });
 
 
-  for(let i = 0; i < negativeList0.length; ){
+  for(let i = 0; i < negativeList0.length  - 1; ){
     let indx = negativeCompany0[negativeList0[i]];
     // console.log(i + "   " + indx);
     let elementUp = document.getElementById(indx);
@@ -957,7 +957,7 @@ function getUp1(){
     ele.style.display = "none" ;
   });
  
-    for(let i = 0; i < positive1.length;){
+    for(let i = 0; i < positive1.length  - 1;){
     let indx = positiveCompany1[positive1[i]];
     // console.log(i + "   " + indx);
     let elementUp = document.getElementById(indx);
@@ -981,7 +981,7 @@ lst.forEach( (ele) => {
 });
 
 
-for(let i = 0; i < negativeList1.length; ){
+for(let i = 0; i < negativeList1.length  - 1; ){
   let indx = negativeCompany1[negativeList1[i]];
   // console.log(i + "   " + indx);
   let elementUp = document.getElementById(indx);
@@ -1003,7 +1003,7 @@ function getUp2(){
     ele.style.display = "none" ;
   });
  
-    for(let i = 0; i < positive2.length;){
+    for(let i = 0; i < positive2.length  - 1;){
     let indx = positiveCompany2[positive2[i]];
     // console.log(i + "   " + indx);
     let elementUp = document.getElementById(indx);
@@ -1027,7 +1027,7 @@ lst.forEach( (ele) => {
 });
 
 
-for(let i = 0; i < negativeList2.length; ){
+for(let i = 0; i < negativeList2.length  - 1; ){
   let indx = negativeCompany2[negativeList2[i]];
   // console.log(i + "   " + indx);
   let elementUp = document.getElementById(indx);
@@ -1049,7 +1049,7 @@ function getUp3(){
     ele.style.display = "none" ;
   });
  
-    for(let i = 0; i < positive3.length;){
+    for(let i = 0; i < positive3.length  - 1;){
     let indx = positiveCompany3[positive3[i]];
     // console.log(i + "   " + indx);
     let elementUp = document.getElementById(indx);
@@ -1073,7 +1073,7 @@ lst.forEach( (ele) => {
 });
 
 
-for(let i = 0; i < negativeList3.length; ){
+for(let i = 0; i < negativeList3.length  - 1; ){
   let indx = negativeCompany3[negativeList3[i]];
   // console.log(i + "   " + indx);
   let elementUp = document.getElementById(indx);
