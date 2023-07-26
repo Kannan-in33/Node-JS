@@ -909,7 +909,7 @@ let myFunc2 = letsDebounce(setFilter2,1000);
       ele.style.display = "none" ;
     });
    //positive0.length - 1;
-      for(let i = 0; i < 30;){
+      for(let i = 0; i < 50;){
       let indx = positiveCompany0[positive0[i]];
       // console.log(i + "   " + indx);
       let elementUp = document.getElementById(indx);
@@ -957,7 +957,7 @@ function getUp1(){
     ele.style.display = "none" ;
   });
 //  positive1.length  - 1
-    for(let i = 0; i < 30;){
+    for(let i = 0; i < 50;){
     let indx = positiveCompany1[positive1[i]];
     // console.log(i + "   " + indx);
     let elementUp = document.getElementById(indx);
@@ -1003,7 +1003,7 @@ function getUp2(){
     ele.style.display = "none" ;
   });
 //  positive2.length  - 1
-    for(let i = 0; i < 30;){
+    for(let i = 0; i < 50;){
     let indx = positiveCompany2[positive2[i]];
     // console.log(i + "   " + indx);
     let elementUp = document.getElementById(indx);
