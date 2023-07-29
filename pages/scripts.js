@@ -550,6 +550,8 @@ let resultCount = 0;
                                       }]
                                     },
                               options: {
+                                    animation: false,
+                                    normalized: true,
                                       plugins: {
                                           legend: true // Hide legend
                                       },
@@ -935,7 +937,7 @@ function getDown0(){
   });
 
 // negativeList0.length  - 1
-  for(let i = 0; i < Math.min(50, negativeList0.length  - 1); ){
+  for(let i = 0; i < Math.min(300, negativeList0.length  - 1); ){
     let indx = negativeCompany0[negativeList0[i]];
     // console.log(i + "   " + indx);
     let elementUp = document.getElementById(indx);
@@ -959,7 +961,7 @@ function getUp1(){
     ele.style.display = "none" ;
   });
 //  positive1.length  - 1
-    for(let i = 0; i < Math.min(30, positive1.length - 1);){
+    for(let i = 0; i < Math.min(250, positive1.length - 1);){
     let indx = positiveCompany1[positive1[i]];
     // console.log(i + "   " + indx);
     let elementUp = document.getElementById(indx);
@@ -983,7 +985,7 @@ lst.forEach( (ele) => {
 });
 
 // negativeList1.length  - 1
-for(let i = 0; i < Math.min(50, negativeList1.length  - 1); ){
+for(let i = 0; i < Math.min(300, negativeList1.length  - 1); ){
   let indx = negativeCompany1[negativeList1[i]];
   // console.log(i + "   " + indx);
   let elementUp = document.getElementById(indx);
@@ -1005,7 +1007,7 @@ function getUp2(){
     ele.style.display = "none" ;
   });
 //  positive2.length  - 1
-    for(let i = 0; i < Math.min(30, positive2.length - 1);){
+    for(let i = 0; i < Math.min(250, positive2.length - 1);){
     let indx = positiveCompany2[positive2[i]];
     // console.log(i + "   " + indx);
     let elementUp = document.getElementById(indx);
@@ -1029,7 +1031,7 @@ lst.forEach( (ele) => {
 });
 
 // negativeList2.length  - 1
-for(let i = 0; i < Math.min(50, negativeList2.length  - 1); ){
+for(let i = 0; i < Math.min(300, negativeList2.length  - 1); ){
   let indx = negativeCompany2[negativeList2[i]];
   // console.log(i + "   " + indx);
   let elementUp = document.getElementById(indx);
@@ -1051,7 +1053,7 @@ function getUp3(){
     ele.style.display = "none" ;
   });
 //  positive3.length  - 1
-    for(let i = 0; i < Math.min(30, positive3.length - 1);){
+    for(let i = 0; i < Math.min(250, positive3.length - 1);){
     let indx = positiveCompany3[positive3[i]];
     // console.log(i + "   " + indx);
     let elementUp = document.getElementById(indx);
@@ -1075,7 +1077,7 @@ lst.forEach( (ele) => {
 });
 
 
-for(let i = 0; i < Math.min(50, negativeList3.length  - 1); ){
+for(let i = 0; i < Math.min(300, negativeList3.length  - 1); ){
   let indx = negativeCompany3[negativeList3[i]];
   // console.log(i + "   " + indx);
   let elementUp = document.getElementById(indx);
