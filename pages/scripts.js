@@ -520,6 +520,8 @@ let resultCount = 0;
                                     }]
                                   },  
                                   options: {
+                                    animation: false,
+                                    normalized: true,
                                       scales: {
                                           yAxes: [{
                                               ticks: {
@@ -909,7 +911,7 @@ let myFunc2 = letsDebounce(setFilter2,1000);
       ele.style.display = "none" ;
     });
    //positive0.length - 1;
-      for(let i = 0; i < Math.min(30, positive0.length - 1);){
+      for(let i = 0; i < Math.min(300, positive0.length - 1);){
       let indx = positiveCompany0[positive0[i]];
       // console.log(i + "   " + indx);
       let elementUp = document.getElementById(indx);
