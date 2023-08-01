@@ -511,23 +511,6 @@ let resultCount = 0;
                           }
 
 
-let c = canvas;
-let h = c.height
-let w = c.width
-let ctx = c.getContext('2d')
-// dataY = [...yValues2];
-// dataX =  [...xValues];
-un = Math.round(Math.max(...xValues)/15)
-un = Math.round((Math.max(...xValues)-Math.min(...xValues))/10)
-ys = (w-40)/yValues2.length
-dataT = []
-
-chartLine()
-digram()
-data()
-draw()
-pointes()
-
                       
                         new Chart(canvas, {
                             type: "line",
