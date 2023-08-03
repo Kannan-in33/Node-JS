@@ -505,7 +505,7 @@ let resultCount = 0;
                             BuyObject3Avg[key] = companyObject[key];
                             // console.log(key + "    " + ( (Number(buyAvg[20]) + Number(buyAvg[29]) + Number(buyAvg[15]) )/3).toFixed(2) + "    " + ccurrect);
                           }
-
+                          // drawGraph(canvas, [...yValues2].reverse() )
                       
                         new Chart(canvas, {
                             type: "line",
@@ -1127,44 +1127,44 @@ function clearFavourits(){
 
 }
 
-//   function setFav(){
-//     let AFL = [...Array.from(localStorage)];
+  function setFav(){
+    let AFL = [...Array.from(localStorage)];
 
-//     if(!AFL.includes(event.target.id.toString())){
-//       localStorage.setItem(localStorage.length, event.target.id.toString());
-//       let clr = document.querySelectorAll("#" + event.target.id.toString())[1];
-//       clr.classList.toggle("star");
-//     }
-//     else{
-//       for(let i = 0; i < localStorage.length; i++){
+    if(!AFL.includes(event.target.id.toString())){
+      localStorage.setItem(localStorage.length, event.target.id.toString());
+      let clr = document.querySelectorAll("#" + event.target.id.toString())[1];
+      clr.classList.toggle("star");
+    }
+    else{
+      for(let i = 0; i < localStorage.length; i++){
 
-//         if(localStorage[i] == event.target.id.toString()){
-//           localStorage.removeItem(i);
-//           let AFL2 = [];
+        if(localStorage[i] == event.target.id.toString()){
+          localStorage.removeItem(i);
+          let AFL2 = [];
 
-//           for(let key in localStorage){
-//             if(AFL2.length < AFL.length - 1){
-//               AFL2.push(localStorage[key]);
-//             }
-//           }
+          for(let key in localStorage){
+            if(AFL2.length < AFL.length - 1){
+              AFL2.push(localStorage[key]);
+            }
+          }
 
-//           localStorage.clear();
+          localStorage.clear();
 
-//           for(let j = 0; j < AFL2.length ; j++){
+          for(let j = 0; j < AFL2.length ; j++){
 
-//             if(AFL2[j] != undefined){
-//               localStorage.setItem(j , AFL2[j]);
-//             }
-//           }
-//         }
+            if(AFL2[j] != undefined){
+              localStorage.setItem(j , AFL2[j]);
+            }
+          }
+        }
 
-//       }
-//     }
+      }
+    }
     
 
 
 
-//     }
+    }
 
 
     function getFav(){
@@ -1176,3 +1176,99 @@ function clearFavourits(){
   }
   
   
+  function drawGraph( canvas, dataArr ){  
+    // var canvas = document.getElementById( "testCanvas" );  
+    var context = canvas.getContext( "2d" );  
+  
+    var GRAPH_TOP = 5;  
+    var GRAPH_BOTTOM = 475;  
+    var GRAPH_LEFT = 5;  
+    var GRAPH_RIGHT = 575;  
+  
+    var GRAPH_HEIGHT = 450;  
+    var GRAPH_WIDTH = 550;  
+  
+    var arrayLen = dataArr.length;  
+  
+    context.clearRect( 0, 0, 500, 400 );  
+    // set font for fillText()  
+    context.font = "2px Arial";  
+       
+    // draw X and Y axis  
+    context.beginPath();  
+    context.moveTo( GRAPH_LEFT, GRAPH_BOTTOM );  
+    context.lineTo( GRAPH_RIGHT, GRAPH_BOTTOM );  
+    context.lineTo( GRAPH_RIGHT, GRAPH_TOP );  
+    context.stroke();  
+       
+    // // draw reference line  
+    // context.beginPath();  
+    // context.strokeStyle = "#BBB";  
+    // context.moveTo( GRAPH_LEFT, GRAPH_TOP );  
+    // context.lineTo( GRAPH_RIGHT, GRAPH_TOP );  
+    // // draw reference value for hours  
+    // context.fillText( largest, GRAPH_RIGHT + 15, GRAPH_TOP);  
+    // context.stroke();  
+   
+    // draw reference line  
+    context.beginPath();  
+    for(let i = 1; i < 10; i++){
+      context.moveTo( GRAPH_LEFT, ( GRAPH_HEIGHT * i) /10 );  
+      context.lineTo( GRAPH_RIGHT, ( GRAPH_HEIGHT  * i) / 10 );  
+      context.stroke(); 
+    // context.moveTo( GRAPH_LEFT, ( GRAPH_HEIGHT ) / 4 * 3 + GRAPH_TOP );  
+    // context.lineTo( GRAPH_RIGHT, ( GRAPH_HEIGHT ) / 4 * 3 + GRAPH_TOP );  
+    }
+    // draw reference value for hours  
+    // context.fillText( largest / 4, GRAPH_RIGHT + 15, ( GRAPH_HEIGHT ) / 4 * 3 + GRAPH_TOP);  
+    // context.stroke();  
+   
+    // draw reference line  
+    // context.beginPath();  
+    // context.moveTo( GRAPH_LEFT, ( GRAPH_HEIGHT ) / 2 + GRAPH_TOP );  
+    // context.lineTo( GRAPH_RIGHT, ( GRAPH_HEIGHT ) / 2 + GRAPH_TOP );  
+    // // draw reference value for hours  
+    // context.fillText( largest / 2, GRAPH_RIGHT + 15, ( GRAPH_HEIGHT ) / 2 + GRAPH_TOP);  
+    // context.stroke();  
+   
+    // // draw reference line  
+    // context.beginPath();  
+    // context.moveTo( GRAPH_LEFT, ( GRAPH_HEIGHT ) / 10 + GRAPH_TOP );  
+    // context.lineTo( GRAPH_RIGHT, ( GRAPH_HEIGHT ) / 10 + GRAPH_TOP );  
+    // // draw reference value for hours  
+    // context.fillText( largest / 4 * 3, GRAPH_RIGHT + 15, ( GRAPH_HEIGHT ) / 4 + GRAPH_TOP);  
+    // context.stroke();  
+  
+    // draw titles  
+    // context.fillText( "Day of the week", GRAPH_RIGHT / 3, GRAPH_BOTTOM + 50);  
+    // context.fillText( "Hours", GRAPH_RIGHT + 30, GRAPH_HEIGHT / 2);  
+    var largest = 0;  
+    for( var i = 0; i < arrayLen; i++ ){  
+        if( dataArr[ i ] > largest ){  
+            largest = dataArr[ i ];  
+        }  
+    }  
+
+    var smallest = largest;  
+    for( var i = 0; i < arrayLen; i++ ){  
+        if( dataArr[ i ] < smallest ){  
+          smallest = dataArr[ i ];  
+        }  
+    } 
+    context.beginPath();  
+    context.lineJoin = "round";  
+    context.strokeStyle = "black";  
+  
+    context.moveTo( GRAPH_LEFT, ( GRAPH_HEIGHT - dataArr[ 0 ] / largest * GRAPH_HEIGHT ) + GRAPH_TOP );  
+    // draw reference value for day of the week  
+    // context.fillText( "1", 15, GRAPH_BOTTOM - 25);  
+    for( var i = 1; i < arrayLen; i++ ){  
+      GRAPH_LEFT = GRAPH_LEFT + (GRAPH_RIGHT/ arrayLen);
+      // 200, 205, 290, 202
+      context.lineTo( GRAPH_LEFT , ( GRAPH_HEIGHT - dataArr[ i ] / largest * GRAPH_HEIGHT ) + GRAPH_TOP );
+        // context.lineTo( GRAPH_RIGHT / arrayLen * i + GRAPH_LEFT, ( GRAPH_HEIGHT - dataArr[ i ] / largest * GRAPH_HEIGHT ) + GRAPH_TOP );  
+        // draw reference value for day of the week  
+        context.fillText( ( i + 1 ), GRAPH_RIGHT / arrayLen * i, GRAPH_BOTTOM - 125);  
+    }  
+    context.stroke();  
+} 
