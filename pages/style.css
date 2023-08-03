@@ -160,12 +160,15 @@
       background-color: #fff;
       padding: 10px 5px;
       flex-wrap: wrap;
+      justify-content: center;
      }
      .search input{
        height: 30px;
        width:30%;
      }
- 
+ #secSearch{
+  margin-top: 50px;
+ }
      .static{
        opacity: 1;
        background-color: #fff;
@@ -188,8 +191,8 @@
        width: fit-content;
      }
      #filter, #filters{
-      min-width: 170px;
-      max-width: 200px;
+      min-width: 250px;
+      max-width: 250px;
       height: 30px;
       margin-left: 1px;
      }
@@ -315,6 +318,9 @@
     #GainDropdown, #NoGainDropdown{
       background-color: #fff;
     }
+    .sector{
+      height: 50px;
+    }
 /* Sector Style Ends */
 
      @media only screen and (orientation: landscape){
@@ -371,11 +377,14 @@
               width: 100%;
              }
 
-             #filter, #filters{
-              /* min-width: 80px !important;
-              max-width: 80px !important; */
+             .Ddropdown, .Gdropdown {
+              width: 20% !important;
+              margin: 0 8px;
+          }
 
-             }
+          #filter, #filters {
+            min-width: 20% !important;
+        }
 
              #clear {
               background-color: #ccc;
@@ -388,6 +397,12 @@
               margin-left: -31px !important;
               position: absolute;
           }
+          #compare, #Favourits{
+            display: block;
+          }
+          #secSearch {
+            margin-top: 20px;
+        }
 
      }     
      
