@@ -12,14 +12,57 @@
      
 
       <div class="static">
+        <button id="getData50" class="50" onclick="getData(50);" type="button">Stocks 50+</button>
+        <button id="getData101" class="101" onclick="getData(101);" type="button">Stocks 101+</button>
+        <button id="getData201" class="201" onclick="getData(201);" type="button">Stocks 201+</button>
+        <button id="getData401" class="401" onclick="getData(401);" type="button">Stocks 401+</button>
+        <button id="getData601" class="601" onclick="getData(601);" type="button">Stocks 601+</button>
+        <a href="/Sector">Sector</a>
+        
+        <div class="Gdropdown">  
+          <button id="gainers" class="gainers upTrends"  onclick="showGainers();" type="button">Gainers <span id="Gnumbers"></span></button>              
+                <div id="GainDropdown" class="drop-options">
+                  <button class="upTrend0"  onclick="getUp0();">Today   <span id="results0"></span></button>
+                  <button class="upTrend1"  onclick="getUp1();">+1 Day <span id="results1"></span></button>
+                  <button class="upTrend2"  onclick="getUp2();">+2 Day <span id="results2"></span></button>
+                  <button class="upTrend3"  onclick="getUp3();">+3 Day <span id="results3"></span></button>                  
+                  </div>
+        </div>
+
+
+        
+        
+        
+        
+       
+
+       
+        <div class="Ddropdown">  
+          <button id="nogainers" class="nogainers downTrends"  onclick="showNoGainers();" type="button">Lossers <span id="Dnumbers"></button>         
+          <div id="NoGainDropdown" class="drop-options">           
+            <button class="downTrend0"  onclick="getDown0();">Today <span id="resultsd0"></span></button> 
+            <button class="downTrend1"  onclick="getDown1();">+1 Day <span id="resultsd1"></span></button>
+            <button class="downTrend2"  onclick="getDown2();">+2 Day <span id="resultsd2"></span></button>           
+            <button class="downTrend3"  onclick="getDown3();">+3 Day <span id="resultsd3"></span></button>
+          </div>
+        </div>
 
           <div class="search">
-            <input placeholder="Search..." type="text" id="filter" name="filter" />
+            <input placeholder="..Search..." type="text" id="filter" name="filter" />
             <button id="compare" class="compare" onclick="compareStocks();" type="button">Compare</button>
             <button id="clearcompare" class="compare hide" onclick="clearcompareStocks();" type="button">Clear Compare</button>
             <button id="Favourits" class="Favourits" onclick="getFavourits();" type="button">Favourits</button>
             <button id="clearFavourits" class="Favourits hide" onclick="clearFavourits();" type="button">Clear Favourits</button>
-        
+                
+            <div class="dropdown">
+                <button id="daysbuy" class="buy-main"  onclick="getBuyMain();" type="button">Buy List</button>
+                <div id="BuyDropdown" class="drop-options">
+                  <button id="daysbuy40" class="buy"  onclick="getBuy(40);" type="button">40% +</button>
+                  <button id="daysbuy30" class="buy"  onclick="getBuy(30);" type="button">30% +</button>
+                  <button id="daysbuy20" class="buy"  onclick="getBuy(20);" type="button">20% +</button>
+                  <button id="daysbuyAvg" class="buy"  onclick="getBuy(60);" type="button">30d Avg +</button>
+                  </div>
+            </div>
           </div>
 
 
@@ -28,48 +71,16 @@
       
       
       <div class="range">
-        <button id="getData50" class="50" onclick="getData(50);" type="button">Stocks 50+</button>
-        <button id="getData101" class="101" onclick="getData(101);" type="button">Stocks 101+</button>
-        <button id="getData201" class="201" onclick="getData(201);" type="button">Stocks 201+</button>
-        <button id="getData401" class="401" onclick="getData(401);" type="button">Stocks 401+</button>
-        <button id="getData601" class="601" onclick="getData(601);" type="button">Stocks 601+</button>
-        <a href="/Sector">Sector</a>
+
 
         <!-- <button id="days20" class="d20" onclick="getDay(20);" type="button">20 Days</button>
         <button id="days50" class="d50"  onclick="getDay(50);" type="button">50 Days</button> -->
         <!-- <button id="days70" class="d20" onclick="getDay(70);" type="button">70 Days</button>
         <button id="days100" class="100"  onclick="getDay(100);" type="button">100 Days</button> -->
-        <div class="resultbox">
-          <button class="upTrend0" id="results0" onclick="getUp0();">Up</button>
-          <button class="downTrend0" id="resultsd0" onclick="getDown0();">Dn</button>
-  
-  
-        </div>
-      <div class="resultbox">
-        <button class="upTrend1" id="results1" onclick="getUp1();">1</button>
-        <button class="downTrend1" id="resultsd1" onclick="getDown1();">1</button>
 
-
-      </div>
-      <div class="resultbox">
-        <button class="upTrend2" id="results2" onclick="getUp2();">2</button>
-        <button class="downTrend2" id="resultsd2" onclick="getDown2();">2</button>
-      </div>
-
-      <div class="resultbox">
-        <button class="upTrend3" id="results3" onclick="getUp3();">3</button>
-        <button class="downTrend3" id="resultsd3" onclick="getDown3();">3</button>
-      </div>
+      
         
-        <div class="dropdown">
-            <button id="daysbuy" class="buy-main"  onclick="getBuyMain();" type="button">Buy List</button>
-              <div id="BuyDropdown" class="drop-options">
-                <button id="daysbuy40" class="buy"  onclick="getBuy(40);" type="button">40% +</button>
-                <button id="daysbuy30" class="buy"  onclick="getBuy(30);" type="button">30% +</button>
-                <button id="daysbuy20" class="buy"  onclick="getBuy(20);" type="button">20% +</button>
-                <button id="daysbuyAvg" class="buy"  onclick="getBuy(60);" type="button">30d Avg +</button>
-              </div>
-        </div>
+        
         
       </div>
     </div>

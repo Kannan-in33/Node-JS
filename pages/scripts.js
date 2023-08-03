@@ -161,7 +161,8 @@ if(tday !== undefined ){
 if ((((tday - yday) / yday) * 100) < 0){
   downvalue0++;
   divtag.classList.add("downTrend0");
-  document.querySelector("button.downTrend0").innerText = downvalue0;  
+  document.querySelector("button.downTrend0 span").innerText =  "  " + downvalue0;  
+  document.querySelector("#Dnumbers").innerText = downvalue0;
   negativeList0.push((checkPercent(tday, yday) ));
   negativeCompany0[checkPercent(tday, yday) ] = companyDetails[d];
   
@@ -169,7 +170,8 @@ if ((((tday - yday) / yday) * 100) < 0){
 else{
   upvalue0++;
   divtag.classList.add("upTrend0");
-  document.querySelector("button.upTrend0").innerText = upvalue0;
+  document.querySelector("button.upTrend0 span").innerText =  "  " + upvalue0;
+  document.querySelector("#Gnumbers").innerText = upvalue0;
   positive0.push((checkPercent(tday, yday) ));
   positiveCompany0[checkPercent(tday, yday) ] = companyDetails[d];
 }
@@ -191,7 +193,7 @@ checknum = checkPercent(tday, yday) ;
 if (checknum < 0){
   downvalue1++;
   divtag.classList.add("downTrend1");
-  document.querySelector("button.downTrend1").innerText = downvalue1;
+  document.querySelector("button.downTrend1 span").innerText =  "  " + downvalue1;
   
   negativeList1.push(checknum);
   negativeCompany1[checknum] = companyDetails[d];
@@ -200,7 +202,7 @@ if (checknum < 0){
 else{
   upvalue1++;
   divtag.classList.add("upTrend1");
-  document.querySelector("button.upTrend1").innerText = upvalue1;    
+  document.querySelector("button.upTrend1 span").innerText =  "  " + upvalue1;    
   positive1.push(checknum);
   positiveCompany1[checknum] = companyDetails[d];
 
@@ -220,7 +222,7 @@ checknum = checkPercent(tday, yday) ;
 if (checknum < 0){
   downvalue2++;
   divtag.classList.add("downTrend2");
-  document.querySelector("button.downTrend2").innerText = downvalue2;  
+  document.querySelector("button.downTrend2 span").innerText =  "  " + downvalue2;  
   negativeList2.push(checknum);
   negativeCompany2[checknum] = companyDetails[d];
   
@@ -228,7 +230,7 @@ if (checknum < 0){
 else{
   upvalue2++;
   divtag.classList.add("upTrend2");
-  document.querySelector("button.upTrend2").innerText = upvalue2;
+  document.querySelector("button.upTrend2 span").innerText =  "  " + upvalue2;
   positive2.push(checknum);
   positiveCompany2[checknum ] = companyDetails[d];
 
@@ -250,7 +252,7 @@ checknum = checkPercent(tday, yday) ;
 if (checknum < 0){
   downvalue3++;
   divtag.classList.add("downTrend3");
-  document.querySelector("button.downTrend3").innerText = downvalue3;
+  document.querySelector("button.downTrend3 span").innerText =  "  " + downvalue3;
   
   negativeList3.push(checknum);
   negativeCompany3[checknum] = companyDetails[d];
@@ -259,7 +261,7 @@ if (checknum < 0){
 else{
   upvalue3++;
   divtag.classList.add("upTrend3");
-  document.querySelector("button.upTrend3").innerText = upvalue3;
+  document.querySelector("button.upTrend3 span").innerText = "  " + upvalue3;
   positive3.push(checknum);
   positiveCompany3[checknum] = companyDetails[d];
 
@@ -386,13 +388,30 @@ function removeActive(){
 //   let lst = document.querySelectorAll("[id^='days']");
 //   lst.forEach( element => element.classList.remove('active') );
 }
-function getBuyMain(){
+function showGainers(){
+  let lst = document.querySelectorAll("[class^='upTrend']");
+  lst.forEach(element => {
+    element.classList.toggle('show');    
+  });
+
+}
+
+function showNoGainers(){
+  let lst = document.querySelectorAll("[class^='downTrend']");
+  lst.forEach(element => {
+    element.classList.toggle('show');    
+  });
+
+}
+
+function  getBuyMain(){
   let lst = document.querySelectorAll(".buy");
   lst.forEach(element => {
     element.classList.toggle('show');    
   });
 
 }
+
 function getBuy(margin){
               removeActive();
             //   event.target.classList.add('active');
@@ -413,7 +432,7 @@ function getBuy(margin){
 }
 
 function createChart(companyObject, e, days = 1000){
-
+let chartlim = 0;
 let lst = [];
 lst = document.querySelectorAll(".charts div");
 if(lst.length > 1){
@@ -442,16 +461,17 @@ let resultCount = 0;
                 }
                 xValues.reverse();
         let divtag = document.createElement("div");                  
-                let lbl = document.createElement("label");
-                lbl.setAttribute("for", key);
-                lbl.setAttribute("value", 'compare');
-                lbl.innerText = 'Compare';
-                divtag.appendChild(lbl);
+                
         let checkBox = document.createElement("input");
                   checkBox.setAttribute("type", "checkbox");
                   checkBox.setAttribute("class", key);
                   checkBox.addEventListener("click", setComp);
                   divtag.appendChild(checkBox);
+        let lbl = document.createElement("label");
+                  lbl.setAttribute("for", key);
+                  lbl.setAttribute("value", 'compare');
+                  lbl.innerText = 'Compare';
+                  divtag.appendChild(lbl);
         let lblF = document.createElement("label");
                 lblF.setAttribute("for", key);
                 lblF.setAttribute("value", 'favourite');
@@ -903,13 +923,13 @@ let myFunc2 = letsDebounce(setFilter2,1000);
 
 
   function getUp0(){
-
+    showGainers();
     let lst = document.querySelectorAll(".charts > div");
     lst.forEach( (ele) => {
       ele.style.display = "none" ;
     });
    //positive0.length - 1;
-      for(let i = 0; i < 30;){
+      for(let i = 0; i < positive0.length;){
       let indx = positiveCompany0[positive0[i]];
       // console.log(i + "   " + indx);
       let elementUp = document.getElementById(indx);
@@ -917,7 +937,7 @@ let myFunc2 = letsDebounce(setFilter2,1000);
       elementUp.parentElement.insertBefore(elementUp, elementUp.parentElement.children[i]);
       elementUp.style.display = "";
       i++;
-      document.getElementById("results0").innerText = Math.max(i , 1) ;
+      document.getElementById("Gnumbers").innerText = Math.max(i , 1) ;
       }
       }
 
@@ -926,14 +946,14 @@ let myFunc2 = letsDebounce(setFilter2,1000);
 }
 
 function getDown0(){
-
+  showNoGainers();
   let lst = document.querySelectorAll(".charts > div");
   lst.forEach( (ele) => {
     ele.style.display = "none" ;
   });
 
 // negativeList0.length  - 1
-  for(let i = 0; i < 80; ){
+  for(let i = 0; i < egativeList0.length  - 1; ){
     let indx = negativeCompany0[negativeList0[i]];
     // console.log(i + "   " + indx);
     let elementUp = document.getElementById(indx);
@@ -941,7 +961,7 @@ function getDown0(){
     elementUp.style.display = "";
     i++;
     elementUp.parentElement.insertBefore(elementUp, elementUp.parentElement.children[i]);
-    document.getElementById("resultsd0").innerText = Math.max((i) , 1) ;
+    document.getElementById("Dnumbers").innerText = Math.max((i) , 1) ;
     }
     }
 
@@ -951,7 +971,7 @@ function getDown0(){
 // GET UP DOWN DUP WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 
 function getUp1(){
-
+  showGainers();
   let lst = document.querySelectorAll(".charts > div");
   lst.forEach( (ele) => {
     ele.style.display = "none" ;
@@ -974,7 +994,7 @@ function getUp1(){
 }
 
 function getDown1(){
-
+  showNoGainers();
 let lst = document.querySelectorAll(".charts > div");
 lst.forEach( (ele) => {
   ele.style.display = "none" ;
@@ -997,7 +1017,7 @@ for(let i = 0; i < 80; ){
 }
 
 function getUp2(){
-
+  showGainers();
   let lst = document.querySelectorAll(".charts > div");
   lst.forEach( (ele) => {
     ele.style.display = "none" ;
@@ -1020,7 +1040,7 @@ function getUp2(){
 }
 
 function getDown2(){
-
+  showNoGainers();
 let lst = document.querySelectorAll(".charts > div");
 lst.forEach( (ele) => {
   ele.style.display = "none" ;
@@ -1043,7 +1063,7 @@ for(let i = 0; i < 80; ){
 }
 
 function getUp3(){
-
+  showGainers();
   let lst = document.querySelectorAll(".charts > div");
   lst.forEach( (ele) => {
     ele.style.display = "none" ;
@@ -1066,7 +1086,7 @@ function getUp3(){
 }
 
 function getDown3(){
-
+  showNoGainers();
 let lst = document.querySelectorAll(".charts > div");
 lst.forEach( (ele) => {
   ele.style.display = "none" ;
@@ -1178,97 +1198,58 @@ function clearFavourits(){
   
   function drawGraph( canvas, dataArr ){  
     // var canvas = document.getElementById( "testCanvas" );  
-    var context = canvas.getContext( "2d" );  
-  
-    var GRAPH_TOP = 5;  
-    var GRAPH_BOTTOM = 475;  
-    var GRAPH_LEFT = 5;  
-    var GRAPH_RIGHT = 575;  
-  
-    var GRAPH_HEIGHT = 450;  
-    var GRAPH_WIDTH = 550;  
+
+    // if (canvas.id == "AGSTRA"){
+    var context = canvas.getContext( "2d" ); 
+    let largest = Math.max(...dataArr) ;
+    let smallest = Math.min(...dataArr);
+    let newdataArr = dataArr.map( (ele)=>{
+      return largest - ele;
+    })
+    const GRAPH_BOTTOM = 250;  
+    let GRAPH_LEFT = 0;  
+    const GRAPH_RIGHT = 200;    
+    const GRAPH_TOP = 0;  
+    const GRAPH_HEIGHT = 250;  
+    const GRAPH_WIDTH = 200; 
+    let oneUnit;
+    // console.log(largest, smallest);
+    oneUnit = (GRAPH_HEIGHT )/ (largest );
+    // console.log(largest * oneUnit, smallest * oneUnit);
   
     var arrayLen = dataArr.length;  
   
-    context.clearRect( 0, 0, 500, 400 );  
+    // context.clearRect( 0, 10, 300, 180 );  
     // set font for fillText()  
     context.font = "2px Arial";  
-       
+    context.lineWidth = 1;
     // draw X and Y axis  
-    context.beginPath();  
-    context.moveTo( GRAPH_LEFT, GRAPH_BOTTOM );  
-    context.lineTo( GRAPH_RIGHT, GRAPH_BOTTOM );  
-    context.lineTo( GRAPH_RIGHT, GRAPH_TOP );  
-    context.stroke();  
-       
-    // // draw reference line  
     // context.beginPath();  
-    // context.strokeStyle = "#BBB";  
-    // context.moveTo( GRAPH_LEFT, GRAPH_TOP );  
+    // context.moveTo( GRAPH_LEFT, GRAPH_BOTTOM );  
+    // context.lineTo( GRAPH_RIGHT, GRAPH_BOTTOM );  
     // context.lineTo( GRAPH_RIGHT, GRAPH_TOP );  
-    // // draw reference value for hours  
-    // context.fillText( largest, GRAPH_RIGHT + 15, GRAPH_TOP);  
-    // context.stroke();  
-   
-    // draw reference line  
-    context.beginPath();  
-    for(let i = 1; i < 10; i++){
-      context.moveTo( GRAPH_LEFT, ( GRAPH_HEIGHT * i) /10 );  
-      context.lineTo( GRAPH_RIGHT, ( GRAPH_HEIGHT  * i) / 10 );  
-      context.stroke(); 
-    // context.moveTo( GRAPH_LEFT, ( GRAPH_HEIGHT ) / 4 * 3 + GRAPH_TOP );  
-    // context.lineTo( GRAPH_RIGHT, ( GRAPH_HEIGHT ) / 4 * 3 + GRAPH_TOP );  
-    }
-    // draw reference value for hours  
-    // context.fillText( largest / 4, GRAPH_RIGHT + 15, ( GRAPH_HEIGHT ) / 4 * 3 + GRAPH_TOP);  
-    // context.stroke();  
-   
-    // draw reference line  
-    // context.beginPath();  
-    // context.moveTo( GRAPH_LEFT, ( GRAPH_HEIGHT ) / 2 + GRAPH_TOP );  
-    // context.lineTo( GRAPH_RIGHT, ( GRAPH_HEIGHT ) / 2 + GRAPH_TOP );  
-    // // draw reference value for hours  
-    // context.fillText( largest / 2, GRAPH_RIGHT + 15, ( GRAPH_HEIGHT ) / 2 + GRAPH_TOP);  
-    // context.stroke();  
-   
-    // // draw reference line  
-    // context.beginPath();  
-    // context.moveTo( GRAPH_LEFT, ( GRAPH_HEIGHT ) / 10 + GRAPH_TOP );  
-    // context.lineTo( GRAPH_RIGHT, ( GRAPH_HEIGHT ) / 10 + GRAPH_TOP );  
-    // // draw reference value for hours  
-    // context.fillText( largest / 4 * 3, GRAPH_RIGHT + 15, ( GRAPH_HEIGHT ) / 4 + GRAPH_TOP);  
-    // context.stroke();  
-  
-    // draw titles  
-    // context.fillText( "Day of the week", GRAPH_RIGHT / 3, GRAPH_BOTTOM + 50);  
-    // context.fillText( "Hours", GRAPH_RIGHT + 30, GRAPH_HEIGHT / 2);  
-    var largest = 0;  
-    for( var i = 0; i < arrayLen; i++ ){  
-        if( dataArr[ i ] > largest ){  
-            largest = dataArr[ i ];  
-        }  
-    }  
-
-    var smallest = largest;  
-    for( var i = 0; i < arrayLen; i++ ){  
-        if( dataArr[ i ] < smallest ){  
-          smallest = dataArr[ i ];  
-        }  
-    } 
+    // context.stroke();
+    
     context.beginPath();  
     context.lineJoin = "round";  
     context.strokeStyle = "black";  
-  
-    context.moveTo( GRAPH_LEFT, ( GRAPH_HEIGHT - dataArr[ 0 ] / largest * GRAPH_HEIGHT ) + GRAPH_TOP );  
+    context.lineWidth = 0.25;
+    context.moveTo( GRAPH_LEFT,  GRAPH_HEIGHT   - ( dataArr[0] * oneUnit) );  
+    
+    // context.moveTo( GRAPH_LEFT, ( GRAPH_HEIGHT - dataArr[ 0 ] / largest * GRAPH_HEIGHT ) + GRAPH_TOP );  
     // draw reference value for day of the week  
     // context.fillText( "1", 15, GRAPH_BOTTOM - 25);  
+let xincrement =(GRAPH_WIDTH / arrayLen);
+    
     for( var i = 1; i < arrayLen; i++ ){  
-      GRAPH_LEFT = GRAPH_LEFT + (GRAPH_RIGHT/ arrayLen);
-      // 200, 205, 290, 202
-      context.lineTo( GRAPH_LEFT , ( GRAPH_HEIGHT - dataArr[ i ] / largest * GRAPH_HEIGHT ) + GRAPH_TOP );
+      // GRAPH_LEFT = GRAPH_LEFT + 1;
+      GRAPH_LEFT =  GRAPH_LEFT + xincrement;
+      // 200, 205, 300, 202
+      // context.lineTo( GRAPH_LEFT , ( GRAPH_HEIGHT - dataArr[ i ] / largest * GRAPH_HEIGHT ) + GRAPH_TOP );
         // context.lineTo( GRAPH_RIGHT / arrayLen * i + GRAPH_LEFT, ( GRAPH_HEIGHT - dataArr[ i ] / largest * GRAPH_HEIGHT ) + GRAPH_TOP );  
-        // draw reference value for day of the week  
-        context.fillText( ( i + 1 ), GRAPH_RIGHT / arrayLen * i, GRAPH_BOTTOM - 125);  
+        // draw reference value for day of the week 
+        context.lineTo( GRAPH_LEFT, GRAPH_HEIGHT  - ( dataArr[i] * oneUnit) );   
+        context.stroke();  
     }  
-    context.stroke();  
+  // } // Endinf Main IF
 } 
