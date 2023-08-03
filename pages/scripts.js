@@ -923,6 +923,7 @@ let myFunc2 = letsDebounce(setFilter2,1000);
 
 
   function getUp0(){
+    window.scrollTo({top: 0, behavior: 'smooth'});
     showGainers();
     let lst = document.querySelectorAll(".charts > div");
     lst.forEach( (ele) => {
@@ -946,6 +947,7 @@ let myFunc2 = letsDebounce(setFilter2,1000);
 }
 
 function getDown0(){
+  window.scrollTo({top: 0, behavior: 'smooth'});
   showNoGainers();
   let lst = document.querySelectorAll(".charts > div");
   lst.forEach( (ele) => {
@@ -971,6 +973,7 @@ function getDown0(){
 // GET UP DOWN DUP WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 
 function getUp1(){
+  window.scrollTo({top: 0, behavior: 'smooth'});
   showGainers();
   let lst = document.querySelectorAll(".charts > div");
   lst.forEach( (ele) => {
@@ -994,6 +997,7 @@ function getUp1(){
 }
 
 function getDown1(){
+  window.scrollTo({top: 0, behavior: 'smooth'});
   showNoGainers();
 let lst = document.querySelectorAll(".charts > div");
 lst.forEach( (ele) => {
@@ -1017,6 +1021,7 @@ for(let i = 0; i < 80; ){
 }
 
 function getUp2(){
+  window.scrollTo({top: 0, behavior: 'smooth'});
   showGainers();
   let lst = document.querySelectorAll(".charts > div");
   lst.forEach( (ele) => {
@@ -1041,6 +1046,7 @@ function getUp2(){
 
 function getDown2(){
   showNoGainers();
+  window.scrollTo({top: 0, behavior: 'smooth'});
 let lst = document.querySelectorAll(".charts > div");
 lst.forEach( (ele) => {
   ele.style.display = "none" ;
@@ -1063,6 +1069,7 @@ for(let i = 0; i < 80; ){
 }
 
 function getUp3(){
+  window.scrollTo({top: 0, behavior: 'smooth'});
   showGainers();
   let lst = document.querySelectorAll(".charts > div");
   lst.forEach( (ele) => {
@@ -1086,6 +1093,7 @@ function getUp3(){
 }
 
 function getDown3(){
+  window.scrollTo({top: 0, behavior: 'smooth'});
   showNoGainers();
 let lst = document.querySelectorAll(".charts > div");
 lst.forEach( (ele) => {
