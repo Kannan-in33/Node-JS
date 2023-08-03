@@ -51,7 +51,7 @@
 
 
      body{
-       min-width: 350px;
+       min-width: 320px;
        margin: 0 !important;
      }
 
@@ -80,7 +80,7 @@
      canvas{
         margin: 15px 0;
         width: 100% !important;
-        height: 500px !important;
+
       }
       canvas.volume{
         margin: 0;
@@ -156,12 +156,9 @@
 
      .search{
       display: flex;
-      margin-left: 15px;
+      margin-top: 100px;
       background-color: #fff;
       padding: 10px 5px;
-      left: 0;
-      right: 0;
-      top: 0;
       flex-wrap: wrap;
      }
      .search input{
@@ -180,6 +177,7 @@
        width: 100%;
        z-index: 200;
        height: 100px;
+       justify-content: center;
      }
      .hide{
        display: none;
@@ -273,25 +271,27 @@
 /* Sector style Start */
 
   #clear{
-    border-radius: 0;
-    background-color: red;
-    margin-top: 0;
-    margin-left: -34px;
-    width: 34px !important;
+    background-color: #ccc;
+    margin-top: 1px;
+    margin-left: -36px;
+    width: 38px !important;
+    border-radius: 0 50%;
+    height: 35px;
   }
   #SectorList{
     display: block;
-    z-index: 100;
-    position: absolute;
+    z-index: 2000;
+    position: fixed;
     list-style: none;
     background-color: aliceblue;
     line-height: 1.5;
-    margin-top: 40px;
+    margin-top: 0;
     padding-left: 3px;
     right: 4px;
     left: 4px;
     height: 90%;
     overflow: scroll;
+    top: 0;
        }
     #SectorList li{
         border-bottom: 0.5px solid #000 ;
@@ -310,6 +310,7 @@
       margin-left: 10px !important;
       padding: 2px;
       padding-left: 15px !important;
+      border: 0.25px #ccc solid;
     }
     #GainDropdown, #NoGainDropdown{
       background-color: #fff;
@@ -321,7 +322,6 @@
         .charts{
             width: 60%;
             margin: auto;
-            margin-top: 120px;
             }
 
             .charts > div {
@@ -343,7 +343,9 @@
              .range {
               margin-top: 60px;
             }
-
+            canvas {
+              height: 500px !important;
+            }
             [class^=results], [class^=resultsd]{
               margin-left: 10px !important;
               margin-right: -4px;
@@ -355,8 +357,8 @@
               margin-left: 15px;
               background-color: #fff;
               width: 100px;
-              position: absolute;
-              margin-top: 100px;
+              position: fixed;
+              margin-top: 20px;
              }
              .search input, .search button{
               width: 100px !important;
