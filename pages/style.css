@@ -357,32 +357,35 @@
               display: block;
               margin-left: 15px;
               background-color: #fff;
-              width: 100px;
+              width: 20%;
               position: fixed;
               margin-top: 20px;
              }
              .search input, .search button{
-              width: 100px !important;
-              margin-left: 15px !important;
-              min-width: 100px !important;
-              max-width: 100px !important;
+              width: 72% !important;
+              /* margin-left: 15px !important; */
+              /* min-width: 100px !important;
+              max-width: 100px !important; */
+             }
+             .dropdown{
+              width: 100%;
              }
 
              #filter, #filters{
-              min-width: 80px !important;
-              max-width: 80px !important;
+              /* min-width: 80px !important;
+              max-width: 80px !important; */
 
              }
 
              #clear {
               background-color: #ccc;
-              margin-top: -36px !important;
+              margin-top: 1px !important;
               width: 34px !important;
-              min-width: 34px !important; 
+              min-width: 34px !important;
               max-width: 34px !important;
               border-radius: 0 50%;
               height: 35px;
-              margin-left: 77px !important;
+              margin-left: -31px !important;
               position: absolute;
           }
 
