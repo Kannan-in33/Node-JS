@@ -80,6 +80,7 @@
      canvas{
         margin: 15px 0;
         width: 100% !important;
+         min-height: 200px !important;
 
       }
       canvas.volume{
