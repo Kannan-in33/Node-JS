@@ -930,7 +930,7 @@ let myFunc2 = letsDebounce(setFilter2,1000);
       ele.style.display = "none" ;
     });
    //positive0.length - 1;
-      for(let i = 0; i < positive0.length;){
+      for(let i = 0; i < 40;){
       let indx = positiveCompany0[positive0[i]];
       // console.log(i + "   " + indx);
       let elementUp = document.getElementById(indx);
