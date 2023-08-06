@@ -359,7 +359,7 @@
               display: flex;
               width: 100%;
               margin: auto;
-              max-width: 660px;
+              max-width: 780px;
           }
 
             #comparel .block1{
@@ -440,6 +440,7 @@
           text-align: left;
           width: 100px !important;
           font-size: large;
+          margin-left: 15px;
          }
          .right .block1{
           letter-spacing: 0.08rem;
