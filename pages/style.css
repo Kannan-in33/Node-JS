@@ -73,8 +73,9 @@
      .right{
       align-self: center;
       text-align: left;
-      width: 100px !important;
+      width: 70px !important;
       font-size: small;
+      margin-left: 5px;
       /* overflow: hidden; */
      }
      .right .block1{
@@ -102,7 +103,7 @@
 
       [class^=upTrend], [class^=downTrend]{
         display: none;
-        width: 93% !important;
+        width: 100% !important;
       }
       .Ddropdown, .Gdropdown{
         width: 20% !important;
@@ -194,6 +195,7 @@
        z-index: 200;
        height: 100px;
        justify-content: center;
+       padding-bottom: 10px;
      }
      .page{
       display: flex;
@@ -335,6 +337,9 @@
     }
     #GainDropdown, #NoGainDropdown{
       background-color: #fff;
+      width: 172px !important;
+      right: 18px;
+      position: fixed;
     }
     .sector{
       height: 50px;
@@ -407,6 +412,10 @@
             min-width: 20% !important;
         }
 
+        [class^=upTrend], [class^=downTrend]{
+          width: 93% !important;
+        }
+
              #clear {
               background-color: #ccc;
               margin-top: 1px !important;
@@ -433,8 +442,15 @@
          }
          .right .block1{
           letter-spacing: 0.08rem;
-          width: 100px;
+          width: 100%;
          }
+
+         #GainDropdown, #NoGainDropdown{
+          background-color: #fff;
+          width: 90% !important;
+          right: 0;
+          position: relative;
+        }
 
      }     
      
