@@ -41,8 +41,7 @@
       text-decoration-line: none;
       padding-top: 4px;
 }
-     }
-     atic a{
+     static a{
           text-decoration: none;
           /* width: 20%; */
           padding-top: 5px;
@@ -66,7 +65,7 @@
         width:100%;
         margin-top: 25px;
       }
-        }
+        
     .charts > div > div{
         width: 75%
         }
@@ -328,7 +327,7 @@
     }
     #filter{
       -webkit-border-radius: 20px;
-      -moz-border-radius: 20px;
+      border-radius: 20px;
       margin-left: 10px !important;
       padding: 2px;
       padding-left: 15px !important;
