@@ -25,9 +25,16 @@ let positive3 = [];
 let positiveCompany3 = {};
 let negativeList3 = [];
 let negativeCompany3 = {};
+let positive4 = [];
+let positiveCompany4 = {};
+let negativeList4 = [];
+let negativeCompany4 = {};
+let positive5 = [];
+let positiveCompany5 = {};
+let negativeList5 = [];
+let negativeCompany5 = {};
 let CurrentPriceObj = {};
 
-const weekday = ["S","M","T","W","Th","F","St"];
 
 let rupee = new Intl.NumberFormat('en-IN', {
     style: 'currency',
@@ -45,6 +52,10 @@ function updateCompanyDeatils(){
   let downvalue2 = 0;
   let upvalue3 = 0;
   let downvalue3 = 0;
+  let upvalue4 = 0;
+  let downvalue4 = 0;
+  let upvalue5 = 0;
+  let downvalue5 = 0;
   let checknum = 0;
   
 let positivelength = positive0.length;
@@ -103,6 +114,35 @@ for(let n = 0; n < negativeListlength; n++) {
 
 // END 3******************************
 
+positivelength = positive4.length;
+
+for(let p = 0; p < positivelength; p++) {
+  positive4.pop();
+}
+
+negativeListlength = negativeList4.length
+
+for(let n = 0; n < negativeListlength; n++) {
+  negativeList4.pop();
+}
+
+// END 4 ******************************
+
+
+positivelength = positive5.length;
+
+for(let p = 0; p < positivelength; p++) {
+  positive5.pop();
+}
+
+negativeListlength = negativeList5.length
+
+for(let n = 0; n < negativeListlength; n++) {
+  negativeList5.pop();
+}
+
+// END 5 ******************************
+
   for(let d = 0 ; d < companyDetails.length ; d++) {
     
 if (document.querySelectorAll('#'+ companyDetails[d].toString().replace("&"," ")).length > 0 &&  document.querySelectorAll('#'+ companyDetails[d] + " .right .block1").length == 0){
@@ -113,13 +153,13 @@ let divtag0 = document.createElement("div");
   document.querySelector('#'+ companyDetails[d] + " .right").appendChild(divtag0);
 
 let divtag = document.createElement("div");
-divtag.setAttribute("class", "Company");
-divtag.innerText = companyDetails[d];
-divtag0.appendChild(divtag);
+// divtag.setAttribute("class", "Company");
+// divtag.innerText = companyDetails[d];
+// divtag0.appendChild(divtag);
 
   divtag = document.createElement("div");
   divtag.setAttribute("class", "MarketCap");
-  divtag.innerText = "M  :  " + rupee.format(getCompareObject[companyDetails[d]]['Market Cap']);
+  divtag.innerText = "M:" + rupee.format(getCompareObject[companyDetails[d]]['Market Cap']);
   divtag0.appendChild(divtag);
 
 divtag = document.createElement("div");
@@ -127,24 +167,24 @@ divtag.setAttribute("class", "bookvalue");
 divtag.innerText = "BK:  " + getCompareObject[companyDetails[d]]['Book Value'];
 divtag0.appendChild(divtag);
 
-divtag = document.createElement("div");
-divtag.setAttribute("class", "High");
-divtag.innerText = "H   :  " + getCompareObject[companyDetails[d]].High;
-divtag0.appendChild(divtag);
+// divtag = document.createElement("div");
+// divtag.setAttribute("class", "High");
+// divtag.innerText = "H :" + getCompareObject[companyDetails[d]].High;
+// divtag0.appendChild(divtag);
 
-divtag = document.createElement("div");
-divtag.setAttribute("class", "Low");
-divtag.innerText = "L   :  " +getCompareObject[companyDetails[d]].Low;
-divtag0.appendChild(divtag);
+// divtag = document.createElement("div");
+// divtag.setAttribute("class", "Low");
+// divtag.innerText = "L :" +getCompareObject[companyDetails[d]].Low;
+// divtag0.appendChild(divtag);
 
 divtag = document.createElement("div");
 divtag.setAttribute("class", "Reserve");
-divtag.innerText = "R  :  " + rupee.format(getCompareObject[companyDetails[d]].Reserves);
+divtag.innerText = "R:" + rupee.format(getCompareObject[companyDetails[d]].Reserves);
 divtag0.appendChild(divtag);
 
 divtag = document.createElement("div");
 divtag.setAttribute("class", "Barrowing");
-divtag.innerText = "B  :  " + rupee.format(getCompareObject[companyDetails[d]].Borrowings);
+divtag.innerText = "B:" + rupee.format(getCompareObject[companyDetails[d]].Borrowings);
 divtag0.appendChild(divtag);
 
 
@@ -176,7 +216,7 @@ else{
   positiveCompany0[checkPercent(tday, yday) ] = companyDetails[d];
 }
 // }
-divtag.innerText = "0:  " +  Math.abs(checkPercent(tday, yday).toFixed(1)) + ' %';
+divtag.innerText = "0:  " +  Math.abs(checkPercent(tday, yday).toFixed(1)) ;
 }
 divtag0.appendChild(divtag);
 
@@ -187,8 +227,6 @@ divtag.setAttribute("class", "difference1");
 complen = dCompanyObject[companyDetails[d]].length -1 ;
 tday = (dCompanyObject[companyDetails[d]][complen]);
 yday = (dCompanyObject[companyDetails[d]][complen -1] );
-
-// console.log(((tday - yday) / yday) * 100);
 checknum = checkPercent(tday, yday) ;
 if (checknum < 0){
   downvalue1++;
@@ -207,7 +245,7 @@ else{
   positiveCompany1[checknum] = companyDetails[d];
 
 }
-divtag.innerText = "1:  " +  Math.abs(checkPercent(tday, yday).toFixed(1)) + ' %';
+divtag.innerText = "1:  " +  Math.abs(checkPercent(tday, yday).toFixed(1)) ;
 divtag0.appendChild(divtag);
 
 // Second Symbol
@@ -236,7 +274,7 @@ else{
 
 
 }
-divtag.innerText = "2:  " +  Math.abs(checkPercent(tday, yday).toFixed(1)) + ' %';
+divtag.innerText = "2:  " +  Math.abs(checkPercent(tday, yday).toFixed(1)) ;
 divtag0.appendChild(divtag);
 
 // Third Symbol*****************************************************************************
@@ -267,7 +305,7 @@ else{
 
 
 }
-divtag.innerText = "3:  " +  Math.abs(checkPercent(tday, yday).toFixed(1)) + ' %';
+divtag.innerText = "3:  " +  Math.abs(checkPercent(tday, yday).toFixed(1)) ;
 divtag0.appendChild(divtag);
 
 
@@ -279,6 +317,90 @@ divtag.innerText = rupee.format(tday) ;
 divtag0.appendChild(divtag);
 
 // Third symbol END*******************************************************************
+
+
+// Fourth Symbol*****************************************************************************
+
+
+// divtag = document.createElement("div");
+// divtag.setAttribute("class", "difference4");
+// complen = dCompanyObject[companyDetails[d]].length -4 ;
+// tday = (dCompanyObject[companyDetails[d]][complen]);
+// yday = (dCompanyObject[companyDetails[d]][complen -1] );
+// checknum = checkPercent(tday, yday) ;
+
+// if (checknum < 0){
+//   downvalue3++;
+//   divtag.classList.add("downTrend4");
+//   document.querySelector("button.downTrend3 span").innerText =  "  " + downvalue4;
+  
+//   negativeList4.push(checknum);
+//   negativeCompany4[checknum] = companyDetails[d];
+  
+// }
+// else{
+//   upvalue4++;
+//   divtag.classList.add("upTrend4");
+//   document.querySelector("button.upTrend3 span").innerText = "  " + upvalue4;
+//   positive4.push(checknum);
+//   positiveCompany4[checknum] = companyDetails[d];
+
+
+// }
+// divtag.innerText = "4:  " +  Math.abs(checkPercent(tday, yday).toFixed(1)) ;
+// divtag0.appendChild(divtag);
+
+
+// divtag = document.createElement("div");
+// divtag.setAttribute("class", "currentPrice");
+// complen = dCompanyObject[companyDetails[d]].length -1 ;
+// tday = (dCompanyObject[companyDetails[d]][complen]);
+// divtag.innerText = rupee.format(tday) ;
+// divtag0.appendChild(divtag);
+
+// Fourth symbol END*******************************************************************
+
+// Fifth Symbol*****************************************************************************
+
+
+// divtag = document.createElement("div");
+// divtag.setAttribute("class", "difference5");
+// complen = dCompanyObject[companyDetails[d]].length -5 ;
+// tday = (dCompanyObject[companyDetails[d]][complen]);
+// yday = (dCompanyObject[companyDetails[d]][complen -1] );
+// checknum = checkPercent(tday, yday) ;
+
+// if (checknum < 0){
+//   downvalue5++;
+//   divtag.classList.add("downTrend5");
+//   document.querySelector("button.downTrend3 span").innerText =  "  " + downvalue5;
+  
+//   negativeList5.push(checknum);
+//   negativeCompany5[checknum] = companyDetails[d];
+  
+// }
+// else{
+//   upvalue5++;
+//   divtag.classList.add("upTrend5");
+//   document.querySelector("button.upTrend3 span").innerText = "  " + upvalue5;
+//   positive5.push(checknum);
+//   positiveCompany5[checknum] = companyDetails[d];
+
+
+// }
+// divtag.innerText = "5:  " +  Math.abs(checkPercent(tday, yday).toFixed(1)) ;
+// divtag0.appendChild(divtag);
+
+
+// divtag = document.createElement("div");
+// divtag.setAttribute("class", "currentPrice");
+// complen = dCompanyObject[companyDetails[d]].length -1 ;
+// tday = (dCompanyObject[companyDetails[d]][complen]);
+// divtag.innerText = rupee.format(tday) ;
+// divtag0.appendChild(divtag);
+
+// Fifth symbol END*******************************************************************
+
 }
 
 }
@@ -321,7 +443,7 @@ function compareStocks(){
 
         divtag = document.createElement("div");
         divtag.setAttribute("class", "MarketCap");
-        divtag.innerText = 'M : ' + getCompareObject[compareList[d]]['Market Cap'];
+        divtag.innerText = 'M: ' + getCompareObject[compareList[d]]['Market Cap'];
         divtag0.appendChild(divtag);
 
         divtag = document.createElement("div");
@@ -331,26 +453,26 @@ function compareStocks(){
 
       divtag = document.createElement("div");
       divtag.setAttribute("class", "High");
-      divtag.innerText = 'H : ' + getCompareObject[compareList[d]].High;
+      divtag.innerText = 'H: ' + getCompareObject[compareList[d]].High;
       divtag0.appendChild(divtag);
 
       divtag = document.createElement("div");
       divtag.setAttribute("class", "Low");
-      divtag.innerText = 'L : ' + getCompareObject[compareList[d]].Low;
+      divtag.innerText = 'L: ' + getCompareObject[compareList[d]].Low;
       divtag0.appendChild(divtag);
 
       divtag = document.createElement("div");
       divtag.setAttribute("class", "Reserve");
-      divtag.innerText = 'R : ' + getCompareObject[compareList[d]].Reserves;
+      divtag.innerText = 'R: ' + getCompareObject[compareList[d]].Reserves;
       divtag0.appendChild(divtag);
 
       divtag = document.createElement("div");
       divtag.setAttribute("class", "Barrowing");
-      divtag.innerText = 'B : ' + getCompareObject[compareList[d]].Borrowings;
+      divtag.innerText = 'B: ' + getCompareObject[compareList[d]].Borrowings;
       divtag0.appendChild(divtag);
     }
     }
-    comparetoggleHide();
+comparetoggleHide();
 }
 
 function clearcompareStocks(){
@@ -454,14 +576,10 @@ let resultCount = 0;
               yValues2[y] =  yValues[y] ;
             }
                 for (let i = 0; i < Math.min(companyObject[key].length, days) ; i++) {
-                  // let d = new Date(dCompanyDateObject[key][i]);
-                  // xValues.push( weekday[d.getDay()]);
-
                   xValues.push(i);
                 }
                 xValues.reverse();
         let divtag = document.createElement("div");                  
-                
         let checkBox = document.createElement("input");
                   checkBox.setAttribute("type", "checkbox");
                   checkBox.setAttribute("class", key);
@@ -485,8 +603,6 @@ let resultCount = 0;
                   checkBoxF.addEventListener("click", setFav);
                   divtag.appendChild(checkBoxF);
                   companyDetails.push(key);
-
-
         let anchortag = document.createElement("a");
               anchortag.setAttribute("href", "https://www.screener.in/company/" + key + "/");
               anchortag.setAttribute("target", "_blank");
@@ -494,7 +610,6 @@ let resultCount = 0;
         let canvas = document.createElement("canvas");
                     canvas.setAttribute("id", key);
                     canvas.setAttribute("class", key);       
-        
         let divtagMain = document.createElement("div"); 
                   divtagMain.setAttribute("id", key);
         let divtagLeft = document.createElement("div"); 
@@ -506,7 +621,6 @@ let resultCount = 0;
 
         divtag.appendChild(canvas);
                     document.querySelector(".charts").appendChild(divtagMain);
-                      // let cmax = Math.max(...yValues2);
                       let ccurrect = yValues2[0];
                       let cmin = Math.min(...yValues2);
                       let cmax = Math.max(...yValues2);
@@ -521,18 +635,15 @@ let resultCount = 0;
                           BuyObject20[key] = companyObject[key];
                         }
                         if ((yValues2[1] * 1.05) < ccurrect){
-                          // if (( ( (Number(buyAvg[20]) + Number(buyAvg[29]) + Number(buyAvg[15])) / 3) < (ccurrect * 1.09 )) && (((cmax-ccurrect)/cmax) * 100) > 30 ){
-                            BuyObject3Avg[key] = companyObject[key];
-                            // console.log(key + "    " + ( (Number(buyAvg[20]) + Number(buyAvg[29]) + Number(buyAvg[15]) )/3).toFixed(2) + "    " + ccurrect);
-                          }
-                          // drawGraph(canvas, [...yValues2].reverse() )
+                           BuyObject3Avg[key] = companyObject[key];
+                           }
                       
                         new Chart(canvas, {
                             type: "line",
                             data: {
                             labels: xValues,
                             datasets: [{
-                                    label: key + '   FL ' + ( ((cmax-cmin)/cmax) * 100).toFixed(2).toString() + ' %   FC  ' + ( ((cmax-ccurrect)/cmax) * 100).toFixed(2).toString() + ' %' ,
+                                    label: key + '   FL ' + ( ((cmax-cmin)/cmax) * 100).toFixed(2).toString() + ' %   FC  ' + ( ((cmax-ccurrect)/cmax) * 100).toFixed(2).toString()  ,
                                     pointRadius: 0,
                                     borderWidth : 0.5,
                                     borderColor: "rgba(0,0,0,0.9)",
@@ -581,10 +692,6 @@ let resultCount = 0;
                                     }
                               });
 
-
-
-
-
     }
 document.getElementById("results0").innerText = resultCount.toString();
 let idlst = document.querySelectorAll("[id^='getData']");
@@ -593,10 +700,6 @@ element.innerText = "Stocks " + element.classList[0] +'+';
 element.classList.remove('active');
 })
 updateCompanyDeatils();
-// setTimeout(updateCompanyDeatils, 1000);
-// setTimeout(updateFavourite, 5000);
-
-// setTimeout(getFav, 100);
 
 }
 
@@ -608,14 +711,12 @@ if (document.querySelectorAll("#" + localStorage[i]).length > 0 ){
           let ele =  document.querySelectorAll("#" + localStorage[i])[1];
           //  ele.checked = true;
           ele.classList.add("star");
-
            }
           }
-
   }
 
 
-  function getKeyByValue(object, value) {
+function getKeyByValue(object, value) {
   return Object.keys(object).find(key => object[key] === value);
 }
 
@@ -645,7 +746,6 @@ function getData(e) {
   }
 
 function getSectorData(event) {
-
         document.getElementById("results0").innerText = 0;
         document.getElementById("results1").innerText = 0;
         document.getElementById("results2").innerText = 0;
@@ -676,7 +776,7 @@ function getSectorData(event) {
           };
   }
 
-  function getSectorDataAll() {
+function getSectorDataAll() {
     // removeActive();
     document.getElementById("filter").value = 'All';
     document.getElementById("results0").innerText = "Loading...";
@@ -699,12 +799,7 @@ function getSectorData(event) {
       };
 }
 
- 
-
 // Search Bar Script to filter charts matching the typed text
-
-
-
 
 function setComp(event){
 
@@ -720,7 +815,7 @@ function setComp(event){
     
     }
 
-    function setFav(event){
+function setFav(event){
         let AFL = [...Array.from(localStorage)];
     
         if(!AFL.includes(event.target.id.toString())){
@@ -757,7 +852,7 @@ function setComp(event){
         }
       }
 
-      function getCompare() {
+function getCompare() {
         const xhr = new XMLHttpRequest();
         xhr.open("GET", "/getcompare");
         xhr.send();
@@ -774,29 +869,6 @@ function setComp(event){
         };
 }
 getCompare();
-
-// let CrLink = 'https://docs.google.com/spreadsheets/u/1/d/e/2PACX-1vSe4LB0TG9QgBjssTYT2uOd_83tl16F1UP0fdBaFMB6fC1lBYMz9y8yQaiokTid2fsQW1M5aZ7oLG8D/pubhtml?gid=0&single=true';
-
-
-
-function getCurrentPrice() {
-  const xhr = new XMLHttpRequest();
-  xhr.open("GET", CrLink);
-  xhr.send();
-  xhr.responseType = "text/html";
-  xhr.onload = () => {
-  if (xhr.readyState == 4 && xhr.status == 200) {
-      CurrentPriceObj = xhr.response;
-      // console.log(CurrentPriceObj);
-  } 
-  else {
-      console.log(`Error: ${xhr.status}`);
-      }
-  };
-}
-
-
-
 
 function createChartMini(companyObject, companyName, divtag0, days = 1000){
           let yValues  = [];
@@ -921,204 +993,6 @@ let myFunc2 = letsDebounce(setFilter2,1000);
 
   }
 
-
-  function getUp0(){
-    window.scrollTo({top: 0, behavior: 'smooth'});
-    showGainers();
-    let lst = document.querySelectorAll(".charts > div");
-    lst.forEach( (ele) => {
-      ele.style.display = "none" ;
-    });
-   //positive0.length - 1;
-      for(let i = 0; i < 40;){
-      let indx = positiveCompany0[positive0[i]];
-      // console.log(i + "   " + indx);
-      let elementUp = document.getElementById(indx);
-      if (elementUp != null){
-      elementUp.parentElement.insertBefore(elementUp, elementUp.parentElement.children[i]);
-      elementUp.style.display = "";
-      i++;
-      document.getElementById("Gnumbers").innerText = Math.max(i , 1) ;
-      }
-      }
-
-
-
-}
-
-function getDown0(){
-  window.scrollTo({top: 0, behavior: 'smooth'});
-  showNoGainers();
-  let lst = document.querySelectorAll(".charts > div");
-  lst.forEach( (ele) => {
-    ele.style.display = "none" ;
-  });
-
-// negativeList0.length  - 1
-  for(let i = 0; i < egativeList0.length  - 1; ){
-    let indx = negativeCompany0[negativeList0[i]];
-    // console.log(i + "   " + indx);
-    let elementUp = document.getElementById(indx);
-    if (elementUp != null){
-    elementUp.style.display = "";
-    i++;
-    elementUp.parentElement.insertBefore(elementUp, elementUp.parentElement.children[i]);
-    document.getElementById("Dnumbers").innerText = Math.max((i) , 1) ;
-    }
-    }
-
-
-}
-
-// GET UP DOWN DUP WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
-
-function getUp1(){
-  window.scrollTo({top: 0, behavior: 'smooth'});
-  showGainers();
-  let lst = document.querySelectorAll(".charts > div");
-  lst.forEach( (ele) => {
-    ele.style.display = "none" ;
-  });
-//  positive1.length  - 1
-    for(let i = 0; i < 30;){
-    let indx = positiveCompany1[positive1[i]];
-    // console.log(i + "   " + indx);
-    let elementUp = document.getElementById(indx);
-    if (elementUp != null){
-    elementUp.style.display = "";
-    i++;
-    elementUp.parentElement.insertBefore(elementUp, elementUp.parentElement.children[i]);
-    document.getElementById("results1").innerText = Math.max(i , 1) ;
-    }
-    }
-
-
-
-}
-
-function getDown1(){
-  window.scrollTo({top: 0, behavior: 'smooth'});
-  showNoGainers();
-let lst = document.querySelectorAll(".charts > div");
-lst.forEach( (ele) => {
-  ele.style.display = "none" ;
-});
-
-// negativeList1.length  - 1
-for(let i = 0; i < 80; ){
-  let indx = negativeCompany1[negativeList1[i]];
-  // console.log(i + "   " + indx);
-  let elementUp = document.getElementById(indx);
-  if (elementUp != null){
-  elementUp.style.display = "";
-  i++;
-  elementUp.parentElement.insertBefore(elementUp, elementUp.parentElement.children[i]);
-  document.getElementById("resultsd1").innerText = Math.max((i) , 1) ;
-  }
-  }
-
-
-}
-
-function getUp2(){
-  window.scrollTo({top: 0, behavior: 'smooth'});
-  showGainers();
-  let lst = document.querySelectorAll(".charts > div");
-  lst.forEach( (ele) => {
-    ele.style.display = "none" ;
-  });
-//  positive2.length  - 1
-    for(let i = 0; i < 30;){
-    let indx = positiveCompany2[positive2[i]];
-    // console.log(i + "   " + indx);
-    let elementUp = document.getElementById(indx);
-    if (elementUp != null){
-    elementUp.style.display = "";
-    i++;
-    elementUp.parentElement.insertBefore(elementUp, elementUp.parentElement.children[i]);
-    // document.getElementById("results2").innerText = Math.max(i , 1) ;
-    }
-    }
-
-
-
-}
-
-function getDown2(){
-  showNoGainers();
-  window.scrollTo({top: 0, behavior: 'smooth'});
-let lst = document.querySelectorAll(".charts > div");
-lst.forEach( (ele) => {
-  ele.style.display = "none" ;
-});
-
-// negativeList2.length  - 1
-for(let i = 0; i < 80; ){
-  let indx = negativeCompany2[negativeList2[i]];
-  // console.log(i + "   " + indx);
-  let elementUp = document.getElementById(indx);
-  if (elementUp != null){
-  elementUp.style.display = "";
-  i++;
-  elementUp.parentElement.insertBefore(elementUp, elementUp.parentElement.children[i]);
-  // document.getElementById("resultsd2").innerText = Math.max((i) , 1) ;
-  }
-  }
-
-
-}
-
-function getUp3(){
-  window.scrollTo({top: 0, behavior: 'smooth'});
-  showGainers();
-  let lst = document.querySelectorAll(".charts > div");
-  lst.forEach( (ele) => {
-    ele.style.display = "none" ;
-  });
-//  positive3.length  - 1
-    for(let i = 0; i < 80;){
-    let indx = positiveCompany3[positive3[i]];
-    // console.log(i + "   " + indx);
-    let elementUp = document.getElementById(indx);
-    if (elementUp != null){
-    elementUp.style.display = "";
-    i++;
-    elementUp.parentElement.insertBefore(elementUp, elementUp.parentElement.children[i]);
-    // document.getElementById("results3").innerText = Math.max(i , 1) ;
-    }
-    }
-
-
-
-}
-
-function getDown3(){
-  window.scrollTo({top: 0, behavior: 'smooth'});
-  showNoGainers();
-let lst = document.querySelectorAll(".charts > div");
-lst.forEach( (ele) => {
-  ele.style.display = "none" ;
-});
-
-
-for(let i = 0; i < negativeList3.length  - 1; ){
-  let indx = negativeCompany3[negativeList3[i]];
-  // console.log(i + "   " + indx);
-  let elementUp = document.getElementById(indx);
-  if (elementUp != null){
-  elementUp.style.display = "";
-  i++;
-  elementUp.parentElement.insertBefore(elementUp, elementUp.parentElement.children[i]);
-  // document.getElementById("resultsd3").innerText = Math.max((i) , 1) ;
-  }
-  }
-
-
-}
-
-// GET UP DOWN DUP ENDS WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
-
-
   // compareStocks
   function getFavourits(){
 
@@ -1204,60 +1078,88 @@ function clearFavourits(){
   }
   
   
-  function drawGraph( canvas, dataArr ){  
-    // var canvas = document.getElementById( "testCanvas" );  
+function getUp(num){
+  window.scrollTo({top: 0, behavior: 'smooth'});
+  showGainers();
+  let lst = document.querySelectorAll(".charts > div");
+  lst.forEach( (ele) => {
+    ele.style.display = "none" ;
+  });
+let positive = [];
+let positiveCompany = {};
 
-    // if (canvas.id == "AGSTRA"){
-    var context = canvas.getContext( "2d" ); 
-    let largest = Math.max(...dataArr) ;
-    let smallest = Math.min(...dataArr);
-    let newdataArr = dataArr.map( (ele)=>{
-      return largest - ele;
-    })
-    const GRAPH_BOTTOM = 250;  
-    let GRAPH_LEFT = 0;  
-    const GRAPH_RIGHT = 200;    
-    const GRAPH_TOP = 0;  
-    const GRAPH_HEIGHT = 250;  
-    const GRAPH_WIDTH = 200; 
-    let oneUnit;
-    // console.log(largest, smallest);
-    oneUnit = (GRAPH_HEIGHT )/ (largest );
-    // console.log(largest * oneUnit, smallest * oneUnit);
-  
-    var arrayLen = dataArr.length;  
-  
-    // context.clearRect( 0, 10, 300, 180 );  
-    // set font for fillText()  
-    context.font = "2px Arial";  
-    context.lineWidth = 1;
-    // draw X and Y axis  
-    // context.beginPath();  
-    // context.moveTo( GRAPH_LEFT, GRAPH_BOTTOM );  
-    // context.lineTo( GRAPH_RIGHT, GRAPH_BOTTOM );  
-    // context.lineTo( GRAPH_RIGHT, GRAPH_TOP );  
-    // context.stroke();
-    
-    context.beginPath();  
-    context.lineJoin = "round";  
-    context.strokeStyle = "black";  
-    context.lineWidth = 0.25;
-    context.moveTo( GRAPH_LEFT,  GRAPH_HEIGHT   - ( dataArr[0] * oneUnit) );  
-    
-    // context.moveTo( GRAPH_LEFT, ( GRAPH_HEIGHT - dataArr[ 0 ] / largest * GRAPH_HEIGHT ) + GRAPH_TOP );  
-    // draw reference value for day of the week  
-    // context.fillText( "1", 15, GRAPH_BOTTOM - 25);  
-let xincrement =(GRAPH_WIDTH / arrayLen);
-    
-    for( var i = 1; i < arrayLen; i++ ){  
-      // GRAPH_LEFT = GRAPH_LEFT + 1;
-      GRAPH_LEFT =  GRAPH_LEFT + xincrement;
-      // 200, 205, 300, 202
-      // context.lineTo( GRAPH_LEFT , ( GRAPH_HEIGHT - dataArr[ i ] / largest * GRAPH_HEIGHT ) + GRAPH_TOP );
-        // context.lineTo( GRAPH_RIGHT / arrayLen * i + GRAPH_LEFT, ( GRAPH_HEIGHT - dataArr[ i ] / largest * GRAPH_HEIGHT ) + GRAPH_TOP );  
-        // draw reference value for day of the week 
-        context.lineTo( GRAPH_LEFT, GRAPH_HEIGHT  - ( dataArr[i] * oneUnit) );   
-        context.stroke();  
-    }  
-  // } // Endinf Main IF
-} 
+  switch (num){
+    case 0:
+      positive = [...positive0];
+      positiveCompany = positiveCompany0;
+      break;
+
+      case 1:
+        positive = [...positive1];
+        positiveCompany = positiveCompany1;
+        break;
+
+        case 2:
+          positive = [...positive2];
+          positiveCompany = positiveCompany2;
+          break;
+
+          case 3:
+            positive = [...positive3];
+            positiveCompany = positiveCompany3;
+            break;
+  }
+    for(let i = 0; i < Math.min(positive.length, 40);){
+        let indx = positiveCompany[positive[i]];
+        let elementUp = document.getElementById(indx);
+        if (elementUp != null){
+            elementUp.parentElement.insertBefore(elementUp, elementUp.parentElement.children[i]);
+            elementUp.style.display = "";
+            i++;
+            document.getElementById("Gnumbers").innerText = Math.max(i , 1) ;
+        }   
+    }
+  }
+
+function getDown(num){
+      window.scrollTo({top: 0, behavior: 'smooth'});
+  showNoGainers();
+  let lst = document.querySelectorAll(".charts > div");
+  lst.forEach( (ele) => {
+    ele.style.display = "none" ;
+  });
+let negative = [];
+let negativeCompany = {};
+
+  switch (num){
+    case 0:
+      negative = [...negativeList0];
+      negativeCompany = negativeCompany0;
+      break;
+
+      case 1:
+        negative = [...negativeList1];
+        negativeCompany = negativeCompany1;
+        break;
+
+        case 2:
+          negative = [...negativeList2];
+          negativeCompany = negativeCompany2;
+          break;
+
+          case 3:
+            negative = [...negativeList3];
+            negativeCompany = negativeCompany3;
+            break;
+  }
+    for(let i = 0; i < Math.min(negative.length,40);){
+        let indx = negativeCompany[negative[i]];
+        let elementUp = document.getElementById(indx);
+        if (elementUp != null){
+            elementUp.parentElement.insertBefore(elementUp, elementUp.parentElement.children[i]);
+            elementUp.style.display = "";
+            i++;
+            document.getElementById("Dnumbers").innerText = Math.max(i , 1) ;
+        }   
+    }
+  }

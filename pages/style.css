@@ -39,8 +39,10 @@
      margin:8px;
      text-align: center;
       text-decoration-line: none;
+      padding-top: 4px;
+}
      }
-     .static a{
+     atic a{
           text-decoration: none;
           /* width: 20%; */
           padding-top: 5px;
@@ -62,6 +64,8 @@
     .charts > div{
         display: flex;
         width:100%;
+        margin-top: 25px;
+      }
         }
     .charts > div > div{
         width: 75%
@@ -70,34 +74,32 @@
      .right{
       align-self: center;
       text-align: left;
-      width: 25% !important;
+      width: 100px !important;
+      font-size: small;
+      /* overflow: hidden; */
      }
      .right .block1{
       letter-spacing: 0.08rem;
+      width: 100%;
      }
 
      
-     canvas{
+     canvas:not(.volume){
         margin: 15px 0;
-        width: 100% !important;
-         min-height: 200px !important;
+        min-width: 280px !important;
 
       }
       canvas.volume{
         margin: 0;
         height: 150px !important;
+        min-width: 280px !important;
       }
 
-     .MarketCap, .High, .Reserve, .difference0, .difference1 , .difference2, .difference3{
+     .MarketCap, .High, .Reserve, [class^=difference]{
           background-color: #FFD750;
-          padding: 0 5% 0 10px;
+          padding: 0 2px;
           width: 100%;
       }
-
-      /* .difference2  {
-        padding: 0 5% 0 10px;
-        width: 100%;
-      } */
 
       [class^=upTrend], [class^=downTrend]{
         display: none;
@@ -112,7 +114,13 @@
         margin-left: 0 !important;
       }
 
-      .upTrends::before, .upTrend0::before, .upTrend1::before, .upTrend2::before, .upTrend3::before{      
+      .upTrends::before, 
+      .upTrend0::before, 
+      .upTrend1::before, 
+      .upTrend2::before, 
+      .upTrend3::before,
+      .upTrend4::before, 
+      .upTrend5::before{       
         transform: scale(1.5);
         display: inline-flex;
         margin-left: 5px;
@@ -123,7 +131,13 @@
 
       }
 
-      .downTrends::before,.downTrend0::before, .downTrend1::before, .downTrend2::before, .downTrend3::before{      
+      .downTrends::before,
+      .downTrend0::before, 
+      .downTrend1::before, 
+      .downTrend2::before, 
+      .downTrend3::before, 
+      .downTrend4::before, 
+      .downTrend5::before{      
         transform: scale(1.5);
         display: inline-flex;
         margin-left: 5px;
@@ -146,13 +160,12 @@
         background-color: #ff5e00b2;
       }
       .company, .Low, .Barrowing, .bookvalue{
-        padding: 0 5% 0 10px;
+        padding: 0 2px;
       }
 
       .currentPrice {
         padding: 6px 5% 0 15px;
         font-weight: 600;
-        /* text-align: center; */
       }
 
      .search{
@@ -182,6 +195,11 @@
        z-index: 200;
        height: 100px;
        justify-content: center;
+     }
+     .page{
+      display: flex;
+      width: 80%;
+      justify-content: end;
      }
      .hide{
        display: none;
@@ -352,8 +370,14 @@
               margin-top: 60px;
             }
             canvas {
+              height: 150px !important;
+              width: 600px !important;
+            }
+            canvas:not(.volume) {
               height: 500px !important;
             }
+
+
             [class^=results], [class^=resultsd]{
               margin-left: 10px !important;
               margin-right: -4px;
@@ -370,9 +394,6 @@
              }
              .search input, .search button{
               width: 72% !important;
-              /* margin-left: 15px !important; */
-              /* min-width: 100px !important;
-              max-width: 100px !important; */
              }
              .dropdown{
               width: 100%;
@@ -404,6 +425,17 @@
           #secSearch {
             margin-top: 20px;
         }
+
+        .right{
+          align-self: center;
+          text-align: left;
+          width: 100px !important;
+          font-size: large;
+         }
+         .right .block1{
+          letter-spacing: 0.08rem;
+          width: 100px;
+         }
 
      }     
      
