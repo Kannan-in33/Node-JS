@@ -349,6 +349,17 @@
     .sector{
       height: 50px;
     }
+
+    .dayComp{
+      display: flex;
+      justify-content: space-evenly;
+    }
+
+    .dayCompare::before, .LCompare::before{
+      font-size: 10px !important;
+    }
+
+
 /* Sector Style Ends */
 
      @media only screen and (orientation: landscape){

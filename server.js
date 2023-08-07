@@ -6,6 +6,8 @@ const {google} = require('googleapis');
 const port = process.env.PORT || 5000 ;
 const server = express();
 currentPriceData = {};
+currentPriceData1 = {};
+let timestamp = new Date().getHours();
 
 const spreadsheetId = "13BOxMT5cUoScurImRrDK0PwwLYAtV7qJiI75Knw44kQ";
 
@@ -58,7 +60,6 @@ server.use( (req, res)=>{
     let  companyObject2 ={};
 
 
-
 if(req.path == '/All') {
     let j = 0;
     let k = 0;
@@ -82,12 +83,7 @@ if(req.path == '/All') {
                     max = max < obj['datasets'][0]['values'].length ? obj['datasets'][0]['values'].length : max
                     for (let key in obj['datasets'][0]['values']) {
                             obj2.push(obj['datasets'][0]['values'][key][1]);  
-                           
-                            // if(j <  30){
                                 volumeObj.push((obj['datasets'][1]['values'][key][1])/100000); 
-                            // }  
-                            //     j++; 
-                    
                     }
                     companyObject[file.split('.')[0]] = [...obj2];
                     volumeObject[file.split('.')[0]] = [...volumeObj];
@@ -101,9 +97,7 @@ if(req.path == '/All') {
                     "companyObject" : companyObject,
                     "volumeObject" : volumeObject,
                     "currentPriceData": currentPriceData,
-                // "valueList" : valueList,
-                // "max" : max,                
-                // "companyDateObj" : companyDateObj
+                    "currentPriceData1": currentPriceData1,
                 }
                 res.send(obj3);
     }
@@ -147,15 +141,9 @@ fs.readdir(directorypath , function (err, files) {
                     max = max < obj['datasets'][0]['values'].length ? obj['datasets'][0]['values'].length : max
                     for (let key in obj['datasets'][0]['values']) {
                     obj2.push(obj['datasets'][0]['values'][key][1]);  
-                    // datesObj.push(obj['datasets'][0]['values'][key][0]);
-                        // if(j <  30){
-                            volumeObj.push((obj['datasets'][1]['values'][key][1])/100000); 
-                        // }  
-                        //     j++; 
-                        
+                            volumeObj.push((obj['datasets'][1]['values'][key][1])/100000);                        
                     }
                     companyObject[file.split('.')[0]] = [...obj2];
-                    // companyDateObj[file.split('.')[0]] = [...datesObj];
                     volumeObject[file.split('.')[0]] = [...volumeObj];
                     obj2 =[];
                     datesObj = [];
@@ -163,12 +151,10 @@ fs.readdir(directorypath , function (err, files) {
             }
                 if (i == files.length -1 ){
                 obj3 = { "company" : company,
-                "volumeObject" : volumeObject,
-                "currentPriceData" : currentPriceData,
-                // "valueList" : valueList,
-                // "max" : max,
+                "volumeObject" : volumeObject,                
                 "companyObject" : companyObject,
-                // "companyDateObj" : companyDateObj
+                "currentPriceData" : currentPriceData,
+                "currentPriceData1": currentPriceData1,
                 }
                 res.send(obj3);
                 }
@@ -182,7 +168,7 @@ fs.readdir(directorypath , function (err, files) {
 
 });
 
-server.listen(port, () => {
+server.listen(port, () => {    
     console.log('Server is listening on port ' + port);
     getUpdatedPrice();
   //  setInterval(getUpdatedPrice, (1000 * 60  * 30));
@@ -195,7 +181,6 @@ getUpdatedPrice =  async () =>{
     });
 
     const client = await auth.getClient();
-
     const googleSheets = google.sheets({
         version: "v4",
         auth: client
@@ -211,8 +196,20 @@ getUpdatedPrice =  async () =>{
 
    let cpvalues = (CPdata.data.values);
    cpvalues.forEach ( ele => {
-   currentPriceData[ele[0].toString().split(",")[0]] = ele[1].toString();
-})
+   currentPriceData[ele[0].toString().split(",")[0]] = ele[1].toString();   
+});
+
+if(timestamp >= 12 && Object.keys(currentPriceData1).length <= Object.keys(currentPriceData).length - 50 ){
+    cpvalues.forEach ( ele => {
+        currentPriceData1[ele[0].toString().split(",")[0]] = ele[1].toString(); 
+    });
+}
+else if(timestamp < 12){
+    currentPriceData1 ={};
+}
+
+console.log(Object.keys(currentPriceData1).length + "    " +  Object.keys(currentPriceData).length + "   " + timestamp);
+
 }
 
 

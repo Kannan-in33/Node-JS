@@ -34,6 +34,7 @@ let positiveCompany5 = {};
 let negativeList5 = [];
 let negativeCompany5 = {};
 let CurrentPriceObj = {};
+let CurrentPriceObj1 = {};
 
 
 let rupee = new Intl.NumberFormat('en-IN', {
@@ -153,6 +154,68 @@ let divtag0 = document.createElement("div");
   document.querySelector('#'+ companyDetails[d] + " .right").appendChild(divtag0);
 
 let divtag = document.createElement("div");
+    divtag.setAttribute("class", "dayComp");
+
+// Start UPDTAE CURRENT and 1 Data************************************************
+
+let divtagDC = document.createElement("div");
+divtagDC.setAttribute("class", "dayCompare");
+let complen = dCompanyObject[companyDetails[d]].length -1 ;
+let tday;
+let yday;
+
+if(Object.keys(CurrentPriceObj1).length < 20){
+  tday = CurrentPriceObj[companyDetails[d]];
+  yday = (dCompanyObject[companyDetails[d]][complen]);
+}
+else{
+  tday = CurrentPriceObj1[companyDetails[d]];
+  yday = (dCompanyObject[companyDetails[d]][complen]);
+}
+if(tday !== undefined ){
+ checknum = checkPercent(tday, yday) ;
+    if ((((tday - yday) / yday) * 100) < 0){
+      divtagDC.classList.add("downTrend0");  
+    }
+    else{
+      divtagDC.classList.add("upTrend0");
+    }
+
+divtagDC.innerText = Math.abs(checkPercent(tday, yday).toFixed(1)) ;
+divtag.appendChild(divtagDC);
+}
+
+
+if(Object.keys(CurrentPriceObj1).length > 20){
+  tday = CurrentPriceObj[companyDetails[d]];
+  yday = CurrentPriceObj1[companyDetails[d]];
+  let divtagLC = document.createElement("div");
+  divtagLC.setAttribute("class", "LCompare");
+
+if(tday !== undefined ){
+ checknum = checkPercent(tday, yday) ;
+    if ((((tday - yday) / yday) * 100) < 0){
+      divtagLC.classList.add("downTrend0");  
+    }
+    else{
+      divtagLC.classList.add("upTrend0");
+    }
+
+    divtagLC.innerText = Math.abs(checkPercent(tday, yday).toFixed(1)) ;
+divtag.appendChild(divtagLC);
+}
+
+}
+
+
+
+divtag0.appendChild(divtag);
+
+// **************************************update Current and 1 data END************************************
+
+
+
+
 // divtag.setAttribute("class", "Company");
 // divtag.innerText = companyDetails[d];
 // divtag0.appendChild(divtag);
@@ -192,9 +255,9 @@ divtag0.appendChild(divtag);
 
 divtag = document.createElement("div");
 divtag.setAttribute("class", "difference0");
-let complen = dCompanyObject[companyDetails[d]].length -1 ;
-let tday = CurrentPriceObj[companyDetails[d]];
-let yday = (dCompanyObject[companyDetails[d]][complen]);
+complen = dCompanyObject[companyDetails[d]].length -1 ;
+tday = CurrentPriceObj[companyDetails[d]];
+yday = (dCompanyObject[companyDetails[d]][complen]);
 
 if(tday !== undefined ){
  checknum = checkPercent(tday, yday) ;
@@ -217,6 +280,7 @@ else{
 }
 // }
 divtag.innerText = "0:  " +  Math.abs(checkPercent(tday, yday).toFixed(1)) ;
+
 }
 divtag0.appendChild(divtag);
 
@@ -732,8 +796,9 @@ function getData(e) {
         xhr.onload = () => {
           if (xhr.readyState == 4 && xhr.status == 200) {
             dCompanyObject = xhr.response.companyObject;
-            dCompanyDateObject = xhr.response.companyDateObj;
+            // dCompanyDateObject = xhr.response.companyDateObj;
             dVolumeObject = xhr.response.volumeObject;
+            CurrentPriceObj1 = xhr.response.currentPriceData1;
             if(JSON.stringify(CurrentPriceObj).length == 2) {
             CurrentPriceObj = xhr.response.currentPriceData;
             }
@@ -765,9 +830,10 @@ function getSectorData(event) {
         xhr.onload = () => {
           if (xhr.readyState == 4 && xhr.status == 200) {
             dCompanyObject = xhr.response.companyObject;
-            dCompanyDateObject = xhr.response.companyDateObj;
+            // dCompanyDateObject = xhr.response.companyDateObj;
             dVolumeObject = xhr.response.volumeObject;
             CurrentPriceObj = xhr.response.currentPriceData;
+            CurrentPriceObj1 = xhr.response.currentPriceData1;
             createChart( xhr.response.companyObject, event.target.id);
           } 
           else {
@@ -788,9 +854,10 @@ function getSectorDataAll() {
     xhr.onload = () => {
       if (xhr.readyState == 4 && xhr.status == 200) {
         dCompanyObject = xhr.response.companyObject;
-        dCompanyDateObject = xhr.response.companyDateObj;
+        // dCompanyDateObject = xhr.response.companyDateObj;
         dVolumeObject = xhr.response.volumeObject;
         CurrentPriceObj = xhr.response.currentPriceData;
+        CurrentPriceObj1 = xhr.response.currentPriceData1;
         createChart( xhr.response.companyObject, 'All');
       } 
       else {
