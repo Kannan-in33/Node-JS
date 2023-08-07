@@ -208,7 +208,6 @@ else if(timestamp < 12){
     currentPriceData1 ={};
 }
 
-console.log(Object.keys(currentPriceData1).length + "    " +  Object.keys(currentPriceData).length + "   " + timestamp);
 
 }
 
