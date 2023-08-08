@@ -199,7 +199,7 @@ getUpdatedPrice =  async () =>{
    currentPriceData[ele[0].toString().split(",")[0]] = ele[1].toString();   
 });
 
-if(timestamp >= 12 && Object.keys(currentPriceData1).length <= Object.keys(currentPriceData).length - 50 ){
+if(timestamp >= 10 && Object.keys(currentPriceData1).length <= Object.keys(currentPriceData).length - 50 ){
     cpvalues.forEach ( ele => {
         currentPriceData1[ele[0].toString().split(",")[0]] = ele[1].toString(); 
     });
