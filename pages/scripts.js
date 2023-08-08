@@ -799,6 +799,7 @@ function getData(e) {
             // dCompanyDateObject = xhr.response.companyDateObj;
             dVolumeObject = xhr.response.volumeObject;
             CurrentPriceObj1 = xhr.response.currentPriceData1;
+            console.log(xhr.response.timestamp);
             if(JSON.stringify(CurrentPriceObj).length == 2) {
             CurrentPriceObj = xhr.response.currentPriceData;
             }

@@ -155,6 +155,7 @@ fs.readdir(directorypath , function (err, files) {
                 "companyObject" : companyObject,
                 "currentPriceData" : currentPriceData,
                 "currentPriceData1": currentPriceData1,
+                "timestamp": timestamp,
                 }
                 res.send(obj3);
                 }
