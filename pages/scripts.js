@@ -554,6 +554,11 @@ function comparetoggleHide(){
 }
 
 function clea() {
+    lst = document.querySelectorAll(".charts > div");
+    lst.forEach( ele => ele.style.display = "");
+
+  if(document.URL.includes("sector")){
+
     document.getElementById("filter").value = '';
     document.getElementById("SectorList").style.display = "block";
     document.querySelector(".charts").innerHTML = "";
@@ -564,6 +569,7 @@ function clea() {
       compareList.splice(0,1)
     });
     document.getElementById("comparel").innerHTML ="";
+  }
     
 }
 
@@ -606,18 +612,31 @@ function getBuy(margin){
             //   event.target.classList.add('active');
               switch(margin) {
                 case 40:
-                  createChart(BuyObject40, dE);
+                  // createChart(BuyObject40, dE);
+                  hideBuyStocks(BuyObject40);
                   break;
                 case 30:
-                  createChart(BuyObject30, dE);
+                  // createChart(BuyObject30, dE);
+                  hideBuyStocks(BuyObject30);
                   break;
                 case 60:
-                  createChart(BuyObject3Avg, dE);
+                  // createChart(BuyObject3Avg, dE);
+                  hideBuyStocks(BuyObject3Avg);
                   break;
                 default:
-                  createChart(BuyObject20, dE);
+                  // createChart(BuyObject20, dE);
+                  hideBuyStocks(BuyObject20);
               }
         getBuyMain(); 
+}
+
+function hideBuyStocks(BuyObject){
+  lst = document.querySelectorAll(".charts > div");
+  lst.forEach( ele => ele.style.display = "none");
+  for (let key in BuyObject) {    
+    document.querySelector(".charts > #" + key).style.display = ""
+    } 
+
 }
 
 function createChart(companyObject, e, days = 1000){
@@ -898,7 +917,7 @@ function getSectorData(event) {
 
 function getSectorDataAll() {
     // removeActive();
-    document.getElementById("filter").value = 'All';
+    document.getElementById("filter").value = "Loading...";
     document.getElementById("results0").innerText = "Loading...";
     document.getElementById("SectorList").style.display = 'none';
     const xhr = new XMLHttpRequest();
@@ -913,6 +932,7 @@ function getSectorDataAll() {
         CurrentPriceObj = xhr.response.currentPriceData;
         currentPriceData1 = xhr.response.currentPriceData1;
         createChart( xhr.response.companyObject, 'All');
+        document.getElementById("filter").value = 'All';
       } 
       else {
         console.log(`Error: ${xhr.status}`);
@@ -1230,7 +1250,7 @@ let positiveCompany = {};
             positiveCompany = positiveCompany3;
             break;
   }
-    for(let i = 0; i < Math.min(positive.length, 40);){
+    for(let i = 0; i < Math.max(positive.length , 0);){
         let indx = positiveCompany[positive[i]];
         let elementUp = document.getElementById(indx);
         if (elementUp != null){
@@ -1273,7 +1293,7 @@ let negativeCompany = {};
             negativeCompany = negativeCompany3;
             break;
   }
-    for(let i = 0; i < Math.min(negative.length,40);){
+    for(let i = 0; i < Math.max(negative.length,0);){
         let indx = negativeCompany[negative[i]];
         let elementUp = document.getElementById(indx);
         if (elementUp != null){
