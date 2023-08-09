@@ -211,7 +211,7 @@ getUpdatedPrice =  async () =>{
 
 function getDayPriceData(){
 
-if(timestamp > 4 && Object.keys(currentPriceData1).length == 0 ){
+if(timestamp >= 4 && Object.keys(currentPriceData1).length == 0 ){
       t = 1;  
     cpvalues.forEach ( ele => {
         currentPriceData1[ele[0].toString().split(",")[0]] = ele[1].toString(); 
@@ -248,7 +248,7 @@ else {
 
 }
 
-if(timestamp > 4){
+if(timestamp >= 4){
     // currentPriceData1 ={};
     setInterval(getDayPriceData, (1000 * 60 * 20));
 }
