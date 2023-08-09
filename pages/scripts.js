@@ -855,7 +855,7 @@ function getData(e) {
             if(JSON.stringify(CurrentPriceObj).length == 2) {
             CurrentPriceObj = xhr.response.currentPriceData;
             }
-            console.log(timestamp);
+            console.log(xhr.response.timestamp);
             createChart( xhr.response.companyObject, e);
           } 
           else {
