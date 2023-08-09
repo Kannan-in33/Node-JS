@@ -7,8 +7,11 @@ const port = process.env.PORT || 5000 ;
 const server = express();
 currentPriceData = {};
 currentPriceData1 = {};
+currentPriceDataArray = {};
 let timestamp = new Date().getHours();
-
+let cpvalues;
+let tempArr = [];
+let t = 0;
 const spreadsheetId = "13BOxMT5cUoScurImRrDK0PwwLYAtV7qJiI75Knw44kQ";
 
 server.get('/',  (req, res) => {
@@ -195,23 +198,52 @@ getUpdatedPrice =  async () =>{
         range: 'NSE Daily', 
     });
 
-   let cpvalues = (CPdata.data.values);
+   cpvalues = (CPdata.data.values);
+
    cpvalues.forEach ( ele => {
    currentPriceData[ele[0].toString().split(",")[0]] = ele[1].toString();   
 });
 
-if(timestamp >= 6 && Object.keys(currentPriceData1).length <= Object.keys(currentPriceData).length - 50 ){
+}
+
+function getDayPriceData(){
+
+if(timestamp = 4 && Object.keys(currentPriceData1).length == 0 ){
+      t = 1;  
     cpvalues.forEach ( ele => {
         currentPriceData1[ele[0].toString().split(",")[0]] = ele[1].toString(); 
     });
 }
-else if(timestamp < 6){
-    currentPriceData1 ={};
+
+else {
+    cpvalues.forEach ( ele => {
+        if(t == 1){
+        tempArr = [];
+        tempArr.push(ele[1]);
+        currentPriceData1[ele[0]] = tempArr;
+        
+        }
+        else{
+            tempArr =[];
+            tempArr = currentPriceData1[ele[0]];
+            tempArr.push(ele[1]);
+            currentPriceData1[ele[0]] = [...tempArr];
+        }
+       
+    });
+    t = 2;
 }
 
 
 }
 
+if(timestamp > 3){
+    // currentPriceData1 ={};
+    setInterval(getDayPriceData, (1000 * 60 * 20));
+}
+if(timestamp > 5){
+    clearInterval(getDayPriceData);
+}
 
 // OLD Codes
 // if(req.path == '/10x'){

@@ -671,6 +671,9 @@ let resultCount = 0;
               anchortag.setAttribute("href", "https://www.screener.in/company/" + key + "/");
               anchortag.setAttribute("target", "_blank");
               anchortag.appendChild(divtag);
+        let bar = document.createElement("div");
+              bar.setAttribute("class", "bar");
+              divtag.appendChild(bar);
         let canvas = document.createElement("canvas");
                     canvas.setAttribute("id", key);
                     canvas.setAttribute("class", key);       
@@ -799,7 +802,7 @@ function getData(e) {
             // dCompanyDateObject = xhr.response.companyDateObj;
             dVolumeObject = xhr.response.volumeObject;
             CurrentPriceObj1 = xhr.response.currentPriceData1;
-            console.log(xhr.response.timestamp);
+            console.log(CurrentPriceObj1);
             if(JSON.stringify(CurrentPriceObj).length == 2) {
             CurrentPriceObj = xhr.response.currentPriceData;
             }
