@@ -34,7 +34,10 @@ let positiveCompany5 = {};
 let negativeList5 = [];
 let negativeCompany5 = {};
 let CurrentPriceObj = {};
-let CurrentPriceObj1 = {};
+let currentPriceData1 = {};
+let currentPriceDataMid = {};
+
+
 
 
 let rupee = new Intl.NumberFormat('en-IN', {
@@ -163,13 +166,13 @@ divtagDC.setAttribute("class", "dayCompare");
 let complen = dCompanyObject[companyDetails[d]].length -1 ;
 let tday;
 let yday;
-
-if(Object.keys(CurrentPriceObj1).length < 20){
+// DC data
+if(Object.keys(currentPriceDataMid).length < 20){
   tday = CurrentPriceObj[companyDetails[d]];
   yday = (dCompanyObject[companyDetails[d]][complen]);
 }
 else{
-  tday = CurrentPriceObj1[companyDetails[d]];
+  tday = currentPriceDataMid[companyDetails[d]];
   yday = (dCompanyObject[companyDetails[d]][complen]);
 }
 if(tday !== undefined ){
@@ -186,9 +189,9 @@ divtag.appendChild(divtagDC);
 }
 
 
-if(Object.keys(CurrentPriceObj1).length > 20){
+if(Object.keys(currentPriceDataMid).length > 20){
   tday = CurrentPriceObj[companyDetails[d]];
-  yday = CurrentPriceObj1[companyDetails[d]];
+  yday = currentPriceDataMid[companyDetails[d]];
   let divtagLC = document.createElement("div");
   divtagLC.setAttribute("class", "LCompare");
 
@@ -671,9 +674,55 @@ let resultCount = 0;
               anchortag.setAttribute("href", "https://www.screener.in/company/" + key + "/");
               anchortag.setAttribute("target", "_blank");
               anchortag.appendChild(divtag);
-        let bar = document.createElement("div");
+
+          if(Object.keys(currentPriceData1).length > 1){
+          let bar = document.createElement("div");
               bar.setAttribute("class", "bar");
-              divtag.appendChild(bar);
+              bar.setAttribute("height", "100px");
+             let preHig = 0;
+              let largebar = 0;
+              let smallbar = 0;
+              [...currentPriceData1[key]].forEach( ele => {
+                  if(Number(ele) > largebar){
+                    largebar = Number(ele);
+                  }
+              });
+              smallbar = largebar;
+              [...currentPriceData1[key]].forEach( ele => {
+                if(Number(ele) < smallbar){
+                  smallbar = Number(ele);
+                }
+            });
+            
+            for(let i = 0; i < currentPriceData1[key].length; i++){
+
+            let barc = document.createElement("div");
+              barc.setAttribute("class", "barc");
+              let hig =  (Number(currentPriceData1[key][i]) - (smallbar * 0.5));
+              if(Number(key == "SNOWMAN")){
+                console.log(Number(currentPriceData1[key][i]));
+                console.log(currentPriceData1[key]);
+              }
+              if(preHig > hig){
+                barc.style.backgroundColor = "rgba(255, 0,0, 0.5)";
+              }
+              else{
+                barc.style.backgroundColor = "rgba(20, 255 ,20, 0.75)";
+                
+              }
+              preHig = hig;
+              let barHig = (hig * (100 / largebar)).toFixed(1);
+              barc.style.height = barHig.toString() + 'px'; //((largebar - Number(currentPriceData1[key][i])).toFixed(1).toString() + 'px').toString();
+              barc.style.top = (100 - barHig).toFixed(1).toString() + 'px';
+              barc.style.width = '10px';
+              
+              
+              barc.innerText = Number(currentPriceData1[key][i]).toFixed(1);
+              bar.appendChild(barc);
+            }
+            divtag.appendChild(bar);
+              }
+              
         let canvas = document.createElement("canvas");
                     canvas.setAttribute("id", key);
                     canvas.setAttribute("class", key);       
@@ -801,11 +850,12 @@ function getData(e) {
             dCompanyObject = xhr.response.companyObject;
             // dCompanyDateObject = xhr.response.companyDateObj;
             dVolumeObject = xhr.response.volumeObject;
-            CurrentPriceObj1 = xhr.response.currentPriceData1;
-            console.log(CurrentPriceObj1);
+            currentPriceData1 = xhr.response.currentPriceData1;
+            currentPriceDataMid  = xhr.response.currentPriceDataMid;            
             if(JSON.stringify(CurrentPriceObj).length == 2) {
             CurrentPriceObj = xhr.response.currentPriceData;
             }
+            console.log(timestamp);
             createChart( xhr.response.companyObject, e);
           } 
           else {
@@ -837,7 +887,7 @@ function getSectorData(event) {
             // dCompanyDateObject = xhr.response.companyDateObj;
             dVolumeObject = xhr.response.volumeObject;
             CurrentPriceObj = xhr.response.currentPriceData;
-            CurrentPriceObj1 = xhr.response.currentPriceData1;
+            currentPriceData1 = xhr.response.currentPriceData1;
             createChart( xhr.response.companyObject, event.target.id);
           } 
           else {
@@ -861,7 +911,7 @@ function getSectorDataAll() {
         // dCompanyDateObject = xhr.response.companyDateObj;
         dVolumeObject = xhr.response.volumeObject;
         CurrentPriceObj = xhr.response.currentPriceData;
-        CurrentPriceObj1 = xhr.response.currentPriceData1;
+        currentPriceData1 = xhr.response.currentPriceData1;
         createChart( xhr.response.companyObject, 'All');
       } 
       else {

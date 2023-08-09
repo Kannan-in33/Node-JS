@@ -7,6 +7,7 @@ const port = process.env.PORT || 5000 ;
 const server = express();
 currentPriceData = {};
 currentPriceData1 = {};
+currentPriceDataMid = {};
 currentPriceDataArray = {};
 let timestamp = new Date().getHours();
 let cpvalues;
@@ -101,6 +102,7 @@ if(req.path == '/All') {
                     "volumeObject" : volumeObject,
                     "currentPriceData": currentPriceData,
                     "currentPriceData1": currentPriceData1,
+                    "currentPriceDataMid":currentPriceDataMid,
                 }
                 res.send(obj3);
     }
@@ -158,6 +160,7 @@ fs.readdir(directorypath , function (err, files) {
                 "companyObject" : companyObject,
                 "currentPriceData" : currentPriceData,
                 "currentPriceData1": currentPriceData1,
+                "currentPriceDataMid": currentPriceDataMid,
                 "timestamp": timestamp,
                 }
                 res.send(obj3);
@@ -208,7 +211,7 @@ getUpdatedPrice =  async () =>{
 
 function getDayPriceData(){
 
-if(timestamp = 4 && Object.keys(currentPriceData1).length == 0 ){
+if(timestamp > 4 && Object.keys(currentPriceData1).length == 0 ){
       t = 1;  
     cpvalues.forEach ( ele => {
         currentPriceData1[ele[0].toString().split(",")[0]] = ele[1].toString(); 
@@ -223,7 +226,15 @@ else {
         currentPriceData1[ele[0]] = tempArr;
         
         }
-        else{
+        // currentPriceDataMid
+        else if(t == 8){
+            tempArr =[];
+            tempArr = currentPriceData1[ele[0]];
+            tempArr.push(ele[1]);
+            currentPriceData1[ele[0]] = [...tempArr];
+            currentPriceDataMid[ele[0]] = [ele[1]];
+        }
+        else if(t < 18 && t != 8){
             tempArr =[];
             tempArr = currentPriceData1[ele[0]];
             tempArr.push(ele[1]);
@@ -231,17 +242,17 @@ else {
         }
        
     });
-    t = 2;
+    t = t +1;
 }
 
 
 }
 
-if(timestamp > 3){
+if(timestamp > 4){
     // currentPriceData1 ={};
     setInterval(getDayPriceData, (1000 * 60 * 20));
 }
-if(timestamp > 5){
+if(timestamp > 18 || t >= 18){
     clearInterval(getDayPriceData);
 }
 
