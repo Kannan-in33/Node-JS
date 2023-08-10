@@ -557,7 +557,7 @@ function clea() {
     lst = document.querySelectorAll(".charts > div");
     lst.forEach( ele => ele.style.display = "");
 
-  if(document.URL.includes("sector")){
+  if(document.URL.includes("Sector")){
 
     document.getElementById("filter").value = '';
     document.getElementById("SectorList").style.display = "block";
