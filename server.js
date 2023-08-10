@@ -2,6 +2,7 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const {google} = require('googleapis');
+// const req = require('request');
 
 const port = process.env.PORT || 5000 ;
 const server = express();
@@ -11,7 +12,9 @@ currentPriceDataMid = {};
 currentPriceDataArray = {};
 let timestamp = new Date().getHours();
 let cpvalues;
+let cpvaluesTable;
 let tempArr = [];
+let tempArr2 =[ , ];
 let t = 0;
 const spreadsheetId = "13BOxMT5cUoScurImRrDK0PwwLYAtV7qJiI75Knw44kQ";
 
@@ -161,6 +164,7 @@ fs.readdir(directorypath , function (err, files) {
                 "currentPriceData" : currentPriceData,
                 "currentPriceData1": currentPriceData1,
                 "currentPriceDataMid": currentPriceDataMid,
+                "cpvaluesTable":cpvaluesTable,
                 "timestamp": timestamp,
                 }
                 res.send(obj3);
@@ -180,6 +184,8 @@ server.listen(port, () => {
     getUpdatedPrice();
   //  setInterval(getUpdatedPrice, (1000 * 60  * 30));
 })
+
+// UpdateBarData
 
 getUpdatedPrice =  async () =>{
     const auth = new google.auth.GoogleAuth({
@@ -203,11 +209,58 @@ getUpdatedPrice =  async () =>{
 
    cpvalues = (CPdata.data.values);
 
-   cpvalues.forEach ( ele => {
-   currentPriceData[ele[0].toString().split(",")[0]] = ele[1].toString();   
+   cpvalues.forEach ( (ele, i) => {
+   currentPriceData[ele[0].toString().split(",")[0]] = ele[1].toString();
+//    tempArr.push(ele[1].toString());
+//    tempArr2[i] = ( ele[1].toString());
 });
 
 }
+
+// Try Getting data from Bar
+
+
+getUpdatedPriceTable =  async () =>{
+    const auth = new google.auth.GoogleAuth({
+        keyFile: "credentials.json",
+        scopes: "https://www.googleapis.com/auth/drive",
+    });
+
+    const client = await auth.getClient();
+    const googleSheets = google.sheets({
+        version: "v4",
+        auth: client
+    });
+
+    // get details of spreadsheet
+
+    const GsUpdate = await googleSheets.spreadsheets.values.get({
+        auth,
+        spreadsheetId,
+        range: "Bar",
+    });
+
+    cpvaluesTable = (GsUpdate.data.values);
+    // const script = google.script({version: 'v1', auth});
+    // const scriptId = '1z9Nc-LoBXdtthz9mxzC-phETkifTxbPG_gtXca3UBwqtEksZFZiAD6hv'
+    // const GsUpdate2 = await script.scripts.run({
+    //     auth: auth,
+    //     resource: {
+    //       function: 'UpdateBarData',
+    //     },
+    //     scriptId: scriptId,
+    //   });
+
+    return GsUpdate;
+
+}
+
+getUpdatedPriceTable();
+// Try Getting data from Bar END
+
+
+
+
 
 function getDayPriceData(){
 
@@ -248,9 +301,9 @@ else {
 
 }
 
-if(timestamp >= 4){
+if(timestamp >= 1){
     // currentPriceData1 ={};
-    setInterval(getDayPriceData, (1000 * 60 * 20));
+    setInterval(getUpdatedPriceTable, (1000 * 8 * 1));
 }
 if(timestamp > 18 || t >= 18){
     clearInterval(getDayPriceData);
