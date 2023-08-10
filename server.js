@@ -70,7 +70,7 @@ if(req.path == '/All') {
     let foldersPath = fs.readdirSync(path.resolve(__dirname, 'src/'));
     foldersPath.forEach( (folder, j) => {
         //  ||  folder == '401'
-    if(folder == '50' || folder == '101'|| folder == '201' ||  folder == '401' ||  folder == '601'){
+    if(folder == '50' || folder == '101'|| folder == '201'){
     const directorypath = path.join(__dirname, 'src/' + folder);
     fs.readdir(directorypath , function (err, files) {
     if (err) throw err;
