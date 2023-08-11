@@ -36,7 +36,7 @@ let negativeCompany5 = {};
 let CurrentPriceObj = {};
 let currentPriceData1 = {};
 let currentPriceDataMid = {};
-let cpvaluesTable = {};
+let currentPriceDataTable = {};
 
 
 
@@ -694,53 +694,53 @@ let resultCount = 0;
               anchortag.setAttribute("target", "_blank");
               anchortag.appendChild(divtag);
 
-          // if(Object.keys(cpvaluesTable).length > 1){
-          // let bar = document.createElement("div");
-          //     bar.setAttribute("class", "bar");
-          //     bar.setAttribute("height", "100px");
-          //    let preHig = 0;
-          //     let largebar = 0;
-          //     let smallbar = 0;
-          //     [...cpvaluesTable[key]].forEach( ele => {
-          //         if(Number(ele) > largebar){
-          //           largebar = Number(ele);
-          //         }
-          //     });
-          //     smallbar = largebar;
-          //     [...cpvaluesTable[key]].forEach( ele => {
-          //       if(Number(ele) < smallbar){
-          //         smallbar = Number(ele);
-          //       }
-          //   });
+          if(Object.keys(currentPriceDataTable).length > 1){
+          let bar = document.createElement("div");
+              bar.setAttribute("class", "bar");
+              bar.setAttribute("height", "100px");
+             let preHig = 0;
+              let largebar = 0;
+              let smallbar = 0;
+              [...currentPriceDataTable[key]].forEach( ele => {
+                  if(Number(ele) > largebar){
+                    largebar = Number(ele);
+                  }
+              });
+              smallbar = largebar;
+              [...currentPriceDataTable[key]].forEach( ele => {
+                if(Number(ele) < smallbar){
+                  smallbar = Number(ele);
+                }
+            });
             
-          //   for(let i = 0; i < cpvaluesTable[key].length; i++){
+            for(let i = 0; i < currentPriceDataTable[key].length; i++){
 
-          //   let barc = document.createElement("div");
-          //     barc.setAttribute("class", "barc");
-          //     let hig =  (Number(cpvaluesTable[key][i]) - (smallbar * 0.5));
-          //     if(Number(key == "SNOWMAN")){
-          //       console.log(Number(cpvaluesTable[key][i]));
-          //       console.log(cpvaluesTable[key]);
-          //     }
-          //     if(preHig > hig){
-          //       barc.style.backgroundColor = "rgba(255, 0,0, 0.5)";
-          //     }
-          //     else{
-          //       barc.style.backgroundColor = "rgba(20, 255 ,20, 0.75)";
+            let barc = document.createElement("div");
+              barc.setAttribute("class", "barc");
+              let hig =  (Number(currentPriceDataTable[key][i]) - (smallbar * 0.5));
+              if(Number(key == "SNOWMAN")){
+                console.log(Number(currentPriceDataTable[key][i]));
+                console.log(currentPriceDataTable[key]);
+              }
+              if(preHig > hig){
+                barc.style.backgroundColor = "rgba(255, 0,0, 0.5)";
+              }
+              else{
+                barc.style.backgroundColor = "rgba(20, 255 ,20, 0.75)";
                 
-          //     }
-          //     preHig = hig;
-          //     let barHig = (hig * (100 / largebar)).toFixed(1);
-          //     barc.style.height = barHig.toString() + 'px'; //((largebar - Number(currentPriceData1[key][i])).toFixed(1).toString() + 'px').toString();
-          //     barc.style.top = (100 - barHig).toFixed(1).toString() + 'px';
-          //     barc.style.width = '10px';
+              }
+              preHig = hig;
+              let barHig = (hig * (100 / largebar)).toFixed(1);
+              barc.style.height = barHig.toString() + 'px'; //((largebar - Number(currentPriceData1[key][i])).toFixed(1).toString() + 'px').toString();
+              barc.style.top = (100 - barHig).toFixed(1).toString() + 'px';
+              barc.style.width = '10px';
               
               
-          //     barc.innerText = Number(currentPriceData1[key][i]).toFixed(1);
-          //     bar.appendChild(barc);
-          //   }
-          //   divtag.appendChild(bar);
-          //     }
+              barc.innerText = Number(currentPriceDataTable[key][i]).toFixed(1);
+              bar.appendChild(barc);
+            }
+            divtag.appendChild(bar);
+              }
               
         let canvas = document.createElement("canvas");
                     canvas.setAttribute("id", key);
@@ -873,7 +873,7 @@ function getData(e) {
             currentPriceDataMid  = xhr.response.currentPriceDataMid;            
             if(JSON.stringify(CurrentPriceObj).length == 2) {
             CurrentPriceObj = xhr.response.currentPriceData;
-            cpvaluesTable = xhr.response.cpvaluesTable;
+            currentPriceDataTable = xhr.response.currentPriceDataTable;
             }
             console.log(xhr.response.timestamp);
             createChart( xhr.response.companyObject, e);
@@ -932,8 +932,10 @@ function getSectorDataAll() {
         dVolumeObject = xhr.response.volumeObject;
         CurrentPriceObj = xhr.response.currentPriceData;
         currentPriceData1 = xhr.response.currentPriceData1;
+        currentPriceDataTable = xhr.response.currentPriceDataTable;
         createChart( xhr.response.companyObject, 'All');
         document.getElementById("filter").value = 'All';
+        
       } 
       else {
         console.log(`Error: ${xhr.status}`);

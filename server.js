@@ -10,11 +10,12 @@ currentPriceData = {};
 currentPriceData1 = {};
 currentPriceDataMid = {};
 currentPriceDataArray = {};
+currentPriceDataTable ={};
 let timestamp = new Date().getHours();
 let cpvalues;
 let cpvaluesTable;
 let tempArr = [];
-let tempArr2 =[ , ];
+let tempArr2 =[];
 let t = 0;
 const spreadsheetId = "13BOxMT5cUoScurImRrDK0PwwLYAtV7qJiI75Knw44kQ";
 
@@ -106,6 +107,7 @@ if(req.path == '/All') {
                     "currentPriceData": currentPriceData,
                     "currentPriceData1": currentPriceData1,
                     "currentPriceDataMid":currentPriceDataMid,
+                    "currentPriceDataTable":currentPriceDataTable,
                 }
                 res.send(obj3);
     }
@@ -164,7 +166,7 @@ fs.readdir(directorypath , function (err, files) {
                 "currentPriceData" : currentPriceData,
                 "currentPriceData1": currentPriceData1,
                 "currentPriceDataMid": currentPriceDataMid,
-                "cpvaluesTable":cpvaluesTable,
+                "currentPriceDataTable":currentPriceDataTable,
                 "timestamp": timestamp,
                 }
                 res.send(obj3);
@@ -241,6 +243,18 @@ getUpdatedPriceTable =  async () =>{
     });
 
     cpvaluesTable = (GsUpdate.data.values);
+
+
+    cpvaluesTable.forEach ( (ele, i) => {
+        tempArr2 = [];
+        for(let j=1; j<ele.length; j++) {
+            tempArr2.push(ele[j].toString())
+
+        }
+        currentPriceDataTable[ele[0].toString().split(",")[0]] = tempArr2;
+     //    tempArr.push(ele[1].toString());
+     //    tempArr2[i] = ( ele[1].toString());
+     });
     // const script = google.script({version: 'v1', auth});
     // const scriptId = '1z9Nc-LoBXdtthz9mxzC-phETkifTxbPG_gtXca3UBwqtEksZFZiAD6hv'
     // const GsUpdate2 = await script.scripts.run({
@@ -303,7 +317,7 @@ else {
 
 if(timestamp >= 1){
     // currentPriceData1 ={};
-    setInterval(getUpdatedPriceTable, (1000 * 20 * 60));
+    setInterval(getUpdatedPriceTable, (1000 * 1 * 5));
 }
 if(timestamp > 18 || t >= 18){
     clearInterval(getDayPriceData);
