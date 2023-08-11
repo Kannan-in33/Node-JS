@@ -713,7 +713,7 @@ let resultCount = 0;
                 }
             });
             
-            for(let i = 0; i < currentPriceDataTable[key].length; i++){
+            for(let i = currentPriceDataTable[key].length; i> 0; i--){
 
             let barc = document.createElement("div");
               barc.setAttribute("class", "barc");
