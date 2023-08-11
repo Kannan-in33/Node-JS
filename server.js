@@ -303,7 +303,7 @@ else {
 
 if(timestamp >= 1){
     // currentPriceData1 ={};
-    setInterval(getUpdatedPriceTable, (1000 * 8 * 1));
+    setInterval(getUpdatedPriceTable, (1000 * 20 * 60));
 }
 if(timestamp > 18 || t >= 18){
     clearInterval(getDayPriceData);

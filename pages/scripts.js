@@ -36,7 +36,7 @@ let negativeCompany5 = {};
 let CurrentPriceObj = {};
 let currentPriceData1 = {};
 let currentPriceDataMid = {};
-
+let cpvaluesTable = {};
 
 
 
@@ -694,53 +694,53 @@ let resultCount = 0;
               anchortag.setAttribute("target", "_blank");
               anchortag.appendChild(divtag);
 
-          if(Object.keys(currentPriceData1).length > 1){
-          let bar = document.createElement("div");
-              bar.setAttribute("class", "bar");
-              bar.setAttribute("height", "100px");
-             let preHig = 0;
-              let largebar = 0;
-              let smallbar = 0;
-              [...currentPriceData1[key]].forEach( ele => {
-                  if(Number(ele) > largebar){
-                    largebar = Number(ele);
-                  }
-              });
-              smallbar = largebar;
-              [...currentPriceData1[key]].forEach( ele => {
-                if(Number(ele) < smallbar){
-                  smallbar = Number(ele);
-                }
-            });
+          // if(Object.keys(cpvaluesTable).length > 1){
+          // let bar = document.createElement("div");
+          //     bar.setAttribute("class", "bar");
+          //     bar.setAttribute("height", "100px");
+          //    let preHig = 0;
+          //     let largebar = 0;
+          //     let smallbar = 0;
+          //     [...cpvaluesTable[key]].forEach( ele => {
+          //         if(Number(ele) > largebar){
+          //           largebar = Number(ele);
+          //         }
+          //     });
+          //     smallbar = largebar;
+          //     [...cpvaluesTable[key]].forEach( ele => {
+          //       if(Number(ele) < smallbar){
+          //         smallbar = Number(ele);
+          //       }
+          //   });
             
-            for(let i = 0; i < currentPriceData1[key].length; i++){
+          //   for(let i = 0; i < cpvaluesTable[key].length; i++){
 
-            let barc = document.createElement("div");
-              barc.setAttribute("class", "barc");
-              let hig =  (Number(currentPriceData1[key][i]) - (smallbar * 0.5));
-              if(Number(key == "SNOWMAN")){
-                console.log(Number(currentPriceData1[key][i]));
-                console.log(currentPriceData1[key]);
-              }
-              if(preHig > hig){
-                barc.style.backgroundColor = "rgba(255, 0,0, 0.5)";
-              }
-              else{
-                barc.style.backgroundColor = "rgba(20, 255 ,20, 0.75)";
+          //   let barc = document.createElement("div");
+          //     barc.setAttribute("class", "barc");
+          //     let hig =  (Number(cpvaluesTable[key][i]) - (smallbar * 0.5));
+          //     if(Number(key == "SNOWMAN")){
+          //       console.log(Number(cpvaluesTable[key][i]));
+          //       console.log(cpvaluesTable[key]);
+          //     }
+          //     if(preHig > hig){
+          //       barc.style.backgroundColor = "rgba(255, 0,0, 0.5)";
+          //     }
+          //     else{
+          //       barc.style.backgroundColor = "rgba(20, 255 ,20, 0.75)";
                 
-              }
-              preHig = hig;
-              let barHig = (hig * (100 / largebar)).toFixed(1);
-              barc.style.height = barHig.toString() + 'px'; //((largebar - Number(currentPriceData1[key][i])).toFixed(1).toString() + 'px').toString();
-              barc.style.top = (100 - barHig).toFixed(1).toString() + 'px';
-              barc.style.width = '10px';
+          //     }
+          //     preHig = hig;
+          //     let barHig = (hig * (100 / largebar)).toFixed(1);
+          //     barc.style.height = barHig.toString() + 'px'; //((largebar - Number(currentPriceData1[key][i])).toFixed(1).toString() + 'px').toString();
+          //     barc.style.top = (100 - barHig).toFixed(1).toString() + 'px';
+          //     barc.style.width = '10px';
               
               
-              barc.innerText = Number(currentPriceData1[key][i]).toFixed(1);
-              bar.appendChild(barc);
-            }
-            divtag.appendChild(bar);
-              }
+          //     barc.innerText = Number(currentPriceData1[key][i]).toFixed(1);
+          //     bar.appendChild(barc);
+          //   }
+          //   divtag.appendChild(bar);
+          //     }
               
         let canvas = document.createElement("canvas");
                     canvas.setAttribute("id", key);
@@ -873,6 +873,7 @@ function getData(e) {
             currentPriceDataMid  = xhr.response.currentPriceDataMid;            
             if(JSON.stringify(CurrentPriceObj).length == 2) {
             CurrentPriceObj = xhr.response.currentPriceData;
+            cpvaluesTable = xhr.response.cpvaluesTable;
             }
             console.log(xhr.response.timestamp);
             createChart( xhr.response.companyObject, e);
