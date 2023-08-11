@@ -184,6 +184,7 @@ fs.readdir(directorypath , function (err, files) {
 server.listen(port, () => {    
     console.log('Server is listening on port ' + port);
     getUpdatedPrice();
+    getUpdatedPriceTable();
   //  setInterval(getUpdatedPrice, (1000 * 60  * 30));
 })
 
@@ -269,7 +270,7 @@ getUpdatedPriceTable =  async () =>{
 
 }
 
-getUpdatedPriceTable();
+
 // Try Getting data from Bar END
 
 
@@ -315,11 +316,11 @@ else {
 
 }
 
-if(timestamp >= 1){
+if(timestamp < 18){
     // currentPriceData1 ={};
-    setInterval(getUpdatedPriceTable, (1000 * 1 * 5));
+    setInterval(getUpdatedPriceTable, (1000 * 10 * 60));
 }
-if(timestamp > 18 || t >= 18){
+if(timestamp > 18){
     clearInterval(getDayPriceData);
 }
 
