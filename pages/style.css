@@ -178,7 +178,7 @@
 
      .search{
       display: flex;
-      margin-top: 100px;
+      margin-top: 64px;
       background-color: #fff;
       padding: 10px 5px;
       flex-wrap: wrap;
@@ -189,7 +189,7 @@
        width:30%;
      }
  #secSearch{
-  margin-top: 50px;
+  margin-top: 54px;
  }
      .static{
        opacity: 1;
@@ -201,7 +201,7 @@
        flex-wrap: wrap;
        width: 100%;
        z-index: 200;
-       height: 100px;
+       height: 50px;
        justify-content: center;
        padding-bottom: 10px;
        min-width: 320px;
