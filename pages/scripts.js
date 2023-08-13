@@ -591,6 +591,14 @@ function showGainers(){
 
 }
 
+function showPrice(){
+  let lst = document.querySelectorAll("[id^='getData']");
+  lst.forEach(element => {
+    element.classList.toggle('show');    
+  });
+  document.querySelector(".search").classList.toggle('hide');
+}
+
 function showNoGainers(){
   let lst = document.querySelectorAll("[class^='downTrend']");
   lst.forEach(element => {
@@ -697,32 +705,26 @@ let resultCount = 0;
           if(Object.keys(currentPriceDataTable).length > 1){
           let bar = document.createElement("div");
               bar.setAttribute("class", "bar");
-              bar.setAttribute("height", "100px");
+              bar.setAttribute("height", "150px");
              let preHig = 0;
               let largebar = 0;
               let smallbar = 0;
-              [...currentPriceDataTable[key]].forEach( ele => {
-                  if(Number(ele) > largebar){
-                    largebar = Number(ele);
-                  }
-              });
-              smallbar = largebar;
-              [...currentPriceDataTable[key]].forEach( ele => {
-                if(Number(ele) < smallbar){
-                  smallbar = Number(ele);
-                }
-            });
+              largebar = Math.max(...[...currentPriceDataTable[key]]);
+              smallbar = Math.min(...[...currentPriceDataTable[key]]);
+
+
             
             for(let i = currentPriceDataTable[key].length -1; i> 0; i--){
 
             let barc = document.createElement("div");
               barc.setAttribute("class", "barc");
-              let hig =  (Number(currentPriceDataTable[key][i]) - (smallbar * 0.5));
-              if(Number(key == "SNOWMAN")){
-                console.log(Number(currentPriceDataTable[key][i]));
-                console.log(currentPriceDataTable[key]);
-              }
-              if(preHig > hig){
+              let hig =  (Number(currentPriceDataTable[key][i])); // - (smallbar * 0.5));
+
+                num = Number(hig);
+                let unit = (largebar/ (largebar - smallbar))
+                let barHig  = (((num - smallbar) * unit).toFixed(1));
+
+              if(preHig >= hig){
                 barc.style.backgroundColor = "rgba(255, 0,0, 0.5)";
               }
               else{
@@ -730,13 +732,24 @@ let resultCount = 0;
                 
               }
               preHig = hig;
-              let barHig = (hig * (100 / largebar)).toFixed(1);
-              barc.style.height = barHig.toString() + 'px'; //((largebar - Number(currentPriceData1[key][i])).toFixed(1).toString() + 'px').toString();
+              if(hig == largebar){
+                console.log(hig);
+              }
+
+              if(hig == smallbar){
+                console.log(hig);
+              }
+              // let barHig = (hig * (100 / largebar)).toFixed(1);
+              barc.style.height = (50 + Number(barHig)).toString() + 'px'; //((largebar - Number(currentPriceData1[key][i])).toFixed(1).toString() + 'px').toString();
               barc.style.top = (100 - barHig).toFixed(1).toString() + 'px';
               barc.style.width = '10px';
               
+
+              let barcspan = document.createElement("span");
+              barcspan.setAttribute("class", "barcspan");
               
-              barc.innerText = Number(currentPriceDataTable[key][i]).toFixed(1);
+              barcspan.innerText = Number(currentPriceDataTable[key][i]).toFixed(1);
+              barc.appendChild(barcspan);
               bar.appendChild(barc);
             }
             divtag.appendChild(bar);
@@ -882,6 +895,7 @@ function getData(e) {
             console.log(`Error: ${xhr.status}`);
             }
           };
+          showPrice();
   }
 
 function getSectorData(event) {
@@ -1307,3 +1321,5 @@ let negativeCompany = {};
         }   
     }
   }
+
+  
