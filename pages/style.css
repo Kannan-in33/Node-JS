@@ -29,7 +29,7 @@
 
   }
 
-     [id^='getData'], button, a{
+     button, a{
      background-color: #FFD700;
      border: none;
      border-radius: 10px;
@@ -40,6 +40,10 @@
      text-align: center;
       text-decoration-line: none;
       padding-top: 4px;
+}
+[id^='getData']{
+  width: 100% !important;
+
 }
      static a{
           text-decoration: none;
@@ -96,25 +100,25 @@
         min-width: 280px !important;
       }
 
-     .MarketCap, .High, .Reserve, [class^=difference]{
+     .MarketCap, .High, .Reserve, [class^='difference']{
           background-color: #FFD750;
           padding: 0 2px;
           width: 100%;
       }
 
-      [class^=upTrend], [class^=downTrend]{
+      [id^='getData'], [class^='upTrend'], [class^='downTrend']{
         display: none;
         width: 100% !important;
       }
-      .Ddropdown, .Gdropdown{
+      .Pdropdown,  .Ddropdown, .Gdropdown{
         width: 20% !important;
         margin: 0 8px;
       }
-      #gainers, #nogainers{
+      #price, #gainers, #nogainers{
         width: 100% !important;
         margin-left: 0 !important;
         display: flex;
-        place-content: flex-start;
+        place-content: center;
       }
 
       .upTrends::before, 
@@ -208,7 +212,7 @@
       justify-content: end;
      }
      .hide{
-       display: none;
+       display: none !important;
      }
      label{
        margin: 5px 10px;
@@ -328,7 +332,7 @@
        }
 
     
-      .static > .range  > a, [id^='getData'], button, a {
+      .static > .range  > a, button, a {
 
       width : 20% !important;
     }
@@ -340,6 +344,13 @@
       padding-left: 15px !important;
       border: 0.25px #ccc solid;
     }
+
+    #PriceDropdown{
+      background-color: #fff;
+      width: 172px !important;
+      position: fixed;
+    }
+
     #GainDropdown, #NoGainDropdown{
       background-color: #fff;
       width: 172px !important;
@@ -476,7 +487,7 @@
           width: 100px;
          }
 
-         #GainDropdown, #NoGainDropdown{
+         #PriceDropdown, #GainDropdown, #NoGainDropdown{
           background-color: #fff;
           width: 90% !important;
           right: 0;
@@ -485,7 +496,7 @@
         [id^="getData"], button, a {
           height: 30px;
         }
-        #gainers, #nogainers{
+        #price, #gainers, #nogainers{
           place-content: center;
         }
 
