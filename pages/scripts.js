@@ -705,7 +705,7 @@ let resultCount = 0;
           if(Object.keys(currentPriceDataTable).length > 1){
           let bar = document.createElement("div");
               bar.setAttribute("class", "bar");
-              bar.setAttribute("height", "150px");
+              bar.setAttribute("height", "100px");
              let preHig = 0;
               let largebar = 0;
               let smallbar = 0;
@@ -721,8 +721,8 @@ let resultCount = 0;
               let hig =  (Number(currentPriceDataTable[key][i])); // - (smallbar * 0.5));
 
                 num = Number(hig);
-                let unit = (largebar/ (largebar - smallbar))
-                let barHig  = (((num - smallbar) * unit).toFixed(1));
+                let unit = (100 / (largebar - smallbar)); // (largebar - smallbar))
+                let barHig  = ((unit * (num - smallbar) )).toFixed(1);
 
               if(preHig >= hig){
                 barc.style.backgroundColor = "rgba(255, 0,0, 0.5)";
@@ -732,16 +732,9 @@ let resultCount = 0;
                 
               }
               preHig = hig;
-              if(hig == largebar){
-                console.log(hig);
-              }
-
-              if(hig == smallbar){
-                console.log(hig);
-              }
               // let barHig = (hig * (100 / largebar)).toFixed(1);
-              barc.style.height = (50 + Number(barHig)).toString() + 'px'; //((largebar - Number(currentPriceData1[key][i])).toFixed(1).toString() + 'px').toString();
-              barc.style.top = (100 - barHig).toFixed(1).toString() + 'px';
+              barc.style.height = (Number(barHig)).toString() + 'px'; //((largebar - Number(currentPriceData1[key][i])).toFixed(1).toString() + 'px').toString();
+              barc.style.top = (100 - Number(barHig).toFixed(1).toString())+ 'px';
               barc.style.width = '10px';
               
 
@@ -973,42 +966,42 @@ function setComp(event){
     
     }
 
-function setFav(event){
-        let AFL = [...Array.from(localStorage)];
+// function setFav(event){
+//         let AFL = [...Array.from(localStorage)];
     
-        if(!AFL.includes(event.target.id.toString())){
-          localStorage.setItem(localStorage.length, event.target.id.toString());
-          let clr = document.querySelectorAll("#" + event.target.id.toString())[1];
-          clr.classList.add("star");
-        }
-        else{
-          let clr = document.querySelectorAll("#" + event.target.id.toString())[1];
-          clr.classList.toggle("star");
-          for(let i = 0; i < localStorage.length; i++){
+//         if(!AFL.includes(event.target.id.toString())){
+//           localStorage.setItem(localStorage.length, event.target.id.toString());
+//           let clr = document.querySelectorAll("#" + event.target.id.toString())[1];
+//           clr.classList.add("star");
+//         }
+//         else{
+//           let clr = document.querySelectorAll("#" + event.target.id.toString())[1];
+//           clr.classList.toggle("star");
+//           for(let i = 0; i < localStorage.length; i++){
     
-            if(localStorage[i] == event.target.id.toString()){
-              localStorage.removeItem(i);
-              let AFL2 = [];
+//             if(localStorage[i] == event.target.id.toString()){
+//               localStorage.removeItem(i);
+//               let AFL2 = [];
     
-              for(let key in localStorage){
-                if(AFL2.length < AFL.length - 1){
-                  AFL2.push(localStorage[key]);
-                }
-              }
+//               for(let key in localStorage){
+//                 if(AFL2.length < AFL.length - 1){
+//                   AFL2.push(localStorage[key]);
+//                 }
+//               }
     
-              localStorage.clear();
+//               localStorage.clear();
     
-              for(let j = 0; j < AFL2.length ; j++){
+//               for(let j = 0; j < AFL2.length ; j++){
     
-                if(AFL2[j] != undefined){
-                  localStorage.setItem(j , AFL2[j]);
-                }
-              }
-            }
+//                 if(AFL2[j] != undefined){
+//                   localStorage.setItem(j , AFL2[j]);
+//                 }
+//               }
+//             }
     
-          }
-        }
-      }
+//           }
+//         }
+//       }
 
 function getCompare() {
         const xhr = new XMLHttpRequest();
@@ -1322,4 +1315,29 @@ let negativeCompany = {};
     }
   }
 
+
+  function getFavData(stockName) {
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", "/fav/:" + stockName);
+    xhr.send();
+    xhr.responseType = "json";
+    xhr.onload = () => {
+      if (xhr.readyState == 4 && xhr.status == 200) {
+        dCompanyObject = xhr.response.companyObject;
+        dVolumeObject = xhr.response.volumeObject;
+        currentPriceData1 = xhr.response.currentPriceData1;
+        currentPriceDataMid  = xhr.response.currentPriceDataMid;            
+        if(JSON.stringify(CurrentPriceObj).length == 2) {
+        CurrentPriceObj = xhr.response.currentPriceData;
+        currentPriceDataTable = xhr.response.currentPriceDataTable;
+        }
+        console.log(xhr.response.timestamp);
+        createChart( xhr.response.companyObject);
+      } 
+      else {
+        console.log(`Error: ${xhr.status}`);
+        }
+      };
+      showPrice();
+}
   
