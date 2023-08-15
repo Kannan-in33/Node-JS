@@ -38,8 +38,10 @@ let currentPriceData1 = {};
 let currentPriceDataMid = {};
 let currentPriceDataTable = {};
 let currentVolumeDataTable = {};
-
-
+let positive = [];
+let positiveCompany = {};
+let negative = [];
+let negativeCompany = {};
 let rupee = new Intl.NumberFormat('en-IN', {
     style: 'currency',
     currency: 'INR',
@@ -740,13 +742,15 @@ let resultCount = 0;
 
               let barcspan = document.createElement("span");
               barcspan.setAttribute("class", "barcspan");
+
+              barcspan.innerText = Number(currentPriceDataTable[key][i]).toFixed(1);
               
-              if( i == currentPriceDataTable[key].length -1){
-                barcspan.innerText = Number(currentPriceDataTable[key][i]).toFixed(1);
-              }
-              else{
-                barcspan.innerText = Number(currentPriceDataTable[key][i] - currentPriceDataTable[key][i -1]).toFixed(1);
-              }
+              // if( i == currentPriceDataTable[key].length -1){
+              //   barcspan.innerText = Number(currentPriceDataTable[key][i]).toFixed(1);
+              // }
+              // else{
+              //   barcspan.innerText = Number(currentPriceDataTable[key][i] - currentPriceDataTable[key][i -1]).toFixed(1);
+              // }
               
               barct.appendChild(barcspan);
               barct.appendChild(barc);
@@ -1291,13 +1295,18 @@ function clearFavourits(){
   
   
 function getUp(num){
-  
-  let lst = document.querySelectorAll(".charts > div");
-  lst.forEach( (ele) => {
-    ele.style.display = "none" ;
-  });
-let positive = [];
-let positiveCompany = {};
+  // document.querySelector(".charts").style.display = "none"; 
+  // let lst = document.querySelectorAll(".charts > div");
+  // lst.forEach( (ele) => {
+  //   ele.style.display = "none" ;
+  // });
+
+    let positivelength = positive.length;
+
+    for(let p = 0; p < positivelength; p++) {
+    positive.pop();
+    }
+    positiveCompany = {};
 
   switch (num){
     case 0:
@@ -1320,60 +1329,71 @@ let positiveCompany = {};
             positiveCompany = positiveCompany3;
             break;
   }
-    for(let i = 0; i < Math.max(positive.length , 0);){
-        let indx = positiveCompany[positive[i]];
-        let elementUp = document.getElementById(indx);
-        if (elementUp != null){
-            elementUp.parentElement.insertBefore(elementUp, elementUp.parentElement.children[i]);
-            elementUp.style.display = "";
-            i++;
-            document.getElementById("Gnumbers").innerText = Math.max(i , 1) ;
-        }   
-    }
+
+  createPositiveChart(dCompanyObject);
+    // for(let i = 0; i < Math.max(positive.length , 0);){
+    //     let indx = positiveCompany[positive[i]];
+    //     let elementUp = document.getElementById(indx);
+    //     if (elementUp != null){
+    //         elementUp.parentElement.insertBefore(elementUp, elementUp.parentElement.children[i]);
+    //         // elementUp.style.display = "";
+    //         i++;
+    //         document.getElementById("Gnumbers").innerText = Math.max(i , 1) ;
+    //     }   
+    // }
+    // document.querySelector(".charts").style.display = ""; 
     window.scrollTo({top: 0, behavior: 'smooth'});
     showGainers();
   }
 
 function getDown(num){
+  // document.querySelector(".charts").style.display = "none"; 
+  // let lst = document.querySelectorAll(".charts > div");
+  // lst.forEach( (ele) => {
+  //   ele.style.display = "none" ;
+  // });
 
-  let lst = document.querySelectorAll(".charts > div");
-  lst.forEach( (ele) => {
-    ele.style.display = "none" ;
-  });
-let negative = [];
-let negativeCompany = {};
+  let positivelength = positive.length;
+
+  for(let p = 0; p < positivelength; p++) {
+  positive.pop();
+  }
+  positiveCompany = {};
 
   switch (num){
     case 0:
-      negative = [...negativeList0];
-      negativeCompany = negativeCompany0;
+      positive = [...negativeList0];
+      positiveCompany = negativeCompany0;
       break;
 
       case 1:
-        negative = [...negativeList1];
-        negativeCompany = negativeCompany1;
+        positive = [...negativeList1];
+        positiveCompany = negativeCompany1;
         break;
 
         case 2:
-          negative = [...negativeList2];
-          negativeCompany = negativeCompany2;
+          positive = [...negativeList2];
+          positiveCompany = negativeCompany2;
           break;
 
           case 3:
-            negative = [...negativeList3];
-            negativeCompany = negativeCompany3;
+            positive = [...negativeList3];
+            positiveCompany = negativeCompany3;
             break;
   }
-    for(let i = 0; i < Math.max(negative.length,0);){
-        let indx = negativeCompany[negative[i]];
-        let elementUp = document.getElementById(indx);
-        if (elementUp != null){
-            elementUp.parentElement.insertBefore(elementUp, elementUp.parentElement.children[i]);
-            elementUp.style.display = "";
-            i++;
-            document.getElementById("Dnumbers").innerText = Math.max(i , 1) ;
-        }   
-    }
+  createPositiveChart(dCompanyObject);
+
+    // for(let i = 0; i < Math.max(negative.length,0);){
+    //     let indx = negativeCompany[negative[i]];
+    //     let elementUp = document.getElementById(indx);
+    //     if (elementUp != null){
+    //         elementUp.parentElement.insertBefore(elementUp, elementUp.parentElement.children[i]);
+    //         elementUp.style.display = "";
+    //         i++;
+    //         document.getElementById("Dnumbers").innerText = Math.max(i , 1) ;
+    //     }   
+    // }
+    // document.querySelector(".charts").style.display = ""; 
     window.scrollTo({top: 0, behavior: 'smooth'});
     showNoGainers();
   }
@@ -1404,3 +1424,252 @@ let negativeCompany = {};
       showPrice();
 }
   
+function createPositiveChart(companyObject, days =1000){
+  let chartlim = 0;
+  let lst = [];
+  lst = document.querySelectorAll(".charts div");
+  if(lst.length > 1){
+        Array.from(lst).forEach( (element) =>  element.remove() );
+  }
+
+  let resultCount = 0;
+      for(let i = 0; i < Math.max(positive.length  , 0); i++){
+          let indx = positiveCompany[positive[i]];
+if(indx !== undefined){
+
+          document.getElementById("filter").value = indx;
+            let yValues  = [];
+            let volumeValues = [];
+            yValues  = [...companyObject[indx]];
+            volumeValues  = [...dVolumeObject[indx]];
+            let xValues = [];
+            let yValues2 = [];
+  
+              yValues.reverse();
+              for(let y = 0; y < Math.min(companyObject[indx].length, days) ; y++){
+                yValues2[y] =  yValues[y] ;
+              }
+                  for (let i = 0; i < Math.min(companyObject[indx].length, days) ; i++) {
+                    xValues.push(i);
+                  }
+                  xValues.reverse();
+          let divtag = document.createElement("div");                  
+          let checkBox = document.createElement("input");
+                    checkBox.setAttribute("type", "checkbox");
+                    checkBox.setAttribute("class", indx);
+                    checkBox.addEventListener("click", setComp);
+                    divtag.appendChild(checkBox);
+          let lbl = document.createElement("label");
+                    lbl.setAttribute("for", indx);
+                    lbl.setAttribute("value", 'compare');
+                    lbl.innerText = 'Compare';
+                    divtag.appendChild(lbl);
+          let lblF = document.createElement("label");
+                  lblF.setAttribute("for", indx);
+                  lblF.setAttribute("value", 'favourite');
+                  lblF.innerText = 'Favourite';
+                  divtag.appendChild(lblF);
+          let checkBoxF = document.createElement("input");
+                    checkBoxF.setAttribute("type", "checkbox");
+                    checkBoxF.setAttribute("class", 'favourite');
+                    checkBoxF.setAttribute("id", indx);
+                    // checkBoxF.setAttribute("value", "favourite");
+                    checkBoxF.addEventListener("click", setFav);
+                    divtag.appendChild(checkBoxF);
+                    companyDetails.push(indx);
+          let anchortag = document.createElement("a");
+                anchortag.setAttribute("href", "https://www.screener.in/company/" + indx + "/");
+                anchortag.setAttribute("target", "_blank");
+                anchortag.appendChild(divtag);
+  
+            if(Object.keys(currentPriceDataTable).length > 1){
+            let bar = document.createElement("div");
+                bar.setAttribute("class", "bar");
+               let preHig = 0;
+                let largebar = 0;
+                let smallbar = 0;
+                largebar = Math.max(...[...currentPriceDataTable[indx]]);
+                smallbar = Math.min(...[...currentPriceDataTable[indx]]);
+  
+  
+              
+              for(let i = currentPriceDataTable[indx].length -1; i> 0; i--){
+  
+              let barc = document.createElement("div");
+              let barct = document.createElement("div");
+                barc.setAttribute("class", "barc");
+                let hig =  (Number(currentPriceDataTable[indx][i])); // - (smallbar * 0.5));
+  
+                  num = Number(hig);
+                  let unit = (100 / (largebar - smallbar)); // (largebar - smallbar))
+                  let barHig  = ((unit * (num - smallbar) )).toFixed(1);
+  
+                if(preHig >= hig){
+                  barc.style.backgroundColor = "rgba(255, 0,0, 0.5)";
+                }
+                else{
+                  barc.style.backgroundColor = "rgba(20, 255 ,20, 0.75)";
+                  
+                }
+                preHig = hig;
+                // let barHig = (hig * (100 / largebar)).toFixed(1);
+                barc.style.height = (Number(barHig)).toString() + 'px'; //((largebar - Number(currentPriceData1[indx][i])).toFixed(1).toString() + 'px').toString();
+                barc.style.top = (100 - Number(barHig).toFixed(1).toString())+ 'px';
+                // barc.style.width = '10px';
+                
+  
+                let barcspan = document.createElement("span");
+                barcspan.setAttribute("class", "barcspan");
+  
+                barcspan.innerText = Number(currentPriceDataTable[indx][i]).toFixed(1);
+                
+                // if( i == currentPriceDataTable[indx].length -1){
+                //   barcspan.innerText = Number(currentPriceDataTable[indx][i]).toFixed(1);
+                // }
+                // else{
+                //   barcspan.innerText = Number(currentPriceDataTable[indx][i] - currentPriceDataTable[indx][i -1]).toFixed(1);
+                // }
+                
+                barct.appendChild(barcspan);
+                barct.appendChild(barc);
+                bar.appendChild(barct);
+              }
+              divtag.appendChild(bar);
+                }
+  
+                // volume chart starts *********************************************************************************
+  
+                if(Object.keys(currentVolumeDataTable).length > 1){
+                  let barv = document.createElement("div");
+                      barv.setAttribute("class", "barv");
+                     let preHigv = 0;
+                      let largebarv = 0;
+                      let smallbarv = 0;
+                      largebarv = Math.max(...[...currentVolumeDataTable[indx]]);
+                      smallbarv = Math.min(...[...currentVolumeDataTable[indx]]);
+        
+        
+                    
+                    for(let i = currentVolumeDataTable[indx].length -1; i> 0; i--){
+        
+                    let barcv = document.createElement("div");
+                    let barct = document.createElement("div");
+                      barcv.setAttribute("class", "barcv");
+                      let higv =  (Number(currentVolumeDataTable[indx][i])); // - (smallbar * 0.5));
+        
+                        numv = Number(higv);
+                        let unitv = (100 / (largebarv - smallbarv)); // (largebar - smallbar))
+                        let barHigv  = ((unitv * (numv - smallbarv) )).toFixed(1);
+        
+                      if(preHigv >= higv){
+                        barcv.style.backgroundColor = "rgba(255, 0,0, 0.5)";
+                      }
+                      else{
+                        barcv.style.backgroundColor = "rgba(20, 255 ,20, 0.75)";
+                        
+                      }
+                      preHigv = higv;
+                      // let barHig = (hig * (100 / largebar)).toFixed(1);
+                      barcv.style.height = (Number(barHigv)).toString() + 'px'; //((largebar - Number(currentPriceData1[indx][i])).toFixed(1).toString() + 'px').toString();
+                      barcv.style.top = (100 - Number(barHigv).toFixed(1).toString())+ 'px';
+                      // barc.style.width = '10px';
+                      
+        
+                      let barcspanv = document.createElement("span");
+                      barcspanv.setAttribute("class", "barcspanv");
+                      
+                      barcspanv.innerText = Number(currentVolumeDataTable[indx][i]).toFixed(0);
+                      barv.appendChild(barct);
+                      barct.appendChild(barcspanv);
+                      barct.appendChild(barcv);
+                    }
+                    divtag.appendChild(barv);
+                      }
+  
+  
+                      // Volume chart ends }}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+                
+          let canvas = document.createElement("canvas");
+                      canvas.setAttribute("id", indx);
+                      canvas.setAttribute("class", indx);       
+          let divtagMain = document.createElement("div"); 
+                    divtagMain.setAttribute("id", indx);
+          let divtagLeft = document.createElement("div"); 
+                    divtagMain.appendChild(divtagLeft);
+                    divtagLeft.appendChild(anchortag);
+          let divtagRight = document.createElement("div"); 
+                  divtagRight.setAttribute("class", "right");
+                    divtagMain.appendChild(divtagRight);
+  
+          divtag.appendChild(canvas);
+                      document.querySelector(".charts").appendChild(divtagMain);
+                        let ccurrect = yValues2[0];
+                        let cmin = Math.min(...yValues2);
+                        let cmax = Math.max(...yValues2);
+                                               
+                          new Chart(canvas, {
+                              type: "line",
+                              data: {
+                              labels: xValues,
+                              datasets: [{
+                                      label: indx + '   FL ' + ( ((cmax-cmin)/cmax) * 100).toFixed(2).toString() + ' %   FC  ' + ( ((cmax-ccurrect)/cmax) * 100).toFixed(2).toString()  ,
+                                      pointRadius: 0,
+                                      borderWidth : 0.5,
+                                      borderColor: "rgba(0,0,0,0.9)",
+                                      data: [...yValues2].reverse(),
+                                      }]
+                                    },  
+                                    options: {
+                                        scales: {
+                                            yAxes: [{
+                                                ticks: {
+                                                    fontSize: 14
+                                            }
+                                        }]
+                                    }
+                                    }
+  
+                              });
+                        
+                              let canvas2 = document.createElement("canvas");
+                              canvas2.setAttribute("class", 'volume');
+                              divtag.appendChild(canvas2);
+                              new Chart(canvas2, {
+                                type: "line",
+                                data: {
+                                labels: xValues, // .reverse().slice(0,30),
+                                datasets: [{
+                                        label: volumeValues[volumeValues.length - 1],
+                                        tooltip: '',
+                                        pointRadius: 0,
+                                        borderWidth : 0.5,
+                                        borderColor: "rgba(0,0,0,0.9)",
+                                        data: [...volumeValues]
+                                        }]
+                                      },
+                                options: {
+                                        plugins: {
+                                            legend: true // Hide legend
+                                        },
+                                        scales: {
+                                          yAxes: [{
+                                              ticks: {
+                                                  fontSize: 14
+                                              }
+                                          }]
+                                      }
+                                      }
+                                });
+                              }
+  
+      }
+  // document.getElementById("results0").innerText = resultCount.toString();
+  // let idlst = document.querySelectorAll("[id^='getData']");
+  // idlst.forEach( element => {
+  // element.innerText = "Stocks " + element.classList[0] +'+';
+  // element.classList.remove('active');
+  // })
+  document.getElementById("filter").value = "Loaded";
+  updateCompanyDeatils();
+  
+  }
