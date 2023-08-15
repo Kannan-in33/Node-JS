@@ -37,7 +37,7 @@ let CurrentPriceObj = {};
 let currentPriceData1 = {};
 let currentPriceDataMid = {};
 let currentPriceDataTable = {};
-
+let currentVolumeDataTable = {};
 
 
 let rupee = new Intl.NumberFormat('en-IN', {
@@ -705,7 +705,6 @@ let resultCount = 0;
           if(Object.keys(currentPriceDataTable).length > 1){
           let bar = document.createElement("div");
               bar.setAttribute("class", "bar");
-              bar.setAttribute("height", "100px");
              let preHig = 0;
               let largebar = 0;
               let smallbar = 0;
@@ -717,6 +716,7 @@ let resultCount = 0;
             for(let i = currentPriceDataTable[key].length -1; i> 0; i--){
 
             let barc = document.createElement("div");
+            let barct = document.createElement("div");
               barc.setAttribute("class", "barc");
               let hig =  (Number(currentPriceDataTable[key][i])); // - (smallbar * 0.5));
 
@@ -735,18 +735,77 @@ let resultCount = 0;
               // let barHig = (hig * (100 / largebar)).toFixed(1);
               barc.style.height = (Number(barHig)).toString() + 'px'; //((largebar - Number(currentPriceData1[key][i])).toFixed(1).toString() + 'px').toString();
               barc.style.top = (100 - Number(barHig).toFixed(1).toString())+ 'px';
-              barc.style.width = '10px';
+              // barc.style.width = '10px';
               
 
               let barcspan = document.createElement("span");
               barcspan.setAttribute("class", "barcspan");
               
-              barcspan.innerText = Number(currentPriceDataTable[key][i]).toFixed(1);
-              barc.appendChild(barcspan);
-              bar.appendChild(barc);
+              if( i == currentPriceDataTable[key].length -1){
+                barcspan.innerText = Number(currentPriceDataTable[key][i]).toFixed(1);
+              }
+              else{
+                barcspan.innerText = Number(currentPriceDataTable[key][i] - currentPriceDataTable[key][i -1]).toFixed(1);
+              }
+              
+              barct.appendChild(barcspan);
+              barct.appendChild(barc);
+              bar.appendChild(barct);
             }
             divtag.appendChild(bar);
               }
+
+              // volume chart starts *********************************************************************************
+
+              if(Object.keys(currentVolumeDataTable).length > 1){
+                let barv = document.createElement("div");
+                    barv.setAttribute("class", "barv");
+                   let preHigv = 0;
+                    let largebarv = 0;
+                    let smallbarv = 0;
+                    largebarv = Math.max(...[...currentVolumeDataTable[key]]);
+                    smallbarv = Math.min(...[...currentVolumeDataTable[key]]);
+      
+      
+                  
+                  for(let i = currentVolumeDataTable[key].length -1; i> 0; i--){
+      
+                  let barcv = document.createElement("div");
+                  let barct = document.createElement("div");
+                    barcv.setAttribute("class", "barcv");
+                    let higv =  (Number(currentVolumeDataTable[key][i])); // - (smallbar * 0.5));
+      
+                      numv = Number(higv);
+                      let unitv = (100 / (largebarv - smallbarv)); // (largebar - smallbar))
+                      let barHigv  = ((unitv * (numv - smallbarv) )).toFixed(1);
+      
+                    if(preHigv >= higv){
+                      barcv.style.backgroundColor = "rgba(255, 0,0, 0.5)";
+                    }
+                    else{
+                      barcv.style.backgroundColor = "rgba(20, 255 ,20, 0.75)";
+                      
+                    }
+                    preHigv = higv;
+                    // let barHig = (hig * (100 / largebar)).toFixed(1);
+                    barcv.style.height = (Number(barHigv)).toString() + 'px'; //((largebar - Number(currentPriceData1[key][i])).toFixed(1).toString() + 'px').toString();
+                    barcv.style.top = (100 - Number(barHigv).toFixed(1).toString())+ 'px';
+                    // barc.style.width = '10px';
+                    
+      
+                    let barcspanv = document.createElement("span");
+                    barcspanv.setAttribute("class", "barcspanv");
+                    
+                    barcspanv.innerText = Number(currentVolumeDataTable[key][i]).toFixed(0);
+                    barv.appendChild(barct);
+                    barct.appendChild(barcspanv);
+                    barct.appendChild(barcv);
+                  }
+                  divtag.appendChild(barv);
+                    }
+
+
+                    // Volume chart ends }}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
               
         let canvas = document.createElement("canvas");
                     canvas.setAttribute("id", key);
@@ -873,14 +932,13 @@ function getData(e) {
         xhr.onload = () => {
           if (xhr.readyState == 4 && xhr.status == 200) {
             dCompanyObject = xhr.response.companyObject;
-            // dCompanyDateObject = xhr.response.companyDateObj;
             dVolumeObject = xhr.response.volumeObject;
-            currentPriceData1 = xhr.response.currentPriceData1;
-            currentPriceDataMid  = xhr.response.currentPriceDataMid;            
+            currentPriceData1 = xhr.response.currentPriceData1;            
             if(JSON.stringify(CurrentPriceObj).length == 2) {
             CurrentPriceObj = xhr.response.currentPriceData;
             currentPriceDataTable = xhr.response.currentPriceDataTable;
             }
+            currentVolumeDataTable = xhr.response.currentVolumeDataTable;
             console.log(xhr.response.timestamp);
             createChart( xhr.response.companyObject, e);
           } 
@@ -915,6 +973,8 @@ function getSectorData(event) {
             dVolumeObject = xhr.response.volumeObject;
             CurrentPriceObj = xhr.response.currentPriceData;
             currentPriceData1 = xhr.response.currentPriceData1;
+            currentPriceDataTable = xhr.response.currentPriceDataTable;
+            currentVolumeDataTable = xhr.response.currentVolumeDataTable,
             createChart( xhr.response.companyObject, event.target.id);
           } 
           else {
@@ -940,6 +1000,7 @@ function getSectorDataAll() {
         CurrentPriceObj = xhr.response.currentPriceData;
         currentPriceData1 = xhr.response.currentPriceData1;
         currentPriceDataTable = xhr.response.currentPriceDataTable;
+        currentVolumeDataTable = xhr.response.currentVolumeDataTable,
         createChart( xhr.response.companyObject, 'All');
         document.getElementById("filter").value = 'All';
         
@@ -1230,8 +1291,7 @@ function clearFavourits(){
   
   
 function getUp(num){
-  window.scrollTo({top: 0, behavior: 'smooth'});
-  showGainers();
+  
   let lst = document.querySelectorAll(".charts > div");
   lst.forEach( (ele) => {
     ele.style.display = "none" ;
@@ -1270,11 +1330,12 @@ let positiveCompany = {};
             document.getElementById("Gnumbers").innerText = Math.max(i , 1) ;
         }   
     }
+    window.scrollTo({top: 0, behavior: 'smooth'});
+    showGainers();
   }
 
 function getDown(num){
-      window.scrollTo({top: 0, behavior: 'smooth'});
-  showNoGainers();
+
   let lst = document.querySelectorAll(".charts > div");
   lst.forEach( (ele) => {
     ele.style.display = "none" ;
@@ -1313,6 +1374,8 @@ let negativeCompany = {};
             document.getElementById("Dnumbers").innerText = Math.max(i , 1) ;
         }   
     }
+    window.scrollTo({top: 0, behavior: 'smooth'});
+    showNoGainers();
   }
 
 
