@@ -58,7 +58,8 @@ server.get('/favicon.ico', (req, res) => {
         
 server.use( (req, res)=>{
 
-
+    getUpdatedPriceTable();
+    getUpdatedVolomeTable();
 
     let obj ={};
     let obj2 = [];
@@ -249,16 +250,16 @@ getUpdatedPriceTable =  async () =>{
     const GsUpdate = await googleSheets.spreadsheets.values.get({
         auth,
         spreadsheetId,
-        range: "Bar!A1:Z2822",
+        range: "Bar!A1:AB2822",
     });
 
     cpvaluesTable = (GsUpdate.data.values);
     cpvaluesTable.forEach ( (ele, i) => {
         tempArr2 = [];
-        for(let j=1; j<ele.length; j++) {
+        for(let j = 1; j < 25; j++) {
             tempArr2.push(ele[j].toString())
         }
-        currentPriceDataTable[ele[0].toString().split(",")[0]] = tempArr2;
+        currentPriceDataTable[ele[0].toString().split(",")[0]] = tempArr2.reverse();
      });
 
     return GsUpdate;
@@ -283,25 +284,27 @@ getUpdatedVolomeTable =  async () =>{
     const CVVdata = await googleSheets.spreadsheets.values.get({
         auth,
         spreadsheetId,
-        range: 'Daily Volume!A1:AA2822', 
+        range: 'Daily Volume!A1:AB2822', 
     });
 
    cvvalues = (CVVdata.data.values);
 
 cvvalues.forEach ( (ele, i) => {
     tempArr2 = [];
-    for(let j = 2; j < ele.length; j++) {
+    
+        // console.log(ele[0].toString().split(",")[0]);
+    for(let j = 1; j < 25 ; j++) {
 
-            tempArr2.push(((ele[j-1] - ele[j])/1000).toString());
+            tempArr2.push(((ele[j] - ele[j +1])/1000).toString());
         
     }
-    currentVolumeDataTable[ele[0].toString().split(",")[0]] = tempArr2;
+
+    currentVolumeDataTable[ele[0].toString().split(",")[0]] = tempArr2.reverse();
  });
 
  return CVVdata;
 
 }
-
 
 // Try Getting data from Bar END
 

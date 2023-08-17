@@ -715,7 +715,7 @@ let resultCount = 0;
 
 
             
-            for(let i = currentPriceDataTable[key].length -1; i> 0; i--){
+            for(let i = 0 ;i  < currentPriceDataTable[key].length ;  i++){
 
             let barc = document.createElement("div");
             let barct = document.createElement("div");
@@ -727,7 +727,7 @@ let resultCount = 0;
                 let barHig  = ((unit * (num - smallbar) )).toFixed(1);
 
               if(preHig >= hig){
-                barc.style.backgroundColor = "rgba(255, 0,0, 0.5)";
+                barc.style.backgroundColor = "rgba(255, 0,0, 0.35)";
               }
               else{
                 barc.style.backgroundColor = "rgba(20, 255 ,20, 0.75)";
@@ -772,7 +772,8 @@ let resultCount = 0;
       
       
                   
-                  for(let i = currentVolumeDataTable[key].length -1; i> 0; i--){
+                  for(let i =0; i < currentVolumeDataTable[key].length ;  i++){
+                    // console.log(i);
       
                   let barcv = document.createElement("div");
                   let barct = document.createElement("div");
@@ -784,7 +785,7 @@ let resultCount = 0;
                       let barHigv  = ((unitv * (numv - smallbarv) )).toFixed(1);
       
                     if(preHigv >= higv){
-                      barcv.style.backgroundColor = "rgba(255, 0,0, 0.5)";
+                      barcv.style.backgroundColor = "rgba(255, 0,0, 0.35)";
                     }
                     else{
                       barcv.style.backgroundColor = "rgba(20, 255 ,20, 0.75)";
@@ -895,7 +896,7 @@ let resultCount = 0;
                                     }
                                     }
                               });
-
+//  chart ends here
     }
 document.getElementById("results0").innerText = resultCount.toString();
 let idlst = document.querySelectorAll("[id^='getData']");
