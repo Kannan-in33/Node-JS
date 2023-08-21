@@ -295,7 +295,9 @@ cvvalues.forEach ( (ele, i) => {
         // console.log(ele[0].toString().split(",")[0]);
     for(let j = 1; j < 25 ; j++) {
 
-            tempArr2.push(((ele[j] - ele[j +1])/1000).toString());
+        tempArr2.push(ele[j]);
+
+            // tempArr2.push(((ele[j] - ele[j +1])/1000).toString());
         
     }
 
