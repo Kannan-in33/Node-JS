@@ -749,7 +749,7 @@ let resultCount = 0;
               let barcspan = document.createElement("span");
               barcspan.setAttribute("class", "barcspan");
 
-              barcspan.innerText = PperDif; //Number(currentPriceDataTable[key][i]).toFixed(1);
+              barcspan.innerText = Number(currentPriceDataTable[key][i]).toFixed(1);
               // if( key == 'AURIONPRO'){
               //   console.log(PperDif);
               // }
@@ -790,10 +790,11 @@ let resultCount = 0;
                     let higv =  (Number(currentVolumeDataTable[key][i])); // - (smallbar * 0.5));
                     let perDif;
                     if (i == 0){
-                      perDif = 0;
+                      perDif = higv;
                     }
                     else{
-                      perDif = (((higv - preHigv)/higv)*100).toFixed(1);
+                      perDif = (higv - preHigv);
+                      // perDif = (((higv - preHigv)/higv)*100).toFixed(1);
                     }     
 
       
@@ -818,7 +819,7 @@ let resultCount = 0;
                     let barcspanv = document.createElement("span");
                     barcspanv.setAttribute("class", "barcspanv");
                     
-                    barcspanv.innerText = perDif; //Number(currentVolumeDataTable[key][i]).toFixed(0);
+                    barcspanv.innerText = perDif; //; Number(currentVolumeDataTable[key][i]).toFixed(0) 
                     barv.appendChild(barct);
                     barct.appendChild(barcspanv);
                     barct.appendChild(barcv);
@@ -1512,7 +1513,7 @@ if(indx !== undefined){
   
   
               
-              for(let i = currentPriceDataTable[indx].length -1; i> 0; i--){
+              for(let  i = 0; i < currentPriceDataTable[indx].length -1; i++){
   
               let barc = document.createElement("div");
               let barct = document.createElement("div");
@@ -1546,7 +1547,7 @@ if(indx !== undefined){
                 let barcspan = document.createElement("span");
                 barcspan.setAttribute("class", "barcspan");
   
-                barcspan.innerText = perDif; // Number(currentPriceDataTable[indx][i]).toFixed(1);
+                barcspan.innerText = Number(currentPriceDataTable[indx][i]).toFixed(1);  //perDif; 
                 
                 // if( i == currentPriceDataTable[indx].length -1){
                 //   barcspan.innerText = Number(currentPriceDataTable[indx][i]).toFixed(1);
@@ -1575,7 +1576,7 @@ if(indx !== undefined){
         
         
                     
-                    for(let i = currentVolumeDataTable[indx].length -1; i> 0; i--){
+                    for(let i = 0; i < currentVolumeDataTable[indx].length -1;  i++){
         
                     let barcv = document.createElement("div");
                     let barct = document.createElement("div");
@@ -1609,7 +1610,7 @@ if(indx !== undefined){
                       let barcspanv = document.createElement("span");
                       barcspanv.setAttribute("class", "barcspanv");
                       
-                      barcspanv.innerText =  PperDif; //Number(currentVolumeDataTable[indx][i]).toFixed(0);
+                      barcspanv.innerText =  Number(currentVolumeDataTable[indx][i]).toFixed(0); // PperDif; //
                       barv.appendChild(barct);
                       barct.appendChild(barcspanv);
                       barct.appendChild(barcv);
