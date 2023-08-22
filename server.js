@@ -20,19 +20,127 @@ let tempArr2 =[];
 let t = 0;
 const spreadsheetId = "13BOxMT5cUoScurImRrDK0PwwLYAtV7qJiI75Knw44kQ";
 
-server.get('/',  (req, res) => {
-    getUpdatedPrice();
+// UpdateBarData
+
+getUpdatedPrice =  async () =>{
+    const auth = new google.auth.GoogleAuth({
+        keyFile: "credentials.json",
+        scopes: "https://www.googleapis.com/auth/spreadsheets",
+    });
+
+    const client = await auth.getClient();
+    const googleSheets = google.sheets({
+        version: "v4",
+        auth: client
+    });
+
+    // get details of spreadsheet
+
+    const CPdata = await googleSheets.spreadsheets.values.get({
+        auth,
+        spreadsheetId,
+        range: 'NSE Daily!A1:B2822', 
+    });
+
+
+   cpvalues = (CPdata.data.values);
+
+   cpvalues.forEach ( (ele, i) => {
+   currentPriceData[ele[0].toString().split(",")[0]] = ele[1].toString();
+});
+
+
+}
+
+// Try Getting data from Bar
+
+
+getUpdatedPriceTable =  async () =>{
+    const auth = new google.auth.GoogleAuth({
+        keyFile: "credentials.json",
+        scopes: "https://www.googleapis.com/auth/drive",
+    });
+
+    const client = await auth.getClient();
+    const googleSheets = google.sheets({
+        version: "v4",
+        auth: client
+    });
+
+    const GsUpdate = await googleSheets.spreadsheets.values.get({
+        auth,
+        spreadsheetId,
+        range: "Bar!A1:AD2822",
+    });
+
+    cpvaluesTable = (GsUpdate.data.values);
+    cpvaluesTable.forEach ( (ele, i) => {
+        tempArr2 = [];
+        for(let j = 1; j < 27; j++) {
+            tempArr2.push(ele[j].toString())
+        }
+        currentPriceDataTable[ele[0].toString().split(",")[0]] = tempArr2.reverse();
+     });
+
+    return GsUpdate;
+
+}
+
+getUpdatedVolomeTable =  async () =>{
+    const auth = new google.auth.GoogleAuth({
+        keyFile: "credentials.json",
+        scopes: "https://www.googleapis.com/auth/drive",
+    });
+
+    const client = await auth.getClient();
+    const googleSheets = google.sheets({
+        version: "v4",
+        auth: client
+    });
+
+
+    //  Capturing Volume Data
+
+    const CVVdata = await googleSheets.spreadsheets.values.get({
+        auth,
+        spreadsheetId,
+        range: 'Daily Volume!A1:AD2822', 
+    });
+
+   cvvalues = (CVVdata.data.values);
+
+cvvalues.forEach ( (ele, i) => {
+    tempArr2 = [];
+    
+        // console.log(ele[0].toString().split(",")[0]);
+    for(let j = 1; j < 27 ; j++) {
+
+        tempArr2.push(ele[j]);
+
+            // tempArr2.push(((ele[j] - ele[j +1])/1000).toString());
+        
+    }
+
+    currentVolumeDataTable[ele[0].toString().split(",")[0]] = tempArr2.reverse();
+ });
+
+ return CVVdata;
+
+}
+
+getUpdatedPrice();
 getUpdatedPriceTable();
 getUpdatedVolomeTable();
+
+server.get('/',  (req, res) => {
+
 
 res.sendFile(path.join(__dirname, './pages/index.html'));
 
 });
 
 server.get('/sector', (req, res) => {
-    getUpdatedPrice();
-getUpdatedPriceTable();
-getUpdatedVolomeTable();
+
     res.sendFile(path.join(__dirname, './pages/sector.html'));
 
 });
@@ -58,8 +166,6 @@ server.get('/favicon.ico', (req, res) => {
         
 server.use( (req, res)=>{
 
-    getUpdatedPriceTable();
-    getUpdatedVolomeTable();
 
     let obj ={};
     let obj2 = [];
@@ -200,121 +306,4 @@ server.listen(port, () => {
   //  setInterval(getUpdatedPrice, (1000 * 60  * 30));
 })
 
-// UpdateBarData
-
-getUpdatedPrice =  async () =>{
-    const auth = new google.auth.GoogleAuth({
-        keyFile: "credentials.json",
-        scopes: "https://www.googleapis.com/auth/spreadsheets",
-    });
-
-    const client = await auth.getClient();
-    const googleSheets = google.sheets({
-        version: "v4",
-        auth: client
-    });
-
-    // get details of spreadsheet
-
-    const CPdata = await googleSheets.spreadsheets.values.get({
-        auth,
-        spreadsheetId,
-        range: 'NSE Daily!A1:B2822', 
-    });
-
-
-   cpvalues = (CPdata.data.values);
-
-   cpvalues.forEach ( (ele, i) => {
-   currentPriceData[ele[0].toString().split(",")[0]] = ele[1].toString();
-});
-
-
-}
-
-// Try Getting data from Bar
-
-
-getUpdatedPriceTable =  async () =>{
-    const auth = new google.auth.GoogleAuth({
-        keyFile: "credentials.json",
-        scopes: "https://www.googleapis.com/auth/drive",
-    });
-
-    const client = await auth.getClient();
-    const googleSheets = google.sheets({
-        version: "v4",
-        auth: client
-    });
-
-    const GsUpdate = await googleSheets.spreadsheets.values.get({
-        auth,
-        spreadsheetId,
-        range: "Bar!A1:AB2822",
-    });
-
-    cpvaluesTable = (GsUpdate.data.values);
-    cpvaluesTable.forEach ( (ele, i) => {
-        tempArr2 = [];
-        for(let j = 1; j < 25; j++) {
-            tempArr2.push(ele[j].toString())
-        }
-        currentPriceDataTable[ele[0].toString().split(",")[0]] = tempArr2.reverse();
-     });
-
-    return GsUpdate;
-
-}
-
-getUpdatedVolomeTable =  async () =>{
-    const auth = new google.auth.GoogleAuth({
-        keyFile: "credentials.json",
-        scopes: "https://www.googleapis.com/auth/drive",
-    });
-
-    const client = await auth.getClient();
-    const googleSheets = google.sheets({
-        version: "v4",
-        auth: client
-    });
-
-
-    //  Capturing Volume Data
-
-    const CVVdata = await googleSheets.spreadsheets.values.get({
-        auth,
-        spreadsheetId,
-        range: 'Daily Volume!A1:AB2822', 
-    });
-
-   cvvalues = (CVVdata.data.values);
-
-cvvalues.forEach ( (ele, i) => {
-    tempArr2 = [];
-    
-        // console.log(ele[0].toString().split(",")[0]);
-    for(let j = 1; j < 25 ; j++) {
-
-        tempArr2.push(ele[j]);
-
-            // tempArr2.push(((ele[j] - ele[j +1])/1000).toString());
-        
-    }
-
-    currentVolumeDataTable[ele[0].toString().split(",")[0]] = tempArr2.reverse();
- });
-
- return CVVdata;
-
-}
-
-// Try Getting data from Bar END
-
-// if(timestamp < 18){
-//     // currentPriceData1 ={};
-//     setInterval(getUpdatedPriceTable, (1000 * 10 * 60));
-// }
-// if(timestamp > 18){
-//     clearInterval(getUpdatedPriceTable);
-// }
 

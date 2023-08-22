@@ -743,6 +743,7 @@ let resultCount = 0;
               // let barHig = (hig * (100 / largebar)).toFixed(1);
               barc.style.height = (Number(barHig)).toString() + 'px'; //((largebar - Number(currentPriceData1[key][i])).toFixed(1).toString() + 'px').toString();
               barc.style.top = (100 - Number(barHig).toFixed(1).toString())+ 'px';
+              // barc.style.fontSize = '14px';
               // barc.style.width = '10px';
               
 
@@ -819,7 +820,7 @@ let resultCount = 0;
                     let barcspanv = document.createElement("span");
                     barcspanv.setAttribute("class", "barcspanv");
                     
-                    barcspanv.innerText = perDif; //; Number(currentVolumeDataTable[key][i]).toFixed(0) 
+                    barcspanv.innerText = (perDif / 1000).toFixed(0); //; Number(currentVolumeDataTable[key][i]).toFixed(0) 
                     barv.appendChild(barct);
                     barct.appendChild(barcspanv);
                     barct.appendChild(barcv);

@@ -373,7 +373,7 @@
     .bar, .barv{
       display: flex;
       justify-content: flex-start;
-      height: 125px;
+      height: 100px;
       overflow: hidden;
       letter-spacing: -1px;
       position: relative;
@@ -386,6 +386,7 @@
       position: relative;
       width: 20px;
       margin: 0 2px;
+      margin-top: 30px;
 
     }
     .barcspan, .barcspanv{
@@ -396,7 +397,7 @@
       margin-left: -2px;
       width: -webkit-fill-available;
       position: absolute;
-      bottom: 26px;
+      bottom: 2px;
       color: #000;
       z-index: 100;
 
