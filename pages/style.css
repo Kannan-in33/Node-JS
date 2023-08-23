@@ -377,6 +377,7 @@
       overflow: hidden;
       letter-spacing: -1px;
       position: relative;
+      margin-top: 30px;
     }
 
     .bar > div, .barv > div{

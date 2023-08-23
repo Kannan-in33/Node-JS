@@ -1026,7 +1026,7 @@ function getSectorDataAll() {
         currentPriceData1 = xhr.response.currentPriceData1;
         currentPriceDataTable = xhr.response.currentPriceDataTable;
         currentVolumeDataTable = xhr.response.currentVolumeDataTable,
-        createChart( xhr.response.companyObject, 'All');
+        createChartAll( xhr.response.companyObject);
         document.getElementById("filter").value = 'All';
         
       } 
@@ -1706,3 +1706,189 @@ if(indx !== undefined){
   updateCompanyDeatils();
   
   }
+
+  function createChartAll(companyObject, days =1000){
+    let chartlim = 0;
+    let lst = [];
+    lst = document.querySelectorAll(".charts div");
+    if(lst.length > 1){
+          Array.from(lst).forEach( (element) =>  element.remove() );
+    }
+  
+    let resultCount = 0;
+    if(Object.keys(companyObject).length > 1){
+      for(let key in companyObject){
+        if(resultCount < 300){
+          resultCount += 1;
+        let indx = key;
+        // console.log(indx);
+              let yValues  = [];
+              let volumeValues = [];
+              yValues  = [...companyObject[indx]];
+              volumeValues  = [...dVolumeObject[indx]];
+              let xValues = [];
+              let yValues2 = [];
+    
+                yValues.reverse();
+                for(let y = 0; y < Math.min(companyObject[indx].length, days) ; y++){
+                  yValues2[y] =  yValues[y] ;
+                }
+                    for (let i = 0; i < Math.min(companyObject[indx].length, days) ; i++) {
+                      xValues.push(i);
+                    }
+                    xValues.reverse();
+            let divtag = document.createElement("div");                  
+            let checkBox = document.createElement("input");
+                      checkBox.setAttribute("type", "checkbox");
+                      checkBox.setAttribute("class", indx);
+                      checkBox.addEventListener("click", setComp);
+                      divtag.appendChild(checkBox);
+            let lbl = document.createElement("label");
+                      lbl.setAttribute("for", indx);
+                      lbl.setAttribute("value", 'compare');
+                      lbl.innerText = 'Compare';
+                      divtag.appendChild(lbl);
+            let lblF = document.createElement("label");
+                    lblF.setAttribute("for", indx);
+                    lblF.setAttribute("value", 'favourite');
+                    lblF.innerText = 'Favourite';
+                    divtag.appendChild(lblF);
+            let checkBoxF = document.createElement("input");
+                      checkBoxF.setAttribute("type", "checkbox");
+                      checkBoxF.setAttribute("class", 'favourite');
+                      checkBoxF.setAttribute("id", indx);
+                      // checkBoxF.setAttribute("value", "favourite");
+                      checkBoxF.addEventListener("click", setFav);
+                      divtag.appendChild(checkBoxF);
+                      companyDetails.push(indx);
+            let anchortag = document.createElement("a");
+                  anchortag.setAttribute("href", "https://www.screener.in/company/" + indx + "/");
+                  anchortag.setAttribute("target", "_blank");
+                  anchortag.appendChild(divtag);
+    
+              if(Object.keys(currentPriceDataTable).length > 1){
+                
+              let bar = document.createElement("div");
+                  bar.setAttribute("class", "bar");
+                 let preHig = 0;
+                  let largebar = 0;
+                  let smallbar = 0;
+                  largebar = Math.max(...[...currentPriceDataTable[indx]]);
+                  smallbar = Math.min(...[...currentPriceDataTable[indx]]);
+    
+    
+                
+                for(let  i = 0; i < currentPriceDataTable[indx].length -1; i++){
+    
+                let barc = document.createElement("div");
+                let barct = document.createElement("div");
+                  barc.setAttribute("class", "barc");
+                  let hig =  (Number(currentPriceDataTable[indx][i])); // - (smallbar * 0.5));
+                  let perDif;
+                  if (i == 0){
+                    perDif = 0;
+                  }
+                  else{
+                    perDif = (((hig - preHig)/hig)*100).toFixed(1);
+                  }   
+                    num = Number(hig);
+                    let unit = (100 / (largebar - smallbar)); // (largebar - smallbar))
+                    let barHig  = ((unit * (num - smallbar) )).toFixed(1);
+    
+                  if(preHig >= hig){
+                    barc.style.backgroundColor = "rgba(255, 0,0, 0.5)";
+                  }
+                  else{
+                    barc.style.backgroundColor = "rgba(20, 255 ,20, 0.75)";
+                    
+                  }
+                  preHig = hig;
+                  // let barHig = (hig * (100 / largebar)).toFixed(1);
+                  barc.style.height = (Number(barHig)).toString() + 'px'; //((largebar - Number(currentPriceData1[indx][i])).toFixed(1).toString() + 'px').toString();
+                  barc.style.top = (100 - Number(barHig).toFixed(1).toString())+ 'px';
+                  // barc.style.width = '10px';
+                  
+    
+                  let barcspan = document.createElement("span");
+                  barcspan.setAttribute("class", "barcspan");
+    
+                  barcspan.innerText = Number(currentPriceDataTable[indx][i]).toFixed(1);  //perDif; 
+                  barct.appendChild(barcspan);
+                  barct.appendChild(barc);
+                  bar.appendChild(barct);
+                }
+                divtag.appendChild(bar);
+                  }
+    
+                  // volume chart starts *********************************************************************************
+    
+                  if(Object.keys(currentVolumeDataTable).length > 1){
+                    let barv = document.createElement("div");
+                        barv.setAttribute("class", "barv");
+                       let preHigv = 0;
+                        let largebarv = 0;
+                        let smallbarv = 0;
+                        largebarv = Math.max(...[...currentVolumeDataTable[indx]]);
+                        smallbarv = Math.min(...[...currentVolumeDataTable[indx]]);
+          
+          
+                      
+                      for(let i = 0; i < currentVolumeDataTable[indx].length -1;  i++){
+          
+                      let barcv = document.createElement("div");
+                      let barct = document.createElement("div");
+                        barcv.setAttribute("class", "barcv");
+                        let higv =  (Number(currentVolumeDataTable[indx][i])); // - (smallbar * 0.5));
+                        let PperDif;
+                        if (i == 0){
+                          PperDif = 0;
+                        }
+                        else{
+                          PperDif = (((higv - preHigv)/higv)*100).toFixed(1);
+                        }   
+                          numv = Number(higv);
+                          let unitv = (100 / (largebarv - smallbarv)); // (largebar - smallbar))
+                          let barHigv  = ((unitv * (numv - smallbarv) )).toFixed(1);
+          
+                        if(preHigv >= higv){
+                          barcv.style.backgroundColor = "rgba(255, 0,0, 0.5)";
+                        }
+                        else{
+                          barcv.style.backgroundColor = "rgba(20, 255 ,20, 0.75)";
+                          
+                        }
+                        preHigv = higv;
+                        // let barHig = (hig * (100 / largebar)).toFixed(1);
+                        barcv.style.height = (Number(barHigv)).toString() + 'px'; //((largebar - Number(currentPriceData1[indx][i])).toFixed(1).toString() + 'px').toString();
+                        barcv.style.top = (100 - Number(barHigv).toFixed(1).toString())+ 'px';
+                        // barc.style.width = '10px';
+                        
+          
+                        let barcspanv = document.createElement("span");
+                        barcspanv.setAttribute("class", "barcspanv");
+                        
+                        barcspanv.innerText =  Number(currentVolumeDataTable[indx][i]).toFixed(0); // PperDif; //
+                        barv.appendChild(barct);
+                        barct.appendChild(barcspanv);
+                        barct.appendChild(barcv);
+                      }
+                      divtag.appendChild(barv);
+                        }
+    
+    
+                        // Volume chart ends }}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}      
+            let divtagMain = document.createElement("div"); 
+                      divtagMain.setAttribute("id", indx);
+            let divtagLeft = document.createElement("div"); 
+                      divtagMain.appendChild(divtagLeft);
+                      divtagLeft.appendChild(anchortag);
+            let divtagRight = document.createElement("div"); 
+                    divtagRight.setAttribute("class", "right");
+                      divtagMain.appendChild(divtagRight);
+                        document.querySelector(".charts").appendChild(divtagMain);
+    document.getElementById("filter").value = "Loaded";
+    updateCompanyDeatils();
+                      }
+                    }
+                  }
+    }
