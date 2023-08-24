@@ -70,13 +70,13 @@ getUpdatedPriceTable =  async () =>{
     const GsUpdate = await googleSheets.spreadsheets.values.get({
         auth,
         spreadsheetId,
-        range: "Bar!A1:AD2822",
+        range: "Bar!A1:AM2822",
     });
 
     cpvaluesTable = (GsUpdate.data.values);
     cpvaluesTable.forEach ( (ele, i) => {
         tempArr2 = [];
-        for(let j = 1; j < 27; j++) {
+        for(let j = 1; j < 37; j++) {
             tempArr2.push(ele[j].toString())
         }
         currentPriceDataTable[ele[0].toString().split(",")[0]] = tempArr2.reverse();
@@ -104,7 +104,7 @@ getUpdatedVolomeTable =  async () =>{
     const CVVdata = await googleSheets.spreadsheets.values.get({
         auth,
         spreadsheetId,
-        range: 'Daily Volume!A1:AD2822', 
+        range: 'Daily Volume!A1:AM2822', 
     });
 
    cvvalues = (CVVdata.data.values);
@@ -113,7 +113,7 @@ cvvalues.forEach ( (ele, i) => {
     tempArr2 = [];
     
         // console.log(ele[0].toString().split(",")[0]);
-    for(let j = 1; j < 27 ; j++) {
+    for(let j = 1; j < 37 ; j++) {
 
         tempArr2.push(ele[j]);
 

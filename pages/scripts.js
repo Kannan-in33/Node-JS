@@ -1026,7 +1026,7 @@ function getSectorDataAll() {
         currentPriceData1 = xhr.response.currentPriceData1;
         currentPriceDataTable = xhr.response.currentPriceDataTable;
         currentVolumeDataTable = xhr.response.currentVolumeDataTable,
-        createChartAll( xhr.response.companyObject);
+        createChart( xhr.response.companyObject);
         document.getElementById("filter").value = 'All';
         
       } 
@@ -1611,7 +1611,7 @@ if(indx !== undefined){
                       let barcspanv = document.createElement("span");
                       barcspanv.setAttribute("class", "barcspanv");
                       
-                      barcspanv.innerText =  Number(currentVolumeDataTable[indx][i]).toFixed(0); // PperDif; //
+                      barcspanv.innerText =  Number(currentVolumeDataTable[indx][i] / 1000).toFixed(0); // PperDif; //
                       barv.appendChild(barct);
                       barct.appendChild(barcspanv);
                       barct.appendChild(barcv);
@@ -1718,7 +1718,7 @@ if(indx !== undefined){
     let resultCount = 0;
     if(Object.keys(companyObject).length > 1){
       for(let key in companyObject){
-        if(resultCount < 300){
+        if(resultCount < 200){
           resultCount += 1;
         let indx = key;
         // console.log(indx);
@@ -1779,6 +1779,7 @@ if(indx !== undefined){
     
                 
                 for(let  i = 0; i < currentPriceDataTable[indx].length -1; i++){
+                  if((Number(currentPriceDataTable[indx][i])).toString().length > 0){
     
                 let barc = document.createElement("div");
                 let barct = document.createElement("div");
@@ -1819,10 +1820,14 @@ if(indx !== undefined){
                 }
                 divtag.appendChild(bar);
                   }
+                }
     
                   // volume chart starts *********************************************************************************
     
                   if(Object.keys(currentVolumeDataTable).length > 1){
+                    for(let i = 0; i < currentVolumeDataTable[indx].length -1;  i++){
+
+                    if((Number(currentVolumeDataTable[indx][i])).toString().length > 0){
                     let barv = document.createElement("div");
                         barv.setAttribute("class", "barv");
                        let preHigv = 0;
@@ -1833,7 +1838,7 @@ if(indx !== undefined){
           
           
                       
-                      for(let i = 0; i < currentVolumeDataTable[indx].length -1;  i++){
+                      
           
                       let barcv = document.createElement("div");
                       let barct = document.createElement("div");
@@ -1871,11 +1876,12 @@ if(indx !== undefined){
                         barv.appendChild(barct);
                         barct.appendChild(barcspanv);
                         barct.appendChild(barcv);
-                      }
-                      divtag.appendChild(barv);
+                      divtag.appendChild(barv);   
+                    }
+                   
                         }
     
-    
+                      }
                         // Volume chart ends }}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}      
             let divtagMain = document.createElement("div"); 
                       divtagMain.setAttribute("id", indx);
