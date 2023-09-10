@@ -188,7 +188,7 @@ if(req.path == '/All') {
     let foldersPath = fs.readdirSync(path.resolve(__dirname, 'src/'));
     foldersPath.forEach( (folder, j) => {
         //  ||  folder == '401'
-    if(folder == 'All'){
+    if(folder == '101'  ||  folder == '201'  ||  folder == '401'){  // 'All
         console.log(folder);
     const directorypath = path.join(__dirname, 'src/' + folder);
     fs.readdir(directorypath , function (err, files) {
