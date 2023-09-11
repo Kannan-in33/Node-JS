@@ -1052,42 +1052,42 @@ function setComp(event){
     
     }
 
-// function setFav(event){
-//         let AFL = [...Array.from(localStorage)];
+function setFav(event){
+        let AFL = [...Array.from(localStorage)];
     
-//         if(!AFL.includes(event.target.id.toString())){
-//           localStorage.setItem(localStorage.length, event.target.id.toString());
-//           let clr = document.querySelectorAll("#" + event.target.id.toString())[1];
-//           clr.classList.add("star");
-//         }
-//         else{
-//           let clr = document.querySelectorAll("#" + event.target.id.toString())[1];
-//           clr.classList.toggle("star");
-//           for(let i = 0; i < localStorage.length; i++){
+        if(!AFL.includes(event.target.id.toString())){
+          localStorage.setItem(localStorage.length, event.target.id.toString());
+          let clr = document.querySelectorAll("#" + event.target.id.toString())[1];
+          clr.classList.add("star");
+        }
+        else{
+          let clr = document.querySelectorAll("#" + event.target.id.toString())[1];
+          clr.classList.toggle("star");
+          for(let i = 0; i < localStorage.length; i++){
     
-//             if(localStorage[i] == event.target.id.toString()){
-//               localStorage.removeItem(i);
-//               let AFL2 = [];
+            if(localStorage[i] == event.target.id.toString()){
+              localStorage.removeItem(i);
+              let AFL2 = [];
     
-//               for(let key in localStorage){
-//                 if(AFL2.length < AFL.length - 1){
-//                   AFL2.push(localStorage[key]);
-//                 }
-//               }
+              for(let key in localStorage){
+                if(AFL2.length < AFL.length - 1){
+                  AFL2.push(localStorage[key]);
+                }
+              }
     
-//               localStorage.clear();
+              localStorage.clear();
     
-//               for(let j = 0; j < AFL2.length ; j++){
+              for(let j = 0; j < AFL2.length ; j++){
     
-//                 if(AFL2[j] != undefined){
-//                   localStorage.setItem(j , AFL2[j]);
-//                 }
-//               }
-//             }
+                if(AFL2[j] != undefined){
+                  localStorage.setItem(j , AFL2[j]);
+                }
+              }
+            }
     
-//           }
-//         }
-//       }
+          }
+        }
+      }
 
 function getCompare() {
         const xhr = new XMLHttpRequest();
