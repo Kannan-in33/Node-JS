@@ -60,6 +60,21 @@
        margin: 0 !important;
      }
 
+     .slider{
+      display: flex;
+      width: 90%;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin: auto;
+
+     }
+     #mini, #maxi{
+      width: 20%;
+     }
+     #slider{
+      width: 100%;
+     }
+
      .charts{
         width: 100%;
         margin: auto;
@@ -517,5 +532,8 @@
           place-content: center;
         }
 
-     }     
+     }   
+     [id^=sliderButton], #sliderReset{
+      margin: auto;
+     }  
      

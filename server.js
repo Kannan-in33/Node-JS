@@ -191,16 +191,15 @@ server.use( (req, res)=>{
 if(req.path == '/All') {
     let j = 0;
     let k = 0;
+    let flag = 0;
+
     let foldersPath = fs.readdirSync(path.resolve(__dirname, 'src/'));
     foldersPath.forEach( (folder, j) => {
         //  ||  folder == '401'
     if(folder == 'All'  ){  // 'All ||  folder == '201'  ||  folder == '401'
-        console.log('done');
-        console.log(folder);
     const directorypath = path.join(__dirname, 'src/' + folder);
     fs.readdir(directorypath , function (err, files) {
     if (err) throw err;
-    // console.log(files.length);
     files.forEach( (file, i) => {
         k++;
         
@@ -209,7 +208,6 @@ if(req.path == '/All') {
             obj = JSON.parse(data);
             j++;
             company.push(file);
-            
                 if(obj['datasets'].length > 0 ){
                     // valueList[file.split('.')[0]] = obj['datasets'][0]['values'].length
                     max = max < obj['datasets'][0]['values'].length ? obj['datasets'][0]['values'].length : max
@@ -230,8 +228,10 @@ if(req.path == '/All') {
                     datesObj = [];
                     volumeObj =[];
             }
-            // console.log(i)
-                if (i == files.length -1 || k <= 200 ){
+            // console.log(k)
+            
+                if (i >= 200 && flag == 0){
+                    flag = 1;
                 obj3 = { 
                     "company" : company,
                     "companyObject" : companyObject,
@@ -242,6 +242,7 @@ if(req.path == '/All') {
                     "currentVolumeDataTable": currentVolumeDataTable,
                 }
                 res.send(obj3);
+                
     }
     
     });
@@ -267,9 +268,7 @@ else if(req.path.includes('getcompare')) {
 // Favourite Page Start
 
     else if(req.path.includes(',')) {
-        let ARR = ([...req.path.split(',')]);
-        console.log(ARR[1]);
-        
+        let ARR = ([...req.path.split(',')]);        
         // req.params()
         let foldersPath = fs.readdirSync(path.resolve(__dirname, 'src/'));
         foldersPath.forEach( (folder, j) => {
@@ -279,7 +278,6 @@ else if(req.path.includes('getcompare')) {
         fs.readdir(directorypath , function (err, files) {
         if (err) throw err;
         for(let j = 1; j < ARR.length; j++){
-            console.log(ARR[j]);
         files.forEach( (file, i) => {
             
             if (file.split('.')[0] == ARR[j]){
@@ -387,5 +385,4 @@ server.listen(port, () => {
     getUpdatedVolomeTable();
   //  setInterval(getUpdatedPrice, (1000 * 60  * 30));
 })
-
 

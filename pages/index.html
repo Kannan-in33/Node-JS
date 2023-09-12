@@ -23,7 +23,7 @@
                 </div>
           </div>
         <a href="/Sector">Sector</a>
-        <a href="/fav">Fav</a>
+        
         
         <div class="Gdropdown">  
           <button id="gainers" class="gainers upTrends"  onclick="showGainers();" type="button">Gainer <span id="Gnumbers"></span></button>              
@@ -48,18 +48,27 @@
             <button class="previous"  onclick="previous();">Previous <span id="previous"></span></button> 
             <button class="next"  onclick="next();">Next<span id="next"></span></button>
           </div> -->
-        
 
-          
-    </div>
+        </div>
+
     <div class="range">
 
+      <div class="slider">
 
-  <button id="days20" class="d20" onclick="getDay(20);" type="button">20 Days</button>
-  <button id="days50" class="d50"  onclick="getDay(50);" type="button">50 Days</button>
+        <input type="text" name="min" id="mini">
+        <input type="text" name="max" id="maxi">
+        <input type="range" min="-200" max="200" value="0" name="slider" id="slider" /> 
+        
+      </div>
+
+  <button id="sliderButton" class="d20" onclick="getDay(20);" type="button">Get Chart</button>
+  <button id="sliderReset" onclick="resetSlider();" type="button">Reset</button>
+  <a id="sliderButton2" href="/fav">Fav</a> 
+
+  <!-- <button id="days50" class="d50"  onclick="getDay(50);" type="button">50 Days</button>
   <button id="days70" class="d20" onclick="getDay(70);" type="button">70 Days</button>
   <button id="days100" class="100"  onclick="getDay(100);" type="button">100 Days</button>
-  <button id="days300" class="300"  onclick="getDay(365);" type="button">365 Days</button>
+  <button id="days300" class="300"  onclick="getDay(365);" type="button">365 Days</button> -->
 
   
   

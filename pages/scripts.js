@@ -578,6 +578,7 @@ function clea() {
 function getDay(days){
   removeActive();
   cleanUpCompare();
+  days = document.querySelector("#slider").value;
 //   event.target.classList.add('active');
   createChart(dCompanyObject, dE, days = days)
 }
@@ -669,8 +670,19 @@ let resultCount = 0;
           let yValues2 = [];
 
             yValues.reverse();
+
+            if(days < 0){
+
+              for(let y = 0 ; y < companyObject[key].length + Number(days) ; y++){
+                yValues2[y] =  yValues[y] ;
+              }
+                  for (let i = 0 ; i < companyObject[key].length + Number(days) ; i++) {
+                    xValues.push(i);
+                  }
+            }
             
-          if (days < companyObject[key].length){
+          else if (days < companyObject[key].length){
+            // days = 20
             for(let y = days ; y < companyObject[key].length ; y++){
               yValues2[y] =  yValues[y] ;
             }
@@ -679,6 +691,7 @@ let resultCount = 0;
                 }
           }
           else{
+            // days = 1000
             for(let y = 0; y < Math.min(companyObject[key].length, days) ; y++){
               yValues2[y] =  yValues[y] ;
             }
@@ -937,7 +950,7 @@ element.innerText = "Stocks " + element.classList[0] +'+';
 element.classList.remove('active');
 })
 updateCompanyDeatils();
-setFav();
+updateFavourite();
 }
 
 
@@ -1909,3 +1922,35 @@ if(indx !== undefined){
                     }
                   }
     }
+
+var slider = document.querySelector('#slider');
+var mini = document.getElementById("mini");
+var maxi = document.getElementById("maxi");
+mini.value = maxi.value = slider.value;
+
+slider.oninput = function() {
+  if (slider.value < 0){
+    mini.value = this.value;
+    maxi.value = 0;
+  }
+  else{
+    maxi.value = this.value;
+    mini.value = 0;
+  }
+    
+  }
+
+  mini.oninput = function() {
+    slider.value = this.value;   
+      
+    }
+    maxi.oninput = function() {
+      slider.value = this.value;   
+        
+      }
+
+      function resetSlider(){
+        maxi.value = 0;
+        slider.value = 0;
+        getDay(20);
+      }

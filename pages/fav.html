@@ -12,16 +12,7 @@
      
 
       <div class="static">
-        <div class="Pdropdown">  
-          <button id="price" class="priceDropDown"  onclick="showPrice();" type="button">Price <span id="Pnumbers"></span></button>              
-                <div id="PriceDropdown" class="drop-options">
-                    <button id="getData50" class="50" onclick="getData(50);" type="button">Stocks 50+</button>
-                    <button id="getData101" class="101" onclick="getData(101);" type="button">Stocks 101+</button>
-                    <button id="getData201" class="201" onclick="getData(201);" type="button">Stocks 201+</button>
-                    <button id="getData401" class="401" onclick="getData(401);" type="button">Stocks 401+</button>
-                    <button id="getData601" class="601" onclick="getData(601);" type="button">Stocks 601+</button>
-                </div>
-          </div>
+        <a href="/">Home</a>
         <a href="/Sector">Sector</a>
         
         <div class="Gdropdown">  
@@ -51,14 +42,18 @@
 
           
     </div>
-    <div class="range">
+    <<div class="range">
 
-
-  <button id="days20" class="d20" onclick="getDay(20);" type="button">20 Days</button>
-  <button id="days50" class="d50"  onclick="getDay(50);" type="button">50 Days</button>
-  <button id="days70" class="d20" onclick="getDay(70);" type="button">70 Days</button>
-  <button id="days100" class="100"  onclick="getDay(100);" type="button">100 Days</button>
-  <button id="days300" class="300"  onclick="getDay(365);" type="button">365 Days</button>
+        <div class="slider">
+  
+          <input type="text" name="min" id="mini">
+          <input type="text" name="max" id="maxi">
+          <input type="range" min="-200" max="200" value="0" name="slider" id="slider" /> 
+          
+        </div>
+  
+    <button id="sliderButton" onclick="getDay(20);" type="button">Get Chart</button>
+    <button id="sliderReset" onclick="resetSlider();" type="button">Reset</button>
 
   
   
