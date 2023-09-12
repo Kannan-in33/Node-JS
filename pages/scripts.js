@@ -650,6 +650,7 @@ function hideBuyStocks(BuyObject){
 }
 
 function createChart(companyObject, e, days = 1000){
+  console.log(days);
 let chartlim = 0;
 let lst = [];
 lst = document.querySelectorAll(".charts div");
@@ -668,12 +669,23 @@ let resultCount = 0;
           let yValues2 = [];
 
             yValues.reverse();
+            
+          if (days < companyObject[key].length){
+            for(let y = days ; y < companyObject[key].length ; y++){
+              yValues2[y] =  yValues[y] ;
+            }
+                for (let i = days ; i < companyObject[key].length ; i++) {
+                  xValues.push(i);
+                }
+          }
+          else{
             for(let y = 0; y < Math.min(companyObject[key].length, days) ; y++){
               yValues2[y] =  yValues[y] ;
             }
                 for (let i = 0; i < Math.min(companyObject[key].length, days) ; i++) {
                   xValues.push(i);
                 }
+          }
                 xValues.reverse();
         let divtag = document.createElement("div");                  
         let checkBox = document.createElement("input");
@@ -925,7 +937,7 @@ element.innerText = "Stocks " + element.classList[0] +'+';
 element.classList.remove('active');
 })
 updateCompanyDeatils();
-
+setFav();
 }
 
 
@@ -1422,21 +1434,20 @@ function getDown(num){
 
   function getFavData(stockName) {
     const xhr = new XMLHttpRequest();
-    xhr.open("GET", "/fav/:" + stockName);
+    xhr.open("GET", "," + stockName);
     xhr.send();
     xhr.responseType = "json";
     xhr.onload = () => {
       if (xhr.readyState == 4 && xhr.status == 200) {
         dCompanyObject = xhr.response.companyObject;
+        // dCompanyDateObject = xhr.response.companyDateObj;
         dVolumeObject = xhr.response.volumeObject;
-        currentPriceData1 = xhr.response.currentPriceData1;
-        currentPriceDataMid  = xhr.response.currentPriceDataMid;            
-        if(JSON.stringify(CurrentPriceObj).length == 2) {
         CurrentPriceObj = xhr.response.currentPriceData;
+        currentPriceData1 = xhr.response.currentPriceData1;
         currentPriceDataTable = xhr.response.currentPriceDataTable;
-        }
-        console.log(xhr.response.timestamp);
+        currentVolumeDataTable = xhr.response.currentVolumeDataTable,
         createChart( xhr.response.companyObject);
+
       } 
       else {
         console.log(`Error: ${xhr.status}`);

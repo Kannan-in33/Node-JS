@@ -144,6 +144,12 @@ server.get('/sector', (req, res) => {
 
 });
 
+server.get('/fav', (req, res) => {
+
+    res.sendFile(path.join(__dirname, './pages/fav.html'));
+
+});
+
 server.get('/compare', (req, res) => {
     res.sendFile(path.join(__dirname, './pages/compare.html'));
 
@@ -201,7 +207,7 @@ if(req.path == '/All') {
         fs.readFile(path.join(directorypath , file), 'utf8', function (err2, data) {
         if (err2) throw err2;
             obj = JSON.parse(data);
-            let j = 0;
+            j++;
             company.push(file);
             
                 if(obj['datasets'].length > 0 ){
@@ -225,7 +231,7 @@ if(req.path == '/All') {
                     volumeObj =[];
             }
             // console.log(i)
-                if (i == files.length -1 ){
+                if (i == files.length -1 || k <= 200 ){
                 obj3 = { 
                     "company" : company,
                     "companyObject" : companyObject,
@@ -260,20 +266,23 @@ else if(req.path.includes('getcompare')) {
 
 // Favourite Page Start
 
-    else if(req.path == '/favourite') {
-        let j = 0;
-        let k = 0;
+    else if(req.path.includes(',')) {
+        let ARR = ([...req.path.split(',')]);
+        console.log(ARR[1]);
+        
         // req.params()
         let foldersPath = fs.readdirSync(path.resolve(__dirname, 'src/'));
         foldersPath.forEach( (folder, j) => {
             //  ||  folder == '401'
-        if(folder == '101'  ||  folder == '201'  ||  folder == '401'){  // 'All
-            console.log(folder);
+        if(folder == 'All'){  // 'All
         const directorypath = path.join(__dirname, 'src/' + folder);
         fs.readdir(directorypath , function (err, files) {
         if (err) throw err;
+        for(let j = 1; j < ARR.length; j++){
+            console.log(ARR[j]);
         files.forEach( (file, i) => {
-            k++;
+            
+            if (file.split('.')[0] == ARR[j]){
             fs.readFile(path.join(directorypath , file), 'utf8', function (err2, data) {
             if (err2) throw err2;
                 obj = JSON.parse(data);
@@ -293,7 +302,7 @@ else if(req.path.includes('getcompare')) {
                         datesObj = [];
                         volumeObj =[];
                 }
-                    if (i == files.length -1 ){
+                    if (file.split('.')[0] == ARR[ARR.length - 1] ){
                     obj3 = { 
                         "company" : company,
                         "companyObject" : companyObject,
@@ -308,8 +317,12 @@ else if(req.path.includes('getcompare')) {
         
         });
         
+    }
+
         });
         
+    }
+
         });
     
     }
@@ -321,8 +334,7 @@ else if(req.path.includes('getcompare')) {
 else{
     let j = 0;
 const directorypath = path.join(__dirname, (req.path.replace('/', 'src/').replaceAll('%20', ' ') ));
-fs.readdir(directorypath , function (err, files) {
-    
+fs.readdir(directorypath , function (err, files) {    
                 if (err) throw err;
                 files.forEach( (file, i) => {    
                     // console.log(file);                
