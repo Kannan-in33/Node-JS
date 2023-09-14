@@ -70,6 +70,8 @@
      }
      #mini, #maxi{
       width: 20%;
+      border: none;
+      text-align: center;
      }
      #slider{
       width: 100%;
@@ -193,7 +195,7 @@
 
      .search{
       display: flex;
-      margin-top: 64px;
+      /* margin-top: 64px; */
       background-color: #fff;
       padding: 10px 5px;
       flex-wrap: wrap;
@@ -204,7 +206,7 @@
        width:30%;
      }
  #secSearch{
-  margin-top: 54px;
+  /* margin-top: 54px; */
  }
      .static{
        opacity: 1;
@@ -297,7 +299,7 @@
     input[type='checkbox']{
         cursor: pointer;
     }
-    input[type='checkbox']:nth-of-type(even):before{
+    input[type='checkbox']:nth-of-type(odd):before{
       content: "★";
       display: inline-block;
       font-size: 32px;
@@ -309,7 +311,7 @@
       color: rgb(0, 150, 255);
     }
 
-    input[type='checkbox']:nth-of-type(even){
+    input[type='checkbox']:nth-of-type(odd){
       width: 0;
     }
 
@@ -392,11 +394,13 @@
       overflow: hidden;
       letter-spacing: -1px;
       position: relative;
-      margin-top: 30px;
+      /* margin-top: 30px; */
+      max-width: 300px;
     }
 
     .bar > div, .barv > div{
       position: relative;
+      width:12px;
     }
     .barc, .barcv{
       position: relative;
@@ -409,7 +413,7 @@
       writing-mode: vertical-rl;
       text-orientation: upright;
       text-align: end;
-      font-size: 14px;
+      font-size: 10px;
       margin-left: -2px;
       width: -webkit-fill-available;
       position: absolute;

@@ -46,23 +46,41 @@
 
     
 </div>
+<div class="range">
+
+  <div class="slider">
+
+    <input type="text" name="min" id="mini">
+    <input type="text" name="max" id="maxi">
+    <input type="range" min="-240" max="240" value="0" name="slider" id="slider" /> 
+    
+  </div>
+
+<button id="sliderButton" class="d20" onclick="getDay(20);" type="button">Get Chart</button>
+<button id="sliderReset" onclick="resetSlider();" type="button">Reset</button>
+<a id="sliderButton2" href="/fav">Fav</a> 
+
+<div class="dropdown">
+  <button id="daysbuy" class="buy-main"  onclick="getBuyMain();" type="button">Buy List</button>
+  <div id="BuyDropdown" class="drop-options">
+    <button id="daysbuy40" class="buy"  onclick="getBuy(40);" type="button">40% +</button>
+    <button id="daysbuy30" class="buy"  onclick="getBuy(30);" type="button">30% +</button>
+    <button id="daysbuy20" class="buy"  onclick="getBuy(20);" type="button">20% +</button>
+    <button id="daysbuyAvg" class="buy"  onclick="getBuy(60);" type="button">30d Avg +</button>
+    </div>
+</div>
+
+
+</div>
 <div class="search" id="secSearch">
 <input placeholder="..Search..." type="text" id="filter" name="filter" />
 <button id="clear" onclick="clea();" type="button"><strong>X</strong></button>
-<button id="compare" class="compare" onclick="compareStocks();" type="button">Compare</button>
+<!-- <button id="compare" class="compare" onclick="compareStocks();" type="button">Compare</button>
 <button id="clearcompare" class="compare hide" onclick="clearcompareStocks();" type="button">Clear Compare</button>
 <button id="Favourits" class="Favourits" onclick="getFavourits();" type="button">Favourits</button>
-<button id="clearFavourits" class="Favourits hide" onclick="clearFavourits();" type="button">Clear Favourits</button>
+<button id="clearFavourits" class="Favourits hide" onclick="clearFavourits();" type="button">Clear Favourits</button> -->
     
-<div class="dropdown">
-    <button id="daysbuy" class="buy-main"  onclick="getBuyMain();" type="button">Buy List</button>
-    <div id="BuyDropdown" class="drop-options">
-      <button id="daysbuy40" class="buy"  onclick="getBuy(40);" type="button">40% +</button>
-      <button id="daysbuy30" class="buy"  onclick="getBuy(30);" type="button">30% +</button>
-      <button id="daysbuy20" class="buy"  onclick="getBuy(20);" type="button">20% +</button>
-      <button id="daysbuyAvg" class="buy"  onclick="getBuy(60);" type="button">30d Avg +</button>
-      </div>
-</div>
+
 </div>
 
 
@@ -89,7 +107,7 @@
 
         <style>
           .range{
-            margin-top: 100px !important;
+            margin-top: 62px !important;
           }
         </style>
 

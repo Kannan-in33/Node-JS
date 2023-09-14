@@ -557,13 +557,13 @@ function comparetoggleHide(){
 
 function clea() {
     lst = document.querySelectorAll(".charts > div");
-    lst.forEach( ele => ele.style.display = "");
+    // lst.forEach( ele => ele.style.display = "");
 
   if(document.URL.includes("Sector")){
 
     document.getElementById("filter").value = '';
     document.getElementById("SectorList").style.display = "block";
-    document.querySelector(".charts").innerHTML = "";
+    // document.querySelector(".charts").innerHTML = "";
     myFunction();
 
     compareList.forEach(( ) =>{
@@ -651,13 +651,12 @@ function hideBuyStocks(BuyObject){
 }
 
 function createChart(companyObject, e, days = 1000){
-  console.log(days);
 let chartlim = 0;
 let lst = [];
 lst = document.querySelectorAll(".charts div");
-if(lst.length > 1){
-      Array.from(lst).forEach( (element) =>  element.remove() );
-}
+// if(lst.length > 1){
+//       Array.from(lst).forEach( (element) =>  element.remove() );
+// }
 dE = e;
 let resultCount = 0;
     for (let key in companyObject) {
@@ -701,16 +700,16 @@ let resultCount = 0;
           }
                 xValues.reverse();
         let divtag = document.createElement("div");                  
-        let checkBox = document.createElement("input");
-                  checkBox.setAttribute("type", "checkbox");
-                  checkBox.setAttribute("class", key);
-                  checkBox.addEventListener("click", setComp);
-                  divtag.appendChild(checkBox);
-        let lbl = document.createElement("label");
-                  lbl.setAttribute("for", key);
-                  lbl.setAttribute("value", 'compare');
-                  lbl.innerText = 'Compare';
-                  divtag.appendChild(lbl);
+        // let checkBox = document.createElement("input");
+        //           checkBox.setAttribute("type", "checkbox");
+        //           checkBox.setAttribute("class", key);
+        //           checkBox.addEventListener("click", setComp);
+        //           divtag.appendChild(checkBox);
+        // let lbl = document.createElement("label");
+        //           lbl.setAttribute("for", key);
+        //           lbl.setAttribute("value", 'compare');
+        //           lbl.innerText = 'Compare';
+        //           divtag.appendChild(lbl);
         let lblF = document.createElement("label");
                 lblF.setAttribute("for", key);
                 lblF.setAttribute("value", 'favourite');
@@ -1291,13 +1290,14 @@ function clearFavourits(){
 
 }
 
-  function setFav(){
+  function setFav(event){
     let AFL = [...Array.from(localStorage)];
+    let clr = document.querySelectorAll("#" + event.target.id.toString())[1];
+      clr.classList.toggle("star");
 
     if(!AFL.includes(event.target.id.toString())){
       localStorage.setItem(localStorage.length, event.target.id.toString());
-      let clr = document.querySelectorAll("#" + event.target.id.toString())[1];
-      clr.classList.toggle("star");
+      
     }
     else{
       for(let i = 0; i < localStorage.length; i++){
@@ -1735,9 +1735,9 @@ if(indx !== undefined){
     let chartlim = 0;
     let lst = [];
     lst = document.querySelectorAll(".charts div");
-    if(lst.length > 1){
-          Array.from(lst).forEach( (element) =>  element.remove() );
-    }
+    // if(lst.length > 1){
+    //       Array.from(lst).forEach( (element) =>  element.remove() );
+    // }
   
     let resultCount = 0;
     if(Object.keys(companyObject).length > 1){
