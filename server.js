@@ -192,6 +192,7 @@ if(req.path == '/All') {
     let j = 0;
     let k = 0;
     let flag = 0;
+    
 
     let foldersPath = fs.readdirSync(path.resolve(__dirname, 'src/'));
     foldersPath.forEach( (folder, j) => {
@@ -201,7 +202,7 @@ if(req.path == '/All') {
     fs.readdir(directorypath , function (err, files) {
     if (err) throw err;
     files.forEach( (file, i) => {
-        k++;
+        
         
         fs.readFile(path.join(directorypath , file), 'utf8', function (err2, data) {
         if (err2) throw err2;

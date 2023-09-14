@@ -653,6 +653,7 @@ function hideBuyStocks(BuyObject){
 function createChart(companyObject, e, days = 1000){
 let chartlim = 0;
 let lst = [];
+window.scrollTo({ left: 0, top: document.body.scrollHeight, behavior: "smooth" });
 lst = document.querySelectorAll(".charts div");
 // if(lst.length > 1){
 //       Array.from(lst).forEach( (element) =>  element.remove() );
