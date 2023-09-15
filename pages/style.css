@@ -79,17 +79,23 @@
 
      .charts{
         width: 100%;
-        margin: auto;
-        min-width: 280px;
-        max-width: 600px;
+        /* margin: auto; */
+        /* min-width: 280px;
+        max-width: 320px; */
           }
     .charts > div{
-        display: flex;
+        display: block;
         width:100%;
         margin-top: 25px;
       }
       
-        
+      .topDivtag{
+        width: 95%;
+        text-align: center;
+      }
+      .bottomDivTag{
+        display: flex;
+      }
 
      .right{
       align-self: center;
@@ -102,19 +108,19 @@
       width: 100%;
      }
      canvas {
-      width: 100% !important;
+      width: 280px !important;
     }
      
      canvas:not(.volume){
         margin: 15px 0;
-        min-width: 280px !important;
+        max-width: 280px !important;
         height: 300px !important;
 
       }
       canvas.volume{
         margin: 0;
         height: 150px !important;
-        min-width: 280px !important;
+        max-width: 280px !important;
       }
 
      .MarketCap, .High, .Reserve, [class^='difference']{
@@ -395,12 +401,12 @@
       letter-spacing: -1px;
       position: relative;
       /* margin-top: 30px; */
-      max-width: 300px;
+      /* max-width: 280px; */
     }
 
     .bar > div, .barv > div{
       position: relative;
-      width:12px;
+      width:4%;
     }
     .barc, .barcv{
       position: relative;
