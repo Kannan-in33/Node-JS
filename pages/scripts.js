@@ -805,7 +805,7 @@ let resultCount = 0;
               barct.appendChild(barc);
               bar.appendChild(barct);
             }
-            topDivtag.appendChild(bar);
+            anchortag.appendChild(bar);
               }
 
               // volume chart starts *********************************************************************************
@@ -1992,3 +1992,11 @@ slider.oninput = function() {
         slider.value = 0;
         getDay(20);
       }
+
+      document.onscroll = function(){
+        document.querySelector(".range").style.display = "none";
+        }
+        document.querySelector(".static").onclick = function(){
+          document.querySelector(".range").style.display = "";
+        }
+        

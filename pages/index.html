@@ -49,13 +49,21 @@
             <button class="next"  onclick="next();">Next<span id="next"></span></button>
           </div> -->
 
-        </div>
+        <!-- </div> -->
 
     <div class="range">
 
       <div class="slider">
 
         <input type="text" name="min" id="mini">
+            <div class="search">
+              <input placeholder="..Search..." type="text" id="filter" name="filter" />
+              <button id="clear" onclick="clea();" type="button"><strong>X</strong></button>
+              <button id="compare" class="compare hide" onclick="compareStocks();" type="button">Compare</button>
+              <button id="clearcompare" class="compare hide" onclick="clearcompareStocks();" type="button">Clear Compare</button>
+              <button id="Favourits" class="Favourits hide" onclick="getFavourits();" type="button">Favourits</button>
+              <button id="clearFavourits" class="Favourits hide" onclick="clearFavourits();" type="button">Clear Favourits</button>        
+            </div>
         <input type="text" name="max" id="maxi">
         <input type="range" min="-240" max="240" value="0" name="slider" id="slider" /> 
         
@@ -85,17 +93,8 @@
   
   
 </div>
-    <div class="search">
-      <input placeholder="..Search..." type="text" id="filter" name="filter" />
-      <button id="clear" onclick="clea();" type="button"><strong>X</strong></button>
-      <button id="compare" class="compare hide" onclick="compareStocks();" type="button">Compare</button>
-      <button id="clearcompare" class="compare hide" onclick="clearcompareStocks();" type="button">Clear Compare</button>
-      <button id="Favourits" class="Favourits hide" onclick="getFavourits();" type="button">Favourits</button>
-      <button id="clearFavourits" class="Favourits hide" onclick="clearFavourits();" type="button">Clear Favourits</button>
-          
 
-    </div>
-
+</div>
 
 <!-- <a href="/compare">Favourits</a> -->
 
@@ -107,14 +106,14 @@
       <div class="charts"></div>
       <ol class="volume"> </ol>
 
-      <style>
+      <!-- <style>
         .range {
               margin-top: 60px !important;
             }
         #filter, #filters {
             min-width: 150px !important;
             }
-      </style>
+      </style> -->
 
 <script src="/scripts.js"></script>
 <link rel="stylesheet" type="text/css"  href="/style.css" >

@@ -62,7 +62,7 @@
 
      .slider{
       display: flex;
-      width: 90%;
+      width: 96%;
       flex-wrap: wrap;
       justify-content: space-between;
       margin: auto;
@@ -243,18 +243,20 @@
        width: fit-content;
      }
      #filter, #filters{
-      min-width: 250px;
-      max-width: 250px;
+      /* min-width: 250px;
+      max-width: 250px; */
       height: 30px;
       margin-left: 1px;
      }
      .range{
-       position: relative;
-       display: flex;
-       width: 100%;
-       flex-wrap: wrap;
-       justify-content: space-between;
-       margin-top: 60px;
+        position: relative;
+        display: flex;
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        opacity: 1;
+        background-color: #fff;
+       /* margin-top: 60px; */
      }
   
      .range button, .range dropdown{
@@ -362,16 +364,18 @@
     #filter{
       -webkit-border-radius: 20px;
       border-radius: 20px;
-      margin-left: 10px !important;
+      /* margin-left: 10px !important; */
       padding: 2px;
-      padding-left: 15px !important;
+      /* padding-left: 15px !important; */
       border: 0.25px #ccc solid;
+      width: 90%;
     }
 
     #PriceDropdown{
       background-color: #fff;
       width: 172px !important;
       position: fixed;
+      z-index: 100;
     }
 
     #GainDropdown, #NoGainDropdown{
@@ -379,6 +383,7 @@
       width: 172px !important;
       right: 18px;
       position: fixed;
+      z-index: 200;
     }
     .sector{
       height: 50px;
@@ -454,9 +459,9 @@
               width: 34px;
              }
 
-             .range {
+             /* .range {
               margin-top: 60px;
-            }
+            } */
             canvas {
               height: 150px !important;
               width: 600px !important;
@@ -476,15 +481,15 @@
               display: block;
               margin-left: 15px;
               background-color: #fff;
-              width: 20%;
-              position: fixed;
+              width: 50%;
+              /* position: fixed; */
               margin-top: 20px;
              }
              .search input, .search button{
               width: 72% !important;
              }
              .dropdown{
-              width: 100%;
+              /* width: 100%; */
              }
 
              .Ddropdown, .Gdropdown {
@@ -493,7 +498,7 @@
           }
 
           #filter, #filters {
-            min-width: 20% !important;
+            /* min-width: 20% !important; */
         }
 
         [class^=upTrend], [class^=downTrend]{
