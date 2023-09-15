@@ -773,8 +773,8 @@ let resultCount = 0;
               }
               preHig = hig;
               // let barHig = (hig * (100 / largebar)).toFixed(1);
-              barc.style.height = (Number(barHig)).toString() + 'px'; //((largebar - Number(currentPriceData1[key][i])).toFixed(1).toString() + 'px').toString();
-              barc.style.top = (100 - Number(barHig).toFixed(1).toString())+ 'px';
+              barc.style.height = "100px"; //((Number(barHig)).toString()) + 'px'; //((largebar - Number(currentPriceData1[key][i])).toFixed(1).toString() + 'px').toString();
+              // barc.style.top = (100 - Number(barHig).toFixed(1).toString())+ 'px';
               // barc.style.fontSize = '14px';
               // barc.style.width = '10px';
               
@@ -801,11 +801,13 @@ let resultCount = 0;
               //   barcspan.innerText = Number(currentPriceDataTable[key][i] - currentPriceDataTable[key][i -1]).toFixed(1);
               // }
               
-              barct.appendChild(barcspan);
+              
               barct.appendChild(barc);
+              barc.appendChild(barcspan);
               bar.appendChild(barct);
             }
             anchortag.appendChild(bar);
+            topDivtag.appendChild(anchortag);
               }
 
               // volume chart starts *********************************************************************************
@@ -887,7 +889,7 @@ let resultCount = 0;
 
         let divtagLeft = document.createElement("div"); 
                   divtagMain.appendChild(divtagLeft);
-                  divtagLeft.appendChild(anchortag);
+                  // divtagLeft.appendChild(anchortag);
                     
         let divtagRight = document.createElement("div"); 
                 divtagRight.setAttribute("class", "right");
@@ -1510,262 +1512,582 @@ function createPositiveChart(companyObject, days =1000){
 
   let resultCount = 0;
       for(let i = 0; i < Math.max(positive.length  , 0); i++){
-          let indx = positiveCompany[positive[i]];
-if(indx !== undefined){
+          let key = positiveCompany[positive[i]];
+if(key !== undefined){
 
-          document.getElementById("filter").value = indx;
-            let yValues  = [];
-            let volumeValues = [];
-            yValues  = [...companyObject[indx]];
-            volumeValues  = [...dVolumeObject[indx]];
-            let xValues = [];
-            let yValues2 = [];
-  
-              yValues.reverse();
-              for(let y = 0; y < Math.min(companyObject[indx].length, days) ; y++){
+          document.getElementById("filter").value = key;
+          let yValues  = [];
+          let volumeValues = [];
+          yValues  = [...companyObject[key]];
+          volumeValues  = [...dVolumeObject[key]];
+          let xValues = [];
+          let yValues2 = [];
+
+            yValues.reverse();
+
+            if(days < 0){
+
+              for(let y = 0 ; y < companyObject[key].length + Number(days) ; y++){
                 yValues2[y] =  yValues[y] ;
               }
-                  for (let i = 0; i < Math.min(companyObject[indx].length, days) ; i++) {
+                  for (let i = 0 ; i < companyObject[key].length + Number(days) ; i++) {
                     xValues.push(i);
                   }
-                  xValues.reverse();
-          let divtag = document.createElement("div");                  
-          // let checkBox = document.createElement("input");
-          //           checkBox.setAttribute("type", "checkbox");
-          //           checkBox.setAttribute("class", indx);
-          //           checkBox.addEventListener("click", setComp);
-          //           divtag.appendChild(checkBox);
-          // let lbl = document.createElement("label");
-          //           lbl.setAttribute("for", indx);
-          //           lbl.setAttribute("value", 'compare');
-          //           lbl.innerText = 'Compare';
-          //           divtag.appendChild(lbl);
-          let lblF = document.createElement("label");
-                  lblF.setAttribute("for", indx);
-                  lblF.setAttribute("value", 'favourite');
-                  lblF.innerText = 'Favourite';
-                  divtag.appendChild(lblF);
-          let checkBoxF = document.createElement("input");
-                    checkBoxF.setAttribute("type", "checkbox");
-                    checkBoxF.setAttribute("class", 'favourite');
-                    checkBoxF.setAttribute("id", indx);
-                    // checkBoxF.setAttribute("value", "favourite");
-                    checkBoxF.addEventListener("click", setFav);
-                    divtag.appendChild(checkBoxF);
-                    companyDetails.push(indx);
-          let anchortag = document.createElement("a");
-                anchortag.setAttribute("href", "https://www.screener.in/company/" + indx + "/");
-                anchortag.setAttribute("target", "_blank");
-                anchortag.appendChild(divtag);
-  
-            if(Object.keys(currentPriceDataTable).length > 1){
-            let bar = document.createElement("div");
-                bar.setAttribute("class", "bar");
-               let preHig = 0;
-                let largebar = 0;
-                let smallbar = 0;
-                largebar = Math.max(...[...currentPriceDataTable[indx]]);
-                smallbar = Math.min(...[...currentPriceDataTable[indx]]);
-  
-  
-              
-              for(let  i = 0; i < currentPriceDataTable[indx].length -1; i++){
-  
-              let barc = document.createElement("div");
-              let barct = document.createElement("div");
-                barc.setAttribute("class", "barc");
-                let hig =  (Number(currentPriceDataTable[indx][i])); // - (smallbar * 0.5));
-                let perDif;
-                if (i == 0){
-                  perDif = 0;
+            }
+            
+          else if (days < companyObject[key].length){
+            // days = 20
+            for(let y = days ; y < companyObject[key].length ; y++){
+              yValues2[y] =  yValues[y] ;
+            }
+                for (let i = days ; i < companyObject[key].length ; i++) {
+                  xValues.push(i);
                 }
-                else{
-                  perDif = (((hig - preHig)/hig)*100).toFixed(1);
-                }   
-                  num = Number(hig);
-                  let unit = (100 / (largebar - smallbar)); // (largebar - smallbar))
-                  let barHig  = ((unit * (num - smallbar) )).toFixed(1);
-  
-                if(preHig >= hig){
-                  barc.style.backgroundColor = "rgba(255, 0,0, 0.5)";
+          }
+          else{
+            // days = 1000
+            for(let y = 0; y < Math.min(companyObject[key].length, days) ; y++){
+              yValues2[y] =  yValues[y] ;
+            }
+                for (let i = 0; i < Math.min(companyObject[key].length, days) ; i++) {
+                  xValues.push(i);
                 }
-                else{
-                  barc.style.backgroundColor = "rgba(20, 255 ,20, 0.75)";
-                  
-                }
-                preHig = hig;
-                // let barHig = (hig * (100 / largebar)).toFixed(1);
-                barc.style.height = (Number(barHig)).toString() + 'px'; //((largebar - Number(currentPriceData1[indx][i])).toFixed(1).toString() + 'px').toString();
-                barc.style.top = (100 - Number(barHig).toFixed(1).toString())+ 'px';
-                // barc.style.width = '10px';
-                
-  
-                let barcspan = document.createElement("span");
-                barcspan.setAttribute("class", "barcspan");
-                
-                if(i == 0){
-                barcspan.innerText = Number(currentPriceDataTable[indx][i]).toFixed(1);  //perDif; 
-                }
-                else{
-                  let PreviousPrice = currentPriceDataTable[indx][i -1];
-                  let CurrentPrice = currentPriceDataTable[indx][i];
+          }
+                xValues.reverse();
+        let mainBlock = document.createElement("div");   
+        mainBlock.setAttribute("class", "mainBlock");
 
-                  barcspan.innerText = (((CurrentPrice - PreviousPrice)/ PreviousPrice) * 100)
-                }
-                // if( i == currentPriceDataTable[indx].length -1){
-                //   barcspan.innerText = Number(currentPriceDataTable[indx][i]).toFixed(1);
-                // }
-                // else{
-                //   barcspan.innerText = Number(currentPriceDataTable[indx][i] - currentPriceDataTable[indx][i -1]).toFixed(1);
-                // }
-                
-                barct.appendChild(barcspan);
-                barct.appendChild(barc);
-                bar.appendChild(barct);
+        let topDivtag = document.createElement("div"); 
+        topDivtag.setAttribute("class", "topDivtag");
+        // let checkBox = document.createElement("input");
+        //           checkBox.setAttribute("type", "checkbox");
+        //           checkBox.setAttribute("class", key);
+        //           checkBox.addEventListener("click", setComp);
+        //           divtag.appendChild(checkBox);
+        // let lbl = document.createElement("label");
+        //           lbl.setAttribute("for", key);
+        //           lbl.setAttribute("value", 'compare');
+        //           lbl.innerText = 'Compare';
+        //           divtag.appendChild(lbl);
+        let lblF = document.createElement("label");
+                lblF.setAttribute("for", key);
+                lblF.setAttribute("value", 'favourite');
+                lblF.innerText = 'Favourite';
+                topDivtag.appendChild(lblF);
+        let checkBoxF = document.createElement("input");
+                  checkBoxF.setAttribute("type", "checkbox");
+                  checkBoxF.setAttribute("class", 'favourite');
+                  checkBoxF.setAttribute("id", key);
+                  // checkBoxF.setAttribute("value", "favourite");
+                  checkBoxF.addEventListener("click", setFav);
+                  topDivtag.appendChild(checkBoxF);
+                  companyDetails.push(key);
+                  
+        let anchortag = document.createElement("a");
+              anchortag.setAttribute("href", "https://www.screener.in/company/" + key + "/");
+              anchortag.setAttribute("target", "_blank");
+              topDivtag.appendChild(anchortag);
+              mainBlock.appendChild(topDivtag);
+          
+          
+              if(Object.keys(currentPriceDataTable).length > 1){
+          let bar = document.createElement("div");
+              bar.setAttribute("class", "bar");
+             let preHig = 0;
+              let largebar = 0;
+              let smallbar = 0;
+              largebar = Math.max(...[...currentPriceDataTable[key]]);
+              smallbar = Math.min(...[...currentPriceDataTable[key]]);
+
+
+            
+            for(let i = 0 ;i  < currentPriceDataTable[key].length ;  i++){
+
+            let barc = document.createElement("div");
+            let barct = document.createElement("div");
+              barc.setAttribute("class", "barc");
+              let hig =  (Number(currentPriceDataTable[key][i])); // - (smallbar * 0.5));
+              let PperDif;
+              if (i == 0){
+                PperDif = 0;
               }
-              divtag.appendChild(bar);
-                }
-  
-                // volume chart starts *********************************************************************************
-  
-                if(Object.keys(currentVolumeDataTable).length > 1){
-                  let barv = document.createElement("div");
-                      barv.setAttribute("class", "barv");
-                     let preHigv = 0;
-                      let largebarv = 0;
-                      let smallbarv = 0;
-                      largebarv = Math.max(...[...currentVolumeDataTable[indx]]);
-                      smallbarv = Math.min(...[...currentVolumeDataTable[indx]]);
-        
-        
-                    
-                    for(let i = 0; i < currentVolumeDataTable[indx].length -1;  i++){
-        
-                    let barcv = document.createElement("div");
-                    let barct = document.createElement("div");
-                      barcv.setAttribute("class", "barcv");
-                      let higv =  (Number(currentVolumeDataTable[indx][i])); // - (smallbar * 0.5));
-                      let PperDif;
-                      if (i == 0){
-                        PperDif = 0;
-                      }
-                      else{
-                        PperDif = (((higv - preHigv)/higv)*100).toFixed(1);
-                      }   
-                        numv = Number(higv);
-                        let unitv = (100 / (largebarv - smallbarv)); // (largebar - smallbar))
-                        let barHigv  = ((unitv * (numv - smallbarv) )).toFixed(1);
-        
-                      if(preHigv >= higv){
-                        barcv.style.backgroundColor = "rgba(255, 0,0, 0.5)";
-                      }
-                      else{
-                        barcv.style.backgroundColor = "rgba(20, 255 ,20, 0.75)";
-                        
-                      }
-                      preHigv = higv;
-                      // let barHig = (hig * (100 / largebar)).toFixed(1);
-                      barcv.style.height = (Number(barHigv)).toString() + 'px'; //((largebar - Number(currentPriceData1[indx][i])).toFixed(1).toString() + 'px').toString();
-                      barcv.style.top = (100 - Number(barHigv).toFixed(1).toString())+ 'px';
-                      // barc.style.width = '10px';
-                      
-        
-                      let barcspanv = document.createElement("span");
-                      barcspanv.setAttribute("class", "barcspanv");
-                      
-                      barcspanv.innerText =  Number(currentVolumeDataTable[indx][i] / 1000).toFixed(0); // PperDif; //
-                      barv.appendChild(barct);
-                      barct.appendChild(barcspanv);
-                      barct.appendChild(barcv);
-                    }
-                    divtag.appendChild(barv);
-                      }
-  
-  
-                      // Volume chart ends }}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+              else{
+                PperDif = (((hig - preHig)/hig)*100).toFixed(1);
+              }   
+                num = Number(hig);
+                let unit = (100 / (largebar - smallbar)); // (largebar - smallbar))
+                let barHig  = ((unit * (num - smallbar) )).toFixed(1);
+
+              if(preHig >= hig){
+                barc.style.backgroundColor = "rgba(255, 0,0, 0.35)";
+              }
+              else{
+                barc.style.backgroundColor = "rgba(20, 255 ,20, 0.75)";
                 
-          let canvas = document.createElement("canvas");
-                      canvas.setAttribute("id", indx);
-                      canvas.setAttribute("class", indx);       
+              }
+              preHig = hig;
+              // let barHig = (hig * (100 / largebar)).toFixed(1);
+              barc.style.height = "100px"; //((Number(barHig)).toString()) + 'px'; //((largebar - Number(currentPriceData1[key][i])).toFixed(1).toString() + 'px').toString();
+              // barc.style.top = (100 - Number(barHig).toFixed(1).toString())+ 'px';
+              // barc.style.fontSize = '14px';
+              // barc.style.width = '10px';
+              
+
+              let barcspan = document.createElement("span");
+              barcspan.setAttribute("class", "barcspan");
+
+              if(i == 0){
+                barcspan.innerText = Number(currentPriceDataTable[key][i]).toFixed(1);  //perDif; 
+                }
+                else{
+                  let PreviousPrice = currentPriceDataTable[key][i -1];
+                  let CurrentPrice = currentPriceDataTable[key][i];
+
+                  barcspan.innerText = (((CurrentPrice - PreviousPrice)/ PreviousPrice) * 100).toFixed(1);
+                }
+              // if( key == 'AURIONPRO'){
+              //   console.log(PperDif);
+              // }
+              // if( i == currentPriceDataTable[key].length -1){
+              //   barcspan.innerText = Number(currentPriceDataTable[key][i]).toFixed(1);
+              // }
+              // else{
+              //   barcspan.innerText = Number(currentPriceDataTable[key][i] - currentPriceDataTable[key][i -1]).toFixed(1);
+              // }
+              
+              
+              barct.appendChild(barc);
+              barc.appendChild(barcspan);
+              bar.appendChild(barct);
+            }
+            anchortag.appendChild(bar);
+            topDivtag.appendChild(anchortag);
+              }
+
+              // volume chart starts *********************************************************************************
+
+              if(Object.keys(currentVolumeDataTable).length > 1){
+                let barv = document.createElement("div");
+                    barv.setAttribute("class", "barv");
+                   let preHigv = 0;
+                    let largebarv = 0;
+                    let smallbarv = 0;
+                    largebarv = Math.max(...[...currentVolumeDataTable[key]]);
+                    smallbarv = Math.min(...[...currentVolumeDataTable[key]]);
+      
+      
+                  
+                  for(let i =0; i < currentVolumeDataTable[key].length ;  i++){
+                    // console.log(i);
+      
+                  let barcv = document.createElement("div");
+                  let barct = document.createElement("div");
+                    barcv.setAttribute("class", "barcv");
+                    
+                    let higv =  (Number(currentVolumeDataTable[key][i])); // - (smallbar * 0.5));
+                    let perDif;
+                    if (i == 0){
+                      perDif = higv;
+                    }
+                    else{
+                      perDif = (higv - preHigv);
+                      // perDif = (((higv - preHigv)/higv)*100).toFixed(1);
+                    }     
+
+      
+                      numv = Number(higv);
+                      let unitv = (100 / (largebarv - smallbarv)); // (largebar - smallbar))
+                      let barHigv  = ((unitv * (numv - smallbarv) )).toFixed(1);
+      
+                    if(preHigv >= higv){
+                      barcv.style.backgroundColor = "rgba(255, 0,0, 0.35)";
+                    }
+                    else{
+                      barcv.style.backgroundColor = "rgba(20, 255 ,20, 0.75)";
+                      
+                    }
+                    
+                    // let barHig = (hig * (100 / largebar)).toFixed(1);
+                    barcv.style.height = (Number(barHigv)).toString() + 'px'; //((largebar - Number(currentPriceData1[key][i])).toFixed(1).toString() + 'px').toString();
+                    barcv.style.top = (100 - Number(barHigv).toFixed(1).toString())+ 'px';
+                    // barc.style.width = '10px';
+                    
+      
+                    let barcspanv = document.createElement("span");
+                    barcspanv.setAttribute("class", "barcspanv");
+                    
+                    barcspanv.innerText = (perDif / 1000).toFixed(0); //; Number(currentVolumeDataTable[key][i]).toFixed(0) 
+                    barv.appendChild(barct);
+                    barct.appendChild(barcspanv);
+                    barct.appendChild(barcv);
+                    preHigv = higv;
+                  }
+                  // topDivtag.appendChild(barv);
+                    }
+
+
+                    // Volume chart ends }}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+          mainBlock.appendChild(topDivtag);
+
           let divtagMain = document.createElement("div"); 
-                    divtagMain.setAttribute("id", indx);
-          let divtagLeft = document.createElement("div"); 
-                    divtagMain.appendChild(divtagLeft);
-                    divtagLeft.appendChild(anchortag);
-          let divtagRight = document.createElement("div"); 
-                  divtagRight.setAttribute("class", "right");
-                    divtagMain.appendChild(divtagRight);
-  
-          divtag.appendChild(canvas);
-                      document.querySelector(".charts").appendChild(divtagMain);
-                        let ccurrect = yValues2[0];
-                        let cmin = Math.min(...yValues2);
-                        let cmax = Math.max(...yValues2);
-                                               
-                          new Chart(canvas, {
+                  divtagMain.setAttribute("id", key);
+                  divtagMain.appendChild(mainBlock);
+
+        let bottomDivTag = document.createElement("div");
+        bottomDivTag.setAttribute("class", "bottomDivTag");
+
+        let canvas = document.createElement("canvas");
+                    canvas.setAttribute("id", key);
+                    canvas.setAttribute("class", key);       
+        
+
+        let divtagLeft = document.createElement("div"); 
+                  divtagMain.appendChild(divtagLeft);
+                  // divtagLeft.appendChild(anchortag);
+                    
+        let divtagRight = document.createElement("div"); 
+                divtagRight.setAttribute("class", "right");
+                  
+
+                  divtagLeft.appendChild(canvas);
+                  bottomDivTag.appendChild(divtagLeft);
+                  bottomDivTag.appendChild(divtagRight);
+                  mainBlock.appendChild(bottomDivTag);
+
+                    document.querySelector(".charts").appendChild(divtagMain);
+                      let ccurrect = yValues2[0];
+                      let cmin = Math.min(...yValues2);
+                      let cmax = Math.max(...yValues2);
+                      let buyAvg = [...yValues2];                        
+                        if (Math.floor(((cmax-ccurrect)/cmax) * 100) > 40 && ccurrect < cmax){
+                          BuyObject40[key] = companyObject[key];
+                        }
+                        else if (Math.floor(((cmax-ccurrect)/cmax) * 100) > 30 && ccurrect < cmax){
+                          BuyObject30[key] = companyObject[key];
+                        }
+                        else if (Math.floor(((cmax-ccurrect)/cmax) * 100) > 20 && ccurrect < cmax){
+                          BuyObject20[key] = companyObject[key];
+                        }
+                        if ((yValues2[1] * 1.05) < ccurrect){
+                           BuyObject3Avg[key] = companyObject[key];
+                           }
+                      
+                        new Chart(canvas, {
+                            type: "line",
+                            data: {
+                            labels: xValues,
+                            datasets: [{
+                                    label: key + '   FL ' + ( ((cmax-cmin)/cmax) * 100).toFixed(2).toString() + ' %   FC  ' + ( ((cmax-ccurrect)/cmax) * 100).toFixed(2).toString()  ,
+                                    pointRadius: 0,
+                                    borderWidth : 0.5,
+                                    borderColor: "rgba(0,0,0,0.9)",
+                                    data: [...yValues2].reverse(),
+                                    }]
+                                  },  
+                                  options: {
+                                      scales: {
+                                          yAxes: [{
+                                              ticks: {
+                                                  fontSize: 14
+                                          }
+                                      }]
+                                  }
+                                  }
+
+                            });
+                      
+                            let canvas2 = document.createElement("canvas");
+                            canvas2.setAttribute("class", 'volume');
+                            mainBlock.appendChild(canvas2);
+                            new Chart(canvas2, {
                               type: "line",
                               data: {
-                              labels: xValues,
+                              labels: xValues, // .reverse().slice(0,30),
                               datasets: [{
-                                      label: indx + '   FL ' + ( ((cmax-cmin)/cmax) * 100).toFixed(2).toString() + ' %   FC  ' + ( ((cmax-ccurrect)/cmax) * 100).toFixed(2).toString()  ,
+                                      label: volumeValues[volumeValues.length - 1],
+                                      tooltip: '',
                                       pointRadius: 0,
                                       borderWidth : 0.5,
                                       borderColor: "rgba(0,0,0,0.9)",
-                                      data: [...yValues2].reverse(),
+                                      data: [...volumeValues]
                                       }]
-                                    },  
-                                    options: {
-                                        scales: {
-                                            yAxes: [{
-                                                ticks: {
-                                                    fontSize: 14
+                                    },
+                              options: {
+                                      plugins: {
+                                          legend: true // Hide legend
+                                      },
+                                      scales: {
+                                        yAxes: [{
+                                            ticks: {
+                                                fontSize: 14
                                             }
                                         }]
                                     }
                                     }
-  
                               });
-                        
-                              let canvas2 = document.createElement("canvas");
-                              canvas2.setAttribute("class", 'volume');
-                              divtag.appendChild(canvas2);
-                              new Chart(canvas2, {
-                                type: "line",
-                                data: {
-                                labels: xValues, // .reverse().slice(0,30),
-                                datasets: [{
-                                        label: volumeValues[volumeValues.length - 1],
-                                        tooltip: '',
-                                        pointRadius: 0,
-                                        borderWidth : 0.5,
-                                        borderColor: "rgba(0,0,0,0.9)",
-                                        data: [...volumeValues]
-                                        }]
-                                      },
-                                options: {
-                                        plugins: {
-                                            legend: true // Hide legend
-                                        },
-                                        scales: {
-                                          yAxes: [{
-                                              ticks: {
-                                                  fontSize: 14
-                                              }
-                                          }]
-                                      }
-                                      }
-                                });
-                              }
-  
+//  chart ends here
+    }
+document.getElementById("results0").innerText = resultCount.toString();
+let idlst = document.querySelectorAll("[id^='getData']");
+idlst.forEach( element => {
+element.innerText = "Stocks " + element.classList[0] +'+';
+element.classList.remove('active');
+})
+updateCompanyDeatils();
+updateFavourite();
       }
-  // document.getElementById("results0").innerText = resultCount.toString();
-  // let idlst = document.querySelectorAll("[id^='getData']");
-  // idlst.forEach( element => {
-  // element.innerText = "Stocks " + element.classList[0] +'+';
-  // element.classList.remove('active');
-  // })
-  document.getElementById("filter").value = "Loaded";
-  updateCompanyDeatils();
+  //           let yValues  = [];
+  //           let volumeValues = [];
+  //           yValues  = [...companyObject[indx]];
+  //           volumeValues  = [...dVolumeObject[indx]];
+  //           let xValues = [];
+  //           let yValues2 = [];
+  
+  //             yValues.reverse();
+  //             for(let y = 0; y < Math.min(companyObject[indx].length, days) ; y++){
+  //               yValues2[y] =  yValues[y] ;
+  //             }
+  //                 for (let i = 0; i < Math.min(companyObject[indx].length, days) ; i++) {
+  //                   xValues.push(i);
+  //                 }
+  //                 xValues.reverse();
+  //         let divtag = document.createElement("div");                  
+  //         // let checkBox = document.createElement("input");
+  //         //           checkBox.setAttribute("type", "checkbox");
+  //         //           checkBox.setAttribute("class", indx);
+  //         //           checkBox.addEventListener("click", setComp);
+  //         //           divtag.appendChild(checkBox);
+  //         // let lbl = document.createElement("label");
+  //         //           lbl.setAttribute("for", indx);
+  //         //           lbl.setAttribute("value", 'compare');
+  //         //           lbl.innerText = 'Compare';
+  //         //           divtag.appendChild(lbl);
+  //         let lblF = document.createElement("label");
+  //                 lblF.setAttribute("for", indx);
+  //                 lblF.setAttribute("value", 'favourite');
+  //                 lblF.innerText = 'Favourite';
+  //                 divtag.appendChild(lblF);
+  //         let checkBoxF = document.createElement("input");
+  //                   checkBoxF.setAttribute("type", "checkbox");
+  //                   checkBoxF.setAttribute("class", 'favourite');
+  //                   checkBoxF.setAttribute("id", indx);
+  //                   // checkBoxF.setAttribute("value", "favourite");
+  //                   checkBoxF.addEventListener("click", setFav);
+  //                   divtag.appendChild(checkBoxF);
+  //                   companyDetails.push(indx);
+  //         let anchortag = document.createElement("a");
+  //               anchortag.setAttribute("href", "https://www.screener.in/company/" + indx + "/");
+  //               anchortag.setAttribute("target", "_blank");
+  //               anchortag.appendChild(divtag);
+  
+  //           if(Object.keys(currentPriceDataTable).length > 1){
+  //           let bar = document.createElement("div");
+  //               bar.setAttribute("class", "bar");
+  //              let preHig = 0;
+  //               let largebar = 0;
+  //               let smallbar = 0;
+  //               largebar = Math.max(...[...currentPriceDataTable[indx]]);
+  //               smallbar = Math.min(...[...currentPriceDataTable[indx]]);
+  
+  
+              
+  //             for(let  i = 0; i < currentPriceDataTable[indx].length -1; i++){
+  
+  //             let barc = document.createElement("div");
+  //             let barct = document.createElement("div");
+  //               barc.setAttribute("class", "barc");
+  //               let hig =  (Number(currentPriceDataTable[indx][i])); // - (smallbar * 0.5));
+  //               let perDif;
+  //               if (i == 0){
+  //                 perDif = 0;
+  //               }
+  //               else{
+  //                 perDif = (((hig - preHig)/hig)*100).toFixed(1);
+  //               }   
+  //                 num = Number(hig);
+  //                 let unit = (100 / (largebar - smallbar)); // (largebar - smallbar))
+  //                 let barHig  = ((unit * (num - smallbar) )).toFixed(1);
+  
+  //               if(preHig >= hig){
+  //                 barc.style.backgroundColor = "rgba(255, 0,0, 0.5)";
+  //               }
+  //               else{
+  //                 barc.style.backgroundColor = "rgba(20, 255 ,20, 0.75)";
+                  
+  //               }
+  //               preHig = hig;
+  //               // let barHig = (hig * (100 / largebar)).toFixed(1);
+  //               barc.style.height = (Number(barHig)).toString() + 'px'; //((largebar - Number(currentPriceData1[indx][i])).toFixed(1).toString() + 'px').toString();
+  //               barc.style.top = (100 - Number(barHig).toFixed(1).toString())+ 'px';
+  //               // barc.style.width = '10px';
+                
+  
+  //               let barcspan = document.createElement("span");
+  //               barcspan.setAttribute("class", "barcspan");
+                
+  //               if(i == 0){
+  //               barcspan.innerText = Number(currentPriceDataTable[indx][i]).toFixed(1);  //perDif; 
+  //               }
+  //               else{
+  //                 let PreviousPrice = currentPriceDataTable[indx][i -1];
+  //                 let CurrentPrice = currentPriceDataTable[indx][i];
+
+  //                 barcspan.innerText = (((CurrentPrice - PreviousPrice)/ PreviousPrice) * 100)
+  //               }
+  //               // if( i == currentPriceDataTable[indx].length -1){
+  //               //   barcspan.innerText = Number(currentPriceDataTable[indx][i]).toFixed(1);
+  //               // }
+  //               // else{
+  //               //   barcspan.innerText = Number(currentPriceDataTable[indx][i] - currentPriceDataTable[indx][i -1]).toFixed(1);
+  //               // }
+                
+  //               barct.appendChild(barcspan);
+  //               barct.appendChild(barc);
+  //               bar.appendChild(barct);
+  //             }
+  //             divtag.appendChild(bar);
+  //               }
+  
+  //               // volume chart starts *********************************************************************************
+  
+  //               if(Object.keys(currentVolumeDataTable).length > 1){
+  //                 let barv = document.createElement("div");
+  //                     barv.setAttribute("class", "barv");
+  //                    let preHigv = 0;
+  //                     let largebarv = 0;
+  //                     let smallbarv = 0;
+  //                     largebarv = Math.max(...[...currentVolumeDataTable[indx]]);
+  //                     smallbarv = Math.min(...[...currentVolumeDataTable[indx]]);
+        
+        
+                    
+  //                   for(let i = 0; i < currentVolumeDataTable[indx].length -1;  i++){
+        
+  //                   let barcv = document.createElement("div");
+  //                   let barct = document.createElement("div");
+  //                     barcv.setAttribute("class", "barcv");
+  //                     let higv =  (Number(currentVolumeDataTable[indx][i])); // - (smallbar * 0.5));
+  //                     let PperDif;
+  //                     if (i == 0){
+  //                       PperDif = 0;
+  //                     }
+  //                     else{
+  //                       PperDif = (((higv - preHigv)/higv)*100).toFixed(1);
+  //                     }   
+  //                       numv = Number(higv);
+  //                       let unitv = (100 / (largebarv - smallbarv)); // (largebar - smallbar))
+  //                       let barHigv  = ((unitv * (numv - smallbarv) )).toFixed(1);
+        
+  //                     if(preHigv >= higv){
+  //                       barcv.style.backgroundColor = "rgba(255, 0,0, 0.5)";
+  //                     }
+  //                     else{
+  //                       barcv.style.backgroundColor = "rgba(20, 255 ,20, 0.75)";
+                        
+  //                     }
+  //                     preHigv = higv;
+  //                     // let barHig = (hig * (100 / largebar)).toFixed(1);
+  //                     barcv.style.height = (Number(barHigv)).toString() + 'px'; //((largebar - Number(currentPriceData1[indx][i])).toFixed(1).toString() + 'px').toString();
+  //                     barcv.style.top = (100 - Number(barHigv).toFixed(1).toString())+ 'px';
+  //                     // barc.style.width = '10px';
+                      
+        
+  //                     let barcspanv = document.createElement("span");
+  //                     barcspanv.setAttribute("class", "barcspanv");
+                      
+  //                     barcspanv.innerText =  Number(currentVolumeDataTable[indx][i] / 1000).toFixed(0); // PperDif; //
+  //                     barv.appendChild(barct);
+  //                     barct.appendChild(barcspanv);
+  //                     barct.appendChild(barcv);
+  //                   }
+  //                   divtag.appendChild(barv);
+  //                     }
+  
+  
+  //                     // Volume chart ends }}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+                
+  //         let canvas = document.createElement("canvas");
+  //                     canvas.setAttribute("id", indx);
+  //                     canvas.setAttribute("class", indx);       
+  //         let divtagMain = document.createElement("div"); 
+  //                   divtagMain.setAttribute("id", indx);
+  //         let divtagLeft = document.createElement("div"); 
+  //                   divtagMain.appendChild(divtagLeft);
+  //                   divtagLeft.appendChild(anchortag);
+  //         let divtagRight = document.createElement("div"); 
+  //                 divtagRight.setAttribute("class", "right");
+  //                   divtagMain.appendChild(divtagRight);
+  
+  //         divtag.appendChild(canvas);
+  //                     document.querySelector(".charts").appendChild(divtagMain);
+  //                       let ccurrect = yValues2[0];
+  //                       let cmin = Math.min(...yValues2);
+  //                       let cmax = Math.max(...yValues2);
+                                               
+  //                         new Chart(canvas, {
+  //                             type: "line",
+  //                             data: {
+  //                             labels: xValues,
+  //                             datasets: [{
+  //                                     label: indx + '   FL ' + ( ((cmax-cmin)/cmax) * 100).toFixed(2).toString() + ' %   FC  ' + ( ((cmax-ccurrect)/cmax) * 100).toFixed(2).toString()  ,
+  //                                     pointRadius: 0,
+  //                                     borderWidth : 0.5,
+  //                                     borderColor: "rgba(0,0,0,0.9)",
+  //                                     data: [...yValues2].reverse(),
+  //                                     }]
+  //                                   },  
+  //                                   options: {
+  //                                       scales: {
+  //                                           yAxes: [{
+  //                                               ticks: {
+  //                                                   fontSize: 14
+  //                                           }
+  //                                       }]
+  //                                   }
+  //                                   }
+  
+  //                             });
+                        
+  //                             let canvas2 = document.createElement("canvas");
+  //                             canvas2.setAttribute("class", 'volume');
+  //                             divtag.appendChild(canvas2);
+  //                             new Chart(canvas2, {
+  //                               type: "line",
+  //                               data: {
+  //                               labels: xValues, // .reverse().slice(0,30),
+  //                               datasets: [{
+  //                                       label: volumeValues[volumeValues.length - 1],
+  //                                       tooltip: '',
+  //                                       pointRadius: 0,
+  //                                       borderWidth : 0.5,
+  //                                       borderColor: "rgba(0,0,0,0.9)",
+  //                                       data: [...volumeValues]
+  //                                       }]
+  //                                     },
+  //                               options: {
+  //                                       plugins: {
+  //                                           legend: true // Hide legend
+  //                                       },
+  //                                       scales: {
+  //                                         yAxes: [{
+  //                                             ticks: {
+  //                                                 fontSize: 14
+  //                                             }
+  //                                         }]
+  //                                     }
+  //                                     }
+  //                               });
+  //                             }
+  
+  //     }
+  // // document.getElementById("results0").innerText = resultCount.toString();
+  // // let idlst = document.querySelectorAll("[id^='getData']");
+  // // idlst.forEach( element => {
+  // // element.innerText = "Stocks " + element.classList[0] +'+';
+  // // element.classList.remove('active');
+  // // })
+  // document.getElementById("filter").value = "Loaded";
+  // updateCompanyDeatils();
   
   }
 
