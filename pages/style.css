@@ -79,9 +79,7 @@
 
      .charts{
         width: 100%;
-        /* margin: auto; */
-        /* min-width: 280px;
-        max-width: 320px; */
+        margin-top: 80px;
           }
     .charts > div{
         display: block;
@@ -100,7 +98,7 @@
      .right{
       align-self: center;
       text-align: left;
-      width: 30% !important;
+      width: 20% !important;
       font-size: 12px;
      }
      .right .block1{
@@ -108,20 +106,25 @@
       width: 100%;
      }
      canvas {
-      width: 280px !important;
+      width: 300px !important;
     }
      
      canvas:not(.volume){
         margin: 15px 0;
-        max-width: 280px !important;
+        max-width: 100% !important;
         height: 300px !important;
 
       }
       canvas.volume{
         margin: 0;
         height: 150px !important;
-        max-width: 280px !important;
+        max-width: 100% !important;
       }
+
+.buttonbar{
+  display: flex;
+  width: 98%;
+}
 
      .MarketCap, .High, .Reserve, [class^='difference']{
           background-color: #FFD750;
@@ -211,8 +214,17 @@
        height: 30px;
        width:30%;
      }
- #secSearch{
-  /* margin-top: 54px; */
+ /* #secSearch{
+  margin-top: 54px;
+ } */
+ #rangeshow{
+      position: fixed;
+      bottom: 0px;
+      right: 0px;
+      z-index: 99;
+      height: 100px;
+      width: 100px;
+      cursor: pointer;
  }
      .static{
        opacity: 1;
@@ -249,14 +261,15 @@
       margin-left: 1px;
      }
      .range{
-        position: relative;
-        display: flex;
-        width: 100%;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        opacity: 1;
-        background-color: #fff;
-       /* margin-top: 60px; */
+      /* position: fixed; */
+      display: flex;
+      width: 100%;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      opacity: 1;
+      background-color: #fff;
+      /* margin-top: 60px; */
+      z-index: 200;
      }
   
      .range button, .range dropdown{
@@ -375,7 +388,7 @@
       background-color: #fff;
       width: 172px !important;
       position: fixed;
-      z-index: 100;
+      z-index: 220;
     }
 
     #GainDropdown, #NoGainDropdown{
@@ -383,11 +396,11 @@
       width: 172px !important;
       right: 18px;
       position: fixed;
-      z-index: 200;
+      z-index: 220;
     }
-    .sector{
+    /* .sector{
       height: 50px;
-    }
+    } */
 
     .dayComp{
       display: flex;
@@ -529,12 +542,10 @@
         .right{
           align-self: center;
           text-align: left;
-          width: 100px !important;
           font-size: large;
          }
          .right .block1{
           letter-spacing: 0.08rem;
-          width: 100px;
          }
 
          #PriceDropdown, #GainDropdown, #NoGainDropdown{

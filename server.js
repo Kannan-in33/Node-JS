@@ -2,6 +2,7 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const {google} = require('googleapis');
+const { isNumberObject } = require('util/types');
 
 const port = process.env.PORT || 5000 ;
 const server = express();
@@ -14,11 +15,50 @@ let currentVolumeDataTable = {};
 let timestamp = new Date().getHours();
 let cpvalues;
 let cvvalues;
+let copvalues;
 let cpvaluesTable;
+let closeOpenPriceData = [];
+let closeOpenPriceDataObject = {};
 let tempArr = [];
 let tempArr2 =[];
 let t = 0;
 const spreadsheetId = "13BOxMT5cUoScurImRrDK0PwwLYAtV7qJiI75Knw44kQ";
+
+// Get CloseAndOpenPriceData
+
+getCloseOpenPrice =  async () =>{
+             if( closeOpenPriceData.length == 0){
+                        
+                    const auth = new google.auth.GoogleAuth({
+                        keyFile: "credentials.json",
+                        scopes: "https://www.googleapis.com/auth/spreadsheets",
+                    });
+                    const client = await auth.getClient();
+                    const googleSheets = google.sheets({
+                        version: "v4",
+                        auth: client
+                    });
+                    const closeOpenPrice = await googleSheets.spreadsheets.values.get({
+                        auth,
+                        spreadsheetId,
+                        range: 'DailyGainers!A2:D1133', 
+                    });
+
+        copvalues = (closeOpenPrice.data.values);    
+            copvalues.forEach ( (ele, i) => {
+                closeOpenPriceDataObject[ele[0]] = copvalues[i];
+                let yday = copvalues[i][3];
+                let tday = copvalues[i][1];           
+                if( !isNaN(yday) && !isNaN(tday) ){                    
+                if((((tday - yday)/yday) * 100).toFixed(1) > 2) {                    
+                    closeOpenPriceData.push(ele[0]);
+                }
+            }
+});
+console.log('closeOpenPriceData  ' + closeOpenPriceData.length);
+             }
+}
+
 
 // UpdateBarData
 
@@ -39,18 +79,25 @@ getUpdatedPrice =  async () =>{
     const CPdata = await googleSheets.spreadsheets.values.get({
         auth,
         spreadsheetId,
-        range: 'NSE Daily!A1:B2822', 
+        range: 'NSE Daily!A1:C1132', 
     });
 
 
    cpvalues = (CPdata.data.values);
 
    cpvalues.forEach ( (ele, i) => {
-   currentPriceData[ele[0].toString().split(",")[0]] = ele[1].toString();
+    tempArr2 = [];
+            tempArr2.push(ele[1].toString());
+            tempArr2.push(ele[2].toString())
+
+   currentPriceData[ele[0]] = tempArr2;
 });
 
 
 }
+
+
+
 
 // Try Getting data from Bar
 
@@ -70,7 +117,7 @@ getUpdatedPriceTable =  async () =>{
     const GsUpdate = await googleSheets.spreadsheets.values.get({
         auth,
         spreadsheetId,
-        range: "Bar!A1:Z2822",
+        range: "Bar!A1:Z1132",
     });
 
     cpvaluesTable = (GsUpdate.data.values);
@@ -104,7 +151,7 @@ getUpdatedVolomeTable =  async () =>{
     const CVVdata = await googleSheets.spreadsheets.values.get({
         auth,
         spreadsheetId,
-        range: 'Daily Volume!A1:Z2822', 
+        range: 'Daily Volume!A1:Z1132', 
     });
 
    cvvalues = (CVVdata.data.values);
@@ -127,13 +174,18 @@ cvvalues.forEach ( (ele, i) => {
 
 }
 
+
 getUpdatedPrice();
 getUpdatedPriceTable();
 getUpdatedVolomeTable();
 
+
+server.get('/favicon.ico', (req, res) => {
+    res.sendFile(path.join(__dirname, './pages/favicon.ico'));
+
+});
+
 server.get('/',  (req, res) => {
-
-
 res.sendFile(path.join(__dirname, './pages/index.html'));
 
 });
@@ -141,6 +193,12 @@ res.sendFile(path.join(__dirname, './pages/index.html'));
 server.get('/sector', (req, res) => {
 
     res.sendFile(path.join(__dirname, './pages/sector.html'));
+
+});
+
+server.get('/openg', (req, res) => {
+    
+    res.sendFile(path.join(__dirname, './pages/openg.html'));
 
 });
 
@@ -164,13 +222,11 @@ server.get('/scripts.js', (req, res) => {
 
 });
 
-server.get('/favicon.ico', (req, res) => {
-    res.sendFile(path.join(__dirname, './pages/favicon.ico'));
 
-});
         
 server.use( (req, res)=>{
 
+// console.log(req.path);
 
     let obj ={};
     let obj2 = [];
@@ -188,7 +244,82 @@ server.use( (req, res)=>{
     let  companyObject2 ={};
 
 
-if(req.path == '/All') {
+if(req.path.includes('getcompare')) {
+        const directorypath = path.join(__dirname, 'SectorData');
+        fs.readFile(path.join(directorypath , 'Comparison.json'), 'utf8', function (err2, data) {
+            if (err2) throw err2;
+            obj = JSON.parse(data);
+            res.send(data);
+        });
+        }
+
+// Open page data
+
+else if(req.path.includes('open')) {
+    let ARR = [...closeOpenPriceData];        
+    console.log(ARR.length);
+    let foldersPath = fs.readdirSync(path.resolve(__dirname, 'src/'));
+    foldersPath.forEach( (folder, j) => {
+        //  ||  folder == '401'
+    if(folder == 'All'){  // 'All
+    const directorypath = path.join(__dirname, 'src/' + folder);
+    fs.readdir(directorypath , function (err, files) {
+    if (err) throw err;
+    for(let j = 1; j < ARR.length; j++){
+    files.forEach( (file, i) => {
+        
+        if (file.split('.')[0] == ARR[j]){
+        fs.readFile(path.join(directorypath , file), 'utf8', function (err2, data) {
+        if (err2) throw err2;
+            obj = JSON.parse(data);
+            let j = 0;
+            company.push(file);
+            
+                if(obj['datasets'].length > 0 ){
+                    // valueList[file.split('.')[0]] = obj['datasets'][0]['values'].length
+                    max = max < obj['datasets'][0]['values'].length ? obj['datasets'][0]['values'].length : max
+                    for (let key in obj['datasets'][0]['values']) {
+                            obj2.push(obj['datasets'][0]['values'][key][1]);  
+                                volumeObj.push((obj['datasets'][1]['values'][key][1])/100000); 
+                    }
+                    companyObject[file.split('.')[0]] = [...obj2];
+                    volumeObject[file.split('.')[0]] = [...volumeObj];
+                    obj2 =[];
+                    datesObj = [];
+                    volumeObj =[];
+            }
+            
+                if (file.split('.')[0] == ARR[ARR.length - 1] ){
+                obj3 = { 
+                    "company" : company,
+                    "companyObject" : companyObject,
+                    "volumeObject" : volumeObject,
+                    "currentPriceData": currentPriceData,
+                    "currentPriceData1": currentPriceData1,
+                    "currentPriceDataTable":currentPriceDataTable,
+                    "currentVolumeDataTable": currentVolumeDataTable,
+                    "closeOpenPriceDataObject": closeOpenPriceDataObject,
+                    "closeOpenPriceData":closeOpenPriceData,
+                }
+                res.send(obj3);
+    }
+    
+    });
+    
+}
+
+    });
+    
+}
+
+    });
+
+}
+});  
+}
+
+// Open Page End
+else if(req.path == '/All') {
     let j = 0;
     let k = 0;
     let flag = 0;
@@ -241,6 +372,7 @@ if(req.path == '/All') {
                     "currentPriceData1": currentPriceData1,
                     "currentPriceDataTable":currentPriceDataTable,
                     "currentVolumeDataTable": currentVolumeDataTable,
+                    "closeOpenPriceDataObject": closeOpenPriceDataObject,
                 }
                 res.send(obj3);
                 
@@ -256,15 +388,6 @@ if(req.path == '/All') {
 });  
 }
 
-else if(req.path.includes('getcompare')) {
-
-    const directorypath = path.join(__dirname, 'SectorData');
-    fs.readFile(path.join(directorypath , 'Comparison.json'), 'utf8', function (err2, data) {
-        if (err2) throw err2;
-        obj = JSON.parse(data);
-        res.send(data);
-    });
-    }
 
 // Favourite Page Start
 
@@ -310,6 +433,7 @@ else if(req.path.includes('getcompare')) {
                         "currentPriceData1": currentPriceData1,
                         "currentPriceDataTable":currentPriceDataTable,
                         "currentVolumeDataTable": currentVolumeDataTable,
+                        "closeOpenPriceDataObject": closeOpenPriceDataObject,
                     }
                     res.send(obj3);
         }
@@ -329,6 +453,7 @@ else if(req.path.includes('getcompare')) {
     }
 
 // Favourite Page End
+
 
 else{
     let j = 0;
@@ -365,7 +490,7 @@ fs.readdir(directorypath , function (err, files) {
                 "currentPriceData1": currentPriceData1,
                 "currentPriceDataTable":currentPriceDataTable,
                 "currentVolumeDataTable":currentVolumeDataTable,
-                "timestamp": timestamp,
+                "closeOpenPriceDataObject": closeOpenPriceDataObject,
                 }
                 res.send(obj3);
                 }
@@ -381,6 +506,7 @@ fs.readdir(directorypath , function (err, files) {
 
 server.listen(port, () => {    
     console.log('Server is listening on port ' + port);
+    getCloseOpenPrice();
     getUpdatedPrice();
     getUpdatedPriceTable();
     getUpdatedVolomeTable();

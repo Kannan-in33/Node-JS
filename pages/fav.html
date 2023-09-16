@@ -15,6 +15,7 @@
         <a href="/">Home</a>
         <a href="/Sector">Sector</a>
         
+        
         <div class="Gdropdown">  
           <button id="gainers" class="gainers upTrends"  onclick="showGainers();" type="button">Gainer <span id="Gnumbers"></span></button>              
                 <div id="GainDropdown" class="drop-options">
@@ -38,65 +39,54 @@
             <button class="previous"  onclick="previous();">Previous <span id="previous"></span></button> 
             <button class="next"  onclick="next();">Next<span id="next"></span></button>
           </div> -->
+
+        <!-- </div> -->
+
+    <div class="range">
+
+      <div class="slider">
+
+        <input type="text" name="min" id="mini">
+            <div class="search">
+              <input placeholder="..Search..." type="text" id="filter" name="filter" />
+              <button id="clear" onclick="clea();" type="button"><strong>X</strong></button>
+               </div>
+        <input type="text" name="max" id="maxi">
+        <input type="range" min="-240" max="240" value="0" name="slider" id="slider" /> 
         
+      </div>
 
-          
-    </div>
-    <<div class="range">
+  <button id="sliderButton" class="d20" onclick="getDay(20);" type="button">Get Chart</button>
+  <button id="sliderReset" onclick="resetSlider();" type="button">Reset</button>
+  <div class="dropdown">
+    <button id="daysbuy" class="buy-main"  onclick="getBuyMain();" type="button">Buy List</button>
+    <div id="BuyDropdown" class="drop-options">
+      <button id="daysbuy40" class="buy"  onclick="getBuy(40);" type="button">40% +</button>
+      <button id="daysbuy30" class="buy"  onclick="getBuy(30);" type="button">30% +</button>
+      <button id="daysbuy20" class="buy"  onclick="getBuy(20);" type="button">20% +</button>
+      <button id="daysbuyAvg" class="buy"  onclick="getBuy(60);" type="button">30d Avg +</button>
+      </div>
+</div>
 
-        <div class="slider">
-  
-          <input type="text" name="min" id="mini">
-          <input type="text" name="max" id="maxi">
-          <input type="range" min="-200" max="200" value="0" name="slider" id="slider" /> 
-          
-        </div>
-  
-    <button id="sliderButton" onclick="getDay(20);" type="button">Get Chart</button>
-    <button id="sliderReset" onclick="resetSlider();" type="button">Reset</button>
+  <!-- <button id="days50" class="d50"  onclick="getDay(50);" type="button">50 Days</button>
+  <button id="days70" class="d20" onclick="getDay(70);" type="button">70 Days</button>
+  <button id="days100" class="100"  onclick="getDay(100);" type="button">100 Days</button>
+  <button id="days300" class="300"  onclick="getDay(365);" type="button">365 Days</button> -->
 
   
   
   
 </div>
-    <div class="search">
-      <input placeholder="..Search..." type="text" id="filter" name="filter" />
-      <button id="clear" onclick="clea();" type="button"><strong>X</strong></button>
-      <button id="compare" class="compare hide" onclick="compareStocks();" type="button">Compare</button>
-      <button id="clearcompare" class="compare hide" onclick="clearcompareStocks();" type="button">Clear Compare</button>
-      <button id="Favourits" class="Favourits hide" onclick="getFavourits();" type="button">Favourits</button>
-      <button id="clearFavourits" class="Favourits hide" onclick="clearFavourits();" type="button">Clear Favourits</button>
-          
-      <div class="dropdown">
-          <button id="daysbuy" class="buy-main"  onclick="getBuyMain();" type="button">Buy List</button>
-          <div id="BuyDropdown" class="drop-options">
-            <button id="daysbuy40" class="buy"  onclick="getBuy(40);" type="button">40% +</button>
-            <button id="daysbuy30" class="buy"  onclick="getBuy(30);" type="button">30% +</button>
-            <button id="daysbuy20" class="buy"  onclick="getBuy(20);" type="button">20% +</button>
-            <button id="daysbuyAvg" class="buy"  onclick="getBuy(60);" type="button">30d Avg +</button>
-            </div>
-      </div>
-    </div>
+
+</div>
 
 
-<!-- <a href="/compare">Favourits</a> -->
-
-
-
+<div id="rangeshow"></div>
 
     <div id="comparel" class="comparel"></div>
 
       <div class="charts"></div>
       <ol class="volume"> </ol>
-
-      <style>
-        .range {
-              margin-top: 90px !important;
-            }
-        #filter, #filters {
-            min-width: 150px !important;
-            }
-      </style>
 
 <script src="/scripts.js"></script>
 <link rel="stylesheet" type="text/css"  href="/style.css" >

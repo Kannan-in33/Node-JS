@@ -40,8 +40,46 @@ let currentPriceDataTable = {};
 let currentVolumeDataTable = {};
 let positive = [];
 let positiveCompany = {};
+let Masterpositive = [];
+let MasterpositiveCompany = {};
+let Masterpositive1 = [];
+let MasterpositiveCompany1 = {};
+let Masterpositive2 = [];
+let MasterpositiveCompany2 = {};
+let Masterpositive3 = [];
+let MasterpositiveCompany3 = {};
+let MasterdCompanyObject = {};
+let MasterdCompanyObjectCopy = {};
+
+let MasterNegative = [];
+let MasterNegativeCompany = {};
+let MasterNegative1 = [];
+let MasterNegativeCompany1 = {};
+let MasterNegative2 = [];
+let MasterNegativeCompany2 = {};
+let MasterNegative3 = [];
+let MasterNegativeCompany3 = {};
+
+
 let negative = [];
 let negativeCompany = {};
+let upvalue0 = 0;
+let downvalue0 = 0;
+let upvalue1 = 0;
+let downvalue1 = 0;
+let upvalue2 = 0;
+let downvalue2 = 0;
+let upvalue3 = 0;
+let downvalue3 = 0;
+let upvalue4 = 0;
+let downvalue4 = 0;
+let upvalue5 = 0;
+let downvalue5 = 0;
+let checknum = 0;
+let closeOpenPriceData = [];
+let closeOpenPriceDataObject = {};
+let getCompareObject = {};
+
 let rupee = new Intl.NumberFormat('en-IN', {
     style: 'currency',
     currency: 'INR',
@@ -49,103 +87,108 @@ let rupee = new Intl.NumberFormat('en-IN', {
     
 });
 
+function getCompare() {
+  const xhr = new XMLHttpRequest();
+  xhr.open("GET", "/getcompare");
+  xhr.send();
+  xhr.responseType = "json";
+  xhr.onload = () => {
+  if (xhr.readyState == 4 && xhr.status == 200) {
+      getCompareObject = xhr.response;
+  } 
+  else {
+      console.log(`Error: ${xhr.status}`);
+      }
+  };
+}
+getCompare();
+
+
 function updateCompanyDeatils(){
-  let upvalue0 = 0;
-  let downvalue0 = 0;
-  let upvalue1 = 0;
-  let downvalue1 = 0;
-  let upvalue2 = 0;
-  let downvalue2 = 0;
-  let upvalue3 = 0;
-  let downvalue3 = 0;
-  let upvalue4 = 0;
-  let downvalue4 = 0;
-  let upvalue5 = 0;
-  let downvalue5 = 0;
-  let checknum = 0;
+
   
-let positivelength = positive0.length;
+// let positivelength = positive0.length;
 
-for(let p = 0; p < positivelength; p++) {
-  positive0.pop();
-}
+// for(let p = 0; p < positivelength; p++) {
+//   positive0.pop();
+// }
 
-let negativeListlength = negativeList0.length
+// let negativeListlength = negativeList0.length
 
-for(let n = 0; n < negativeListlength; n++) {
-  negativeList0.pop();
-}
+// for(let n = 0; n < negativeListlength; n++) {
+//   negativeList0.pop();
+// }
 
-// 1***********************
-positivelength = positive1.length;
+// // 1***********************
+// positivelength = positive1.length;
 
-for(let p = 0; p < positivelength; p++) {
-  positive1.pop();
-}
+// for(let p = 0; p < positivelength; p++) {
+//   positive1.pop();
+// }
 
-negativeListlength = negativeList1.length
+// negativeListlength = negativeList1.length
 
-for(let n = 0; n < negativeListlength; n++) {
-  negativeList1.pop();
-}
-// / END 1***************************
+// for(let n = 0; n < negativeListlength; n++) {
+//   negativeList1.pop();
+// }
+// // / END 1***************************
 
-positivelength = positive2.length;
+// positivelength = positive2.length;
 
-for(let p = 0; p < positivelength; p++) {
-  positive2.pop();
-}
+// for(let p = 0; p < positivelength; p++) {
+//   positive2.pop();
+// }
 
-negativeListlength = negativeList2.length
+// negativeListlength = negativeList2.length
 
-for(let n = 0; n < negativeListlength; n++) {
-  negativeList2.pop();
-}
-
-
-
-// END 2***************************
-
-positivelength = positive3.length;
-
-for(let p = 0; p < positivelength; p++) {
-  positive3.pop();
-}
-
-negativeListlength = negativeList3.length
-
-for(let n = 0; n < negativeListlength; n++) {
-  negativeList3.pop();
-}
-
-// END 3******************************
-
-positivelength = positive4.length;
-
-for(let p = 0; p < positivelength; p++) {
-  positive4.pop();
-}
-
-negativeListlength = negativeList4.length
-
-for(let n = 0; n < negativeListlength; n++) {
-  negativeList4.pop();
-}
-
-// END 4 ******************************
+// for(let n = 0; n < negativeListlength; n++) {
+//   negativeList2.pop();
+// }
 
 
-positivelength = positive5.length;
 
-for(let p = 0; p < positivelength; p++) {
-  positive5.pop();
-}
+// // END 2***************************
 
-negativeListlength = negativeList5.length
+// positivelength = positive3.length;
 
-for(let n = 0; n < negativeListlength; n++) {
-  negativeList5.pop();
-}
+// for(let p = 0; p < positivelength; p++) {
+//   positive3.pop();
+// }
+
+// negativeListlength = negativeList3.length
+
+// for(let n = 0; n < negativeListlength; n++) {
+//   negativeList3.pop();
+// }
+
+// // END 3******************************
+
+// positivelength = positive4.length;
+
+// for(let p = 0; p < positivelength; p++) {
+//   positive4.pop();
+// }
+
+// negativeListlength = negativeList4.length
+
+// for(let n = 0; n < negativeListlength; n++) {
+//   negativeList4.pop();
+// }
+
+// // END 4 ******************************
+
+
+// positivelength = positive5.length;
+
+// for(let p = 0; p < positivelength; p++) {
+//   positive5.pop();
+// }
+
+// negativeListlength = negativeList5.length
+
+// for(let n = 0; n < negativeListlength; n++) {
+//   negativeList5.pop();
+// }
 
 // END 5 ******************************
 
@@ -170,7 +213,7 @@ let tday;
 let yday;
 // DC data
 if(Object.keys(currentPriceDataMid).length < 20){
-  tday = CurrentPriceObj[companyDetails[d]];
+  tday = CurrentPriceObj[companyDetails[d]][0];
   yday = (dCompanyObject[companyDetails[d]][complen]);
 }
 else{
@@ -181,9 +224,12 @@ if(tday !== undefined ){
  checknum = checkPercent(tday, yday) ;
     if ((((tday - yday) / yday) * 100) < 0){
       divtagDC.classList.add("downTrend0");  
+      divtagDC.id = companyDetails[d];
     }
     else{
       divtagDC.classList.add("upTrend0");
+      divtagDC.id = companyDetails[d];
+      
     }
 
 divtagDC.innerText = Math.abs(checkPercent(tday, yday).toFixed(1)) ;
@@ -261,7 +307,7 @@ divtag0.appendChild(divtag);
 divtag = document.createElement("div");
 divtag.setAttribute("class", "difference0");
 complen = dCompanyObject[companyDetails[d]].length -1 ;
-tday = CurrentPriceObj[companyDetails[d]];
+tday = CurrentPriceObj[companyDetails[d]][0];
 yday = (dCompanyObject[companyDetails[d]][complen]);
 
 if(tday !== undefined ){
@@ -282,6 +328,8 @@ else{
   document.querySelector("#Gnumbers").innerText = upvalue0;
   positive0.push((checkPercent(tday, yday) ));
   positiveCompany0[checkPercent(tday, yday) ] = companyDetails[d];
+  Masterpositive.push((checkPercent(tday, yday) ));
+  MasterpositiveCompany[checkPercent(tday, yday) ] = companyDetails[d];
 }
 // }
 divtag.innerText = "0:  " +  Math.abs(checkPercent(tday, yday).toFixed(1)) ;
@@ -312,6 +360,8 @@ else{
   document.querySelector("button.upTrend1 span").innerText =  "  " + upvalue1;    
   positive1.push(checknum);
   positiveCompany1[checknum] = companyDetails[d];
+  Masterpositive1.push(checknum);
+  MasterpositiveCompany1[checknum] = companyDetails[d];
 
 }
 divtag.innerText = "1:  " +  Math.abs(checkPercent(tday, yday).toFixed(1)) ;
@@ -333,6 +383,7 @@ if (checknum < 0){
   negativeList2.push(checknum);
   negativeCompany2[checknum] = companyDetails[d];
   
+  
 }
 else{
   upvalue2++;
@@ -340,6 +391,8 @@ else{
   document.querySelector("button.upTrend2 span").innerText =  "  " + upvalue2;
   positive2.push(checknum);
   positiveCompany2[checknum ] = companyDetails[d];
+  Masterpositive2.push(checknum);
+  MasterpositiveCompany2[checknum] = companyDetails[d];
 
 
 }
@@ -371,6 +424,8 @@ else{
   document.querySelector("button.upTrend3 span").innerText = "  " + upvalue3;
   positive3.push(checknum);
   positiveCompany3[checknum] = companyDetails[d];
+  Masterpositive3.push(checknum);
+  MasterpositiveCompany3[checknum] = companyDetails[d];
 
 
 }
@@ -558,10 +613,9 @@ function comparetoggleHide(){
 function clea() {
     lst = document.querySelectorAll(".charts > div");
     // lst.forEach( ele => ele.style.display = "");
-
-  if(document.URL.includes("Sector")){
-
     document.getElementById("filter").value = '';
+  if(document.URL.includes("Sector")){
+    
     document.getElementById("SectorList").style.display = "block";
     // document.querySelector(".charts").innerHTML = "";
     myFunction();
@@ -572,7 +626,10 @@ function clea() {
     });
     document.getElementById("comparel").innerHTML ="";
   }
-    
+  else{
+    setFilter();
+  }
+  
 }
 
 function getDay(days){
@@ -599,7 +656,7 @@ function showPrice(){
   lst.forEach(element => {
     element.classList.toggle('show');    
   });
-  document.querySelector(".search").classList.toggle('hide');
+  // document.querySelector(".search").classList.toggle('hide');
 }
 
 function showNoGainers(){
@@ -783,7 +840,7 @@ let resultCount = 0;
               barcspan.setAttribute("class", "barcspan");
 
               if(i == 0){
-                barcspan.innerText = Number(currentPriceDataTable[key][i]).toFixed(1);  //perDif; 
+                barcspan.innerText = Number(CurrentPriceObj[key][1]).toFixed(1);  //perDif; 
                 }
                 else{
                   let PreviousPrice = currentPriceDataTable[key][i -1];
@@ -812,64 +869,64 @@ let resultCount = 0;
 
               // volume chart starts *********************************************************************************
 
-              if(Object.keys(currentVolumeDataTable).length > 1){
-                let barv = document.createElement("div");
-                    barv.setAttribute("class", "barv");
-                   let preHigv = 0;
-                    let largebarv = 0;
-                    let smallbarv = 0;
-                    largebarv = Math.max(...[...currentVolumeDataTable[key]]);
-                    smallbarv = Math.min(...[...currentVolumeDataTable[key]]);
+              // if(Object.keys(currentVolumeDataTable).length > 1){
+              //   let barv = document.createElement("div");
+              //       barv.setAttribute("class", "barv");
+              //      let preHigv = 0;
+              //       let largebarv = 0;
+              //       let smallbarv = 0;
+              //       largebarv = Math.max(...[...currentVolumeDataTable[key]]);
+              //       smallbarv = Math.min(...[...currentVolumeDataTable[key]]);
       
       
                   
-                  for(let i =0; i < currentVolumeDataTable[key].length ;  i++){
-                    // console.log(i);
+              //     for(let i =0; i < currentVolumeDataTable[key].length ;  i++){
+              //       // console.log(i);
       
-                  let barcv = document.createElement("div");
-                  let barct = document.createElement("div");
-                    barcv.setAttribute("class", "barcv");
+              //     let barcv = document.createElement("div");
+              //     let barct = document.createElement("div");
+              //       barcv.setAttribute("class", "barcv");
                     
-                    let higv =  (Number(currentVolumeDataTable[key][i])); // - (smallbar * 0.5));
-                    let perDif;
-                    if (i == 0){
-                      perDif = higv;
-                    }
-                    else{
-                      perDif = (higv - preHigv);
-                      // perDif = (((higv - preHigv)/higv)*100).toFixed(1);
-                    }     
+              //       let higv =  (Number(currentVolumeDataTable[key][i])); // - (smallbar * 0.5));
+              //       let perDif;
+              //       if (i == 0){
+              //         perDif = higv;
+              //       }
+              //       else{
+              //         perDif = (higv - preHigv);
+              //         // perDif = (((higv - preHigv)/higv)*100).toFixed(1);
+              //       }     
 
       
-                      numv = Number(higv);
-                      let unitv = (100 / (largebarv - smallbarv)); // (largebar - smallbar))
-                      let barHigv  = ((unitv * (numv - smallbarv) )).toFixed(1);
+              //         numv = Number(higv);
+              //         let unitv = (100 / (largebarv - smallbarv)); // (largebar - smallbar))
+              //         let barHigv  = ((unitv * (numv - smallbarv) )).toFixed(1);
       
-                    if(preHigv >= higv){
-                      barcv.style.backgroundColor = "rgba(255, 0,0, 0.35)";
-                    }
-                    else{
-                      barcv.style.backgroundColor = "rgba(20, 255 ,20, 0.75)";
+              //       if(preHigv >= higv){
+              //         barcv.style.backgroundColor = "rgba(255, 0,0, 0.35)";
+              //       }
+              //       else{
+              //         barcv.style.backgroundColor = "rgba(20, 255 ,20, 0.75)";
                       
-                    }
+              //       }
                     
-                    // let barHig = (hig * (100 / largebar)).toFixed(1);
-                    barcv.style.height = (Number(barHigv)).toString() + 'px'; //((largebar - Number(currentPriceData1[key][i])).toFixed(1).toString() + 'px').toString();
-                    barcv.style.top = (100 - Number(barHigv).toFixed(1).toString())+ 'px';
-                    // barc.style.width = '10px';
+              //       // let barHig = (hig * (100 / largebar)).toFixed(1);
+              //       barcv.style.height = (Number(barHigv)).toString() + 'px'; //((largebar - Number(currentPriceData1[key][i])).toFixed(1).toString() + 'px').toString();
+              //       barcv.style.top = (100 - Number(barHigv).toFixed(1).toString())+ 'px';
+              //       // barc.style.width = '10px';
                     
       
-                    let barcspanv = document.createElement("span");
-                    barcspanv.setAttribute("class", "barcspanv");
+              //       let barcspanv = document.createElement("span");
+              //       barcspanv.setAttribute("class", "barcspanv");
                     
-                    barcspanv.innerText = (perDif / 1000).toFixed(0); //; Number(currentVolumeDataTable[key][i]).toFixed(0) 
-                    barv.appendChild(barct);
-                    barct.appendChild(barcspanv);
-                    barct.appendChild(barcv);
-                    preHigv = higv;
-                  }
-                  // topDivtag.appendChild(barv);
-                    }
+              //       barcspanv.innerText = (perDif / 1000).toFixed(0); //; Number(currentVolumeDataTable[key][i]).toFixed(0) 
+              //       barv.appendChild(barct);
+              //       barct.appendChild(barcspanv);
+              //       barct.appendChild(barcv);
+              //       preHigv = higv;
+              //     }
+              //     // topDivtag.appendChild(barv);
+              //       }
 
 
                     // Volume chart ends }}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
@@ -1014,14 +1071,26 @@ function getData(e) {
         xhr.onload = () => {
           if (xhr.readyState == 4 && xhr.status == 200) {
             dCompanyObject = xhr.response.companyObject;
+            
+            if(Object.keys(MasterdCompanyObject).length == 0){
+              MasterdCompanyObject = dCompanyObject;
+              MasterdCompanyObjectCopy = dCompanyObject;
+            }
+            else{              
+              MasterdCompanyObject = Object.assign(dCompanyObject, MasterdCompanyObjectCopy)
+              MasterdCompanyObjectCopy = {};
+              MasterdCompanyObjectCopy = dCompanyObject;
+            }
+            
+            
             dVolumeObject = xhr.response.volumeObject;
             currentPriceData1 = xhr.response.currentPriceData1;            
             if(JSON.stringify(CurrentPriceObj).length == 2) {
             CurrentPriceObj = xhr.response.currentPriceData;
             currentPriceDataTable = xhr.response.currentPriceDataTable;
+            closeOpenPriceDataObject = xhr.response.closeOpenPriceDataObject;
             }
             currentVolumeDataTable = xhr.response.currentVolumeDataTable;
-            console.log(xhr.response.timestamp);
             createChart( xhr.response.companyObject, e);
           } 
           else {
@@ -1052,11 +1121,23 @@ function getSectorData(event) {
           if (xhr.readyState == 4 && xhr.status == 200) {
             dCompanyObject = xhr.response.companyObject;
             // dCompanyDateObject = xhr.response.companyDateObj;
+            
+            if(Object.keys(MasterdCompanyObject).length == 0){
+              MasterdCompanyObject = dCompanyObject;
+              MasterdCompanyObjectCopy = dCompanyObject;
+            }
+            else{              
+              MasterdCompanyObject = Object.assign(dCompanyObject, MasterdCompanyObjectCopy)
+              MasterdCompanyObjectCopy = {};
+              MasterdCompanyObjectCopy = dCompanyObject;
+            }
+
             dVolumeObject = xhr.response.volumeObject;
             CurrentPriceObj = xhr.response.currentPriceData;
             currentPriceData1 = xhr.response.currentPriceData1;
             currentPriceDataTable = xhr.response.currentPriceDataTable;
             currentVolumeDataTable = xhr.response.currentVolumeDataTable,
+            closeOpenPriceDataObject = xhr.response.closeOpenPriceDataObject;
             createChart( xhr.response.companyObject, event.target.id);
           } 
           else {
@@ -1083,6 +1164,7 @@ function getSectorDataAll() {
         currentPriceData1 = xhr.response.currentPriceData1;
         currentPriceDataTable = xhr.response.currentPriceDataTable;
         currentVolumeDataTable = xhr.response.currentVolumeDataTable,
+        closeOpenPriceDataObject = xhr.response.closeOpenPriceDataObject;
         createChart( xhr.response.companyObject);
         document.getElementById("filter").value = 'All';
         
@@ -1146,23 +1228,7 @@ function setFav(event){
         }
       }
 
-function getCompare() {
-        const xhr = new XMLHttpRequest();
-        xhr.open("GET", "/getcompare");
-        xhr.send();
-        xhr.responseType = "json";
-        xhr.onload = () => {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            // console.log("Success");
-            getCompareObject = xhr.response;
-            // console.log(getCompareObject);
-        } 
-        else {
-            console.log(`Error: ${xhr.status}`);
-            }
-        };
-}
-getCompare();
+
 
 function createChartMini(companyObject, companyName, divtag0, days = 1000){
           let yValues  = [];
@@ -1380,36 +1446,62 @@ function getUp(num){
   //   ele.style.display = "none" ;
   // });
 
-    let positivelength = positive.length;
+    // let positivelength = positive.length;
 
-    for(let p = 0; p < positivelength; p++) {
-    positive.pop();
-    }
-    positiveCompany = {};
+    // for(let p = 0; p < positivelength; p++) {
+    // positive.pop();
+    // }
+    // positiveCompany = {};
 
   switch (num){
     case 0:
-      positive = [...positive0];
-      positiveCompany = positiveCompany0;
+      positive = [...Masterpositive];
+      positiveCompany = MasterpositiveCompany;
+      
       break;
 
       case 1:
-        positive = [...positive1];
-        positiveCompany = positiveCompany1;
+        positive = [...Masterpositive1];
+        positiveCompany = MasterpositiveCompany1;
         break;
+      
+      case 2:
+      positive = [...Masterpositive2];
+      positiveCompany = MasterpositiveCompany2;
+      break;
 
-        case 2:
-          positive = [...positive2];
-          positiveCompany = positiveCompany2;
-          break;
+      case 3:
+        positive = [...Masterpositive3];
+        positiveCompany = MasterpositiveCompany3;
+        break;
+positive.sort().reverse();
+createPositiveChart(MasterdCompanyObject);
 
-          case 3:
-            positive = [...positive3];
-            positiveCompany = positiveCompany3;
-            break;
+  //       case 2:
+  //         positive = [...positive, ...positive2];
+  //         positiveCompany = object.assign(positiveCompany , positiveCompany2);
+  //         break;
+
+  //         case 3:
+  //           positive = [...positive, ...positive3];
+  //           positiveCompany = object.assign(positiveCompany , positiveCompany3);
+  //           break;
   }
 
-  createPositiveChart(dCompanyObject);
+      
+      
+      // let DownList = document.querySelectorAll('.dayCompare.downTrend0');
+      // DownList.forEach( (DowEle) => {
+      //   let DowEleParent = document.getElementById(DowEle.id);
+      //       DowEleParent.style.display = 'none';
+
+      // });
+      // positive.sort().reverse()
+
+     
+
+  
+  // createPositiveChart(dCompanyObject);
     // for(let i = 0; i < Math.max(positive.length , 0);){
     //     let indx = positiveCompany[positive[i]];
     //     let elementUp = document.getElementById(indx);
@@ -1426,41 +1518,67 @@ function getUp(num){
   }
 
 function getDown(num){
+
+
+  switch (num){
+    case 0:
+      positive = [...MasterNegative];
+      positiveCompany = MasterNegativeCompany;
+      
+      break;
+
+      case 1:
+        positive = [...MasterNegative1];
+        positiveCompany = MasterNegativeCompany1;
+        break;
+      
+      case 2:
+      positive = [...MasterNegative2];
+      positiveCompany = MasterNegativeCompany2;
+      break;
+
+      case 3:
+        positive = [...MasterNegative3];
+        positiveCompany = MasterNegativeCompany3;
+        break;
+positive.sort().reverse();
+createPositiveChart(MasterdCompanyObject);
+
   // document.querySelector(".charts").style.display = "none"; 
   // let lst = document.querySelectorAll(".charts > div");
   // lst.forEach( (ele) => {
   //   ele.style.display = "none" ;
   // });
 
-  let positivelength = positive.length;
+  // let positivelength = positive.length;
 
-  for(let p = 0; p < positivelength; p++) {
-  positive.pop();
-  }
-  positiveCompany = {};
+  // for(let p = 0; p < positivelength; p++) {
+  // positive.pop();
+  // }
+  // positiveCompany = {};
 
-  switch (num){
-    case 0:
-      positive = [...negativeList0];
-      positiveCompany = negativeCompany0;
-      break;
+  // switch (num){
+  //   case 0:
+  //     positive = [...negativeList0];
+  //     positiveCompany = negativeCompany0;
+  //     break;
 
-      case 1:
-        positive = [...negativeList1];
-        positiveCompany = negativeCompany1;
-        break;
+  //     case 1:
+  //       positive = [...negativeList1];
+  //       positiveCompany = negativeCompany1;
+  //       break;
 
-        case 2:
-          positive = [...negativeList2];
-          positiveCompany = negativeCompany2;
-          break;
+  //       case 2:
+  //         positive = [...negativeList2];
+  //         positiveCompany = negativeCompany2;
+  //         break;
 
-          case 3:
-            positive = [...negativeList3];
-            positiveCompany = negativeCompany3;
-            break;
-  }
-  createPositiveChart(dCompanyObject);
+  //         case 3:
+  //           positive = [...negativeList3];
+  //           positiveCompany = negativeCompany3;
+  //           break;
+  // }
+  // createPositiveChart(dCompanyObject);
 
     // for(let i = 0; i < Math.max(negative.length,0);){
     //     let indx = negativeCompany[negative[i]];
@@ -1519,7 +1637,7 @@ if(key !== undefined){
           let yValues  = [];
           let volumeValues = [];
           yValues  = [...companyObject[key]];
-          volumeValues  = [...dVolumeObject[key]];
+          // volumeValues  = [...dVolumeObject[key]];
           let xValues = [];
           let yValues2 = [];
 
@@ -2318,7 +2436,44 @@ slider.oninput = function() {
       document.onscroll = function(){
         document.querySelector(".range").style.display = "none";
         }
-        document.querySelector(".static").onclick = function(){
+        document.querySelector("#rangeshow").onclick = function(){
           document.querySelector(".range").style.display = "";
         }
         
+
+function getOpenData() {
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", "/open");
+    xhr.send();
+    xhr.responseType = "json";
+    xhr.onload = () => {
+      if (xhr.readyState == 4 && xhr.status == 200) {
+        dCompanyObject = xhr.response.companyObject;
+        // dCompanyDateObject = xhr.response.companyDateObj;
+        if(Object.keys(MasterdCompanyObject).length == 0){
+          MasterdCompanyObject = dCompanyObject;
+          MasterdCompanyObjectCopy = dCompanyObject;
+        }
+        else{              
+          MasterdCompanyObject = Object.assign(dCompanyObject, MasterdCompanyObjectCopy)
+          MasterdCompanyObjectCopy = {};
+          MasterdCompanyObjectCopy = dCompanyObject;
+        }
+
+        dVolumeObject = xhr.response.volumeObject;
+        CurrentPriceObj = xhr.response.currentPriceData;
+        currentPriceData1 = xhr.response.currentPriceData1;
+        currentPriceDataTable = xhr.response.currentPriceDataTable;
+        currentVolumeDataTable = xhr.response.currentVolumeDataTable;
+        closeOpenPriceDataObject = xhr.response.closeOpenPriceDataObject;
+        closeOpenPriceData = xhr.response.closeOpenPriceData;
+        createChart( MasterdCompanyObjectCopy);
+
+      } 
+      else {
+        console.log(`Error: ${xhr.status}`);
+        }
+      };
+      showPrice();
+}
+       
