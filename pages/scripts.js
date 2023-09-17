@@ -319,6 +319,8 @@ if ((((tday - yday) / yday) * 100) < 0){
   document.querySelector("#Dnumbers").innerText = downvalue0;
   negativeList0.push((checkPercent(tday, yday) ));
   negativeCompany0[checkPercent(tday, yday) ] = companyDetails[d];
+  MasterNegative.push((checkPercent(tday, yday) ));
+  MasterNegativeCompany[checkPercent(tday, yday) ] = companyDetails[d];
   
 }
 else{
@@ -348,10 +350,11 @@ checknum = checkPercent(tday, yday) ;
 if (checknum < 0){
   downvalue1++;
   divtag.classList.add("downTrend1");
-  document.querySelector("button.downTrend1 span").innerText =  "  " + downvalue1;
-  
+  document.querySelector("button.downTrend1 span").innerText =  "  " + downvalue1;  
   negativeList1.push(checknum);
   negativeCompany1[checknum] = companyDetails[d];
+  MasterNegative1.push(checknum);
+  MasterNegativeCompany1[checknum] = companyDetails[d];
   
 }
 else{
@@ -382,7 +385,8 @@ if (checknum < 0){
   document.querySelector("button.downTrend2 span").innerText =  "  " + downvalue2;  
   negativeList2.push(checknum);
   negativeCompany2[checknum] = companyDetails[d];
-  
+  MasterNegative2.push(checknum);
+  MasterNegativeCompany2[checknum] = companyDetails[d];
   
 }
 else{
@@ -412,10 +416,11 @@ checknum = checkPercent(tday, yday) ;
 if (checknum < 0){
   downvalue3++;
   divtag.classList.add("downTrend3");
-  document.querySelector("button.downTrend3 span").innerText =  "  " + downvalue3;
-  
+  document.querySelector("button.downTrend3 span").innerText =  "  " + downvalue3;  
   negativeList3.push(checknum);
   negativeCompany3[checknum] = companyDetails[d];
+  MasterNegative3.push(checknum);
+  MasterNegativeCompany3[checknum] = companyDetails[d];
   
 }
 else{
@@ -1441,17 +1446,17 @@ function clearFavourits(){
   
 function getUp(num){
   // document.querySelector(".charts").style.display = "none"; 
-  // let lst = document.querySelectorAll(".charts > div");
-  // lst.forEach( (ele) => {
-  //   ele.style.display = "none" ;
-  // });
+  let lst = document.querySelectorAll(".charts > div");
+  lst.forEach( (ele) => {
+    ele.style.display = "none" ;
+  });
 
-    // let positivelength = positive.length;
+    let positivelength = positive.length;
 
-    // for(let p = 0; p < positivelength; p++) {
-    // positive.pop();
-    // }
-    // positiveCompany = {};
+    for(let p = 0; p < positivelength; p++) {
+    positive.pop();
+    }
+    positiveCompany = {};
 
   switch (num){
     case 0:
@@ -1474,7 +1479,9 @@ function getUp(num){
         positive = [...Masterpositive3];
         positiveCompany = MasterpositiveCompany3;
         break;
+  }
 positive.sort().reverse();
+
 createPositiveChart(MasterdCompanyObject);
 
   //       case 2:
@@ -1486,7 +1493,7 @@ createPositiveChart(MasterdCompanyObject);
   //           positive = [...positive, ...positive3];
   //           positiveCompany = object.assign(positiveCompany , positiveCompany3);
   //           break;
-  }
+ 
 
       
       
@@ -1518,8 +1525,18 @@ createPositiveChart(MasterdCompanyObject);
   }
 
 function getDown(num){
+  // document.querySelector(".charts").style.display = "none"; 
+  let lst = document.querySelectorAll(".charts > div");
+  lst.forEach( (ele) => {
+    ele.style.display = "none" ;
+  });
 
+  let positivelength = positive.length;
 
+  for(let p = 0; p < positivelength; p++) {
+  positive.pop();
+  }
+  positiveCompany = {};
   switch (num){
     case 0:
       positive = [...MasterNegative];
@@ -1541,6 +1558,7 @@ function getDown(num){
         positive = [...MasterNegative3];
         positiveCompany = MasterNegativeCompany3;
         break;
+  }
 positive.sort().reverse();
 createPositiveChart(MasterdCompanyObject);
 
