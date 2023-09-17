@@ -79,6 +79,8 @@ let checknum = 0;
 let closeOpenPriceData = [];
 let closeOpenPriceDataObject = {};
 let getCompareObject = {};
+let highPriceData = [];
+let BuyObject52High = {};
 
 let rupee = new Intl.NumberFormat('en-IN', {
     style: 'currency',
@@ -664,6 +666,16 @@ function showPrice(){
   // document.querySelector(".search").classList.toggle('hide');
 }
 
+function showPages(){
+  document.querySelector("#pagesDropdown").classList.toggle('show');
+  
+  let lst = document.querySelectorAll(".pagelink");
+  lst.forEach(element => {
+    element.classList.toggle('show');    
+  });
+
+}
+
 function showNoGainers(){
   let lst = document.querySelectorAll("[class^='downTrend']");
   lst.forEach(element => {
@@ -979,6 +991,9 @@ let resultCount = 0;
                         if ((yValues2[1] * 1.05) < ccurrect){
                            BuyObject3Avg[key] = companyObject[key];
                            }
+                           if (cmax == ccurrect){
+                            BuyObject52High[key] = companyObject[key];
+                            }
                       
                         new Chart(canvas, {
                             type: "line",
@@ -2493,8 +2508,44 @@ function getOpenData() {
       };
       showPrice();
 }
-       
+      //  High data Start
+function getHighData() {
+  const xhr = new XMLHttpRequest();
+  xhr.open("GET", "/highp");
+  xhr.send();
+  xhr.responseType = "json";
+  xhr.onload = () => {
+    if (xhr.readyState == 4 && xhr.status == 200) {
+      dCompanyObject = xhr.response.companyObject;
+      // dCompanyDateObject = xhr.response.companyDateObj;
+      if(Object.keys(MasterdCompanyObject).length == 0){
+        MasterdCompanyObject = dCompanyObject;
+        MasterdCompanyObjectCopy = dCompanyObject;
+      }
+      else{              
+        MasterdCompanyObject = Object.assign(dCompanyObject, MasterdCompanyObjectCopy)
+        MasterdCompanyObjectCopy = {};
+        MasterdCompanyObjectCopy = dCompanyObject;
+      }
 
+      dVolumeObject = xhr.response.volumeObject;
+      CurrentPriceObj = xhr.response.currentPriceData;
+      currentPriceData1 = xhr.response.currentPriceData1;
+      currentPriceDataTable = xhr.response.currentPriceDataTable;
+      currentVolumeDataTable = xhr.response.currentVolumeDataTable;
+      closeOpenPriceDataObject = xhr.response.closeOpenPriceDataObject;
+      highPriceData = xhr.response.highPriceData;
+      createChart( MasterdCompanyObjectCopy);
+
+    } 
+    else {
+      console.log(`Error: ${xhr.status}`);
+      }
+    };
+    showPrice();
+}
+
+// End of High Data
 function updateCompanyDeatilsPositive(){
   
     for(let d = 0 ; d < companyDetails.length ; d++) {

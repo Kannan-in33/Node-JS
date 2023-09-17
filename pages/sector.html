@@ -22,8 +22,17 @@
   <button id="getData201" class="201" onclick="getData(201);" type="button">Stocks 201+</button>
   <button id="getData401" class="401" onclick="getData(401);" type="button">Stocks 401+</button>
   <button id="getData601" class="601" onclick="getData(601);" type="button">Stocks 601+</button> -->
-  <a href="/">Home</a>
-  <a href="/openg">Open+</a>
+  
+  <div class="Pagedropdown">  
+    <button id="pages" class="pagesDropDown"  onclick="showPages();" type="button">Pages <span id="Pagenumbers"></span></button>              
+          <div id="pagesDropdown" class="drop-options hide">
+            <a class="pagelink" href="/">Home</a>
+            <a class="pagelink" href="/fav">Favourite</a>
+            <a class="pagelink" href="/openg">Opened High</a>
+            <a class="pagelink" href="/high">52w High</a>
+          </div>
+    </div>
+
   <div class="Gdropdown">  
     <button id="gainers" class="gainers upTrends"  onclick="showGainers();" type="button">Gainers <span id="Gnumbers"></span></button>              
           <div id="GainDropdown" class="drop-options">

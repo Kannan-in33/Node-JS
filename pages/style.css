@@ -136,7 +136,7 @@
         display: none;
         width: 100% !important;
       }
-      .Pdropdown,  .Ddropdown, .Gdropdown{
+      .Pdropdown,  .Ddropdown, .Gdropdown, .Pagedropdown{
         width: 20% !important;
         margin: 0 8px;
       }
@@ -145,6 +145,10 @@
         margin-left: 0 !important;
         display: flex;
         place-content: center;
+      }
+
+      #pages, #pagesDropdown > a.pagelink {
+        width: 100% !important;
       }
 
       .upTrends::before, 
@@ -284,7 +288,7 @@
        display: none;
      }
      .show{
-       display: block;
+       display: block !important;
      }
      .dropdown{
        width: 22%;
@@ -508,7 +512,7 @@
               /* width: 100%; */
              }
 
-             .Ddropdown, .Gdropdown {
+             .Ddropdown, .Gdropdown, .Pagedropdown {
               width: 20% !important;
               margin: 0 8px;
           }

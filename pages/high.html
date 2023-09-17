@@ -9,19 +9,17 @@
   
    </head>
     <body>
-     
-
       <div class="static">
         
         <div class="Pagedropdown">  
-          <button id="pages" class="pagesDropDown"  onclick="showPages();" type="button">Pages <span id="Pagenumbers"></span></button>              
-                <div id="pagesDropdown" class="drop-options hide">
-                  <a class="pagelink" href="/">Home</a>
-                  <a class="pagelink" href="/Sector">Sector</a>
-                  <a class="pagelink" href="/openg">Opened High</a>
-                  <a class="pagelink" href="/high">52w High</a>
-                </div>
-          </div>
+            <button id="pages" class="pagesDropDown"  onclick="showPages();" type="button">Pages <span id="Pagenumbers"></span></button>              
+                  <div id="pagesDropdown" class="drop-options hide">
+                    <a class="pagelink" href="/">Home</a>
+                    <a class="pagelink" href="/Sector">Sector</a>
+                    <a class="pagelink" href="/fav">Favourite</a>
+                    <a class="pagelink" href="/openg">Opened High</a>
+                  </div>
+            </div>
         
         
         <div class="Gdropdown">  
@@ -43,12 +41,6 @@
             <button class="downTrend3"  onclick="getDown(3);">+3 Day <span id="resultsd3"></span></button>
           </div>
         </div>
-      <!-- <div class="page">
-            <button class="previous"  onclick="previous();">Previous <span id="previous"></span></button> 
-            <button class="next"  onclick="next();">Next<span id="next"></span></button>
-          </div> -->
-
-        <!-- </div> -->
 
     <div class="range">
 
@@ -76,13 +68,7 @@
       </div>
 </div>
 
-  <!-- <button id="days50" class="d50"  onclick="getDay(50);" type="button">50 Days</button>
-  <button id="days70" class="d20" onclick="getDay(70);" type="button">70 Days</button>
-  <button id="days100" class="100"  onclick="getDay(100);" type="button">100 Days</button>
-  <button id="days300" class="300"  onclick="getDay(365);" type="button">365 Days</button> -->
 
-  
-  
   
 </div>
 
@@ -94,12 +80,11 @@
     <div id="comparel" class="comparel"></div>
 
       <div class="charts"></div>
-      <ol class="volume"> </ol>
 
 <script src="/scripts.js"></script>
 <link rel="stylesheet" type="text/css"  href="/style.css" >
 <script>
-    getFavData([...Array.from(localStorage)].sort());
+    getHighData();
 </script>
 </body>
 </html>

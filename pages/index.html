@@ -14,7 +14,7 @@
       <div class="static">
         <div class="Pdropdown">  
           <button id="price" class="priceDropDown"  onclick="showPrice();" type="button">Price <span id="Pnumbers"></span></button>              
-                <div id="PriceDropdown" class="drop-options">
+                <div id="PriceDropdown" class="drop-option ">
                     <button id="getData50" class="50" onclick="getData(50);" type="button">Stocks 50+</button>
                     <button id="getData101" class="101" onclick="getData(101);" type="button">Stocks 101+</button>
                     <button id="getData201" class="201" onclick="getData(201);" type="button">Stocks 201+</button>
@@ -22,7 +22,18 @@
                     <button id="getData601" class="601" onclick="getData(601);" type="button">Stocks 601+</button>
                 </div>
           </div>
-        <a href="/Sector">Sector</a>
+        
+        <div class="Pagedropdown">  
+          <button id="pages" class="pagesDropDown"  onclick="showPages();" type="button">Pages <span id="Pagenumbers"></span></button>              
+                <div id="pagesDropdown" class="drop-options hide">
+                  <a class="pagelink" href="/Sector">Sector</a>
+                  <a class="pagelink" href="/fav">Favourite</a>
+                  <a class="pagelink" href="/openg">Opened High</a>
+                  <a class="pagelink" href="/high">52w High</a>
+                </div>
+          </div>
+
+
         
         
         <div class="Gdropdown">  

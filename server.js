@@ -18,6 +18,7 @@ let cvvalues;
 let copvalues;
 let cpvaluesTable;
 let closeOpenPriceData = [];
+let highPriceData = [];
 let closeOpenPriceDataObject = {};
 let tempArr = [];
 let tempArr2 =[];
@@ -41,9 +42,9 @@ getCloseOpenPrice =  async () =>{
                     const closeOpenPrice = await googleSheets.spreadsheets.values.get({
                         auth,
                         spreadsheetId,
-                        range: 'DailyGainers!A2:D1133', 
+                        range: 'DailyGainers!A2:E1133', 
                     });
-
+                    highPriceData =[];
         copvalues = (closeOpenPrice.data.values);    
             copvalues.forEach ( (ele, i) => {
                 closeOpenPriceDataObject[ele[0]] = copvalues[i];
@@ -54,8 +55,16 @@ getCloseOpenPrice =  async () =>{
                     closeOpenPriceData.push(ele[0]);
                 }
             }
+
+            let currentPrice = ele[2];
+            let highPrice = ele[4];
+            if( currentPrice > 0 && (currentPrice == highPrice ||  highPrice < ( currentPrice * 0.03))){
+                highPriceData.push(ele[0]);
+                // console.log(ele[0] + ' highPrice = ' + highPrice + ' currentPrice =' + currentPrice);
+            }
+
 });
-console.log('closeOpenPriceData  ' + closeOpenPriceData.length);
+// console.log('closeOpenPriceData  ' + closeOpenPriceData.length);
              }
 }
 
@@ -222,7 +231,10 @@ server.get('/scripts.js', (req, res) => {
 
 });
 
+server.get('/high', (req, res) => {
+    res.sendFile(path.join(__dirname, './pages/high.html'));
 
+});
         
 server.use( (req, res)=>{
 
@@ -253,11 +265,79 @@ if(req.path.includes('getcompare')) {
         });
         }
 
+// High page data
+
+else if(req.path.includes('highp')) {
+    let ARR = [...highPriceData];        
+    let foldersPath = fs.readdirSync(path.resolve(__dirname, 'src/'));
+    foldersPath.forEach( (folder, j) => {
+        //  ||  folder == '401'
+    if(folder == 'All'){  // 'All
+    const directorypath = path.join(__dirname, 'src/' + folder);
+    fs.readdir(directorypath , function (err, files) {
+    if (err) throw err;
+    for(let j = 1; j < ARR.length; j++){
+    files.forEach( (file, i) => {
+        
+        if (file.split('.')[0] == ARR[j]){
+        fs.readFile(path.join(directorypath , file), 'utf8', function (err2, data) {
+        if (err2) throw err2;
+            obj = JSON.parse(data);
+            let j = 0;
+            company.push(file);
+            
+                if(obj['datasets'].length > 0 ){
+                    // valueList[file.split('.')[0]] = obj['datasets'][0]['values'].length
+                    max = max < obj['datasets'][0]['values'].length ? obj['datasets'][0]['values'].length : max
+                    for (let key in obj['datasets'][0]['values']) {
+                        // console.log(obj['datasets'][1]['values'][key][1]["delivery"]);
+                            obj2.push(obj['datasets'][0]['values'][key][1]);  
+                                volumeObj.push((obj['datasets'][1]['values'][key][1])/100000); 
+                    }
+                    companyObject[file.split('.')[0]] = [...obj2];
+                    volumeObject[file.split('.')[0]] = [...volumeObj];
+                    obj2 =[];
+                    datesObj = [];
+                    volumeObj =[];
+            }
+
+                if (file.split('.')[0] == ARR[ARR.length - 1] ){
+                obj3 = { 
+                    "company" : company,
+                    "companyObject" : companyObject,
+                    "volumeObject" : volumeObject,
+                    "currentPriceData": currentPriceData,
+                    "currentPriceData1": currentPriceData1,
+                    "currentPriceDataTable":currentPriceDataTable,
+                    "currentVolumeDataTable": currentVolumeDataTable,
+                    "closeOpenPriceDataObject": closeOpenPriceDataObject,
+                    "highPriceData":highPriceData,
+                }
+                res.send(obj3);
+    }
+    
+    });
+    
+}
+
+    });
+    
+}
+
+    });
+
+}
+});  
+}
+
+// High Page End
+
+
 // Open page data
 
 else if(req.path.includes('open')) {
     let ARR = [...closeOpenPriceData];        
-    console.log(ARR.length);
+    // console.log(ARR.length);
     let foldersPath = fs.readdirSync(path.resolve(__dirname, 'src/'));
     foldersPath.forEach( (folder, j) => {
         //  ||  folder == '401'
