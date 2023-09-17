@@ -1963,7 +1963,6 @@ if(key !== undefined){
                               });
 //  chart ends here
     }
-document.getElementById("results0").innerText = resultCount.toString();
 let idlst = document.querySelectorAll("[id^='getData']");
 idlst.forEach( element => {
 element.innerText = "Stocks " + element.classList[0] +'+';
@@ -2607,14 +2606,14 @@ function updateCompanyDeatilsPositive(){
   if ((((tday - yday) / yday) * 100) < 0){
     downvalue0++;
     divtag.classList.add("downTrend0"); 
-    document.querySelector("#Dnumbers").innerText = downvalue0;
+    // document.querySelector("#Dnumbers").innerText = downvalue0;
 
     
   }
   else{
     upvalue0++;
     divtag.classList.add("upTrend0");
-    document.querySelector("#Gnumbers").innerText = upvalue0;
+    // document.querySelector("#Gnumbers").innerText = upvalue0;
 
   }
   // }
