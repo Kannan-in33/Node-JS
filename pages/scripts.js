@@ -1969,7 +1969,7 @@ idlst.forEach( element => {
 element.innerText = "Stocks " + element.classList[0] +'+';
 element.classList.remove('active');
 })
-updateCompanyDeatils();
+updateCompanyDeatilsPositive();
 updateFavourite();
       }
   //           let yValues  = [];
@@ -2495,3 +2495,233 @@ function getOpenData() {
       showPrice();
 }
        
+
+function updateCompanyDeatilsPositive(){
+  
+    for(let d = 0 ; d < companyDetails.length ; d++) {
+      
+  if (document.querySelectorAll('#'+ companyDetails[d].toString().replace("&"," ")).length > 0 &&  document.querySelectorAll('#'+ companyDetails[d] + " .right .block1").length == 0){
+  
+  if (JSON.stringify(getCompareObject).includes([companyDetails[d]])){
+  let divtag0 = document.createElement("div");
+    divtag0.setAttribute("class", "block1");
+    document.querySelector('#'+ companyDetails[d] + " .right").appendChild(divtag0);
+  
+  let divtag = document.createElement("div");
+      divtag.setAttribute("class", "dayComp");
+  
+  // Start UPDTAE CURRENT and 1 Data************************************************
+  
+  let divtagDC = document.createElement("div");
+  divtagDC.setAttribute("class", "dayCompare");
+  let complen = dCompanyObject[companyDetails[d]].length -1 ;
+  let tday;
+  let yday;
+  // DC data
+  if(Object.keys(currentPriceDataMid).length < 20){
+    tday = CurrentPriceObj[companyDetails[d]][0];
+    yday = (dCompanyObject[companyDetails[d]][complen]);
+  }
+  else{
+    tday = currentPriceDataMid[companyDetails[d]];
+    yday = (dCompanyObject[companyDetails[d]][complen]);
+  }
+  if(tday !== undefined ){
+   checknum = checkPercent(tday, yday) ;
+      if ((((tday - yday) / yday) * 100) < 0){
+        divtagDC.classList.add("downTrend0");  
+        divtagDC.id = companyDetails[d];
+      }
+      else{
+        divtagDC.classList.add("upTrend0");
+        divtagDC.id = companyDetails[d];
+        
+      }
+  
+  divtagDC.innerText = Math.abs(checkPercent(tday, yday).toFixed(1)) ;
+  divtag.appendChild(divtagDC);
+  }
+  
+  
+  if(Object.keys(currentPriceDataMid).length > 20){
+    tday = CurrentPriceObj[companyDetails[d]];
+    yday = currentPriceDataMid[companyDetails[d]];
+    let divtagLC = document.createElement("div");
+    divtagLC.setAttribute("class", "LCompare");
+  
+  if(tday !== undefined ){
+   checknum = checkPercent(tday, yday) ;
+      if ((((tday - yday) / yday) * 100) < 0){
+        divtagLC.classList.add("downTrend0");  
+      }
+      else{
+        divtagLC.classList.add("upTrend0");
+      }
+  
+      divtagLC.innerText = Math.abs(checkPercent(tday, yday).toFixed(1)) ;
+  divtag.appendChild(divtagLC);
+  }
+  
+  }
+  
+  
+  
+  divtag0.appendChild(divtag);
+  
+  // **************************************update Current and 1 data END************************************
+  
+  
+    divtag = document.createElement("div");
+    divtag.setAttribute("class", "MarketCap");
+    divtag.innerText = "M:" + rupee.format(getCompareObject[companyDetails[d]]['Market Cap']);
+    divtag0.appendChild(divtag);
+  
+  divtag = document.createElement("div");
+  divtag.setAttribute("class", "bookvalue");
+  divtag.innerText = "BK:  " + getCompareObject[companyDetails[d]]['Book Value'];
+  divtag0.appendChild(divtag);
+  
+
+  
+  divtag = document.createElement("div");
+  divtag.setAttribute("class", "Reserve");
+  divtag.innerText = "R:" + rupee.format(getCompareObject[companyDetails[d]].Reserves);
+  divtag0.appendChild(divtag);
+  
+  divtag = document.createElement("div");
+  divtag.setAttribute("class", "Barrowing");
+  divtag.innerText = "B:" + rupee.format(getCompareObject[companyDetails[d]].Borrowings);
+  divtag0.appendChild(divtag);
+  
+  
+  //  UPDTAE CURRENT Data************************************************
+  
+  divtag = document.createElement("div");
+  divtag.setAttribute("class", "difference0");
+  complen = dCompanyObject[companyDetails[d]].length -1 ;
+  tday = CurrentPriceObj[companyDetails[d]][0];
+  yday = (dCompanyObject[companyDetails[d]][complen]);
+  
+  if(tday !== undefined ){
+   checknum = checkPercent(tday, yday) ;
+  if ((((tday - yday) / yday) * 100) < 0){
+    downvalue0++;
+    divtag.classList.add("downTrend0"); 
+    document.querySelector("#Dnumbers").innerText = downvalue0;
+
+    
+  }
+  else{
+    upvalue0++;
+    divtag.classList.add("upTrend0");
+    document.querySelector("#Gnumbers").innerText = upvalue0;
+
+  }
+  // }
+  divtag.innerText = "0:  " +  Math.abs(checkPercent(tday, yday).toFixed(1)) ;
+  
+  }
+  divtag0.appendChild(divtag);
+  
+  // **************************************update Current data END************************************
+  
+  divtag = document.createElement("div");
+  divtag.setAttribute("class", "difference1");
+  complen = dCompanyObject[companyDetails[d]].length -1 ;
+  tday = (dCompanyObject[companyDetails[d]][complen]);
+  yday = (dCompanyObject[companyDetails[d]][complen -1] );
+  checknum = checkPercent(tday, yday) ;
+  if (checknum < 0){
+    downvalue1++;
+    divtag.classList.add("downTrend1");
+    divtag.innerText =  "  " + downvalue1;
+
+    
+  }
+  else{
+    upvalue1++;
+    divtag.classList.add("upTrend1");
+    divtag.innerText =  "  " + upvalue1;
+  
+  
+  }
+  divtag.innerText = "1:  " +  Math.abs(checkPercent(tday, yday).toFixed(1)) ;
+  divtag0.appendChild(divtag);
+  
+  // Second Symbol
+  
+  
+  divtag = document.createElement("div");
+  divtag.setAttribute("class", "difference2");
+  complen = dCompanyObject[companyDetails[d]].length -2 ;
+  tday = (dCompanyObject[companyDetails[d]][complen]);
+  yday = (dCompanyObject[companyDetails[d]][complen -1] );
+  checknum = checkPercent(tday, yday) ;
+  if (checknum < 0){
+    downvalue2++;
+    divtag.classList.add("downTrend2");
+    divtag.innerText =  "  " + downvalue2;  
+  
+    
+  }
+  else{
+    upvalue2++;
+    divtag.classList.add("upTrend2");
+    divtag.innerText =  "  " + upvalue2;
+
+  
+  
+  }
+  divtag.innerText = "2:  " +  Math.abs(checkPercent(tday, yday).toFixed(1)) ;
+  divtag0.appendChild(divtag);
+  
+  // Third Symbol*****************************************************************************
+  
+  
+  divtag = document.createElement("div");
+  divtag.setAttribute("class", "difference3");
+  complen = dCompanyObject[companyDetails[d]].length -3 ;
+  tday = (dCompanyObject[companyDetails[d]][complen]);
+  yday = (dCompanyObject[companyDetails[d]][complen -1] );
+  checknum = checkPercent(tday, yday) ;
+  
+  if (checknum < 0){
+    downvalue3++;
+    divtag.classList.add("downTrend3");
+    divtag.innerText =  "  " + downvalue3;  
+      
+  }
+  else{
+    upvalue3++;
+    divtag.classList.add("upTrend3");
+    divtag.innerText =  "  " + upvalue3;  
+
+  
+  }
+  divtag.innerText = "3:  " +  Math.abs(checkPercent(tday, yday).toFixed(1)) ;
+  divtag0.appendChild(divtag);
+  
+  
+  divtag = document.createElement("div");
+  divtag.setAttribute("class", "currentPrice");
+  complen = dCompanyObject[companyDetails[d]].length -1 ;
+  tday = (dCompanyObject[companyDetails[d]][complen]);
+  divtag.innerText = rupee.format(tday) ;
+  divtag0.appendChild(divtag);
+  
+ 
+  
+  }
+  
+  }
+  }
+  positive0.sort((a, b) => b - a);
+  positive1.sort((a, b) => b - a);
+  positive2.sort((a, b) => b - a);
+  positive3.sort((a, b) => b - a);
+  
+  negativeList0.sort((a, b) => a - b);
+  negativeList1.sort((a, b) => a - b);
+  negativeList2.sort((a, b) => a - b);
+  negativeList3.sort((a, b) => a - b);
+  }
