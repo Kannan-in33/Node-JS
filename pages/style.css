@@ -40,9 +40,14 @@
      text-align: center;
       text-decoration-line: none;
       padding-top: 4px;
+      font-family: sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      color: #000;
 }
 [id^='getData']{
   width: 100% !important;
+  margin-left: 0px !important;
 
 }
      static a{
@@ -395,7 +400,9 @@
       z-index: 220;
     }
 
-    #GainDropdown, #NoGainDropdown{
+    
+
+    #GainDropdown, #NoGainDropdown, #pagesDropdown{
       background-color: #fff;
       width: 172px !important;
       right: 18px;
@@ -405,7 +412,10 @@
     /* .sector{
       height: 50px;
     } */
-
+    #pagesDropdown{
+      top: 50px;
+      left: 0px;
+    }
     .dayComp{
       display: flex;
       justify-content: space-evenly;
@@ -450,6 +460,9 @@
       color: #000;
       z-index: 100;
 
+    }
+    #pages{
+      margin-left: 0px !important;
     }
 /* Sector Style Ends */
 
@@ -516,6 +529,9 @@
               width: 20% !important;
               margin: 0 8px;
           }
+          #pages{
+            width: 172px !important;
+          }
 
           #filter, #filters {
             /* min-width: 20% !important; */
@@ -552,12 +568,21 @@
           letter-spacing: 0.08rem;
          }
 
-         #PriceDropdown, #GainDropdown, #NoGainDropdown{
+         #GainDropdown, #NoGainDropdown{
           background-color: #fff;
           width: 90% !important;
-          right: 0;
+          right: 18px;
           position: relative;
         }
+
+        #PriceDropdown{
+          background-color: #fff;
+          width: 90% !important;
+          left: 5px;
+          position: relative;
+        }
+
+
         [id^="getData"], button, a {
           height: 30px;
         }
