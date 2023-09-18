@@ -151,7 +151,7 @@
         width: 100% !important;
         margin-left: 0 !important;
         display: flex;
-        place-content: center;
+        padding-top: 9px;
       }
 
       #pages, #pagesDropdown > a.pagelink {
