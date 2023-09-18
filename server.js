@@ -541,7 +541,8 @@ const directorypath = path.join(__dirname, (req.path.replace('/', 'src/').replac
 fs.readdir(directorypath , function (err, files) {    
                 if (err) throw err;
                 files.forEach( (file, i) => {    
-                    // console.log(file);                
+                    // console.log(file);
+                    // return file;                
                 fs.readFile(path.join(directorypath , file), 'utf8', 
                 function (err2, data) {
                 if (err2) throw err2;

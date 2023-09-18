@@ -529,9 +529,9 @@
               width: 20% !important;
               margin: 0 8px;
           }
-          #pages{
+          /* #pages{
             width: 172px !important;
-          }
+          } */
 
           #filter, #filters {
             /* min-width: 20% !important; */
