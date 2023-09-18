@@ -545,6 +545,16 @@ negativeList0.sort((a, b) => a - b);
 negativeList1.sort((a, b) => a - b);
 negativeList2.sort((a, b) => a - b);
 negativeList3.sort((a, b) => a - b);
+
+Masterpositive.sort((a, b) => b - a);
+Masterpositive1.sort((a, b) => b - a);
+Masterpositive2.sort((a, b) => b - a);
+Masterpositive3.sort((a, b) => b - a);
+
+MasterNegative.sort((a, b) => a - b);
+MasterNegative1.sort((a, b) => a - b);
+MasterNegative2.sort((a, b) => a - b);
+MasterNegative3.sort((a, b) => a - b);
 }
 
 function checkPercent(tday, yday) {
@@ -668,7 +678,7 @@ function showPrice(){
 
 function showPages(){
   document.querySelector("#pagesDropdown").classList.toggle('show');
-  
+
   let lst = document.querySelectorAll(".pagelink");
   lst.forEach(element => {
     element.classList.toggle('show');    
@@ -1078,7 +1088,6 @@ function getKeyByValue(object, value) {
 }
 
 function getData(e) {
-    event.target.style.display = "none";
     
         removeActive();
         cleanUpCompare();
@@ -1118,6 +1127,7 @@ function getData(e) {
             }
           };
           showPrice();
+         event.target.classList.add('hide');
   }
 
 function getSectorData(event) {

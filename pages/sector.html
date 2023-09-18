@@ -25,7 +25,7 @@
   
   <div class="Pagedropdown">  
     <button id="pages" class="pagesDropDown"  onclick="showPages();" type="button">Pages <span id="Pagenumbers"></span></button>              
-          <div id="pagesDropdown" class="drop-options hide">
+          <div id="pagesDropdown" class="Pdrop-options">
             <a class="pagelink" href="/">Home</a>
             <a class="pagelink" href="/fav">Favourite</a>
             <a class="pagelink" href="/openg">Opened High</a>
@@ -52,16 +52,16 @@
       <button class="downTrend3"  onclick="getDown(3);">+3 Day <span id="resultsd3"></span></button>
     </div>
   </div>
-
+  <div class="search" id="secSearch">
+    <input placeholder="..Search..." type="text" class="sfilter" id="filter" name="filter" />
+    <button id="clear" onclick="clea();" type="button"><strong>X</strong></button>
+  </div>
   <div class="range">
 
     <div class="slider">
   
       <input type="text" name="min" id="mini">
-      <div class="search" id="secSearch">
-        <input placeholder="..Search..." type="text" id="filter" name="filter" />
-        <button id="clear" onclick="clea();" type="button"><strong>X</strong></button>
-      </div>
+      
       <input type="text" name="max" id="maxi">
       <input type="range" min="-240" max="240" value="0" name="slider" id="slider" /> 
       
@@ -120,11 +120,20 @@
       <div class="charts"></div>
       <ol class="volume"> </0l>
 
-        <!-- <style>
-          .range{
-            margin-top: 62px !important;
+        <style>
+          #secSearch > .sfilter{
+            height: 25px !important;
           }
-        </style> -->
+          #secSearch > #clear{
+            height: 30px;
+          }
+          .static{
+            height: 100px !important;
+          }
+          .charts {
+            margin-top: 110px !important;
+          }
+        </style>
 
 <script src="/scripts.js"></script>
 <link rel="stylesheet" type="text/css"  href="/style.css" >

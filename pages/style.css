@@ -64,7 +64,9 @@
        min-width: 320px;
        margin: 0 !important;
      }
-
+.Pdrop-options {
+  display: none;
+}
      .slider{
       display: flex;
       width: 96%;
@@ -255,9 +257,7 @@
       width: 80%;
       justify-content: end;
      }
-     .hide{
-       display: none !important;
-     }
+     
      label{
        margin: 5px 10px;
        display: inline-block;
@@ -464,6 +464,22 @@
     #pages{
       margin-left: 0px !important;
     }
+
+    [id^=sliderButton], #sliderReset{
+      margin: auto;
+     }  
+     
+     .hide{
+      display: none !important;
+    }
+     a.pagelink {
+      margin-top: 0;
+      height: 30px;
+  }
+
+  .downTrend0, .upTrend0{
+    margin-top: 0 !important;
+  }
 /* Sector Style Ends */
 
      @media only screen and (orientation: landscape){
@@ -521,9 +537,9 @@
              .search input, .search button{
               width: 72% !important;
              }
-             .dropdown{
-              /* width: 100%; */
-             }
+             /* .dropdown{
+              width: 100%;
+             } */
 
              .Ddropdown, .Gdropdown, .Pagedropdown {
               width: 20% !important;
@@ -533,9 +549,9 @@
             width: 172px !important;
           } */
 
-          #filter, #filters {
-            /* min-width: 20% !important; */
-        }
+          /* #filter, #filters {
+            min-width: 20% !important;
+        } */
 
         [class^=upTrend], [class^=downTrend]{
           width: 93% !important;
@@ -556,7 +572,9 @@
             display: block;
           }
           #secSearch {
-            margin-top: 20px;
+            width: 20% !important;
+            height: 25px;
+            margin-top: 0px;
         }
 
         .right{
@@ -571,7 +589,7 @@
          #GainDropdown, #NoGainDropdown{
           background-color: #fff;
           width: 90% !important;
-          right: 18px;
+          right: 0px;
           position: relative;
         }
 
@@ -590,8 +608,14 @@
           place-content: center;
         }
 
+        #pagesDropdown{
+          position: relative;
+          top: 0;
+        }
+        a.pagelink {
+          margin-top: 0;
+          height: 30px;
+      }
+
      }   
-     [id^=sliderButton], #sliderReset{
-      margin: auto;
-     }  
-     
+    
