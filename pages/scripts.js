@@ -80,6 +80,7 @@ let closeOpenPriceData = [];
 let closeOpenPriceDataObject = {};
 let getCompareObject = {};
 let highPriceData = [];
+let lowPriceData = [];
 let BuyObject52High = {};
 
 let rupee = new Intl.NumberFormat('en-IN', {
@@ -2784,4 +2785,40 @@ function updateCompanyDeatilsPositive(){
   negativeList1.sort((a, b) => a - b);
   negativeList2.sort((a, b) => a - b);
   negativeList3.sort((a, b) => a - b);
+  }
+
+  function getLowData() {
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", "/low52");
+    xhr.send();
+    xhr.responseType = "json";
+    xhr.onload = () => {
+      if (xhr.readyState == 4 && xhr.status == 200) {
+        dCompanyObject = xhr.response.companyObject;
+        // dCompanyDateObject = xhr.response.companyDateObj;
+        if(Object.keys(MasterdCompanyObject).length == 0){
+          MasterdCompanyObject = dCompanyObject;
+          MasterdCompanyObjectCopy = dCompanyObject;
+        }
+        else{              
+          MasterdCompanyObject = Object.assign(dCompanyObject, MasterdCompanyObjectCopy)
+          MasterdCompanyObjectCopy = {};
+          MasterdCompanyObjectCopy = dCompanyObject;
+        }
+  
+        dVolumeObject = xhr.response.volumeObject;
+        CurrentPriceObj = xhr.response.currentPriceData;
+        currentPriceData1 = xhr.response.currentPriceData1;
+        currentPriceDataTable = xhr.response.currentPriceDataTable;
+        currentVolumeDataTable = xhr.response.currentVolumeDataTable;
+        closeOpenPriceDataObject = xhr.response.closeOpenPriceDataObject;
+        lowPriceData = xhr.response.lowPriceData;
+        createChart( MasterdCompanyObjectCopy);
+  
+      } 
+      else {
+        console.log(`Error: ${xhr.status}`);
+        }
+      };
+      showPrice();
   }
