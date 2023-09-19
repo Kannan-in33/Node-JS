@@ -147,12 +147,15 @@
         width: 20% !important;
         margin: 0 8px;
       }
-      #price, #gainers, #nogainers{
+      #price, #gainers, #nogainers, #pages {
         width: 100% !important;
         margin-left: 0 !important;
         display: flex;
-        padding-top: 9px;
-      }
+        justify-content: center;
+        height: 40px;
+        padding-bottom: 10px;
+    }
+
 
       #pages, #pagesDropdown > a.pagelink {
         width: 100% !important;
@@ -614,8 +617,13 @@
         }
         a.pagelink {
           margin-top: 0;
-          height: 30px;
+          height: 25px;
       }
+
+      #price, #gainers, #nogainers, #pages {
+        height: 30px;
+
+    }
 
      }   
     
