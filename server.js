@@ -68,13 +68,13 @@ getCloseOpenPrice =  async () =>{
             }
             if( (currentPrice > 0) && ( lowPrice >= (currentPrice * 0.9))){
 
-                console.log(ele[0] + '  ' + lowPrice +  '    '  + currentPrice * 0.9);
+                // console.log(ele[0] + '  ' + lowPrice +  '    '  + currentPrice * 0.9);
                 lowPriceData.push(ele[0]);
                 // console.log(ele[0] + ' highPrice = ' + highPrice + ' currentPrice =' + currentPrice);
             }
 
 });
-console.log('lowPriceData  ' + lowPriceData.length);
+// console.log('lowPriceData  ' + lowPriceData.length);
 
              }
 }
@@ -137,13 +137,13 @@ getUpdatedPriceTable =  async () =>{
     const GsUpdate = await googleSheets.spreadsheets.values.get({
         auth,
         spreadsheetId,
-        range: "Bar!A1:Z1132",
+        range: "Bar!A1:AC1132",
     });
 
     cpvaluesTable = (GsUpdate.data.values);
     cpvaluesTable.forEach ( (ele, i) => {
         tempArr2 = [];
-        for(let j = 1; j < ele.length -1; j++) {
+        for(let j = 1; j < ele.length ; j++) {
             tempArr2.push(ele[j].toString())
         }
         currentPriceDataTable[ele[0].toString().split(",")[0]] = tempArr2.reverse();
@@ -171,7 +171,7 @@ getUpdatedVolomeTable =  async () =>{
     const CVVdata = await googleSheets.spreadsheets.values.get({
         auth,
         spreadsheetId,
-        range: 'Daily Volume!A1:Z1132', 
+        range: 'Daily Volume!A1:AC1132', 
     });
 
    cvvalues = (CVVdata.data.values);
@@ -179,7 +179,7 @@ cvvalues.forEach ( (ele, i) => {
     tempArr2 = [];
     
         // console.log(ele[0].toString().split(",")[0]);
-    for(let j = 1; j < ele.length -1 ; j++) {
+    for(let j = 1; j < ele.length ; j++) {
 
         tempArr2.push(ele[j]);
 
@@ -252,6 +252,11 @@ server.get('/low', (req, res) => {
 
 });
 
+server.get('/volume', (req, res) => {
+    res.sendFile(path.join(__dirname, './pages/volume.html'));
+
+});
+
 server.use( (req, res)=>{
 
 // console.log(req.path);
@@ -280,6 +285,90 @@ if(req.path.includes('getcompare')) {
             res.send(data);
         });
         }
+// Volume page data
+
+else if(req.path.includes('volumedata')) {
+       
+    let foldersPath = fs.readdirSync(path.resolve(__dirname, 'src/'));
+    foldersPath.forEach( (folder, j) => {
+        //  ||  folder == '401'
+    if(folder == 'All-volume'){  // 'All
+    const directorypath = path.join(__dirname, 'src/' + folder);
+    fs.readdir(directorypath , function (err, files) {
+    if (err) throw err;
+
+    files.forEach( (file, i) => {
+        
+        fs.readFile(path.join(directorypath , file), 'utf8', function (err2, data) {
+        if (err2) throw err2;
+            obj = JSON.parse(data);
+            let j = 0;
+            company.push(file);
+            
+                if(obj['datasets'].length > 0 ){
+                    let pos = obj['datasets'][0]['values'].length - 1;
+                    let todayPrice = obj['datasets'][0]['values'][pos][1];
+                    let dma200 = obj['datasets'][2]['values'][pos][1];
+
+                    if(todayPrice >= dma200){
+                    // valueList[file.split('.')[0]] = obj['datasets'][0]['values'].length
+                    max = max < obj['datasets'][0]['values'].length ? obj['datasets'][0]['values'].length : max
+                    let MAXI = [];
+                    let flag = 0;
+                    let Max2 = 0;
+                    for (let keyItem in obj['datasets'][0]['values']) {
+                        let value = obj['datasets'][1]['values'][keyItem][1];
+                        let delivery = obj['datasets'][1]['values'][keyItem][2]['delivery']
+                        
+                        MAXI.push(value * delivery);
+                            obj2.push(obj['datasets'][1]['values'][keyItem][1]); 
+                             
+                    }
+                    
+                    let MAXI2 = MAXI.sort((a, b) => b - a);
+                    let maxiLength = MAXI.length;
+                    if((MAXI2[0] > 5 ) && (MAXI2[0] >= (8 * MAXI2[1]))){ 
+          
+                        companyObject[file.split('.')[0]] = [...obj2];
+                        volumeObject[file.split('.')[0]] = [...volumeObj];
+                    }
+                    
+                    obj2 =[];
+                    datesObj = [];
+                    volumeObj =[];
+                }
+            }
+
+                if (i == files.length -1 ){
+                obj3 = { 
+                    "company" : company,
+                    "companyObject" : companyObject,
+                    "volumeObject" : volumeObject,
+                    "currentPriceData": currentPriceData,
+                    "currentPriceData1": currentPriceData1,
+                    "currentPriceDataTable":currentPriceDataTable,
+                    "currentVolumeDataTable": currentVolumeDataTable,
+                    "closeOpenPriceDataObject": closeOpenPriceDataObject,
+                    "highPriceData":highPriceData,
+                }
+                res.send(obj3);
+    }
+    
+    });
+    
+
+    });
+    
+
+
+    });
+
+}
+});  
+}
+
+// Volume Page End
+
 
 // High page data
 
@@ -303,13 +392,17 @@ else if(req.path.includes('highp')) {
             company.push(file);
             
                 if(obj['datasets'].length > 0 ){
+                    
                     // valueList[file.split('.')[0]] = obj['datasets'][0]['values'].length
                     max = max < obj['datasets'][0]['values'].length ? obj['datasets'][0]['values'].length : max
+                    
                     for (let key in obj['datasets'][0]['values']) {
                         // console.log(obj['datasets'][1]['values'][key][1]["delivery"]);
                             obj2.push(obj['datasets'][0]['values'][key][1]);  
-                                volumeObj.push((obj['datasets'][1]['values'][key][1])/100000); 
+                                // volumeObj.push((obj['datasets'][1]['values'][key][1])/100000); 
                     }
+
+
                     companyObject[file.split('.')[0]] = [...obj2];
                     volumeObject[file.split('.')[0]] = [...volumeObj];
                     obj2 =[];
@@ -376,7 +469,7 @@ else if(req.path.includes('low52')) {
                     for (let key in obj['datasets'][0]['values']) {
                         // console.log(obj['datasets'][1]['values'][key][1]["delivery"]);
                             obj2.push(obj['datasets'][0]['values'][key][1]);  
-                                volumeObj.push((obj['datasets'][1]['values'][key][1])/100000); 
+                                // volumeObj.push((obj['datasets'][1]['values'][key][1])/100000); 
                     }
                     companyObject[file.split('.')[0]] = [...obj2];
                     volumeObject[file.split('.')[0]] = [...volumeObj];
@@ -444,7 +537,7 @@ else if(req.path.includes('open')) {
                     max = max < obj['datasets'][0]['values'].length ? obj['datasets'][0]['values'].length : max
                     for (let key in obj['datasets'][0]['values']) {
                             obj2.push(obj['datasets'][0]['values'][key][1]);  
-                                volumeObj.push((obj['datasets'][1]['values'][key][1])/100000); 
+                                // volumeObj.push((obj['datasets'][1]['values'][key][1])/100000); 
                     }
                     companyObject[file.split('.')[0]] = [...obj2];
                     volumeObject[file.split('.')[0]] = [...volumeObj];
@@ -514,7 +607,7 @@ else if(req.path == '/All') {
                     // console.log(file.split('.')[0]);
                     for (let key in obj['datasets'][1]['values']) {
                         // obj2.push(obj['datasets'][0]['values'][key][1]);  
-                            volumeObj.push((obj['datasets'][1]['values'][key][1])/100000); 
+                            // volumeObj.push((obj['datasets'][1]['values'][key][1])/100000); 
                 }
 
                 // console.log(file.split('.')[0]);
@@ -580,7 +673,7 @@ else if(req.path == '/All') {
                         max = max < obj['datasets'][0]['values'].length ? obj['datasets'][0]['values'].length : max
                         for (let key in obj['datasets'][0]['values']) {
                                 obj2.push(obj['datasets'][0]['values'][key][1]);  
-                                    volumeObj.push((obj['datasets'][1]['values'][key][1])/100000); 
+                                    // volumeObj.push((obj['datasets'][1]['values'][key][1])/100000); 
                         }
                         companyObject[file.split('.')[0]] = [...obj2];
                         volumeObject[file.split('.')[0]] = [...volumeObj];
@@ -638,8 +731,9 @@ fs.readdir(directorypath , function (err, files) {
                     max = max < obj['datasets'][0]['values'].length ? obj['datasets'][0]['values'].length : max
                     for (let key in obj['datasets'][0]['values']) {
                     obj2.push(obj['datasets'][0]['values'][key][1]);  
-                            volumeObj.push((obj['datasets'][1]['values'][key][1])/100000);                        
+                            // volumeObj.push((obj['datasets'][1]['values'][key][1])/100000);                        
                     }
+
                     companyObject[file.split('.')[0]] = [...obj2];
                     volumeObject[file.split('.')[0]] = [...volumeObj];
                     obj2 =[];
