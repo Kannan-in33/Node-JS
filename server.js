@@ -24,6 +24,7 @@ let closeOpenPriceDataObject = {};
 let tempArr = [];
 let tempArr2 =[];
 let t = 0;
+let longterm =[];
 
 const spreadsheetId = "13BOxMT5cUoScurImRrDK0PwwLYAtV7qJiI75Knw44kQ";
 
@@ -256,6 +257,10 @@ server.get('/volume', (req, res) => {
     res.sendFile(path.join(__dirname, './pages/volume.html'));
 
 });
+server.get('/lt', (req, res) => {
+    res.sendFile(path.join(__dirname, './pages/volume.html'));
+
+});
 
 server.use( (req, res)=>{
 
@@ -285,6 +290,85 @@ if(req.path.includes('getcompare')) {
             res.send(data);
         });
         }
+        // Long Term
+  else if(req.path.includes('longterm')) {
+            const directorypath = path.join(__dirname, 'SectorData');
+            fs.readFile(path.join(directorypath , 'ComparisonVolume.json'), 'utf8', function (err2, data) {
+                if (err2) throw err2;
+                obj = JSON.parse(data);
+                for (const key in obj){
+                    longterm.push(key);
+                }
+                // res.send(data);
+            });
+
+            let ARR = [...longterm];        
+    let foldersPath = fs.readdirSync(path.resolve(__dirname, 'src/'));
+    foldersPath.forEach( (folder, j) => {
+        //  ||  folder == '401'
+    if(folder == 'All'){  // 'All
+    const directorypath = path.join(__dirname, 'src/' + folder);
+    fs.readdir(directorypath , function (err, files) {
+    if (err) throw err;
+    for(let j = 1; j < ARR.length; j++){
+    files.forEach( (file, i) => {
+        
+        if (file.split('.')[0] == ARR[j]){
+        fs.readFile(path.join(directorypath , file), 'utf8', function (err2, data) {
+        if (err2) throw err2;
+            obj = JSON.parse(data);
+            let j = 0;
+            company.push(file);
+            
+                if(obj['datasets'].length > 0 ){
+                    
+                    // valueList[file.split('.')[0]] = obj['datasets'][0]['values'].length
+                    max = max < obj['datasets'][0]['values'].length ? obj['datasets'][0]['values'].length : max
+                    
+                    for (let key in obj['datasets'][0]['values']) {
+                        // console.log(obj['datasets'][1]['values'][key][1]["delivery"]);
+                            obj2.push(obj['datasets'][0]['values'][key][1]);  
+                                // volumeObj.push((obj['datasets'][1]['values'][key][1])/100000); 
+                    }
+
+
+                    companyObject[file.split('.')[0]] = [...obj2];
+                    volumeObject[file.split('.')[0]] = [...volumeObj];
+                    obj2 =[];
+                    datesObj = [];
+                    volumeObj =[];
+            }
+
+                if (file.split('.')[0] == ARR[ARR.length - 1] ){
+                obj3 = { 
+                    "company" : company,
+                    "companyObject" : companyObject,
+                    "volumeObject" : volumeObject,
+                    "currentPriceData": currentPriceData,
+                    "currentPriceData1": currentPriceData1,
+                    "currentPriceDataTable":currentPriceDataTable,
+                    "currentVolumeDataTable": currentVolumeDataTable,
+                    "closeOpenPriceDataObject": closeOpenPriceDataObject,
+                    "longterm":longterm,
+                }
+                res.send(obj3);
+    }
+    
+    });
+    
+}
+
+    });
+    
+}
+
+    });
+
+}
+});  
+
+            }
+
 // Volume page data
 
 else if(req.path.includes('volumedata')) {

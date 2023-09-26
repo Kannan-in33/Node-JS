@@ -2863,3 +2863,39 @@ function updateCompanyDeatilsPositive(){
       };
       showPrice();
   }
+  function getLongTermData() {
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", "/longterm");
+    xhr.send();
+    xhr.responseType = "json";
+    xhr.onload = () => {
+      if (xhr.readyState == 4 && xhr.status == 200) {
+        dCompanyObject = xhr.response.companyObject;
+        // dCompanyDateObject = xhr.response.companyDateObj;
+        if(Object.keys(MasterdCompanyObject).length == 0){
+          MasterdCompanyObject = dCompanyObject;
+          MasterdCompanyObjectCopy = dCompanyObject;
+        }
+        else{              
+          MasterdCompanyObject = Object.assign(dCompanyObject, MasterdCompanyObjectCopy)
+          MasterdCompanyObjectCopy = {};
+          MasterdCompanyObjectCopy = dCompanyObject;
+        }
+  
+        dVolumeObject = xhr.response.volumeObject;
+        CurrentPriceObj = xhr.response.currentPriceData;
+        currentPriceData1 = xhr.response.currentPriceData1;
+        currentPriceDataTable = xhr.response.currentPriceDataTable;
+        currentVolumeDataTable = xhr.response.currentVolumeDataTable;
+        closeOpenPriceDataObject = xhr.response.closeOpenPriceDataObject;
+        lowPriceData = xhr.response.longterm;
+        createChart( MasterdCompanyObjectCopy);
+  
+      } 
+      else {
+        console.log(`Error: ${xhr.status}`);
+        }
+      };
+      showPrice();
+  }
+  
