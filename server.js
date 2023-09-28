@@ -195,11 +195,22 @@ cvvalues.forEach ( (ele, i) => {
 
 }
 
+function getlongtermarray(){
+    const directorypath = path.join(__dirname, 'SectorData');
+    fs.readFile(path.join(directorypath , 'ComparisonVolume.json'), 'utf8', function (err2, data) {
+        if (err2) throw err2;
+        obj = JSON.parse(data);
+        for (const key in obj){
+            longterm.push(key);
+        }
+    });
+}
+
 
 getUpdatedPrice();
 getUpdatedPriceTable();
 getUpdatedVolomeTable();
-
+getlongtermarray();
 
 server.get('/favicon.ico', (req, res) => {
     res.sendFile(path.join(__dirname, './pages/favicon.ico'));
@@ -258,7 +269,7 @@ server.get('/volume', (req, res) => {
 
 });
 server.get('/lt', (req, res) => {
-    res.sendFile(path.join(__dirname, './pages/volume.html'));
+    res.sendFile(path.join(__dirname, './pages/lt.html'));
 
 });
 
@@ -287,30 +298,22 @@ if(req.path.includes('getcompare')) {
         fs.readFile(path.join(directorypath , 'Comparison.json'), 'utf8', function (err2, data) {
             if (err2) throw err2;
             obj = JSON.parse(data);
+            console.log(obj);
             res.send(data);
         });
         }
         // Long Term
-  else if(req.path.includes('longterm')) {
-            const directorypath = path.join(__dirname, 'SectorData');
-            fs.readFile(path.join(directorypath , 'ComparisonVolume.json'), 'utf8', function (err2, data) {
-                if (err2) throw err2;
-                obj = JSON.parse(data);
-                for (const key in obj){
-                    longterm.push(key);
-                }
-                // res.send(data);
-            });
-
-            let ARR = [...longterm];        
+  else if(req.path.includes('longterm')) { 
+   
+    let ARR = [...longterm];
     let foldersPath = fs.readdirSync(path.resolve(__dirname, 'src/'));
     foldersPath.forEach( (folder, j) => {
-        //  ||  folder == '401'
-    if(folder == 'All'){  // 'All
+    if(folder == 'All'){ 
     const directorypath = path.join(__dirname, 'src/' + folder);
     fs.readdir(directorypath , function (err, files) {
     if (err) throw err;
     for(let j = 1; j < ARR.length; j++){
+        console.log(ARR[j]);
     files.forEach( (file, i) => {
         
         if (file.split('.')[0] == ARR[j]){
@@ -339,7 +342,8 @@ if(req.path.includes('getcompare')) {
                     volumeObj =[];
             }
 
-                if (file.split('.')[0] == ARR[ARR.length - 1] ){
+                if (i == 10) {
+                    console.log(i);
                 obj3 = { 
                     "company" : company,
                     "companyObject" : companyObject,
@@ -366,7 +370,7 @@ if(req.path.includes('getcompare')) {
 
 }
 });  
-
+console.log(ARR); 
             }
 
 // Volume page data
@@ -802,7 +806,7 @@ const directorypath = path.join(__dirname, (req.path.replace('/', 'src/').replac
 fs.readdir(directorypath , function (err, files) {    
                 if (err) throw err;
                 files.forEach( (file, i) => {    
-                    // console.log(file);
+                    
                     // return file;                
                 fs.readFile(path.join(directorypath , file), 'utf8', 
                 function (err2, data) {
