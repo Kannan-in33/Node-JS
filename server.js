@@ -812,6 +812,27 @@ fs.readdir(directorypath , function (err, files) {
                 function (err2, data) {
                 if (err2) throw err2;
                 obj = JSON.parse(data);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
                 company.push(file);
                 if(obj['datasets'].length > 0 ){
 
