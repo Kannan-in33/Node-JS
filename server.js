@@ -46,7 +46,7 @@ getCloseOpenPrice =  async () =>{
                     const closeOpenPrice = await googleSheets.spreadsheets.values.get({
                         auth,
                         spreadsheetId,
-                        range: 'DailyGainers!A2:F1133', 
+                        range: 'DailyGainers!A2:F2396', 
                     });
                     highPriceData =[];
         copvalues = (closeOpenPrice.data.values);    
@@ -100,7 +100,7 @@ getUpdatedPrice =  async () =>{
     const CPdata = await googleSheets.spreadsheets.values.get({
         auth,
         spreadsheetId,
-        range: 'NSE Daily!A1:C1132', 
+        range: 'NSE Daily!A1:C2396', 
     });
 
 
@@ -138,7 +138,7 @@ getUpdatedPriceTable =  async () =>{
     const GsUpdate = await googleSheets.spreadsheets.values.get({
         auth,
         spreadsheetId,
-        range: "Bar!A1:AC1132",
+        range: "Bar!A1:AC2396",
     });
 
     cpvaluesTable = (GsUpdate.data.values);
@@ -172,7 +172,7 @@ getUpdatedVolomeTable =  async () =>{
     const CVVdata = await googleSheets.spreadsheets.values.get({
         auth,
         spreadsheetId,
-        range: 'Daily Volume!A1:AC1132', 
+        range: 'Daily Volume!A1:AC2396', 
     });
 
    cvvalues = (CVVdata.data.values);
@@ -298,7 +298,6 @@ if(req.path.includes('getcompare')) {
         fs.readFile(path.join(directorypath , 'Comparison.json'), 'utf8', function (err2, data) {
             if (err2) throw err2;
             obj = JSON.parse(data);
-            console.log(obj);
             res.send(data);
         });
         }
@@ -832,7 +831,7 @@ fs.readdir(directorypath , function (err, files) {
 
 
 
-                
+
                 company.push(file);
                 if(obj['datasets'].length > 0 ){
 

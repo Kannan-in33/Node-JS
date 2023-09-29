@@ -197,12 +197,12 @@ function updateCompanyDeatils(){
 
   for(let d = 0 ; d < companyDetails.length ; d++) {
     
-if (document.querySelectorAll('#'+ companyDetails[d].toString().replace("&"," ")).length > 0 &&  document.querySelectorAll('#'+ companyDetails[d] + " .right .block1").length == 0){
+if (document.querySelectorAll('[id="'+ companyDetails[d].toString().replace("&"," ")  + '"]').length > 0 &&  document.querySelectorAll('[id="'+ companyDetails[d] + '"] .right .block1').length == 0){
 
 if (JSON.stringify(getCompareObject).includes([companyDetails[d]])){
 let divtag0 = document.createElement("div");
   divtag0.setAttribute("class", "block1");
-  document.querySelector('#'+ companyDetails[d] + " .right").appendChild(divtag0);
+  document.querySelector('[id="'+ companyDetails[d] + '"] .right').appendChild(divtag0);
 
 let divtag = document.createElement("div");
     divtag.setAttribute("class", "dayComp");
@@ -295,13 +295,13 @@ divtag0.appendChild(divtag);
 // divtag0.appendChild(divtag);
 
 divtag = document.createElement("div");
-divtag.setAttribute("class", "Reserve");
-divtag.innerText = "R:" + rupee.format(getCompareObject[companyDetails[d]].Reserves);
+divtag.setAttribute("class", "Promoter holding");
+divtag.innerText = "PH: " + getCompareObject[companyDetails[d]]['Promoter holding'];
 divtag0.appendChild(divtag);
 
 divtag = document.createElement("div");
-divtag.setAttribute("class", "Barrowing");
-divtag.innerText = "B:" + rupee.format(getCompareObject[companyDetails[d]].Borrowings);
+divtag.setAttribute("class", "Debt to equity");
+divtag.innerText = "DE: " + getCompareObject[companyDetails[d]]['Debt to equity'];
 divtag0.appendChild(divtag);
 
 
@@ -747,6 +747,7 @@ dE = e;
 let resultCount = 0;
     for (let key in companyObject) {
       resultCount++;
+      console.log(key);
           let yValues  = [];
           let volumeValues = [];
           yValues  = [...companyObject[key]];
