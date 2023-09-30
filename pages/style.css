@@ -106,7 +106,7 @@
       align-self: center;
       text-align: left;
       width: 20% !important;
-      font-size: 12px;
+      font-size: 12px !important;
      }
      .right .block1{
       letter-spacing: 0.08rem;
