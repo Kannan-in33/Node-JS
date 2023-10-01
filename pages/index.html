@@ -15,7 +15,7 @@
         <div class="Pdropdown">  
           <button id="price" class="priceDropDown"  onclick="showPrice();" type="button">Price <span id="Pnumbers"></span></button>              
                 <div id="PriceDropdown" class="drop-option ">
-                    <button id="getData20" class="20" onclick="getData(20);" type="button">Stocks 20+</button>
+                    <button id="getData20" class="20" onclick="getFivePer();" type="button">Stocks 5%+</button>
                     <button id="getData50" class="50" onclick="getData(50);" type="button">Stocks 50+</button>
                     <button id="getData101" class="101" onclick="getData(101);" type="button">Stocks 101+</button>
                     <button id="getData201" class="201" onclick="getData(201);" type="button">Stocks 201+</button>
@@ -73,6 +73,7 @@
             <div class="search">
               <input placeholder="..Search..." type="text" id="filter" name="filter" />
               <button id="clear" onclick="clea();" type="button"><strong>X</strong></button>
+              <button  onclick="getsector(document.getElementById('filter').value);" type="button"><strong>Get Sector</strong></button>
               <!-- <button id="compare" class="compare hide" onclick="compareStocks();" type="button">Compare</button>
               <button id="clearcompare" class="compare hide" onclick="clearcompareStocks();" type="button">Clear Compare</button>
               <button id="Favourits" class="Favourits hide" onclick="getFavourits();" type="button">Favourits</button>

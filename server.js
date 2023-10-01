@@ -25,6 +25,7 @@ let tempArr = [];
 let tempArr2 =[];
 let t = 0;
 let longterm =[];
+let FivePerData = [];
 
 const spreadsheetId = "13BOxMT5cUoScurImRrDK0PwwLYAtV7qJiI75Knw44kQ";
 
@@ -119,6 +120,40 @@ getUpdatedPrice =  async () =>{
 
 
 
+// Get Five Per Data
+
+getFivePercent =  async () =>{
+    const auth = new google.auth.GoogleAuth({
+        keyFile: "credentials.json",
+        scopes: "https://www.googleapis.com/auth/spreadsheets",
+    });
+
+    const client = await auth.getClient();
+    const googleSheets = google.sheets({
+        version: "v4",
+        auth: client
+    });
+
+    // get details of spreadsheet
+
+    const CPdata = await googleSheets.spreadsheets.values.get({
+        auth,
+        spreadsheetId,
+        range: 'NSE Daily!A1:D2396', 
+    });
+
+   cpvalues = (CPdata.data.values);
+
+   cpvalues.forEach ( (ele, i) => {
+        if(Number(ele[3]) > 4.5){
+           FivePerData.push([ele[0]]);
+        }
+});
+
+// console.log(FivePerData);
+
+}
+getFivePercent();
 
 // Try Getting data from Bar
 
@@ -146,6 +181,9 @@ getUpdatedPriceTable =  async () =>{
         tempArr2 = [];
         for(let j = 1; j < ele.length ; j++) {
             tempArr2.push(ele[j].toString())
+        }
+        if(ele[0].toString().split(",")[0] == 'ACCELYA'){
+            tempArr2.reverse();
         }
         currentPriceDataTable[ele[0].toString().split(",")[0]] = tempArr2.reverse();
      });
@@ -305,6 +343,75 @@ if(req.path.includes('getcompare')) {
             res.send(data);
         });
         }
+
+// Get FivePer
+
+else if(req.path.includes('getFivePer')) {
+    let ARR = [...FivePerData];        
+    console.log(ARR.length);
+    let foldersPath = fs.readdirSync(path.resolve(__dirname, 'src/'));
+    foldersPath.forEach( (folder, j) => {
+        //  ||  folder == '401'
+    if(folder == 'All'){  // 'All
+    const directorypath = path.join(__dirname, 'src/' + folder);
+    fs.readdir(directorypath , function (err, files) {
+    if (err) throw err;
+    for(let j = 1; j < ARR.length; j++){
+    files.forEach( (file, i) => {
+        
+        if (file.split('.')[0] == ARR[j]){
+        fs.readFile(path.join(directorypath , file), 'utf8', function (err2, data) {
+        if (err2) throw err2;
+            obj = JSON.parse(data);
+            let j = 0;
+            company.push(file);
+            
+                if(obj['datasets'].length > 0 ){
+                    // valueList[file.split('.')[0]] = obj['datasets'][0]['values'].length
+                    max = max < obj['datasets'][0]['values'].length ? obj['datasets'][0]['values'].length : max
+                    for (let key in obj['datasets'][0]['values']) {
+                            obj2.push(obj['datasets'][0]['values'][key][1]);  
+                                volumeObj.push((obj['datasets'][1]['values'][key][1])/100000); 
+                    }
+                    companyObject[file.split('.')[0]] = [...obj2];
+                    volumeObject[file.split('.')[0]] = [...volumeObj];
+                    obj2 =[];
+                    datesObj = [];
+                    volumeObj =[];
+            }
+            
+                if (file.split('.')[0] == ARR[ARR.length - 1] ){
+                obj3 = { 
+                    "company" : company,
+                    "companyObject" : companyObject,
+                    "volumeObject" : volumeObject,
+                    "currentPriceData": currentPriceData,
+                    "currentPriceData1": currentPriceData1,
+                    "currentPriceDataTable":currentPriceDataTable,
+                    "currentVolumeDataTable": currentVolumeDataTable,
+                    "closeOpenPriceDataObject": closeOpenPriceDataObject,
+                    "closeOpenPriceData":closeOpenPriceData,
+                }
+                res.send(obj3);
+    }
+    
+    });
+    
+}
+
+    });
+    
+}
+
+    });
+
+}
+});  
+}
+
+// Get FivePer End
+
+
         // Long Term
   else if(req.path.includes('longterm')) { 
    
@@ -740,7 +847,8 @@ else if(req.path == '/All') {
 // Favourite Page Start
 
     else if(req.path.includes(',')) {
-        let ARR = ([...req.path.split(',')]);        
+        let ARR = ([...req.path.replaceAll('/','').split(',')]); 
+        console.log(ARR);       
         // req.params()
         let foldersPath = fs.readdirSync(path.resolve(__dirname, 'src/'));
         foldersPath.forEach( (folder, j) => {
@@ -815,26 +923,6 @@ fs.readdir(directorypath , function (err, files) {
                 function (err2, data) {
                 if (err2) throw err2;
                 obj = JSON.parse(data);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
                 company.push(file);
                 if(obj['datasets'].length > 0 ){
