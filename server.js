@@ -848,7 +848,8 @@ else if(req.path == '/All') {
 
     else if(req.path.includes(',')) {
         let ARR = ([...req.path.replaceAll('/','').split(',')]); 
-        console.log(ARR);       
+        // console.log(ARR); 
+        let AAR2 = [];      
         // req.params()
         let foldersPath = fs.readdirSync(path.resolve(__dirname, 'src/'));
         foldersPath.forEach( (folder, j) => {
@@ -857,10 +858,16 @@ else if(req.path == '/All') {
         const directorypath = path.join(__dirname, 'src/' + folder);
         fs.readdir(directorypath , function (err, files) {
         if (err) throw err;
+        files.forEach( (file, i) => {
+            if(file.includes(ARR[1])){
+                AAR2.push(file.split('.')[0]);
+            }
+        });
         for(let j = 1; j < ARR.length; j++){
         files.forEach( (file, i) => {
             
-            if (file.split('.')[0] == ARR[j]){
+            if ((file.split('.')[0]).includes(ARR[1])){
+                console.log(file)
             fs.readFile(path.join(directorypath , file), 'utf8', function (err2, data) {
             if (err2) throw err2;
                 obj = JSON.parse(data);
@@ -880,7 +887,7 @@ else if(req.path == '/All') {
                         datesObj = [];
                         volumeObj =[];
                 }
-                    if (file.split('.')[0] == ARR[ARR.length - 1] ){
+                    if (file.split('.')[0] == AAR2[AAR2.length - 1] ){
                     obj3 = { 
                         "company" : company,
                         "companyObject" : companyObject,
@@ -896,7 +903,7 @@ else if(req.path == '/All') {
         
         });
         
-    }
+    }    
 
         });
         
