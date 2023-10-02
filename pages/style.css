@@ -432,9 +432,10 @@
     .bar, .barv{
       display: flex;
       justify-content: flex-start;
-      height: 100px;
+      height: 160px;
       overflow: hidden;
       letter-spacing: -1px;
+      width: 100% !important;
       position: relative;
       /* margin-top: 30px; */
       /* max-width: 280px; */
@@ -465,6 +466,12 @@
       z-index: 100;
 
     }
+
+    canvas[id^='bar']{
+      width: 100% !important;
+      height: 150px !important;
+    }
+
     #pages{
       margin-left: 0px !important;
     }
@@ -623,7 +630,12 @@
 
       #price, #gainers, #nogainers, #pages {
         height: 30px;
+    }
 
+    
+    canvas[id^='bar']{
+      width: 100% !important;
+      height: 150px !important;
     }
 
      }   

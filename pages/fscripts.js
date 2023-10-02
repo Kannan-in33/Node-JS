@@ -1126,7 +1126,7 @@ function setComp(event){
     
     }
 
-    function setFav(event){
+function setFav(event){
         let AFL = [...Array.from(localStorage)];
     
         if(!AFL.includes(event.target.id.toString())){
@@ -1164,7 +1164,7 @@ function setComp(event){
       }
 
 
-      function createChartMini(companyObject, companyName, divtag0, days = 1000){
+function createChartMini(companyObject, companyName, divtag0, days = 1000){
         let yValues  = [];
         yValues  = [...companyObject[companyName]];
         let xValues = [];
@@ -1263,7 +1263,7 @@ function setFilter2(){
 let myFunc1 = letsDebounce(setFilter,1000);
 let myFunc2 = letsDebounce(setFilter2,1000);
   
-  function letsDebounce(fn,d){
+function letsDebounce(fn,d){
       let timer;
       return function(){
       clearTimeout(timer);
@@ -1373,12 +1373,14 @@ function clearFavourits(){
   }
 
   function getsector(sector){
-    getHTTPs(',' + sector.toUpperCase());
+    getHTTPs('.' + sector.toUpperCase());
   }
 
   function getFivePer(){
     getHTTPs('getFivePer');
-    
+    updateCompanyDeatils();
+    showPrice();
+
   }
 
   function clearChart(){

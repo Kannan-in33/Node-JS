@@ -317,7 +317,7 @@ server.get('/lt', (req, res) => {
 
 server.use( (req, res)=>{
 
-// console.log(req.path);
+console.log(req.path);
 
     let obj ={};
     let obj2 = [];
@@ -848,8 +848,7 @@ else if(req.path == '/All') {
 
     else if(req.path.includes(',')) {
         let ARR = ([...req.path.replaceAll('/','').split(',')]); 
-        // console.log(ARR); 
-        let AAR2 = [];      
+        // console.log(ARR);    
         // req.params()
         let foldersPath = fs.readdirSync(path.resolve(__dirname, 'src/'));
         foldersPath.forEach( (folder, j) => {
@@ -858,16 +857,11 @@ else if(req.path == '/All') {
         const directorypath = path.join(__dirname, 'src/' + folder);
         fs.readdir(directorypath , function (err, files) {
         if (err) throw err;
-        files.forEach( (file, i) => {
-            if(file.includes(ARR[1])){
-                AAR2.push(file.split('.')[0]);
-            }
-        });
         for(let j = 1; j < ARR.length; j++){
         files.forEach( (file, i) => {
             
-            if ((file.split('.')[0]).includes(ARR[1])){
-                console.log(file)
+            if ((file.split('.')[0]) == (ARR[j])){
+                // console.log(file)
             fs.readFile(path.join(directorypath , file), 'utf8', function (err2, data) {
             if (err2) throw err2;
                 obj = JSON.parse(data);
@@ -887,7 +881,7 @@ else if(req.path == '/All') {
                         datesObj = [];
                         volumeObj =[];
                 }
-                    if (file.split('.')[0] == AAR2[AAR2.length - 1] ){
+                    if (file.split('.')[0] == ARR[ARR.length - 1] ){
                     obj3 = { 
                         "company" : company,
                         "companyObject" : companyObject,
@@ -917,6 +911,78 @@ else if(req.path == '/All') {
 
 // Favourite Page End
 
+// Favourite Page Start
+
+else if(req.path.includes('.')) {
+    let ARR = ([...req.path.replaceAll('/','').split('.')]); 
+    console.log(ARR); 
+    let AAR2 = [];      
+    // req.params()
+    let foldersPath = fs.readdirSync(path.resolve(__dirname, 'src/'));
+    foldersPath.forEach( (folder, j) => {
+        //  ||  folder == '401'
+    if(folder == 'All'){  // 'All
+    const directorypath = path.join(__dirname, 'src/' + folder);
+    fs.readdir(directorypath , function (err, files) {
+    if (err) throw err;
+    files.forEach( (file, i) => {
+        if(file.includes(ARR[1])){
+            AAR2.push(file.split('.')[0]);
+        }
+    });
+    for(let j = 1; j < ARR.length; j++){
+    files.forEach( (file, i) => {
+        
+        if ((file.split('.')[0]).includes(ARR[1])){
+            console.log(file)
+        fs.readFile(path.join(directorypath , file), 'utf8', function (err2, data) {
+        if (err2) throw err2;
+            obj = JSON.parse(data);
+            let j = 0;
+            company.push(file);
+            
+                if(obj['datasets'].length > 0 ){
+                    // valueList[file.split('.')[0]] = obj['datasets'][0]['values'].length
+                    max = max < obj['datasets'][0]['values'].length ? obj['datasets'][0]['values'].length : max
+                    for (let key in obj['datasets'][0]['values']) {
+                            obj2.push(obj['datasets'][0]['values'][key][1]);  
+                                volumeObj.push((obj['datasets'][1]['values'][key][1])/100000); 
+                    }
+                    companyObject[file.split('.')[0]] = [...obj2];
+                    volumeObject[file.split('.')[0]] = [...volumeObj];
+                    obj2 =[];
+                    datesObj = [];
+                    volumeObj =[];
+            }
+                if (file.split('.')[0] == AAR2[AAR2.length - 1] ){
+                obj3 = { 
+                    "company" : company,
+                    "companyObject" : companyObject,
+                    "volumeObject" : volumeObject,
+                    "currentPriceData": currentPriceData,
+                    "currentPriceData1": currentPriceData1,
+                    "currentPriceDataTable":currentPriceDataTable,
+                    "currentVolumeDataTable": currentVolumeDataTable,
+                    "closeOpenPriceDataObject": closeOpenPriceDataObject,
+                }
+                res.send(obj3);
+    }
+    
+    });
+    
+}    
+
+    });
+    
+}
+
+    });
+
+}
+});  
+}
+
+// Favourite Page End
 
 else{
     let j = 0;

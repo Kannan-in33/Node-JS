@@ -336,8 +336,8 @@ else{
   positiveCompany0[checkPercent(tday, yday) ] = companyDetails[d];
   Masterpositive.push((checkPercent(tday, yday) ));
   MasterpositiveCompany[checkPercent(tday, yday) ] = companyDetails[d];
-  console.log(companyDetails[d]);
-  console.log(checkPercent(tday, yday) );
+  // console.log(companyDetails[d]);
+  // console.log(checkPercent(tday, yday) );
   }
 }
 // }
@@ -595,7 +595,7 @@ function createChart(companyObject, e, days = 1000){
               for (let key in companyObject) {
                 if(key !== undefined ){
                 resultCount++;
-                console.log(key);
+                // console.log(key);
                     let yValues  = [];
                     let volumeValues = [];
                     yValues  = [...companyObject[key]];
@@ -673,73 +673,100 @@ function createChart(companyObject, e, days = 1000){
                         if(Object.keys(currentPriceDataTable).length > 1){
                     let bar = document.createElement("div");
                         bar.setAttribute("class", "bar");
-                      let preHig = 0;
-                        let largebar = 0;
-                        let smallbar = 0;
-                        largebar = Math.max(...[...currentPriceDataTable[key]]);
-                        smallbar = Math.min(...[...currentPriceDataTable[key]]);
+                    let canvasb = document.createElement("canvas");
+                          canvasb.setAttribute("id", "bar" + key);
+                          canvasb.setAttribute("class", "bar" + key); 
+                          canvasb.setAttribute("height", "200"); 
+                          canvasb.setAttribute("width", "600"); 
+
+                          let xaxisprice = [];
+                          for(let i = 1; i < 31; i++){
+                            xaxisprice.push(i);
+                          }
+
+                          bar.appendChild(canvasb);
+                              console.log([...currentPriceDataTable[key]].reverse());
+                          new Chart(canvasb, {
+                            type: "line",
+                            data: {
+                            labels: [...xaxisprice],
+                            datasets: [{
+                                    label: key ,
+                                    pointRadius: 0,
+                                    borderWidth : 0.5,
+                                    borderColor: "rgba(0,0,0,0.9)",
+                                    data: [...currentPriceDataTable[key]],
+                                    }]
+                                  },  
+                                  options: {
+                                      scales: {
+                                          yAxes: [{
+                                              ticks: {
+                                                  fontSize: 14
+                                          }
+                                      }]
+                                  }
+                                  }
+
+                            }); 
+
+                      // let preHig = 0;
+                      //   let largebar = 0;
+                      //   let smallbar = 0;
+                      //   largebar = Math.max(...[...currentPriceDataTable[key]]);
+                      //   smallbar = Math.min(...[...currentPriceDataTable[key]]);
 
 
                       
-                      for(let i = 0 ;i  < currentPriceDataTable[key].length ;  i++){
+                      // for(let i = 0 ;i  < currentPriceDataTable[key].length ;  i++){
 
-                      let barc = document.createElement("div");
-                      let barct = document.createElement("div");
-                        barc.setAttribute("class", "barc");
-                        let hig =  (Number(currentPriceDataTable[key][i])); // - (smallbar * 0.5));
-                        let PperDif;
-                        if (i == 0){
-                          PperDif = 0;
-                        }
-                        else{
-                          PperDif = (((hig - preHig)/hig)*100).toFixed(1);
-                        }   
-                          num = Number(hig);
-                          let unit = (100 / (largebar - smallbar)); // (largebar - smallbar))
-                          let barHig  = ((unit * (num - smallbar) )).toFixed(1);
+                      // let barc = document.createElement("div");
+                      // let barct = document.createElement("div");
+                      //   barc.setAttribute("class", "barc");
+                      //   let hig =  (Number(currentPriceDataTable[key][i])); // - (smallbar * 0.5));
+                      //   let PperDif;
+                      //   if (i == 0){
+                      //     PperDif = 0;
+                      //   }
+                      //   else{
+                      //     PperDif = (((hig - preHig)/hig)*100).toFixed(1);
+                      //   }   
+                      //     num = Number(hig);
+                      //     let unit = (100 / (largebar - smallbar)); // (largebar - smallbar))
+                      //     let barHig  = ((unit * (num - smallbar) )).toFixed(1);
 
-                        if(preHig >= hig){
-                          barc.style.backgroundColor = "rgba(255, 0,0, 0.35)";
-                        }
-                        else{
-                          barc.style.backgroundColor = "rgba(20, 255 ,20, 0.75)";
+                      //   if(preHig >= hig){
+                      //     barc.style.backgroundColor = "rgba(255, 0,0, 0.35)";
+                      //   }
+                      //   else{
+                      //     barc.style.backgroundColor = "rgba(20, 255 ,20, 0.75)";
                           
-                        }
-                        preHig = hig;
-                        // let barHig = (hig * (100 / largebar)).toFixed(1);
-                        barc.style.height = "100px"; //((Number(barHig)).toString()) + 'px'; //((largebar - Number(currentPriceData1[key][i])).toFixed(1).toString() + 'px').toString();
-                        // barc.style.top = (100 - Number(barHig).toFixed(1).toString())+ 'px';
-                        // barc.style.fontSize = '14px';
-                        // barc.style.width = '10px';
+                      //   }
+                      //   preHig = hig;
+                      //   // let barHig = (hig * (100 / largebar)).toFixed(1);
+                      //   barc.style.height = "100px"; //((Number(barHig)).toString()) + 'px'; //((largebar - Number(currentPriceData1[key][i])).toFixed(1).toString() + 'px').toString();
+                      //   // barc.style.top = (100 - Number(barHig).toFixed(1).toString())+ 'px';
+                      //   // barc.style.fontSize = '14px';
+                      //   // barc.style.width = '10px';
                         
 
-                        let barcspan = document.createElement("span");
-                        barcspan.setAttribute("class", "barcspan");
+                      //   let barcspan = document.createElement("span");
+                      //   barcspan.setAttribute("class", "barcspan");
 
-                        if(i == 0){
-                          barcspan.innerText = Number(CurrentPriceObj[key][1]).toFixed(1);  //perDif; 
-                          }
-                          else{
-                            let PreviousPrice = currentPriceDataTable[key][i -1];
-                            let CurrentPrice = currentPriceDataTable[key][i];
+                      //   if(i == 0){
+                      //     barcspan.innerText = Number(CurrentPriceObj[key][1]).toFixed(1);  //perDif; 
+                      //     }
+                      //     else{
+                      //       let PreviousPrice = currentPriceDataTable[key][i -1];
+                      //       let CurrentPrice = currentPriceDataTable[key][i];
 
-                            barcspan.innerText = (((CurrentPrice - PreviousPrice)/ PreviousPrice) * 100).toFixed(1);
-                          }
-                        // if( key == 'AURIONPRO'){
-                        //   console.log(PperDif);
-                        // }
-                        // if( i == currentPriceDataTable[key].length -1){
-                        //   barcspan.innerText = Number(currentPriceDataTable[key][i]).toFixed(1);
-                        // }
-                        // else{
-                        //   barcspan.innerText = Number(currentPriceDataTable[key][i] - currentPriceDataTable[key][i -1]).toFixed(1);
-                        // }
+                      //       barcspan.innerText = (((CurrentPrice - PreviousPrice)/ PreviousPrice) * 100).toFixed(1);
+                      //     }                       
                         
-                        
-                        barct.appendChild(barc);
-                        barc.appendChild(barcspan);
-                        bar.appendChild(barct);
-                      }
+                      //   barct.appendChild(barc);
+                      //   barc.appendChild(barcspan);
+                      //   bar.appendChild(barct);
+                      // }
                       anchortag.appendChild(bar);
                       topDivtag.appendChild(anchortag);
                         }
@@ -802,12 +829,12 @@ function createChart(companyObject, e, days = 1000){
                               // barc.appendChild(barcspan);
                               // bar.appendChild(barct);
 
-                              barv.appendChild(barct);
-                              barct.appendChild(barcv);
-                              barcv.appendChild(barcspanv);
-                              preHigv = higv;
+                              // barv.appendChild(barct);
+                              // barct.appendChild(barcv);
+                              // barcv.appendChild(barcspanv);
+                              // preHigv = higv;
                             }
-                            topDivtag.appendChild(barv);
+                            // topDivtag.appendChild(barv);
                               }
 
 
@@ -955,7 +982,11 @@ function getSectorData(event) {
   }
 
 function getSectorDataAll() {
+  document.getElementById("filter").value = "Loading...";
+        document.getElementById("results0").innerText = "Loading...";
+        document.getElementById("SectorList").style.display = 'none';
   getHTTPs("All");
+
 }
 
   
@@ -1130,27 +1161,8 @@ createPositiveChart(MasterdCompanyObject);
   }
 
   function getFavData(stockName) {
-    const xhr = new XMLHttpRequest();
-    xhr.open("GET", "," + stockName);
-    xhr.send();
-    xhr.responseType = "json";
-    xhr.onload = () => {
-      if (xhr.readyState == 4 && xhr.status == 200) {
-        dCompanyObject = xhr.response.companyObject;
-        // dCompanyDateObject = xhr.response.companyDateObj;
-        dVolumeObject = xhr.response.volumeObject;
-        CurrentPriceObj = xhr.response.currentPriceData;
-        currentPriceData1 = xhr.response.currentPriceData1;
-        currentPriceDataTable = xhr.response.currentPriceDataTable;
-        currentVolumeDataTable = xhr.response.currentVolumeDataTable,
-        createChart( xhr.response.companyObject);
-
-      } 
-      else {
-        console.log(`Error: ${xhr.status}`);
-        }
-      };
-      showPrice();
+    
+    getHTTPs("," + stockName);
 }
   
 
@@ -1272,13 +1284,13 @@ function getHighData() {
 function createPositiveChart(dpositive, dpositiveCompany){
       positiveCompanyObject = {};
       for(var i = 0; i < Object.keys(positiveCompany).length - 1; i++){
-        console.log(dpositive[i]);
-        console.log(dpositiveCompany[dpositive[i]]);
+        // console.log(dpositive[i]);
+        // console.log(dpositiveCompany[dpositive[i]]);
         positiveCompanyObject[dpositiveCompany[dpositive[i]]] = dCompanyObject[dpositiveCompany[dpositive[i]]] ;
 
       }
 
-      console.log(positiveCompanyObject);
+      // console.log(positiveCompanyObject);
       clearChart();
       createChart(positiveCompanyObject);
       updateCompanyDeatils();
@@ -1286,3 +1298,5 @@ function createPositiveChart(dpositive, dpositiveCompany){
       showGainers();
 
     }
+
+    
