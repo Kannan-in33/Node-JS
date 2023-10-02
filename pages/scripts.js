@@ -685,7 +685,7 @@ function createChart(companyObject, e, days = 1000){
                           }
 
                           bar.appendChild(canvasb);
-                              console.log([...currentPriceDataTable[key]].reverse());
+                              // console.log([...currentPriceDataTable[key]].reverse());
                           new Chart(canvasb, {
                             type: "line",
                             data: {
@@ -1029,6 +1029,7 @@ function getUp(num){
 // positive.sort().reverse();
 positive.sort((a, b) => b - a);
 createPositiveChart(positive, positiveCompany);
+// showGainers();
 
   //       case 2:
   //         positive = [...positive, ...positive2];
@@ -1208,37 +1209,30 @@ slider.oninput = function() {
         
 
 function getOpenData() {
-    const xhr = new XMLHttpRequest();
-    xhr.open("GET", "/open");
+    getHTTPs('open');
+    updateCompanyDeatils();
 }
  
       //  High data Start
 function getHighData() {
-  const xhr = new XMLHttpRequest();
-  xhr.open("GET", "/highp");
-  
+  getHTTPs('highp');
+  updateCompanyDeatils(); 
 }
 
 // End of High Data
 
   function getLowData() {
-    const xhr = new XMLHttpRequest();
-    xhr.open("GET", "/low52");
-    
-      showPrice();
+    getHTTPs('low52');
+    updateCompanyDeatils();
   }
 
   function getVolumeData() {
-    const xhr = new XMLHttpRequest();
-    xhr.open("GET", "/volumedata");
-    
-      showPrice();
+    getHTTPs('volumedata');
+    updateCompanyDeatils();
   }
   function getLongTermData() {
-    const xhr = new XMLHttpRequest();
-    xhr.open("GET", "/longterm");
-    
-      showPrice();
+    getHTTPs('longterm');
+    updateCompanyDeatils();
   }
 
   
@@ -1294,8 +1288,7 @@ function createPositiveChart(dpositive, dpositiveCompany){
       clearChart();
       createChart(positiveCompanyObject);
       updateCompanyDeatils();
-      showPrice();
-      showGainers();
+      
 
     }
 

@@ -244,7 +244,7 @@ function getlongtermarray(){
     });
 }
 
-
+getCloseOpenPrice();
 getUpdatedPrice();
 getUpdatedPriceTable();
 getUpdatedVolomeTable();
@@ -317,7 +317,7 @@ server.get('/lt', (req, res) => {
 
 server.use( (req, res)=>{
 
-console.log(req.path);
+// console.log(req.path);
 
     let obj ={};
     let obj2 = [];
@@ -348,7 +348,7 @@ if(req.path.includes('getcompare')) {
 
 else if(req.path.includes('getFivePer')) {
     let ARR = [...FivePerData];        
-    console.log(ARR.length);
+    // console.log(ARR.length);
     let foldersPath = fs.readdirSync(path.resolve(__dirname, 'src/'));
     foldersPath.forEach( (folder, j) => {
         //  ||  folder == '401'
@@ -423,7 +423,7 @@ else if(req.path.includes('getFivePer')) {
     fs.readdir(directorypath , function (err, files) {
     if (err) throw err;
     for(let j = 1; j < ARR.length; j++){
-        console.log(ARR[j]);
+        // console.log(ARR[j]);
     files.forEach( (file, i) => {
         
         if (file.split('.')[0] == ARR[j]){
@@ -453,7 +453,7 @@ else if(req.path.includes('getFivePer')) {
             }
 
                 if (i == 10) {
-                    console.log(i);
+                    // console.log(i);
                 obj3 = { 
                     "company" : company,
                     "companyObject" : companyObject,
@@ -480,7 +480,7 @@ else if(req.path.includes('getFivePer')) {
 
 }
 });  
-console.log(ARR); 
+// console.log(ARR); 
             }
 
 // Volume page data
@@ -642,8 +642,9 @@ else if(req.path.includes('highp')) {
 // Low page data
 
 else if(req.path.includes('low52')) {
-    console.log('hi');
-    let ARR = [...lowPriceData];        
+    
+    let ARR = [...lowPriceData]; 
+    // console.log(ARR);   
     let foldersPath = fs.readdirSync(path.resolve(__dirname, 'src/'));
     foldersPath.forEach( (folder, j) => {
         //  ||  folder == '401'
@@ -651,7 +652,7 @@ else if(req.path.includes('low52')) {
     const directorypath = path.join(__dirname, 'src/' + folder);
     fs.readdir(directorypath , function (err, files) {
     if (err) throw err;
-    for(let j = 1; j < ARR.length; j++){
+    for(let j = 0; j < ARR.length -1 ; j++){
     files.forEach( (file, i) => {
         
         if (file.split('.')[0] == ARR[j]){
@@ -676,7 +677,7 @@ else if(req.path.includes('low52')) {
                     volumeObj =[];
             }
 
-                if (file.split('.')[0] == ARR[ARR.length - 1] ){
+                if (file.split('.')[0] == ARR[ARR.length - 2] ){
                 obj3 = { 
                     "company" : company,
                     "companyObject" : companyObject,
@@ -915,7 +916,7 @@ else if(req.path == '/All') {
 
 else if(req.path.includes('.')) {
     let ARR = ([...req.path.replaceAll('/','').split('.')]); 
-    console.log(ARR); 
+    // console.log(ARR); 
     let AAR2 = [];      
     // req.params()
     let foldersPath = fs.readdirSync(path.resolve(__dirname, 'src/'));
@@ -934,7 +935,7 @@ else if(req.path.includes('.')) {
     files.forEach( (file, i) => {
         
         if ((file.split('.')[0]).includes(ARR[1])){
-            console.log(file)
+            // console.log(file)
         fs.readFile(path.join(directorypath , file), 'utf8', function (err2, data) {
         if (err2) throw err2;
             obj = JSON.parse(data);
