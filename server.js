@@ -173,7 +173,7 @@ getUpdatedPriceTable =  async () =>{
     const GsUpdate = await googleSheets.spreadsheets.values.get({
         auth,
         spreadsheetId,
-        range: "Bar!A1:AC2396",
+        range: "Bar!A1:BC2396",
     });
 
     cpvaluesTable = (GsUpdate.data.values);
@@ -210,7 +210,7 @@ getUpdatedVolomeTable =  async () =>{
     const CVVdata = await googleSheets.spreadsheets.values.get({
         auth,
         spreadsheetId,
-        range: 'Daily Volume!A1:AC2396', 
+        range: 'Daily Volume!A1:BC2396', 
     });
 
    cvvalues = (CVVdata.data.values);
