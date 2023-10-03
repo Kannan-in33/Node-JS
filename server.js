@@ -32,7 +32,7 @@ const spreadsheetId = "13BOxMT5cUoScurImRrDK0PwwLYAtV7qJiI75Knw44kQ";
 // Get CloseAndOpenPriceData
 
 getCloseOpenPrice =  async () =>{
-    console.log(closeOpenPriceData.length);
+    // console.log(closeOpenPriceData.length);
              if( closeOpenPriceData.length == 0){
                         
                     const auth = new google.auth.GoogleAuth({
@@ -182,9 +182,9 @@ getUpdatedPriceTable =  async () =>{
         for(let j = 1; j < ele.length ; j++) {
             tempArr2.push(ele[j].toString())
         }
-        if(ele[0].toString().split(",")[0] == 'ACCELYA'){
-            tempArr2.reverse();
-        }
+        // if(ele[0].toString().split(",")[0] == 'ACCELYA'){
+        //     tempArr2.reverse();
+        // }
         currentPriceDataTable[ele[0].toString().split(",")[0]] = tempArr2.reverse();
      });
 
