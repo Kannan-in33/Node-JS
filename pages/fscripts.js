@@ -1389,3 +1389,29 @@ function clearFavourits(){
                 Array.from(lst).forEach( (element) =>  element.remove() );
           }
         }
+
+function getDma(){
+
+    if (DAmFlag == 0){    
+        DAmFlag = 1;
+            lst = document.querySelectorAll(".charts > div");
+                if(lst.length > 1){
+                        Array.from(lst).forEach( (element) =>  {
+                            element.style.display = 'none' ;
+                            if(element.classList.contains('dma')){
+                                element.style.display = '';
+                            }
+                        });
+                }
+                }
+
+        else{
+            lst = document.querySelectorAll(".charts > div");
+                if(lst.length > 1){
+                        Array.from(lst).forEach( (element) =>  {
+                            element.style.display = '' ;
+                                });
+                            }
+                        }
+
+        }

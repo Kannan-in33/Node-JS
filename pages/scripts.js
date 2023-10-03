@@ -60,7 +60,7 @@ let MasterNegativeCompany2 = {};
 let MasterNegative3 = [];
 let MasterNegativeCompany3 = {};
 let positiveCompanyObject = {};
-
+let DAmFlag = 0;
 let negative = [];
 let negativeCompany = {};
 let upvalue0 = 0;
@@ -284,6 +284,12 @@ divtag.setAttribute("class", "bookvalue");
 divtag.innerText = "BK:  " + getCompareObject[companyDetails[d]]['Book Value'];
 divtag0.appendChild(divtag);
 
+// PEG Ratio
+divtag = document.createElement("div");
+divtag.setAttribute("class", "High");
+divtag.innerText = "PG: " + getCompareObject[companyDetails[d]]['PEG Ratio'];
+divtag0.appendChild(divtag);
+
 // divtag = document.createElement("div");
 // divtag.setAttribute("class", "High");
 // divtag.innerText = "H :" + getCompareObject[companyDetails[d]].High;
@@ -293,6 +299,39 @@ divtag0.appendChild(divtag);
 // divtag.setAttribute("class", "Low");
 // divtag.innerText = "L :" +getCompareObject[companyDetails[d]].Low;
 // divtag0.appendChild(divtag);
+
+// DMA 5
+// dCompanyObject[companyDetails[d]][complen -1]
+let DMA20 = 0;
+let DMA5 = 0;
+let DMACompany = [];
+
+DMACompany = [...dCompanyObject[companyDetails[d]]];
+DMACompany.reverse();
+
+for(let i = 0; i < Number(maxi.value) ; i++){
+  // if(i > 5){
+  DMA20 = Number(DMA20) + Number(DMACompany[i]);
+  // }
+  if(i < 5){
+    DMA5 = Number(DMA5) + Number(DMACompany[i]);
+  }
+}
+
+DMA5 = DMA5/5;
+DMA20 = DMA20/Number(maxi.value);
+
+if((DMA5 > 0) && (DMA5 > DMA20)){
+
+divtag = document.createElement("div");
+divtag.setAttribute("class", "Low");
+divtag.innerText = "DMA 5 :" 
+divtag0.appendChild(divtag);
+divtag.parentElement.parentElement.parentElement.parentElement.parentElement.classList.add("dma");
+
+}
+
+// DMA 5 End
 
 divtag = document.createElement("div");
 divtag.setAttribute("class", "Promoter holding");
@@ -676,7 +715,7 @@ function createChart(companyObject, e, days = 1000){
                     let canvasb = document.createElement("canvas");
                           canvasb.setAttribute("id", "bar" + key);
                           canvasb.setAttribute("class", "bar" + key); 
-                          canvasb.setAttribute("height", "200"); 
+                          canvasb.setAttribute("height", "250"); 
                           canvasb.setAttribute("width", "600"); 
 
                           let xaxisprice = [];
@@ -691,7 +730,8 @@ function createChart(companyObject, e, days = 1000){
                             data: {
                             labels: [...xaxisprice],
                             datasets: [{
-                                    label: key ,
+                                    label: 'H : ' + Math.max(...[...currentPriceDataTable[key]]) + '        C : ' + [...currentPriceDataTable[key]][[...currentPriceDataTable[key]].length - 1],
+                                    fontSize: 16,
                                     pointRadius: 0,
                                     borderWidth : 0.5,
                                     borderColor: "rgba(0,0,0,0.9)",
@@ -702,7 +742,8 @@ function createChart(companyObject, e, days = 1000){
                                       scales: {
                                           yAxes: [{
                                               ticks: {
-                                                  fontSize: 14
+                                                  fontSize: 15,
+                                                  family: "'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif', 'monospace'"
                                           }
                                       }]
                                   }
@@ -1171,24 +1212,25 @@ createPositiveChart(MasterdCompanyObject);
 var slider = document.querySelector('#slider');
 var mini = document.getElementById("mini");
 var maxi = document.getElementById("maxi");
-mini.value = maxi.value = slider.value;
+// mini.value = maxi.value = slider.value;
+maxi.value = slider.value;
 
 slider.oninput = function() {
-  if (slider.value < 0){
-    mini.value = 248 - this.value;
-    maxi.value = 0;
-  }
-  else{
+  // if (slider.value < 0){
+  //   mini.value = 248 - this.value;
+  //   maxi.value = 0;
+  // }
+  // else{
     maxi.value = this.value;
-    mini.value = 0;
-  }
+  //   mini.value = 0;
+  // }
     
   }
 
-  mini.oninput = function() {
-    slider.value = this.value;   
+  // mini.oninput = function() {
+  //   slider.value = this.value;   
       
-    }
+  //   }
     maxi.oninput = function() {
       slider.value = this.value;   
         

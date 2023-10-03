@@ -428,11 +428,15 @@
     .dayCompare::before, .LCompare::before{
       font-size: 10px !important;
     }
+    .dma{
+      background-color: aliceblue;
+    }
+
 
     .bar, .barv{
       display: flex;
       justify-content: flex-start;
-      height: 160px;
+      height: 220px;
       overflow: hidden;
       letter-spacing: -1px;
       width: 100% !important;
@@ -469,7 +473,7 @@
 
     canvas[id^='bar']{
       width: 100% !important;
-      height: 150px !important;
+      height: 215px !important;
     }
 
     #pages{
