@@ -719,7 +719,7 @@ function createChart(companyObject, e, days = 1000){
                           canvasb.setAttribute("width", "600"); 
 
                           let xaxisprice = [];
-                          for(let i = 1; i < 31; i++){
+                          for(let i = 1; i < 54; i++){
                             xaxisprice.push(i);
                           }
 
@@ -1149,7 +1149,8 @@ function getDown(num){
   }
 // positive.sort().reverse();
 positive.sort((a, b) => b - a);
-createPositiveChart(MasterdCompanyObject);
+createPositiveChart(positive, positiveCompany);
+// createPositiveChart(MasterdCompanyObject);
 
   // document.querySelector(".charts").style.display = "none"; 
   // let lst = document.querySelectorAll(".charts > div");
