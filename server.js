@@ -371,18 +371,18 @@ else if(req.path.includes('getFivePer')) {
             console.log(j , company );
             if (j == ARR.length - 1 ){
                 
-                obj3 = { 
-                    "company" : company,
-                    "companyObject" : companyObject,
-                    "volumeObject" : volumeObject,
-                    "currentPriceData": currentPriceData,
-                    "currentPriceData1": currentPriceData1,
-                    "currentPriceDataTable":currentPriceDataTable,
-                    "currentVolumeDataTable": currentVolumeDataTable,
-                    "closeOpenPriceDataObject": closeOpenPriceDataObject,
-                    "closeOpenPriceData":closeOpenPriceData,
-                }
-                res.send(obj3);
+                // obj3 = { 
+                //     "company" : company,
+                //     "companyObject" : companyObject,
+                //     "volumeObject" : volumeObject,
+                //     "currentPriceData": currentPriceData,
+                //     "currentPriceData1": currentPriceData1,
+                //     "currentPriceDataTable":currentPriceDataTable,
+                //     "currentVolumeDataTable": currentVolumeDataTable,
+                //     "closeOpenPriceDataObject": closeOpenPriceDataObject,
+                //     "closeOpenPriceData":closeOpenPriceData,
+                // }
+                // res.send(obj3);
     }
             
         fs.readFile(path.join(directorypath , file), 'utf8', function (err2, data) {
