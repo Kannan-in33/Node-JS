@@ -27,6 +27,23 @@ let t = 0;
 let longterm =[];
 let FivePerData = [];
 
+
+
+let obj ={};
+let obj2 = [];
+let datesObj = [];
+let company =[];
+let obj3 = {};
+let valueList = {};
+let volumeList = {};
+let companyObject = {};
+let companyDateObj = {};
+let companyList =[];
+let volumeObj =[];
+let volumeObject = {};    
+let max = 0;
+let  companyObject2 ={};
+
 const spreadsheetId = "13BOxMT5cUoScurImRrDK0PwwLYAtV7qJiI75Knw44kQ";
 
 // Get CloseAndOpenPriceData
@@ -315,24 +332,14 @@ server.get('/lt', (req, res) => {
 
 });
 
+
+
+
 server.use( (req, res)=>{
 
 // console.log(req.path);
 
-    let obj ={};
-    let obj2 = [];
-    let datesObj = [];
-    let company =[];
-    let obj3 = {};
-    let valueList = {};
-    let volumeList = {};
-    let companyObject = {};
-    let companyDateObj = {};
-    let companyList =[];
-    let volumeObj =[];
-    let volumeObject = {};    
-    let max = 0;
-    let  companyObject2 ={};
+
 
 
 if(req.path.includes('getcompare')) {
@@ -348,7 +355,7 @@ if(req.path.includes('getcompare')) {
 
 else if(req.path.includes('getFivePer')) {
     let ARR = [...FivePerData];        
-    // console.log(ARR.length);
+    console.log(ARR.length);
     let foldersPath = fs.readdirSync(path.resolve(__dirname, 'src/'));
     foldersPath.forEach( (folder, j) => {
         //  ||  folder == '401'
@@ -356,14 +363,32 @@ else if(req.path.includes('getFivePer')) {
     const directorypath = path.join(__dirname, 'src/' + folder);
     fs.readdir(directorypath , function (err, files) {
     if (err) throw err;
-    for(let j = 1; j < ARR.length; j++){
+    for(let j = 1; j < ARR.length -1; j++){
     files.forEach( (file, i) => {
         
-        if (file.split('.')[0] == ARR[j]){
+        if (file.split('.')[0] == ARR[j] || j == ARR.length - 1){
+
+            console.log(j , company );
+            if (j == ARR.length - 1 ){
+                
+                obj3 = { 
+                    "company" : company,
+                    "companyObject" : companyObject,
+                    "volumeObject" : volumeObject,
+                    "currentPriceData": currentPriceData,
+                    "currentPriceData1": currentPriceData1,
+                    "currentPriceDataTable":currentPriceDataTable,
+                    "currentVolumeDataTable": currentVolumeDataTable,
+                    "closeOpenPriceDataObject": closeOpenPriceDataObject,
+                    "closeOpenPriceData":closeOpenPriceData,
+                }
+                res.send(obj3);
+    }
+            
         fs.readFile(path.join(directorypath , file), 'utf8', function (err2, data) {
         if (err2) throw err2;
             obj = JSON.parse(data);
-            let j = 0;
+            // let j = 0;
             company.push(file);
             
                 if(obj['datasets'].length > 0 ){
@@ -399,6 +424,9 @@ else if(req.path.includes('getFivePer')) {
     
 }
 
+
+
+
     });
     
 }
@@ -407,6 +435,7 @@ else if(req.path.includes('getFivePer')) {
 
 }
 });  
+
 }
 
 // Get FivePer End
@@ -490,7 +519,7 @@ else if(req.path.includes('volumedata')) {
     let foldersPath = fs.readdirSync(path.resolve(__dirname, 'src/'));
     foldersPath.forEach( (folder, j) => {
         //  ||  folder == '401'
-    if(folder == 'All-volume'){  // 'All
+    if(folder == 'All'){  // 'All
     const directorypath = path.join(__dirname, 'src/' + folder);
     fs.readdir(directorypath , function (err, files) {
     if (err) throw err;
@@ -505,10 +534,10 @@ else if(req.path.includes('volumedata')) {
             
                 if(obj['datasets'].length > 0 ){
                     let pos = obj['datasets'][0]['values'].length - 1;
-                    let todayPrice = obj['datasets'][0]['values'][pos][1];
-                    let dma200 = obj['datasets'][2]['values'][pos][1];
+                    // let todayPrice = obj['datasets'][0]['values'][pos][1];
+                    // let dma200 = obj['datasets'][2]['values'][pos][1];
 
-                    if(todayPrice >= dma200){
+                    if(true){ // todayPrice >= dma200
                     // valueList[file.split('.')[0]] = obj['datasets'][0]['values'].length
                     max = max < obj['datasets'][0]['values'].length ? obj['datasets'][0]['values'].length : max
                     let MAXI = [];
