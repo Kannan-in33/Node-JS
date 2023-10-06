@@ -1059,7 +1059,7 @@ function checkPercent(tday, yday) {
   //   let lst = document.querySelectorAll("[id^='days']");
   //   lst.forEach( element => element.classList.remove('active') );
   }
-  function showGainers(){
+function showGainers(){
     let lst = document.querySelectorAll("[class^='upTrend']");
     lst.forEach(element => {
       element.classList.toggle('show');    
@@ -1415,3 +1415,20 @@ function getDma(){
                         }
 
         }
+
+function getStockData(){
+  getSectorList();
+}
+
+function getSectorList(){
+  let listOfCompanies = [];
+  listOfCompanies = Object.keys(getCompareObject);
+  let sectorList = [];
+  for(let i = 0 ; i < listOfCompanies.length -1; i++){
+    let companyPrice = (getCompareObject[listOfCompanies[i]]['Current Price']);
+    if( (companyPrice > Number(pricemin.value)) && (companyPrice < Number(pricemax.value)) ){
+      sectorList.push(listOfCompanies[i]);
+    }
+}
+    getHTTPs(sectorList);
+}

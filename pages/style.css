@@ -219,7 +219,7 @@
 
      .search{
       display: flex;
-      /* margin-top: 64px; */
+      width: 98% !important;
       background-color: #fff;
       padding: 10px 5px;
       flex-wrap: wrap;
@@ -229,6 +229,12 @@
        height: 30px;
        width:30%;
      }
+     .search #getSector{
+      padding: 0 !important;
+      margin-top: 0;
+      width: 30% !important;
+  }
+     
  /* #secSearch{
   margin-top: 54px;
  } */
@@ -394,7 +400,7 @@
       padding: 2px;
       /* padding-left: 15px !important; */
       border: 0.25px #ccc solid;
-      width: 90%;
+      width: 60% !important;
     }
 
     #PriceDropdown{
@@ -428,10 +434,21 @@
     .dayCompare::before, .LCompare::before{
       font-size: 10px !important;
     }
+    #getstockData, #getdma, #getfiveperData{
+      margin-left: auto !important;
+    }
     .dma{
       background-color: aliceblue;
     }
-
+    .sliders{
+      margin-left: 10px;
+    }
+    .sliders input[type='text']{
+      width: 50px;
+    }
+    .sliders input[type='range']{
+      min-width: 270px;
+    }
 
     .bar, .barv{
       display: flex;
@@ -545,7 +562,7 @@
               display: block;
               margin-left: 15px;
               background-color: #fff;
-              width: 50%;
+              width: 98% !important;
               /* position: fixed; */
               margin-top: 20px;
              }

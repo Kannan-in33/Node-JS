@@ -190,7 +190,7 @@ getUpdatedPriceTable =  async () =>{
     const GsUpdate = await googleSheets.spreadsheets.values.get({
         auth,
         spreadsheetId,
-        range: "Bar!A1:BC2396",
+        range: "Bar!A1:CD2396",
     });
 
     cpvaluesTable = (GsUpdate.data.values);
@@ -227,7 +227,7 @@ getUpdatedVolomeTable =  async () =>{
     const CVVdata = await googleSheets.spreadsheets.values.get({
         auth,
         spreadsheetId,
-        range: 'Daily Volume!A1:BC2396', 
+        range: 'Daily Volume!A1:CD2396', 
     });
 
    cvvalues = (CVVdata.data.values);
@@ -354,8 +354,9 @@ if(req.path.includes('getcompare')) {
 // Get FivePer
 
 else if(req.path.includes('getFivePer')) {
-    let ARR = [...FivePerData];        
-    console.log(ARR.length);
+    let ARR = [...FivePerData];
+    let AAR2 = [];          
+    // console.log(ARR.length);
     let foldersPath = fs.readdirSync(path.resolve(__dirname, 'src/'));
     foldersPath.forEach( (folder, j) => {
         //  ||  folder == '401'
@@ -363,28 +364,21 @@ else if(req.path.includes('getFivePer')) {
     const directorypath = path.join(__dirname, 'src/' + folder);
     fs.readdir(directorypath , function (err, files) {
     if (err) throw err;
-    for(let j = 1; j < ARR.length -1; j++){
+                for(let k = 1; k < ARR.length -1; k++){
+                        files.forEach( (file, i) => {
+                            if(file.includes(ARR[k])){
+                                AAR2.push(file.split('.')[0]);
+                            }
+                        });
+                    }
+                    // console.log(AAR2);
+    for(let j = 0; j < AAR2.length -1; j++){
     files.forEach( (file, i) => {
         
-        if (file.split('.')[0] == ARR[j] || j == ARR.length - 1){
+        if (file.split('.')[0] == AAR2[j] ){
 
-            console.log(j , company );
-            if (j == ARR.length - 1 ){
-                
-                // obj3 = { 
-                //     "company" : company,
-                //     "companyObject" : companyObject,
-                //     "volumeObject" : volumeObject,
-                //     "currentPriceData": currentPriceData,
-                //     "currentPriceData1": currentPriceData1,
-                //     "currentPriceDataTable":currentPriceDataTable,
-                //     "currentVolumeDataTable": currentVolumeDataTable,
-                //     "closeOpenPriceDataObject": closeOpenPriceDataObject,
-                //     "closeOpenPriceData":closeOpenPriceData,
-                // }
-                // res.send(obj3);
-    }
-            
+            // console.log(j , AAR2[j] , AAR2.length);
+                        
         fs.readFile(path.join(directorypath , file), 'utf8', function (err2, data) {
         if (err2) throw err2;
             obj = JSON.parse(data);
@@ -405,7 +399,7 @@ else if(req.path.includes('getFivePer')) {
                     volumeObj =[];
             }
             
-                if (file.split('.')[0] == ARR[ARR.length - 1] ){
+                if (file.split('.')[0] == AAR2[AAR2.length - 2] ){
                 obj3 = { 
                     "company" : company,
                     "companyObject" : companyObject,
@@ -417,6 +411,7 @@ else if(req.path.includes('getFivePer')) {
                     "closeOpenPriceDataObject": closeOpenPriceDataObject,
                     "closeOpenPriceData":closeOpenPriceData,
                 }
+                // console.log(obj3);
                 res.send(obj3);
     }
     
@@ -876,7 +871,7 @@ else if(req.path == '/All') {
 
 // Favourite Page Start
 
-    else if(req.path.includes(',')) {
+else if(req.path.includes(',')) {
         let ARR = ([...req.path.replaceAll('/','').split(',')]); 
         // console.log(ARR);    
         // req.params()
@@ -960,17 +955,18 @@ else if(req.path.includes('.')) {
             AAR2.push(file.split('.')[0]);
         }
     });
-    for(let j = 1; j < ARR.length; j++){
+    // console.log(AAR2.length);
+    for(let j = 0; j < AAR2.length -2 ; j++){
     files.forEach( (file, i) => {
-        
-        if ((file.split('.')[0]).includes(ARR[1])){
+        // console.log(i , AAR2[j]);
+        if ((file.split('.')[0]).includes(AAR2[j])){
             // console.log(file)
         fs.readFile(path.join(directorypath , file), 'utf8', function (err2, data) {
         if (err2) throw err2;
             obj = JSON.parse(data);
             let j = 0;
             company.push(file);
-            
+            // console.log(company);
                 if(obj['datasets'].length > 0 ){
                     // valueList[file.split('.')[0]] = obj['datasets'][0]['values'].length
                     max = max < obj['datasets'][0]['values'].length ? obj['datasets'][0]['values'].length : max
@@ -984,7 +980,7 @@ else if(req.path.includes('.')) {
                     datesObj = [];
                     volumeObj =[];
             }
-                if (file.split('.')[0] == AAR2[AAR2.length - 1] ){
+                if (file.split('.')[0] == AAR2[AAR2.length - 3] ){
                 obj3 = { 
                     "company" : company,
                     "companyObject" : companyObject,
@@ -995,6 +991,7 @@ else if(req.path.includes('.')) {
                     "currentVolumeDataTable": currentVolumeDataTable,
                     "closeOpenPriceDataObject": closeOpenPriceDataObject,
                 }
+                // console.log(obj3);
                 res.send(obj3);
     }
     
@@ -1017,6 +1014,7 @@ else if(req.path.includes('.')) {
 else{
     let j = 0;
 const directorypath = path.join(__dirname, (req.path.replace('/', 'src/').replaceAll('%20', ' ') ));
+// console.log(directorypath);
 fs.readdir(directorypath , function (err, files) {    
                 if (err) throw err;
                 files.forEach( (file, i) => {    
