@@ -950,7 +950,7 @@ function createChart(companyObject, e, days = 1000){
               for (let key in companyObject) {
                 if(!(key.includes('undefined')) ){
                 resultCount++;
-                console.log(key);
+                // console.log(key);
                     let yValues  = [];
                     let volumeValues = [];
                     yValues  = [...companyObject[key]];
