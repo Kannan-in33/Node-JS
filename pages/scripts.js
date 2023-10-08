@@ -950,7 +950,7 @@ function createChart(companyObject, e, days = 1000){
               for (let key in companyObject) {
                 if(!(key.includes('undefined')) ){
                 resultCount++;
-                // console.log(key);
+                console.log(key);
                     let yValues  = [];
                     let volumeValues = [];
                     yValues  = [...companyObject[key]];
@@ -1025,7 +1025,7 @@ function createChart(companyObject, e, days = 1000){
                         mainBlock.appendChild(topDivtag);
                     
                     
-                        if(Object.keys(currentPriceDataTable).length > 1){
+                if(Object.keys(currentPriceDataTable).length > 1){
                     let bar = document.createElement("div");
                         bar.setAttribute("class", "bar");
                     let canvasb = document.createElement("canvas");
@@ -1133,54 +1133,97 @@ function createChart(companyObject, e, days = 1000){
                         if(Object.keys(currentVolumeDataTable).length > 1){
                           let barv = document.createElement("div");
                               barv.setAttribute("class", "barv");
-                            let preHigv = 0;
-                              let largebarv = 0;
-                              let smallbarv = 0;
-                              largebarv = Math.max(...[...currentVolumeDataTable[key]]);
-                              smallbarv = Math.min(...[...currentVolumeDataTable[key]]);
+
+                          let canvasv = document.createElement("canvas");
+                              canvasv.setAttribute("id", "barv" + key);
+                              canvasv.setAttribute("class", "barv" + key); 
+                              canvasv.setAttribute("height", "250"); 
+                              canvasv.setAttribute("width", "600");
+                              let xaxisvolume = [];
+                              for(let i = 1; i < [...currentVolumeDataTable[key]].length - 1; i++){
+                                xaxisvolume.push(i);
+                              }
+                              barv.appendChild(canvasv);
+                              let dvolumeAvg = 0;
+                              for(let v = 1; v < 6; v++){
+                                dvolumeAvg = Number(dvolumeAvg) + Number(dVolumeObject[key][dVolumeObject[key].length - v]);
+                              }
+                              dvolumeAvg = dvolumeAvg/5;
+                              // console.log([...currentPriceDataTable[key]].reverse());
+                          new Chart(canvasv, {
+                            type: "line",
+                            data: {
+                            labels: [...xaxisvolume],
+                            datasets: [{
+                                    label: 'H : ' + (Math.max(...[...currentVolumeDataTable[key]])).toLocaleString('en-IN')  +   '  P : ' + Number(dvolumeAvg.toFixed(0)).toLocaleString('en-IN') ,
+                                    fontSize: 16,
+                                    pointRadius: 0,
+                                    borderWidth : 0.5,
+                                    borderColor: "rgba(0,0,0,0.9)",
+                                    data: [...currentVolumeDataTable[key]],
+                                    }]
+                                  },  
+                                  options: {
+                                      scales: {
+                                          yAxes: [{
+                                              ticks: {
+                                                  fontSize: 15,
+                                                  family: "'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif', 'monospace'"
+                                          }
+                                      }]
+                                  }
+                                  }
+
+                            }); 
+
+                            // let preHigv = 0;
+                            //   let largebarv = 0;
+                            //   let smallbarv = 0;
+                            //   largebarv = Math.max(...[...currentVolumeDataTable[key]]);
+                            //   smallbarv = Math.min(...[...currentVolumeDataTable[key]]);
                 
                 
                             
-                            for(let i =0; i < currentVolumeDataTable[key].length ;  i++){
-                              // console.log(i);
+                            // for(let i =0; i < currentVolumeDataTable[key].length ;  i++){
+                            //   // console.log(i);
                 
-                            let barcv = document.createElement("div");
-                            let barct = document.createElement("div");
-                              barcv.setAttribute("class", "barcv");
+                            // let barcv = document.createElement("div");
+                            // let barct = document.createElement("div");
+                            //   barcv.setAttribute("class", "barcv");
                               
-                              let higv =  (Number(currentVolumeDataTable[key][i])); // - (smallbar * 0.5));
-                              let perDif;
-                              if (i == 0){
-                                perDif = higv;
-                              }
-                              else{
-                                perDif = (higv - preHigv);
-                                // perDif = (((higv - preHigv)/higv)*100).toFixed(1);
-                              }     
+                            //   let higv =  (Number(currentVolumeDataTable[key][i])); // - (smallbar * 0.5));
+                            //   let perDif;
+                            //   if (i == 0){
+                            //     perDif = higv;
+                            //   }
+                            //   else{
+                            //     perDif = (higv - preHigv);
+                            //     // perDif = (((higv - preHigv)/higv)*100).toFixed(1);
+                            //   }     
 
                 
-                                numv = Number(higv);
-                                let unitv = (100 / (largebarv - smallbarv)); // (largebar - smallbar))
-                                let barHigv  = ((unitv * (numv - smallbarv) )).toFixed(1);
+                            //     numv = Number(higv);
+                            //     let unitv = (100 / (largebarv - smallbarv)); // (largebar - smallbar))
+                            //     let barHigv  = ((unitv * (numv - smallbarv) )).toFixed(1);
                 
-                              if(preHigv >= higv){
-                                barcv.style.backgroundColor = "rgba(255, 0,0, 0.35)";
-                              }
-                              else{
-                                barcv.style.backgroundColor = "rgba(20, 255 ,20, 0.75)";
+                            //   if(preHigv >= higv){
+                            //     barcv.style.backgroundColor = "rgba(255, 0,0, 0.35)";
+                            //   }
+                            //   else{
+                            //     barcv.style.backgroundColor = "rgba(20, 255 ,20, 0.75)";
                                 
-                              }
+                            //   }
                               
-                              // let barHig = (hig * (100 / largebar)).toFixed(1);
-                              barcv.style.height = '100px'; //(Number(barHigv)).toString() + 'px'; //((largebar - Number(currentPriceData1[key][i])).toFixed(1).toString() + 'px').toString();
-                              // barcv.style.top = (100 - Number(barHigv).toFixed(1).toString())+ 'px';
-                              // barc.style.width = '10px';
+                            //   // let barHig = (hig * (100 / largebar)).toFixed(1);
+                            //   barcv.style.height = '100px'; //(Number(barHigv)).toString() + 'px'; //((largebar - Number(currentPriceData1[key][i])).toFixed(1).toString() + 'px').toString();
+                            //   // barcv.style.top = (100 - Number(barHigv).toFixed(1).toString())+ 'px';
+                            //   // barc.style.width = '10px';
                               
                 
-                              let barcspanv = document.createElement("span");
-                              barcspanv.setAttribute("class", "barcspanv");
+                            //   let barcspanv = document.createElement("span");
+                            //   barcspanv.setAttribute("class", "barcspanv");
                               
-                              barcspanv.innerText = (perDif / 1000).toFixed(0); //; Number(currentVolumeDataTable[key][i]).toFixed(0) 
+                            //   barcspanv.innerText = (perDif / 1000).toFixed(0); //; Number(currentVolumeDataTable[key][i]).toFixed(0) 
 
                               // barct.appendChild(barc);
                               // barc.appendChild(barcspan);
@@ -1190,8 +1233,8 @@ function createChart(companyObject, e, days = 1000){
                               // barct.appendChild(barcv);
                               // barcv.appendChild(barcspanv);
                               // preHigv = higv;
-                            }
-                            // topDivtag.appendChild(barv);
+                            // }
+                            topDivtag.appendChild(barv);
                               }
 
 
@@ -1519,9 +1562,10 @@ createPositiveChart(positive, positiveCompany);
     showNoGainers();
   }
 
-  function getFavData(stockName) {
-    
+  function getFavData(stockName) {    
     getHTTPs("," + stockName);
+    updateCompanyDeatils();
+    showPages();
 }
   
 
@@ -1628,9 +1672,15 @@ function getHighData() {
   }
 
   
-  function getHTTPs(path) {
+  function getHTTPs(path, flag = 0) {
     companyDetails = [];
-    dCompanyObject = [];
+    dCompanyObject = {};
+    MasterdCompanyObjectCopy = {};
+    if(flag == 0){
+      dCompanyObject = {};
+      clearChart();
+      
+    }
     const xhr = new XMLHttpRequest();
     xhr.open("GET", "/" +  path)  ;
     xhr.send();

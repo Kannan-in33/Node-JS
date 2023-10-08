@@ -64,9 +64,9 @@
        min-width: 320px;
        margin: 0 !important;
      }
-.Pdrop-options {
+/* .Pdrop-options {
   display: none;
-}
+} */
      .slider{
       display: flex;
       width: 96%;
@@ -139,7 +139,10 @@
           width: 100%;
       }
 
-      [id^='getData'], [class^='upTrend'], [class^='downTrend']{
+      [id^='getData'], 
+      [class^='upTrend'], 
+      [class^='downTrend'],
+      .pagelink{
         display: none;
         width: 100% !important;
       }
@@ -158,7 +161,9 @@
     }
 
 
-      #pages, #pagesDropdown > a.pagelink {
+      #pages, 
+      #pagesDropdown > a.pagelink,
+      #pagesDropdown > button.pagelink {
         width: 100% !important;
       }
 
@@ -414,7 +419,7 @@
 
     #GainDropdown, #NoGainDropdown, #pagesDropdown{
       background-color: #fff;
-      width: 172px !important;
+      width: 96% !important;
       right: 18px;
       position: fixed;
       z-index: 220;
@@ -423,7 +428,7 @@
       height: 50px;
     } */
     #pagesDropdown{
-      top: 50px;
+      /* top: 50px; */
       left: 0px;
     }
     .dayComp{
@@ -453,7 +458,7 @@
     .bar, .barv{
       display: flex;
       justify-content: flex-start;
-      height: 220px;
+      height: 240px;
       overflow: hidden;
       letter-spacing: -1px;
       width: 100% !important;
@@ -491,6 +496,8 @@
     canvas[id^='bar']{
       width: 100% !important;
       height: 215px !important;
+      font-size: 16px;
+      letter-spacing: 1.5px;
     }
 
     #pages{

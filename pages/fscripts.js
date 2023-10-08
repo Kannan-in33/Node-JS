@@ -1060,6 +1060,9 @@ function checkPercent(tday, yday) {
   //   lst.forEach( element => element.classList.remove('active') );
   }
 function showGainers(){
+  document.querySelector("#pagesDropdown").style.display = 'none';
+  document.querySelector("#GainDropdown").style.display = '';
+  document.querySelector("#NoGainDropdown").style.display = 'none';
     let lst = document.querySelectorAll("[class^='upTrend']");
     lst.forEach(element => {
       element.classList.toggle('show');    
@@ -1076,7 +1079,10 @@ function showGainers(){
   }
   
   function showPages(){
-    document.querySelector("#pagesDropdown").classList.toggle('show');
+    // document.querySelector("#pagesDropdown").classList.toggle('show');
+    document.querySelector("#pagesDropdown").style.display = '';
+    document.querySelector("#GainDropdown").style.display = 'none';
+    document.querySelector("#NoGainDropdown").style.display = 'none';
   
     let lst = document.querySelectorAll(".pagelink");
     lst.forEach(element => {
@@ -1086,6 +1092,9 @@ function showGainers(){
   }
   
   function showNoGainers(){
+    document.querySelector("#pagesDropdown").style.display = 'none';
+    document.querySelector("#GainDropdown").style.display = 'none';
+    document.querySelector("#NoGainDropdown").style.display = '';
     let lst = document.querySelectorAll("[class^='downTrend']");
     lst.forEach(element => {
       element.classList.toggle('show');    
@@ -1372,12 +1381,11 @@ function clearFavourits(){
     };
   }
 
-  function getsector(sector){
-    getHTTPs('.' + sector.toUpperCase());
-  }
+
 
   function getFivePer(){
-    getHTTPs('getFivePer');
+
+    getHTTPs('getFivePer', 1);
     updateCompanyDeatils();
     showPrice();
 
@@ -1430,5 +1438,20 @@ function getSectorList(){
       sectorList.push(listOfCompanies[i]);
     }
 }
-    getHTTPs(sectorList);
+    getHTTPs(' ,' + sectorList);
+}
+
+function getsector(sector){
+
+  let listOfCompanies = [];
+  listOfCompanies = Object.keys(getCompareObject);
+  let sectorList = [];
+  for(let i = 0 ; i < listOfCompanies.length -1; i++){
+    // let companyPrice = (getCompareObject[listOfCompanies[i]]['Current Price']);
+    if( listOfCompanies[i].includes(sector.toUpperCase()) ){
+      sectorList.push(listOfCompanies[i]);
+    }
+}
+    getHTTPs(' ,' + sectorList, 1 );
+
 }

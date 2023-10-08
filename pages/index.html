@@ -28,7 +28,8 @@
           <button id="pages" class="pagesDropDown"  onclick="showPages();" type="button">Home<span id="Pagenumbers"></span></button>              
                 <div id="pagesDropdown" class="Pdrop-options ">
                   <a class="pagelink" href="/Sector">Sector</a>
-                  <a class="pagelink" href="/fav">Favourite</a>
+                  <!-- <a class="pagelink" href="/fav">Favourite</a> -->
+                  <button class="pagelink"  onclick="getFavData([...Array.from(localStorage)].sort());">Favourite</button>
                   <!-- <a class="pagelink" href="/openg">Opened High</a>
                   <a class="pagelink" href="/high">52w High</a>
                   <a class="pagelink" href="/low">52w Low</a>
