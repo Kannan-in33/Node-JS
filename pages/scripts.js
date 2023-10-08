@@ -1563,7 +1563,7 @@ createPositiveChart(positive, positiveCompany);
   }
 
   function getFavData(stockName) {    
-    getHTTPs("," + stockName);
+    getHTTPs("," + stockName, 1);
     updateCompanyDeatils();
     showPages();
 }
