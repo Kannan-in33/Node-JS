@@ -1142,9 +1142,17 @@ function createChart(companyObject, e, days = 1000){
                               let xaxisvolume = [];
                             let newVolume = [];
                               for(let i = 1; i < [...currentVolumeDataTable[key]].length - 1; i++){
-                                xaxisvolume.push(i);
+                        
                                 newVolume.push([...currentVolumeDataTable[key]][i]/[i]);
                               }
+
+                            for(let i = 1; i < 80 ; i++){
+                                xaxisvolume.push(i);
+                                
+                              }
+
+
+                            
                               barv.appendChild(canvasv);
                               let dvolumeAvg = 0;
                               for(let v = 1; v < 6; v++){
