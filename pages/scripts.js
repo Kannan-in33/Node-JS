@@ -1140,8 +1140,10 @@ function createChart(companyObject, e, days = 1000){
                               canvasv.setAttribute("height", "250"); 
                               canvasv.setAttribute("width", "600");
                               let xaxisvolume = [];
+                            let newVolume = [];
                               for(let i = 1; i < [...currentVolumeDataTable[key]].length - 1; i++){
                                 xaxisvolume.push(i);
+                                newVolume.push([...currentVolumeDataTable[key]][i]/[i]);
                               }
                               barv.appendChild(canvasv);
                               let dvolumeAvg = 0;
@@ -1160,7 +1162,7 @@ function createChart(companyObject, e, days = 1000){
                                     pointRadius: 0,
                                     borderWidth : 0.5,
                                     borderColor: "rgba(0,0,0,0.9)",
-                                    data: [...currentVolumeDataTable[key]],
+                                    data: [...newVolume], // ...currentVolumeDataTable[key]],
                                     }]
                                   },  
                                   options: {
