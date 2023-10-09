@@ -1173,7 +1173,21 @@ function createChart(companyObject, e, days = 1000){
                                                   family: "'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif', 'monospace'"
                                           }
                                       }]
-                                  }
+                                  },
+                                      annotation: {
+                    annotations: [{
+                        type: 'line',
+                        mode: 'horizontal',
+                        scaleID: 'y-axis-0',
+                        value: dvolumeAvg / 80,
+                        borderColor: 'rgb(75, 192, 192)',
+                        borderWidth: 4,
+                        label: {
+                            enabled: true,
+                            content: 'Average',
+                        }
+                    }]
+                }
                                   }
 
                             }); 
