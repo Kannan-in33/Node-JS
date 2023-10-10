@@ -780,7 +780,7 @@ createPositiveChart(positive, positiveCompany);
         closeOpenPriceDataObject = xhr.response.closeOpenPriceDataObject;
         closeOpenPriceData = xhr.response.closeOpenPriceData;
         console.log(xhr.response.ddtime);
-        // createChart( xhr.response.companyObject );
+        createChart( xhr.response.companyObject );
         // updateCompanyDeatils();
       } 
       else {
@@ -810,7 +810,10 @@ function createPositiveChart(dpositive, dpositiveCompany){
     function createChart(companyObject, e, days = 1000){
       let chartlim = 0;
       let lst = [];
-  
+        if(Object.keys(companyObject).length ){
+            document.getElementById("pages").innerText = Object.keys(companyObject).length;
+        }
+        
       dE = e;
       let resultCount = 0;
           for (let key in companyObject) {
@@ -863,7 +866,7 @@ function createPositiveChart(dpositive, dpositiveCompany){
               let lblF = document.createElement("label");
                       lblF.setAttribute("for", key);
                       lblF.setAttribute("value", 'favourite');
-                      lblF.innerText = 'Favourite';
+                      lblF.innerText = key;
                       topDivtag.appendChild(lblF);
               let checkBoxF = document.createElement("input");
                         checkBoxF.setAttribute("type", "checkbox");
@@ -1009,81 +1012,78 @@ function createPositiveChart(dpositive, dpositiveCompany){
                         divtagMain.setAttribute("id", key);
                         divtagMain.appendChild(mainBlock);
 
-              let bottomDivTag = document.createElement("div");
-              bottomDivTag.setAttribute("class", "bottomDivTag");
+            document.querySelector(".charts").appendChild(divtagMain);
 
-              let canvas = document.createElement("canvas");
-                          canvas.setAttribute("id", key);
-                          canvas.setAttribute("class", key);       
+            //   let bottomDivTag = document.createElement("div");
+            //   bottomDivTag.setAttribute("class", "bottomDivTag");
+
+            //   let canvas = document.createElement("canvas");
+            //               canvas.setAttribute("id", key);
+            //               canvas.setAttribute("class", key);       
               
 
-              let divtagLeft = document.createElement("div"); 
-                        divtagMain.appendChild(divtagLeft);
-                        // divtagLeft.appendChild(anchortag);
+            //   let divtagLeft = document.createElement("div"); 
+            //             divtagMain.appendChild(divtagLeft);
+            //             // divtagLeft.appendChild(anchortag);
                           
-              let divtagRight = document.createElement("div"); 
-                      divtagRight.setAttribute("class", "right");
+            //   let divtagRight = document.createElement("div"); 
+            //           divtagRight.setAttribute("class", "right");
                         
 
-                        divtagLeft.appendChild(canvas);
-                        bottomDivTag.appendChild(divtagLeft);
-                        bottomDivTag.appendChild(divtagRight);
-                        mainBlock.appendChild(bottomDivTag);
+            //             divtagLeft.appendChild(canvas);
+            //             bottomDivTag.appendChild(divtagLeft);
+            //             bottomDivTag.appendChild(divtagRight);
+            //             mainBlock.appendChild(bottomDivTag);
 
-                          document.querySelector(".charts").appendChild(divtagMain);
-                            let ccurrect = yValues2[0];
-                            let cmin = Math.min(...yValues2);
-                            let cmax = Math.max(...yValues2);
-                            let buyAvg = [...yValues2];                        
-                              if (Math.floor(((cmax-ccurrect)/cmax) * 100) > 40 && ccurrect < cmax){
-                                BuyObject40[key] = companyObject[key];
-                              }
-                              else if (Math.floor(((cmax-ccurrect)/cmax) * 100) > 30 && ccurrect < cmax){
-                                BuyObject30[key] = companyObject[key];
-                              }
-                              else if (Math.floor(((cmax-ccurrect)/cmax) * 100) > 20 && ccurrect < cmax){
-                                BuyObject20[key] = companyObject[key];
-                              }
-                              if ((yValues2[1] * 1.05) < ccurrect){
-                                BuyObject3Avg[key] = companyObject[key];
-                                }
-                                if (cmax == ccurrect){
-                                  BuyObject52High[key] = companyObject[key];
-                                  }
+            //               document.querySelector(".charts").appendChild(divtagMain);
+            //                 let ccurrect = yValues2[0];
+            //                 let cmin = Math.min(...yValues2);
+            //                 let cmax = Math.max(...yValues2);
+            //                 let buyAvg = [...yValues2];                        
+            //                   if (Math.floor(((cmax-ccurrect)/cmax) * 100) > 40 && ccurrect < cmax){
+            //                     BuyObject40[key] = companyObject[key];
+            //                   }
+            //                   else if (Math.floor(((cmax-ccurrect)/cmax) * 100) > 30 && ccurrect < cmax){
+            //                     BuyObject30[key] = companyObject[key];
+            //                   }
+            //                   else if (Math.floor(((cmax-ccurrect)/cmax) * 100) > 20 && ccurrect < cmax){
+            //                     BuyObject20[key] = companyObject[key];
+            //                   }
+            //                   if ((yValues2[1] * 1.05) < ccurrect){
+            //                     BuyObject3Avg[key] = companyObject[key];
+            //                     }
+            //                     if (cmax == ccurrect){
+            //                       BuyObject52High[key] = companyObject[key];
+            //                       }
                             
-                              new Chart(canvas, {
-                                  type: "line",
-                                  data: {
-                                  labels: xValues,
-                                  datasets: [{
-                                          label: key + '   FL ' + ( ((cmax-cmin)/cmax) * 100).toFixed(2).toString() + ' %   FC  ' + ( ((cmax-ccurrect)/cmax) * 100).toFixed(2).toString()  ,
-                                          pointRadius: 0,
-                                          borderWidth : 0.5,
-                                          borderColor: "rgba(0,0,0,0.9)",
-                                          data: [...yValues2].reverse(),
-                                          }]
-                                        },  
-                                        options: {
-                                            scales: {
-                                                yAxes: [{
-                                                    ticks: {
-                                                        fontSize: 14
-                                                }
-                                            }]
-                                        }
-                                        }
+                            //   new Chart(canvas, {
+                            //       type: "line",
+                            //       data: {
+                            //       labels: xValues,
+                            //       datasets: [{
+                            //               label: key + '   FL ' + ( ((cmax-cmin)/cmax) * 100).toFixed(2).toString() + ' %   FC  ' + ( ((cmax-ccurrect)/cmax) * 100).toFixed(2).toString()  ,
+                            //               pointRadius: 0,
+                            //               borderWidth : 0.5,
+                            //               borderColor: "rgba(0,0,0,0.9)",
+                            //               data: [...yValues2].reverse(),
+                            //               }]
+                            //             },  
+                            //             options: {
+                            //                 scales: {
+                            //                     yAxes: [{
+                            //                         ticks: {
+                            //                             fontSize: 14
+                            //                     }
+                            //                 }]
+                            //             }
+                            //             }
 
-                                  });
+                            //       });
       //  chart ends here
           }
 
         }
-      document.getElementById("results0").innerText = resultCount.toString();
-      let idlst = document.querySelectorAll("[id^='getData']");
-      idlst.forEach( element => {
-      element.innerText = "Stocks " + element.classList[0] +'+';
-      element.classList.remove('active');
-      })
-      updateCompanyDeatils();
+      
+    //   updateCompanyDeatils();
 
 }

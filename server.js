@@ -263,11 +263,11 @@ function getlongtermarray(){
     });
 }
 
-getCloseOpenPrice();
-getUpdatedPrice();
+// getCloseOpenPrice();
+// getUpdatedPrice();
 getUpdatedPriceTable();
 getUpdatedVolomeTable();
-getlongtermarray();
+// getlongtermarray();
 
 server.get('/favicon.ico', (req, res) => {
     res.sendFile(path.join(__dirname, './pages/favicon.ico'));
