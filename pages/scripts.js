@@ -1165,7 +1165,7 @@ function createChart(companyObject, e, days = 1000){
                             data: {
                             labels: [...xaxisvolume],
                             datasets: [{
-                                    label: 'H : ' + (Math.max(...[...currentVolumeDataTable[key]])).toLocaleString('en-IN')  +   '  P : ' + (Number(dvolumeAvg.toFixed(0))/80).toLocaleString('en-IN') ,
+                                    label: 'H : ' + (Math.max(...[...currentVolumeDataTable[key]])).toLocaleString('en-IN')  +   '  P : ' + Math.trunc(Number(dvolumeAvg.toFixed(0))/80).toLocaleString('en-IN') ,
                                     fontSize: 16,
                                     pointRadius: 0,
                                     borderWidth : 0.5,

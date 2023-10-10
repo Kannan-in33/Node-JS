@@ -402,6 +402,7 @@ else if(req.path.includes('getFivePer')) {
             }
             
                 if (file.split('.')[0] == AAR2[AAR2.length - 2] ){
+                    // console.log(volumeObject);
                 obj3 = { 
                     "company" : company,
                     "companyObject" : companyObject,
