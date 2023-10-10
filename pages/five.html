@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Stocks</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
+  
+   </head>
+    <body>
+     
+
+      <div class="static">
+        
+        
+        <div class="Pagedropdown">  
+          <button id="pages" class="pagesDropDown"  onclick="showPages();" type="button">Home<span id="Pagenumbers"></span></button>              
+                <div id="pagesDropdown" class="Pdrop-options ">
+                  <a class="pagelink" href="/Sector">Sector</a>
+                  <!-- <a class="pagelink" href="/fav">Favourite</a> -->
+                  <button class="pagelink"  onclick="getFavData([...Array.from(localStorage)].sort());">Favourite</button>
+                  <!-- <a class="pagelink" href="/openg">Opened High</a>
+                  <a class="pagelink" href="/high">52w High</a>
+                  <a class="pagelink" href="/low">52w Low</a>
+                  <a class="pagelink" href="/volume">Volume</a> -->
+                </div>
+          </div>
+
+
+        
+        
+        <div class="Gdropdown">  
+          <button id="gainers" class="gainers upTrends"  onclick="showGainers();" type="button">Gainer <span id="Gnumbers"></span></button>              
+                <div id="GainDropdown" class="drop-options">
+                  <button class="upTrend0"  onclick="getUp(0);">Today   <span id="results0"></span></button>
+                  <button class="upTrend1"  onclick="getUp(1);">+1 Day <span id="results1"></span></button>
+                  <button class="upTrend2"  onclick="getUp(2);">+2 Day <span id="results2"></span></button>
+                  <button class="upTrend3"  onclick="getUp(3);">+3 Day <span id="results3"></span></button>                  
+                  </div>
+        </div>
+
+        <div class="Ddropdown">  
+          <button id="nogainers" class="nogainers downTrends"  onclick="showNoGainers();" type="button">Losser <span id="Dnumbers"></button>         
+          <div id="NoGainDropdown" class="drop-options">           
+            <button class="downTrend0"  onclick="getDown(0);">Today <span id="resultsd0"></span></button> 
+            <button class="downTrend1"  onclick="getDown(1);">+1 Day <span id="resultsd1"></span></button>
+            <button class="downTrend2"  onclick="getDown(2);">+2 Day <span id="resultsd2"></span></button>           
+            <button class="downTrend3"  onclick="getDown(3);">+3 Day <span id="resultsd3"></span></button>
+          </div>
+        </div>
+      <!-- <div class="page">
+            <button class="previous"  onclick="previous();">Previous <span id="previous"></span></button> 
+            <button class="next"  onclick="next();">Next<span id="next"></span></button>
+          </div> -->
+
+        <!-- </div> -->
+
+    <div class="range">
+
+      <div class="slider">
+
+        <!-- <input type="text" name="min" id="mini"> -->
+            <div class="search">
+              <input placeholder="..Search..." type="text" id="filter" name="filter" />
+              <button id="clear" onclick="clea();" type="button"><strong>X</strong></button>
+              <button  id="getSector"  onclick="getsector(document.getElementById('filter').value);" type="button"><strong>Get Sector</strong></button>
+              <!-- <div class="buttonbar">
+                <!-- <button id="sliderButton" class="d20" onclick="getDay(20);" type="button">Get Chart</button> -->
+                <!-- <button id="sliderReset" onclick="resetSlider();" type="button">Reset</button> -->
+              
+                  <!-- <div class="dropdown"> -->
+                    <!-- <button id="daysbuy" class="buy-main"  onclick="getBuyMain();" type="button">Buy List</button>
+                      <div id="BuyDropdown" class="drop-options">
+                        <button id="daysbuy40" class="buy"  onclick="getBuy(40);" type="button">40% +</button>
+                        <button id="daysbuy30" class="buy"  onclick="getBuy(30);" type="button">30% +</button>
+                        <button id="daysbuy20" class="buy"  onclick="getBuy(20);" type="button">20% +</button>
+                        <button id="daysbuyAvg" class="buy"  onclick="getBuy(60);" type="button">30d Avg +</button>
+                      </div> -->
+                  <!-- </div> -->
+              </div>
+              
+              <!-- <button id="compare" class="compare hide" onclick="compareStocks();" type="button">Compare</button>
+              <button id="clearcompare" class="compare hide" onclick="clearcompareStocks();" type="button">Clear Compare</button>
+              <button id="Favourits" class="Favourits hide" onclick="getFavourits();" type="button">Favourits</button>
+              <button id="clearFavourits" class="Favourits hide" onclick="clearFavourits();" type="button">Clear Favourits</button>         -->
+            </div>
+        <div class="sliders">
+            <input type="text" name="max" id="pricemin" value="21">
+            <input type="range" min="20" max="600" value="20" name="slider" id="slidermin" />
+            <input type="text" name="max" id="pricemax" value="50">
+            <input type="range" min="50" max="1800" value="50" name="slider" id="slidermax" />
+              <div>
+                  <button id="getstockData" class="50" onclick="getStockData();" type="button">Get Stocks</button>
+                  <button id="getfiveperData" class="5" onclick="getFivePer();" type="button">Stocks 5%</button>
+                  <button id="getdma" onclick="getDma();" type="button"><strong>Get DMA</strong></button>
+              </div>
+        </div>
+        <input type="text" name="max" id="maxi" value="6">
+        <input type="range" min="6" max="240" value="20" name="slider" id="slider" /> 
+        
+        <!-- <input type="range" min="-240" max="240" value="0" name="slider" id="slider" />  -->
+        
+      </div>
+
+  <!-- <button id="days50" class="d50"  onclick="getDay(50);" type="button">50 Days</button>
+  <button id="days70" class="d20" onclick="getDay(70);" type="button">70 Days</button>
+  <button id="days100" class="100"  onclick="getDay(100);" type="button">100 Days</button>
+  <button id="days300" class="300"  onclick="getDay(365);" type="button">365 Days</button> -->
+
+  
+  
+  
+</div>
+
+</div>
+
+<!-- <a href="/compare">Favourits</a> -->
+
+
+
+<div id="rangeshow"></div>
+    <div id="comparel" class="comparel"></div>
+
+      <div class="charts"></div>
+      <ol class="volume"> </ol>
+
+      
+
+<script src="/scripts.js"></script>
+<link rel="stylesheet" type="text/css"  href="/style.css" >
+<style>
+  .Pdropdown,  .Ddropdown, .Gdropdown, .Pagedropdown{
+  width: 20% !important;
+}
+  /* .range {
+        margin-top: 60px !important;
+      }
+  #filter, #filters {
+      min-width: 150px !important;
+      } */
+</style>
+<script src="/fscripts.js"></script>
+getsector(document.getElementById('filter').value);
+</body>
+</html>

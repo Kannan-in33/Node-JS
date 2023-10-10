@@ -1035,7 +1035,7 @@ function createChart(companyObject, e, days = 1000){
                           canvasb.setAttribute("width", "600"); 
 
                           let xaxisprice = [];
-                          for(let i = 1; i < [...currentPriceDataTable[key]].length - 1; i++){
+                          for(let i = 1; i < 80; i++){ //[...currentPriceDataTable[key]].length - 1; i++){
                             xaxisprice.push(i);
                           }
 
