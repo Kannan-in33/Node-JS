@@ -1140,9 +1140,19 @@ function createChart(companyObject, e, days = 1000){
                               canvasv.setAttribute("height", "250"); 
                               canvasv.setAttribute("width", "600");
                               let xaxisvolume = [];
+                            let newVolume = [];
                               for(let i = 1; i < [...currentVolumeDataTable[key]].length - 1; i++){
-                                xaxisvolume.push(i);
+                        
+                                newVolume.push([...currentVolumeDataTable[key]][i]/[i]);
                               }
+
+                            for(let i = 1; i < 80 ; i++){
+                                xaxisvolume.push(i);
+                                
+                              }
+
+
+                            
                               barv.appendChild(canvasv);
                               let dvolumeAvg = 0;
                               for(let v = 1; v < 6; v++){
@@ -1155,12 +1165,12 @@ function createChart(companyObject, e, days = 1000){
                             data: {
                             labels: [...xaxisvolume],
                             datasets: [{
-                                    label: 'H : ' + (Math.max(...[...currentVolumeDataTable[key]])).toLocaleString('en-IN')  +   '  P : ' + Number(dvolumeAvg.toFixed(0)).toLocaleString('en-IN') ,
+                                    label: 'H : ' + (Math.max(...[...currentVolumeDataTable[key]])).toLocaleString('en-IN')  +   '  P : ' + (Number(dvolumeAvg.toFixed(0))/80).toLocaleString('en-IN') ,
                                     fontSize: 16,
                                     pointRadius: 0,
                                     borderWidth : 0.5,
                                     borderColor: "rgba(0,0,0,0.9)",
-                                    data: [...currentVolumeDataTable[key]],
+                                    data: [...newVolume], // ...currentVolumeDataTable[key]],
                                     }]
                                   },  
                                   options: {
@@ -1171,7 +1181,21 @@ function createChart(companyObject, e, days = 1000){
                                                   family: "'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif', 'monospace'"
                                           }
                                       }]
-                                  }
+                                  },
+                                      annotation: {
+                    annotations: [{
+                        type: 'line',
+                        mode: 'horizontal',
+                        scaleID: 'y-axis-0',
+                        value: Number(dvolumeAvg) / 80,
+                        borderColor: 'rgb(75, 192, 192)',
+                        borderWidth: 4,
+                        label: {
+                            enabled: true,
+                            content: 'Average',
+                        }
+                    }]
+                }
                                   }
 
                             }); 
