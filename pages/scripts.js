@@ -1762,4 +1762,283 @@ function createPositiveChart(dpositive, dpositiveCompany){
 
 
 
-    
+    function createChartFive(companyObject, e, days = 1000){
+      let chartlim = 0;
+      let lst = [];
+  
+      dE = e;
+      let resultCount = 0;
+          for (let key in companyObject) {
+            if(!(key.includes('undefined')) ){
+            resultCount++;
+            // console.log(key);
+                let yValues  = [];
+                let volumeValues = [];
+                yValues  = [...companyObject[key]];
+                volumeValues  = [...dVolumeObject[key]];
+                let xValues = [];
+                let yValues2 = [];
+
+                  yValues.reverse();
+
+                  if(days < 0){
+
+                    for(let y = 0 ; y < companyObject[key].length + Number(days) ; y++){
+                      yValues2[y] =  yValues[y] ;
+                    }
+                        for (let i = 0 ; i < companyObject[key].length + Number(days) ; i++) {
+                          xValues.push(i);
+                        }
+                  }
+                  
+                else if (days < companyObject[key].length){
+                  // days = 20
+                  for(let y = days ; y < companyObject[key].length ; y++){
+                    yValues2[y] =  yValues[y] ;
+                  }
+                      for (let i = days ; i < companyObject[key].length ; i++) {
+                        xValues.push(i);
+                      }
+                }
+                else{
+                  // days = 1000
+                  for(let y = 0; y < Math.min(companyObject[key].length, days) ; y++){
+                    yValues2[y] =  yValues[y] ;
+                  }
+                      for (let i = 0; i < Math.min(companyObject[key].length, days) ; i++) {
+                        xValues.push(i);
+                      }
+                }
+                      xValues.reverse();
+              let mainBlock = document.createElement("div");   
+              mainBlock.setAttribute("class", "mainBlock");
+
+              let topDivtag = document.createElement("div"); 
+              topDivtag.setAttribute("class", "topDivtag");
+              let lblF = document.createElement("label");
+                      lblF.setAttribute("for", key);
+                      lblF.setAttribute("value", 'favourite');
+                      lblF.innerText = 'Favourite';
+                      topDivtag.appendChild(lblF);
+              let checkBoxF = document.createElement("input");
+                        checkBoxF.setAttribute("type", "checkbox");
+                        checkBoxF.setAttribute("class", 'favourite');
+                        checkBoxF.setAttribute("id", key);
+                        // checkBoxF.setAttribute("value", "favourite");
+                        checkBoxF.addEventListener("click", setFav);
+                        topDivtag.appendChild(checkBoxF);
+                        companyDetails.push(key);
+                        
+              let anchortag = document.createElement("a");
+                    anchortag.setAttribute("href", "https://www.screener.in/company/" + key + "/");
+                    anchortag.setAttribute("target", "_blank");
+                    topDivtag.appendChild(anchortag);
+                    mainBlock.appendChild(topDivtag);
+                
+                
+            if(Object.keys(currentPriceDataTable).length > 1){
+                let bar = document.createElement("div");
+                    bar.setAttribute("class", "bar");
+                let canvasb = document.createElement("canvas");
+                      canvasb.setAttribute("id", "bar" + key);
+                      canvasb.setAttribute("class", "bar" + key); 
+                      canvasb.setAttribute("height", "250"); 
+                      canvasb.setAttribute("width", "600"); 
+
+                      let xaxisprice = [];
+                      for(let i = 1; i < 80; i++){ //[...currentPriceDataTable[key]].length - 1; i++){
+                        xaxisprice.push(i);
+                      }
+
+                      bar.appendChild(canvasb);
+                          // console.log([...currentPriceDataTable[key]].reverse());
+                      new Chart(canvasb, {
+                        type: "line",
+                        data: {
+                        labels: [...xaxisprice],
+                        datasets: [{
+                                label: 'H : ' + Math.max(...[...currentPriceDataTable[key]]) + '        C : ' + [...currentPriceDataTable[key]][[...currentPriceDataTable[key]].length - 1],
+                                fontSize: 16,
+                                pointRadius: 0,
+                                borderWidth : 0.5,
+                                borderColor: "rgba(0,0,0,0.9)",
+                                data: [...currentPriceDataTable[key]],
+                                }]
+                              },  
+                              options: {
+                                  scales: {
+                                      yAxes: [{
+                                          ticks: {
+                                              fontSize: 15,
+                                              family: "'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif', 'monospace'"
+                                      }
+                                  }]
+                              }
+                              }
+
+                        }); 
+
+                 
+                  anchortag.appendChild(bar);
+                  topDivtag.appendChild(anchortag);
+                    }
+
+                    // volume chart starts *********************************************************************************
+
+                    if(Object.keys(currentVolumeDataTable).length > 1){
+                      let barv = document.createElement("div");
+                          barv.setAttribute("class", "barv");
+
+                      let canvasv = document.createElement("canvas");
+                          canvasv.setAttribute("id", "barv" + key);
+                          canvasv.setAttribute("class", "barv" + key); 
+                          canvasv.setAttribute("height", "250"); 
+                          canvasv.setAttribute("width", "600");
+                          let xaxisvolume = [];
+                        let newVolume = [];
+                          for(let i = 1; i < [...currentVolumeDataTable[key]].length - 1; i++){
+                    
+                            newVolume.push([...currentVolumeDataTable[key]][i]/[i]);
+                          }
+
+                        for(let i = 1; i < 80 ; i++){
+                            xaxisvolume.push(i);
+                            
+                          }
+                        
+                          barv.appendChild(canvasv);
+                          let dvolumeAvg = 0;
+                          for(let v = 1; v < 6; v++){
+                            dvolumeAvg = Number(dvolumeAvg) + Number(dVolumeObject[key][dVolumeObject[key].length - v]);
+                          }
+                          dvolumeAvg = dvolumeAvg/5;
+                          // console.log([...currentPriceDataTable[key]].reverse());
+                      new Chart(canvasv, {
+                        type: "line",
+                        data: {
+                        labels: [...xaxisvolume],
+                        datasets: [{
+                                label: 'H : ' + (Math.max(...[...currentVolumeDataTable[key]])).toLocaleString('en-IN')  +   '  P : ' + Math.trunc(Number(dvolumeAvg.toFixed(0))/80).toLocaleString('en-IN') ,
+                                fontSize: 16,
+                                pointRadius: 0,
+                                borderWidth : 0.5,
+                                borderColor: "rgba(0,0,0,0.9)",
+                                data: [...newVolume], // ...currentVolumeDataTable[key]],
+                                }]
+                              },  
+                              options: {
+                                  scales: {
+                                      yAxes: [{
+                                          ticks: {
+                                              fontSize: 15,
+                                              family: "'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif', 'monospace'"
+                                      }
+                                  }]
+                              },
+                                  annotation: {
+                annotations: [{
+                    type: 'line',
+                    mode: 'horizontal',
+                    scaleID: 'y-axis-0',
+                    value: Number(dvolumeAvg) / 80,
+                    borderColor: 'rgb(75, 192, 192)',
+                    borderWidth: 4,
+                    label: {
+                        enabled: true,
+                        content: 'Average',
+                    }
+                }]
+            }
+                              }
+
+                        }); 
+
+                       topDivtag.appendChild(barv);
+                          }
+
+
+                          // Volume chart ends }}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+                mainBlock.appendChild(topDivtag);
+
+                let divtagMain = document.createElement("div"); 
+                        divtagMain.setAttribute("id", key);
+                        divtagMain.appendChild(mainBlock);
+
+              let bottomDivTag = document.createElement("div");
+              bottomDivTag.setAttribute("class", "bottomDivTag");
+
+              let canvas = document.createElement("canvas");
+                          canvas.setAttribute("id", key);
+                          canvas.setAttribute("class", key);       
+              
+
+              let divtagLeft = document.createElement("div"); 
+                        divtagMain.appendChild(divtagLeft);
+                        // divtagLeft.appendChild(anchortag);
+                          
+              let divtagRight = document.createElement("div"); 
+                      divtagRight.setAttribute("class", "right");
+                        
+
+                        divtagLeft.appendChild(canvas);
+                        bottomDivTag.appendChild(divtagLeft);
+                        bottomDivTag.appendChild(divtagRight);
+                        mainBlock.appendChild(bottomDivTag);
+
+                          document.querySelector(".charts").appendChild(divtagMain);
+                            let ccurrect = yValues2[0];
+                            let cmin = Math.min(...yValues2);
+                            let cmax = Math.max(...yValues2);
+                            let buyAvg = [...yValues2];                        
+                              if (Math.floor(((cmax-ccurrect)/cmax) * 100) > 40 && ccurrect < cmax){
+                                BuyObject40[key] = companyObject[key];
+                              }
+                              else if (Math.floor(((cmax-ccurrect)/cmax) * 100) > 30 && ccurrect < cmax){
+                                BuyObject30[key] = companyObject[key];
+                              }
+                              else if (Math.floor(((cmax-ccurrect)/cmax) * 100) > 20 && ccurrect < cmax){
+                                BuyObject20[key] = companyObject[key];
+                              }
+                              if ((yValues2[1] * 1.05) < ccurrect){
+                                BuyObject3Avg[key] = companyObject[key];
+                                }
+                                if (cmax == ccurrect){
+                                  BuyObject52High[key] = companyObject[key];
+                                  }
+                            
+                              new Chart(canvas, {
+                                  type: "line",
+                                  data: {
+                                  labels: xValues,
+                                  datasets: [{
+                                          label: key + '   FL ' + ( ((cmax-cmin)/cmax) * 100).toFixed(2).toString() + ' %   FC  ' + ( ((cmax-ccurrect)/cmax) * 100).toFixed(2).toString()  ,
+                                          pointRadius: 0,
+                                          borderWidth : 0.5,
+                                          borderColor: "rgba(0,0,0,0.9)",
+                                          data: [...yValues2].reverse(),
+                                          }]
+                                        },  
+                                        options: {
+                                            scales: {
+                                                yAxes: [{
+                                                    ticks: {
+                                                        fontSize: 14
+                                                }
+                                            }]
+                                        }
+                                        }
+
+                                  });
+      //  chart ends here
+          }
+
+        }
+      document.getElementById("results0").innerText = resultCount.toString();
+      let idlst = document.querySelectorAll("[id^='getData']");
+      idlst.forEach( element => {
+      element.innerText = "Stocks " + element.classList[0] +'+';
+      element.classList.remove('active');
+      })
+      updateCompanyDeatils();
+
+}

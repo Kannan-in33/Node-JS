@@ -164,7 +164,7 @@ const getFivePercent =  async () =>{
    cpvalues = (CPdata.data.values);
 
    cpvalues.forEach ( (ele, i) => {
-        if(Number(ele[3]) > 3){
+        if((Number(ele[1]) > 0) && (Number(ele[2]) > 0) && (Number(ele[3]) > 5)){
            FivePerData.push([ele[0]]);
         }
 });
@@ -310,6 +310,10 @@ server.get('/scripts.js', (req, res) => {
     res.sendFile(path.join(__dirname, './pages/scripts.js'));
 
 });
+server.get('/fivescripts.js', (req, res) => {
+    res.sendFile(path.join(__dirname, './pages/fivescripts.js'));
+
+});
 server.get('/fscripts.js', (req, res) => {
     res.sendFile(path.join(__dirname, './pages/fscripts.js'));
 
@@ -402,6 +406,8 @@ else if(req.path.includes('getFivePer')) {
             }
             
                 if (file.split('.')[0] == AAR2[AAR2.length - 2] ){
+                    let dd = new Date();
+
                     // console.log(volumeObject);
                 obj3 = { 
                     "company" : company,
@@ -413,6 +419,7 @@ else if(req.path.includes('getFivePer')) {
                     "currentVolumeDataTable": currentVolumeDataTable,
                     "closeOpenPriceDataObject": closeOpenPriceDataObject,
                     "closeOpenPriceData":closeOpenPriceData,
+                    "ddtime": dd.getHours(),
                 }
                 // console.log(obj3);
                 res.send(obj3);
