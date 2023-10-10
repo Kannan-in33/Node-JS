@@ -164,7 +164,7 @@ const getFivePercent =  async () =>{
    cpvalues = (CPdata.data.values);
 
    cpvalues.forEach ( (ele, i) => {
-        if(Number(ele[3]) > 4.5){
+        if(Number(ele[3]) > 3){
            FivePerData.push([ele[0]]);
         }
 });
