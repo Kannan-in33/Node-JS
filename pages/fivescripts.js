@@ -864,6 +864,8 @@ function createPositiveChart(dpositive, dpositiveCompany){
     function createFiveChart(companyObject, e, days = 1000){
       let chartlim = 0;
       let lst = [];
+      let newPositiveSort = [];
+      let newCompanyObject2 ={};
         if(Object.keys(companyObject).length ){
             document.getElementById("pages").innerText = Object.keys(companyObject).length;
         }
@@ -873,7 +875,7 @@ function createPositiveChart(dpositive, dpositiveCompany){
         for (let key in companyObject) {
             let CobjLen = [...currentPriceDataTable[key]].length;           
 
-            if(CobjLen > 4){
+            if(CobjLen >= 4){
                 let data = [...currentPriceDataTable[key]];
                 let cdata = [...currentPriceDataTable[key]][CobjLen -1];
                 let pdata = [...currentPriceDataTable[key]][CobjLen - 2];
@@ -895,9 +897,9 @@ function createPositiveChart(dpositive, dpositiveCompany){
         }
         if(positiveSort.length > 0 ){
             positiveSort.sort((a,b) => a - b);
-
-            forEach.positiveSort( (per) =>{
-                newCompanyObject[per] = posi;
+            
+            positiveSort.forEach( (per) =>{
+                newCompanyObject2[posi[per]] = companyObject[posi[per]];
             })
 
         }
@@ -906,7 +908,7 @@ function createPositiveChart(dpositive, dpositiveCompany){
         
       dE = e;
       let resultCount = 0;
-          for (let key in newCompanyObject) {
+          for (let key in newCompanyObject2) {
             if(!(key.includes('undefined')) ){
             resultCount++;
             // console.log(key);
@@ -995,7 +997,7 @@ function createPositiveChart(dpositive, dpositiveCompany){
                         data: {
                         labels: [...xaxisprice],
                         datasets: [{
-                                label: 'H : ' + Math.max(...[...currentPriceDataTable[key]]) + '        C : ' + [...currentPriceDataTable[key]][[...currentPriceDataTable[key]].length - 1],
+                                label: 'L : ' + Math.min(...[...currentPriceDataTable[key]]) + 'H : ' + Math.max(...[...currentPriceDataTable[key]]) + '        C : ' + [...currentPriceDataTable[key]][[...currentPriceDataTable[key]].length - 1],
                                 fontSize: 16,
                                 pointRadius: 0,
                                 borderWidth : 0.5,
