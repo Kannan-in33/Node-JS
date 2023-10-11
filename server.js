@@ -1106,6 +1106,10 @@ server.listen(port, () => {
     // getUpdatedPrice();
     getUpdatedPriceTable();
     getUpdatedVolomeTable();
+
+    setInterval(getUpdatedPriceTable, 5000 * 60);
+    setInterval(getUpdatedVolomeTable, 5000 * 60);
+ 
   //  setInterval(getUpdatedPrice, (1000 * 60  * 30));
 })
 
