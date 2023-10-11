@@ -881,11 +881,13 @@ function createPositiveChart(dpositive, dpositiveCompany){
                 let cdata = [...currentPriceDataTable[key]][CobjLen -1];
                 let pdata = [...currentPriceDataTable[key]][CobjLen - 2];
                 let ppdata = [...currentPriceDataTable[key]][CobjLen - 3] || 0;
-                let pppdata = [...currentPriceDataTable[key]][CobjLen - 14] || 0;
+                let pppdata = [...currentPriceDataTable[key]][0] || 0;
 
-                if((cdata > pdata) || (cdata > ppdata) || (cdata > pppdata)) {
-                    per = ((cdata - pppdata )/ pppdata)
-                    if(per > 0.005){
+                // if((cdata > pdata) || (cdata > ppdata) || (cdata > pppdata)) {
+                if((cdata > pppdata)) {
+                    per = ((cdata - pppdata )/ pppdata);
+                    // console.log(per);
+                    if(per > 0.05){
                             positiveSort.push(per);
                             posi[per] = key;
 
@@ -901,14 +903,17 @@ function createPositiveChart(dpositive, dpositiveCompany){
 
         }
         if(positiveSort.length > 0 ){
+          // console.log(positiveSort);
             positiveSort.sort((a,b) => a - b);
             positiveSort.reverse();
-            positiveSort.forEach( (per) =>{
-                newCompanyObject2[posi[per]] = companyObject[posi[per]];
+            // console.log(positiveSort);
+            positiveSort.forEach( (ele) =>{
+              console.log(ele);
+                newCompanyObject2[posi[ele]] = companyObject[posi[ele]];
             })
 
         }
-        
+        console.log(newCompanyObject2);
 
         
       dE = e;
@@ -1050,10 +1055,11 @@ function createPositiveChart(dpositive, dpositiveCompany){
                           let xaxisvolume = [];
                         let newVolume = [];
                         let currentVolume = 0;
-                          for(let i = 1; i < [...currentVolumeDataTable[key]].length - 1; i++){
-                    
+                        let lastNum = [...currentVolumeDataTable[key]].length - 1;
+                        currentVolume =  [...currentVolumeDataTable[key]][[lastNum]] - ([...currentVolumeDataTable[key]][[lastNum]]);
+                          for(let i = 1; i < [...currentVolumeDataTable[key]].length - 1; i++){                    
                             newVolume.push([...currentVolumeDataTable[key]][i]/[i]);
-                            currentVolume =  ([...currentVolumeDataTable[key]][[...currentVolumeDataTable[key]].length - 1]);
+                            
                           }
 
                         for(let i = 1; i < 80 ; i++){

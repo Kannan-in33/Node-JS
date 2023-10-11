@@ -168,8 +168,8 @@ const getFivePercent =  async () =>{
 
    cpvalues.forEach ( (ele, i) => {
 
-        if(Number(d + m) > Number(10)){
-            if((Number(ele[1]) > 0) && (Number(ele[2]) > 0) && (Number(ele[3]) > 4)){
+        if(Number(d + m) > Number(0)){
+            if((Number(ele[1]) > 0) && (Number(ele[2]) > 0) && (Number(ele[3]) > 3)){
                 FivePerData.push([ele[0]]);
              }
         }
