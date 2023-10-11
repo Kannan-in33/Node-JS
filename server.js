@@ -424,7 +424,7 @@ else if(req.path.includes('getFivePer')) {
                     "reload": "",
                     
                 }
-                console.log('finished');
+                // console.log('finished');
                 res.send(obj3);
     }
     

@@ -997,7 +997,7 @@ function createPositiveChart(dpositive, dpositiveCompany){
                         data: {
                         labels: [...xaxisprice],
                         datasets: [{
-                                label: 'L : ' + Math.min(...[...currentPriceDataTable[key]]) + 'H : ' + Math.max(...[...currentPriceDataTable[key]]) + '        C : ' + [...currentPriceDataTable[key]][[...currentPriceDataTable[key]].length - 1],
+                                label: 'L : ' + Math.min(...[...currentPriceDataTable[key]]) + '   H : ' + Math.max(...[...currentPriceDataTable[key]]) + '        C : ' + [...currentPriceDataTable[key]][[...currentPriceDataTable[key]].length - 1],
                                 fontSize: 16,
                                 pointRadius: 0,
                                 borderWidth : 0.5,
