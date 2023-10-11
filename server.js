@@ -162,11 +162,24 @@ const getFivePercent =  async () =>{
     });
 
    cpvalues = (CPdata.data.values);
-
+    let dt = new Date();
+        let d = dt.getHours();
+        let m = dt.getMinutes();
+console.log(d + m);
    cpvalues.forEach ( (ele, i) => {
-        if((Number(ele[1]) > 0) && (Number(ele[2]) > 0) && (Number(ele[3]) > 2)){
-           FivePerData.push([ele[0]]);
+
+        if((d + m) > 55){
+            if((Number(ele[1]) > 0) && (Number(ele[2]) > 0) && (Number(ele[3]) > 4)){
+                FivePerData.push([ele[0]]);
+             }
         }
+
+        else{
+            if((Number(ele[1]) > 0) && (Number(ele[2]) > 0) && (Number(ele[3]) > 2)){
+                FivePerData.push([ele[0]]);
+             }
+        }
+        
 });
 
 // console.log(FivePerData);

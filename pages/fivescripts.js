@@ -879,13 +879,17 @@ function createPositiveChart(dpositive, dpositiveCompany){
                 let data = [...currentPriceDataTable[key]];
                 let cdata = [...currentPriceDataTable[key]][CobjLen -1];
                 let pdata = [...currentPriceDataTable[key]][CobjLen - 2];
-                let ppdata = [...currentPriceDataTable[key]][CobjLen - 3];
-                let pppdata = [...currentPriceDataTable[key]][CobjLen - 4];
+                let ppdata = [...currentPriceDataTable[key]][CobjLen - 3] || 0;
+                let pppdata = [...currentPriceDataTable[key]][CobjLen - 14] || 0;
 
                 if((cdata > pdata) || (cdata > ppdata) || (cdata > pppdata)) {
-                    let per = ((data[CobjLen -1] - data[0])/ data[0])
-                    positiveSort.push(per);
-                    posi[per] = key;
+                    let per = ((cdata - pppdata )/ pppdata)
+                    if(per > 0.005){
+                            positiveSort.push(per);
+                            posi[per] = key;
+
+                    }
+                    
                     // newCompanyObject[key] = [...companyObject[key]];
                 }
 
@@ -963,6 +967,8 @@ function createPositiveChart(dpositive, dpositiveCompany){
               let checkBoxF = document.createElement("input");
                         checkBoxF.setAttribute("type", "checkbox");
                         checkBoxF.setAttribute("class", 'favourite');
+                        let Cper = 0;
+                        [...companyObject[key]];
                         checkBoxF.setAttribute("id", key);
                         // checkBoxF.setAttribute("value", "favourite");
                         checkBoxF.addEventListener("click", setFav);
@@ -1040,7 +1046,7 @@ function createPositiveChart(dpositive, dpositiveCompany){
                           for(let i = 1; i < [...currentVolumeDataTable[key]].length - 1; i++){
                     
                             newVolume.push([...currentVolumeDataTable[key]][i]/[i]);
-                            currentVolume =  ([...currentVolumeDataTable[key]][i]);
+                            currentVolume =  ([...currentVolumeDataTable[key]][[...currentVolumeDataTable[key]].length - 1]);
                           }
 
                         for(let i = 1; i < 80 ; i++){
