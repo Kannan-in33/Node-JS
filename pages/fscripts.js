@@ -1385,7 +1385,7 @@ function clearFavourits(){
 
   function getFivePer(){
 
-    getHTTPs('getFivePer', 1);
+    getFiveHTTPs('getFivePer', 1);
     updateCompanyDeatils();
     showPrice();
 

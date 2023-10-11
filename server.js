@@ -158,13 +158,13 @@ const getFivePercent =  async () =>{
     const CPdata = await googleSheets.spreadsheets.values.get({
         auth,
         spreadsheetId,
-        range: 'NSE Daily!A1:D2396', 
+        range: 'NSE Daily!A1:E2396', 
     });
 
    cpvalues = (CPdata.data.values);
 
    cpvalues.forEach ( (ele, i) => {
-        if((Number(ele[1]) > 0) && (Number(ele[2]) > 0) && (Number(ele[3]) > 5)){
+        if((Number(ele[1]) > 0) && (Number(ele[2]) > 0) && (Number(ele[3]) > 2)){
            FivePerData.push([ele[0]]);
         }
 });
@@ -231,9 +231,10 @@ const getUpdatedVolomeTable =  async () =>{
         spreadsheetId,
         range: 'Daily Volume!A1:CD2396', 
     });
+    // console.log('log: ' + CVVdata);
 
    cvvalues = (CVVdata.data.values);
-cvvalues.forEach ( (ele, i) => {
+    cvvalues.forEach ( (ele, i) => {
     tempArr2 = [];
     
         // console.log(ele[0].toString().split(",")[0]);
@@ -265,8 +266,8 @@ function getlongtermarray(){
 
 // getCloseOpenPrice();
 // getUpdatedPrice();
-getUpdatedPriceTable();
-getUpdatedVolomeTable();
+// console.log(getUpdatedPriceTable());
+// console.log(getUpdatedVolomeTable());
 // getlongtermarray();
 
 server.get('/favicon.ico', (req, res) => {
@@ -360,6 +361,7 @@ if(req.path.includes('getcompare')) {
 // Get FivePer
 
 else if(req.path.includes('getFivePer')) {
+    let dd = new Date();
     let ARR = [...FivePerData];
     let AAR2 = [];          
     // console.log(ARR.length);
@@ -405,8 +407,7 @@ else if(req.path.includes('getFivePer')) {
                     volumeObj =[];
             }
             
-                if (file.split('.')[0] == AAR2[AAR2.length - 2] ){
-                    let dd = new Date();
+                if (file.split('.')[0] == AAR2[AAR2.length - 2] ){                    
 
                     // console.log(volumeObject);
                 obj3 = { 
@@ -420,8 +421,10 @@ else if(req.path.includes('getFivePer')) {
                     "closeOpenPriceDataObject": closeOpenPriceDataObject,
                     "closeOpenPriceData":closeOpenPriceData,
                     "ddtime": dd.getHours(),
+                    "reload": "",
+                    
                 }
-                // console.log(obj3);
+                console.log('finished');
                 res.send(obj3);
     }
     
@@ -1086,8 +1089,8 @@ fs.readdir(directorypath , function (err, files) {
 
 server.listen(port, () => {    
     console.log('Server is listening on port ' + port);
-    getCloseOpenPrice();
-    getUpdatedPrice();
+    // getCloseOpenPrice();
+    // getUpdatedPrice();
     getUpdatedPriceTable();
     getUpdatedVolomeTable();
   //  setInterval(getUpdatedPrice, (1000 * 60  * 30));

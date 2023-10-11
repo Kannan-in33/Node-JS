@@ -784,10 +784,64 @@ createPositiveChart(positive, positiveCompany);
         // updateCompanyDeatils();
       } 
       else {
+        document.getElementById("filter").value = "Please Reload"
         console.log(`Error: ${xhr.status}`);
+        
         }
       };
     }
+
+    
+    function getFiveHTTPs(path, flag = 0) {
+        companyDetails = [];
+        dCompanyObject = {};
+        MasterdCompanyObjectCopy = {};
+        if(flag == 0){
+          dCompanyObject = {};
+          clearChart();
+          
+        }
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", "/" +  path)  ;
+        xhr.send();
+        xhr.responseType = "json";
+        xhr.onload = () => {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            dCompanyObject = xhr.response.companyObject;
+            // dCompanyDateObject = xhr.response.companyDateObj;
+            
+            if(Object.keys(MasterdCompanyObject).length == 0){
+              MasterdCompanyObject = dCompanyObject;
+              MasterdCompanyObjectCopy = dCompanyObject;
+            }
+            else{              
+              MasterdCompanyObject = Object.assign(dCompanyObject, MasterdCompanyObjectCopy)
+              MasterdCompanyObjectCopy = {};
+              MasterdCompanyObjectCopy = dCompanyObject;
+            }
+    
+            dVolumeObject = xhr.response.volumeObject;
+            CurrentPriceObj = xhr.response.currentPriceData;
+            currentPriceData1 = xhr.response.currentPriceData1;
+            currentPriceDataTable = xhr.response.currentPriceDataTable;
+            currentVolumeDataTable = xhr.response.currentVolumeDataTable,
+            longtermData = xhr.response.longterm;
+            lowPriceData = xhr.response.lowPriceData;
+            highPriceData = xhr.response.highPriceData;
+            closeOpenPriceDataObject = xhr.response.closeOpenPriceDataObject;
+            closeOpenPriceData = xhr.response.closeOpenPriceData;
+            // console.log(xhr.response.ddtime);
+            createFiveChart( xhr.response.companyObject );
+            // updateCompanyDeatils();
+          } 
+          else {
+            document.getElementById("filter").value = "Please Reload"
+            console.log(`Error: ${xhr.status}`);
+            
+            }
+          };
+        }
+     
 
 function createPositiveChart(dpositive, dpositiveCompany){
       positiveCompanyObject = {};
@@ -807,16 +861,52 @@ function createPositiveChart(dpositive, dpositiveCompany){
 
 
 
-    function createChart(companyObject, e, days = 1000){
+    function createFiveChart(companyObject, e, days = 1000){
       let chartlim = 0;
       let lst = [];
         if(Object.keys(companyObject).length ){
             document.getElementById("pages").innerText = Object.keys(companyObject).length;
         }
+        let newCompanyObject = {};
+        let posi = {};
+        let positiveSort = [];
+        for (let key in companyObject) {
+            let CobjLen = [...currentPriceDataTable[key]].length;           
+
+            if(CobjLen > 4){
+                let data = [...currentPriceDataTable[key]];
+                let cdata = [...currentPriceDataTable[key]][CobjLen -1];
+                let pdata = [...currentPriceDataTable[key]][CobjLen - 2];
+                let ppdata = [...currentPriceDataTable[key]][CobjLen - 3];
+                let pppdata = [...currentPriceDataTable[key]][CobjLen - 4];
+
+                if((cdata > pdata) || (cdata > ppdata) || (cdata > pppdata)) {
+                    let per = ((data[CobjLen -1] - data[0])/ data[0])
+                    positiveSort.push(per);
+                    posi[per] = key;
+                    // newCompanyObject[key] = [...companyObject[key]];
+                }
+
+
+            }
+                
+
+
+        }
+        if(positiveSort.length > 0 ){
+            positiveSort.sort((a,b) => a - b);
+
+            forEach.positiveSort( (per) =>{
+                newCompanyObject[per] = posi;
+            })
+
+        }
+        
+
         
       dE = e;
       let resultCount = 0;
-          for (let key in companyObject) {
+          for (let key in newCompanyObject) {
             if(!(key.includes('undefined')) ){
             resultCount++;
             // console.log(key);
@@ -944,9 +1034,11 @@ function createPositiveChart(dpositive, dpositiveCompany){
                           canvasv.setAttribute("width", "600");
                           let xaxisvolume = [];
                         let newVolume = [];
+                        let currentVolume = 0;
                           for(let i = 1; i < [...currentVolumeDataTable[key]].length - 1; i++){
                     
                             newVolume.push([...currentVolumeDataTable[key]][i]/[i]);
+                            currentVolume =  ([...currentVolumeDataTable[key]][i]);
                           }
 
                         for(let i = 1; i < 80 ; i++){
@@ -966,7 +1058,7 @@ function createPositiveChart(dpositive, dpositiveCompany){
                         data: {
                         labels: [...xaxisvolume],
                         datasets: [{
-                                label: 'H : ' + (Math.max(...[...currentVolumeDataTable[key]])).toLocaleString('en-IN')  +   '  P : ' + Math.trunc(Number(dvolumeAvg.toFixed(0))/80).toLocaleString('en-IN') ,
+                                label: 'C : ' + (currentVolume).toLocaleString('en-IN')  +   '  P : ' + Math.trunc(Number(dvolumeAvg.toFixed(0))/80).toLocaleString('en-IN') ,
                                 fontSize: 16,
                                 pointRadius: 0,
                                 borderWidth : 0.5,
