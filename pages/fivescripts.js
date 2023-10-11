@@ -865,6 +865,7 @@ function createPositiveChart(dpositive, dpositiveCompany){
       let chartlim = 0;
       let lst = [];
       let newPositiveSort = [];
+      let per = 0;
       let newCompanyObject2 ={};
         if(Object.keys(companyObject).length ){
             document.getElementById("pages").innerText = Object.keys(companyObject).length;
@@ -883,7 +884,7 @@ function createPositiveChart(dpositive, dpositiveCompany){
                 let pppdata = [...currentPriceDataTable[key]][CobjLen - 14] || 0;
 
                 if((cdata > pdata) || (cdata > ppdata) || (cdata > pppdata)) {
-                    let per = ((cdata - pppdata )/ pppdata)
+                    per = ((cdata - pppdata )/ pppdata)
                     if(per > 0.005){
                             positiveSort.push(per);
                             posi[per] = key;
@@ -901,7 +902,7 @@ function createPositiveChart(dpositive, dpositiveCompany){
         }
         if(positiveSort.length > 0 ){
             positiveSort.sort((a,b) => a - b);
-            
+            positiveSort.reverse();
             positiveSort.forEach( (per) =>{
                 newCompanyObject2[posi[per]] = companyObject[posi[per]];
             })
@@ -960,16 +961,22 @@ function createPositiveChart(dpositive, dpositiveCompany){
               let topDivtag = document.createElement("div"); 
               topDivtag.setAttribute("class", "topDivtag");
               let lblF = document.createElement("label");
+
+              let cplen = [...currentPriceDataTable[key]].length;
+              let cp = [...currentPriceDataTable[key]][cplen - 1];
+              let op = [...currentPriceDataTable[key]][0];
+              let currPer = (((cp - op) / op) * 100).toFixed(1);
+
                       lblF.setAttribute("for", key);
                       lblF.setAttribute("value", 'favourite');
-                      lblF.innerText = key;
+                      lblF.innerText = currPer + '  ' + key;
                       topDivtag.appendChild(lblF);
               let checkBoxF = document.createElement("input");
                         checkBoxF.setAttribute("type", "checkbox");
                         checkBoxF.setAttribute("class", 'favourite');
-                        let Cper = 0;
-                        [...companyObject[key]];
-                        checkBoxF.setAttribute("id", key);
+
+
+                        checkBoxF.setAttribute("id",  key);
                         // checkBoxF.setAttribute("value", "favourite");
                         checkBoxF.addEventListener("click", setFav);
                         topDivtag.appendChild(checkBoxF);

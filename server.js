@@ -165,10 +165,10 @@ const getFivePercent =  async () =>{
     let dt = new Date();
         let d = dt.getHours();
         let m = dt.getMinutes();
-console.log(d + m);
+
    cpvalues.forEach ( (ele, i) => {
 
-        if((d + m) > 55){
+        if(Number(d + m) > Number(10)){
             if((Number(ele[1]) > 0) && (Number(ele[2]) > 0) && (Number(ele[3]) > 4)){
                 FivePerData.push([ele[0]]);
              }
