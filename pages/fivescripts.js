@@ -1056,7 +1056,7 @@ function createPositiveChart(dpositive, dpositiveCompany){
                         let newVolume = [];
                         let currentVolume = 0;
                         let lastNum = [...currentVolumeDataTable[key]].length - 1;
-                        currentVolume =  [...currentVolumeDataTable[key]][[lastNum]] - ([...currentVolumeDataTable[key]][[0]]);
+                        currentVolume =  [...currentVolumeDataTable[key]][[lastNum]] - ([...currentVolumeDataTable[key]][[lastNum - 1]]);
                           for(let i = 1; i < [...currentVolumeDataTable[key]].length - 1; i++){                    
                             newVolume.push([...currentVolumeDataTable[key]][i]/[i]);
                             
