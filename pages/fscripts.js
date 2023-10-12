@@ -1383,11 +1383,18 @@ function clearFavourits(){
 
 
 
-  function getFivePer(){
-
+function getFivePer(){
+  clearChart();
+  document.querySelector("#pages").classList.toggle("hide");
+  document.querySelector("#pages2").classList.toggle("hide");
     getFiveHTTPs('getFivePer', 1);
-    updateCompanyDeatils();
-    showPrice();
+  }
+
+function getFiveVolumeData(){
+  clearChart();
+  document.querySelector("#pages").classList.toggle("hide");
+  document.querySelector("#pages2").classList.toggle("hide");
+    getFiveHTTPs('getFivePer', 0);
 
   }
 

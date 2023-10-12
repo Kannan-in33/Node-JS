@@ -14,7 +14,9 @@
       <div class="static"  style="margin:auto;">
        
         <div class="nPagedropdown" width="10%"  style="margin:auto;">  
-          <button id="pages" class="pagesDropDown"  onclick="showPages();" type="button" style="padding-top: 12px;">Home<span id="Pagenumbers"></span></button>              
+          <button id="pages" class="pagesDropDown hide"  onclick="getFivePer();" type="button" style="padding-top: 12px;">Home<span id="Pagenumbers"></span></button>              
+          
+          <button id="pages2" class="pagesDropDown"  onclick="getFiveVolumeData();" type="button" style="width: 100% !important; padding-top: 12px;">Volume<span id="Pagenumbers"></span></button>              
                 <div id="pagesDropdown" class="Pdrop-options ">
                   <a class="pagelink" href="/Sector">Sector</a>
                   <button class="pagelink"  onclick="getFavData([...Array.from(localStorage)].sort());">Favourite</button>
@@ -53,7 +55,6 @@
 </style>
 <script src="/fscripts.js"></script>
 <script>
-console.log("hi");
 getFivePer(); 
 setInterval(getFivePer, 5000 * 60);
 </script>
