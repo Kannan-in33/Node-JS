@@ -887,7 +887,7 @@ function createPositiveChart(dpositive, dpositiveCompany){
                 if((cdata > pppdata)) {
                     per = ((cdata - pppdata )/ pppdata);
                     // console.log(per);
-                    if(per > 0.05){
+                    if(per > 0.03){
                             positiveSort.push(per);
                             posi[per] = key;
 
@@ -1056,7 +1056,7 @@ function createPositiveChart(dpositive, dpositiveCompany){
                         let newVolume = [];
                         let currentVolume = 0;
                         let lastNum = [...currentVolumeDataTable[key]].length - 1;
-                        currentVolume =  [...currentVolumeDataTable[key]][[lastNum]] - ([...currentVolumeDataTable[key]][[lastNum]]);
+                        currentVolume =  [...currentVolumeDataTable[key]][[lastNum]] - ([...currentVolumeDataTable[key]][[0]]);
                           for(let i = 1; i < [...currentVolumeDataTable[key]].length - 1; i++){                    
                             newVolume.push([...currentVolumeDataTable[key]][i]/[i]);
                             
