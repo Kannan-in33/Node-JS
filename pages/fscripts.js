@@ -1405,6 +1405,10 @@ function getFiveVolumeData(){
           if(lst.length > 1){
                 Array.from(lst).forEach( (element) =>  element.remove() );
           }
+     lst = document.querySelectorAll(".downcharts div");
+          if(lst.length > 1){
+                Array.from(lst).forEach( (element) =>  element.remove() );
+          }
         }
 
 function getDma(){

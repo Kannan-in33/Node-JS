@@ -86,6 +86,7 @@ let companyObject = {};
 let goingUpCompanyObject = {};
 let goingDownCompanyObject = {};
 let goingFlatCompanyObject = {};
+let Great = 0;
 
 let rupee = new Intl.NumberFormat('en-IN', {
     style: 'currency',
@@ -1516,6 +1517,7 @@ let goingDownPosition = {};
 let goingFlatPosition = {};
 
 function getStockStatus(key){
+  Great = 0;
     let CobjLen = Math.min(document.getElementById("slidermin").value ,[...currentPriceDataTable[key]].length);
           if(CobjLen >= 2){
               let data = [...currentPriceDataTable[key]];
@@ -1538,18 +1540,34 @@ function getStockStatus(key){
                         per = ((cdata - pppdata )/ pppdata);
                         CurrentPer = ((cdata - cdata5 )/ cdata5);
                           if(per > 0.035){
-                                if(CurrentPer > 0){
-                                    goingUp.push(CurrentPer);
-                                    goingUpPosition[CurrentPer] = key;
-                                }
-                                else if(CurrentPer < 0){
-                                    goingDown.push(CurrentPer);
-                                    goingDownPosition[CurrentPer] = key;
-                                }
-                                else{
-                                    goingFlat.push(cdata);
-                                    goingFlatPosition[cdata] = key;
-                                }
+                            data.reverse();
+                            for(let i = 1; i < CobjLen - 2; i++  ){
+                              if(data[i] >= data[i + 1]){
+                                Great++;
+                              }
+                            }
+                            if(Great >= (CobjLen / 1.20 )){
+                              console.log(key, Great, CobjLen/1.20);
+                              goingUp.push(per);
+                               goingUpPosition[per] = key;
+                            }
+                            else{
+                                  goingDown.push(per);
+                                  goingDownPosition[per] = key;
+                              }
+
+                                // if(CurrentPer > 0){
+                                //     goingUp.push(CurrentPer);
+                                //     goingUpPosition[CurrentPer] = key;
+                                // }
+                                // else if(CurrentPer < 0){
+                                //     goingDown.push(CurrentPer);
+                                //     goingDownPosition[CurrentPer] = key;
+                                // }
+                                // else{
+                                //     goingFlat.push(cdata);
+                                //     goingFlatPosition[cdata] = key;
+                                // }
 
 
                           }
@@ -1850,7 +1868,7 @@ var sliderchart = document.querySelector('#slidermin');
 
 function getChart() {
     document.querySelector("#sliderminval").innerText = sliderchart.value;
-
+    window.scrollTo({ left: 0, top: 0 , behavior: "smooth" });
     // getFivePer();
        
   }

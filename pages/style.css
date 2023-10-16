@@ -115,6 +115,9 @@
      canvas {
       width: 300px !important;
     }
+    .downcharts{
+      background-color: rgba(210, 150, 100, 0.25);
+    }
      
      canvas:not(.volume){
         margin: 15px 0;
