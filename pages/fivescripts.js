@@ -1735,7 +1735,7 @@ function addingCharts(newCompanyObject2, location, days){
                             pointRadius: 0,
                             borderWidth : 0.5,
                             borderColor: "rgba(0,0,0,0.9)",
-                            data: [...currentPriceDataTable[key]],
+                            data: ([...currentPriceDataTable[key]]).slice(0, sliderchart.value),
                             }]
                           },  
                           options: {
