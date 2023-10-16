@@ -1517,7 +1517,7 @@ let goingFlatPosition = {};
 
 function getStockStatus(key){
     let CobjLen = Math.min(document.getElementById("slidermin").value ,[...currentPriceDataTable[key]].length);
-          if(CobjLen >= 4){
+          if(CobjLen >= 2){
               let data = [...currentPriceDataTable[key]];
               let cdata = [...currentPriceDataTable[key]][CobjLen -1];
               let cdata2 = [...currentPriceDataTable[key]][CobjLen -2] || 0;
@@ -1537,7 +1537,7 @@ function getStockStatus(key){
                     if((cdata > pppdata) ) {
                         per = ((cdata - pppdata )/ pppdata);
                         CurrentPer = ((cdata - cdata5 )/ cdata5);
-                          if(per > 0.02){
+                          if(per > 0.035){
                                 if(CurrentPer > 0){
                                     goingUp.push(CurrentPer);
                                     goingUpPosition[CurrentPer] = key;
@@ -1850,6 +1850,7 @@ var sliderchart = document.querySelector('#slidermin');
 
 function getChart() {
     document.querySelector("#sliderminval").innerText = sliderchart.value;
+
     // getFivePer();
        
   }

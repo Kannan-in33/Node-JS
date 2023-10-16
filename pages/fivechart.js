@@ -98,6 +98,7 @@ function addingCharts(newCompanyObject2, location){
         resultCount++;
         // console.log(key);
         sliderchart.value = [...currentVolumeDataTable[key]].length - 1;
+        document.getElementById("sliderminval").innerText = sliderchart.value;
         let newVolume = [];
         for(let i = 1; i < [...currentVolumeDataTable[key]].length - 1; i++){                    
           newVolume.push([...currentVolumeDataTable[key]][i]/[i]);
