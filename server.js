@@ -96,7 +96,8 @@ const getCloseOpenPrice =  async () =>{
 
 });
 // console.log('lowPriceData  ' + lowPriceData.length);
-
+// console.log('highPriceData ' + highPriceData);
+// console.log(closeOpenPriceData);
              }
 }
 
@@ -293,6 +294,11 @@ res.sendFile(path.join(__dirname, './pages/index.html'));
 
 });
 
+server.get('/home', (req, res) => {
+
+    res.sendFile(path.join(__dirname, './pages/home.html'));
+
+});
 server.get('/sector', (req, res) => {
 
     res.sendFile(path.join(__dirname, './pages/sector.html'));
@@ -869,7 +875,7 @@ else if(req.path == '/All') {
             }
             // console.log(k)
             
-                if (i >= 400 && flag == 0){
+                if (i >= 800 && flag == 0){
                     flag = 1;
                 obj3 = { 
                     "company" : company,
@@ -1100,16 +1106,17 @@ fs.readdir(directorypath , function (err, files) {
 
 });
 
+function runAfterFiveMinutes(){
+getCloseOpenPrice();
+getUpdatedPrice();
+getUpdatedPriceTable();
+getUpdatedVolomeTable();
+}
+
 server.listen(port, () => {    
     console.log('Server is listening on port ' + port);
-    // getCloseOpenPrice();
-    // getUpdatedPrice();
-    getUpdatedPriceTable();
-    getUpdatedVolomeTable();
+    runAfterFiveMinutes();
+    setInterval(runAfterFiveMinutes, 5000 * 60);
 
-    setInterval(getUpdatedPriceTable, 5000 * 60);
-    setInterval(getUpdatedVolomeTable, 5000 * 60);
- 
-  //  setInterval(getUpdatedPrice, (1000 * 60  * 30));
 })
 

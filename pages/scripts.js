@@ -1007,8 +1007,15 @@ function createChart(companyObject, e, days = 1000){
                   let lblF = document.createElement("label");
                           lblF.setAttribute("for", key);
                           lblF.setAttribute("value", 'favourite');
-                          lblF.innerText = 'Favourite';
+                          let cplen = [...currentPriceDataTable[key]].length;
+                          let cp = [...currentPriceDataTable[key]][cplen - 1];
+                          let op = [...closeOpenPriceDataObject[key]][1];
+                          let currPer = (((cp - op) / op) * 100).toFixed(1);
+
+                          lblF.innerText =  currPer + '  ' +  key;
                           topDivtag.appendChild(lblF);
+
+                          
                   let checkBoxF = document.createElement("input");
                             checkBoxF.setAttribute("type", "checkbox");
                             checkBoxF.setAttribute("class", 'favourite');

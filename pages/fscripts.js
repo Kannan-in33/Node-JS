@@ -1388,6 +1388,7 @@ function getFivePer(){
   document.querySelector("#pages").classList.toggle("hide");
   document.querySelector("#pages2").classList.toggle("hide");
     getFiveHTTPs('getFivePer', 1);
+    window.scrollTo({ left: 0, top: 0, behavior: "smooth" });
   }
 
 function getFiveVolumeData(){
@@ -1395,6 +1396,7 @@ function getFiveVolumeData(){
   document.querySelector("#pages").classList.toggle("hide");
   document.querySelector("#pages2").classList.toggle("hide");
     getFiveHTTPs('getFivePer', 0);
+
 
   }
 
