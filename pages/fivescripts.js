@@ -1516,7 +1516,7 @@ let goingDownPosition = {};
 let goingFlatPosition = {};
 
 function getStockStatus(key){
-    let CobjLen = document.getElementById("slidermin").value; //[...currentPriceDataTable[key]].length;
+    let CobjLen = Math.min(document.getElementById("slidermin").value ,[...currentPriceDataTable[key]].length);
           if(CobjLen >= 4){
               let data = [...currentPriceDataTable[key]];
               let cdata = [...currentPriceDataTable[key]][CobjLen -1];
