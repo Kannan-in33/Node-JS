@@ -1551,10 +1551,14 @@ function getStockStatus(key){
                               goingUp.push(per);
                                goingUpPosition[per] = key;
                             }
-                            else{
+                            else if(Great >= (CobjLen / 1.50 )){
                                   goingDown.push(per);
                                   goingDownPosition[per] = key;
                               }
+                              else{
+                                    goingFlat.push(per);
+                                    goingFlatPosition[per] = key;
+                                }
 
                                 // if(CurrentPer > 0){
                                 //     goingUp.push(CurrentPer);
@@ -1618,7 +1622,7 @@ function createFiveChart(companyObject, e, days = 1000){
 
       if( goingDown.length > 0 ){
           goingDown.sort((a,b) => b - a);
-          goingDown.reverse();
+          // goingDown.reverse();
           goingDown.forEach( (CurrentPer) =>{
           goingDownCompanyObject[goingDownPosition[CurrentPer]] = companyObject[goingDownPosition[CurrentPer]];
         })
