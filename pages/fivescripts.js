@@ -1510,8 +1510,10 @@ function createFiveChartVol(companyObject, e, days = 1000){
 
 
 let goingUp = [];
+let goingUp8 = [];
 let goingDown = [];
 let goingFlat = [];
+let goingUpPosition8 = {};
 let goingUpPosition = {};
 let goingDownPosition = {};
 let goingFlatPosition = {};
@@ -1526,6 +1528,7 @@ function getStockStatus(key){
               let cdata3 = [...currentPriceDataTable[key]][CobjLen -3] || 0;
               let cdata4 = [...currentPriceDataTable[key]][CobjLen -4] || 0;
               let cdata5 = [...currentPriceDataTable[key]][CobjLen -5] || 0;
+              let cdata6 = [...currentPriceDataTable[key]][CobjLen -7] || 0;
               
               
               let pdata = [...currentPriceDataTable[key]][CobjLen - 2];
@@ -1546,16 +1549,38 @@ function getStockStatus(key){
                                 Great++;
                               }
                             }
-                            if(Great >= (CobjLen / 1.20 )){
-                              console.log(key, Great, CobjLen/1.20);
+
+                            // console.log(key + '  ' + (cdata > cdata5) && (cdata5 > cdata6) + ' ' + (cdata) + ' ' + (cdata5)+ ' ' + (cdata6));                            
+                             
+                            
+                            // console.log(key + " " + Math.max(...[...currentPriceDataTable[key]].slice( 0, CobjLen -1)));
+                            if(cdata == Math.max(...[...currentPriceDataTable[key]].slice( 0, CobjLen -1)) ){
+                              // console.log('max ' + key );
                               goingUp.push(per);
                                goingUpPosition[per] = key;
                             }
-                            else if(Great >= (CobjLen / 1.50 )){
+                            else if((cdata > cdata5) && (cdata5 > cdata6)){  
+                              console.log('  ' + key + '  ' + (cdata > cdata5) && (cdata5 > cdata6) + ' ' + (cdata) + ' ' + (cdata5)+ ' ' + (cdata6));                            
+                              // console.log('Up ' + key ); 
+                              goingUp8.push(per);
+                               goingUpPosition8[per] = key;
+                            }
+                            else if(Great >= (CobjLen * 0.80 )){
+                              // console.log('80% ' + key );
+                              goingUp8.push(per);
+                               goingUpPosition8[per] = key;
+                            }
+                            else if(Great >= (CobjLen * 0.70 )){
+                              // console.log('70% ' + key );
                                   goingDown.push(per);
                                   goingDownPosition[per] = key;
                               }
+                            // else if(Great >= (CobjLen * 0.60 )){
+                            //       goingDown6.push(per);
+                            //       goingDownPosition[per] = key;
+                            //   }
                               else{
+                                console.log('Rest ' + key );
                                     goingFlat.push(per);
                                     goingFlatPosition[per] = key;
                                 }
@@ -1586,6 +1611,7 @@ function getStockStatus(key){
 }
 
 
+
 function createFiveChart(companyObject, e, days = 1000){
     let chartlim = 0;
     let lst = [];
@@ -1607,10 +1633,19 @@ function createFiveChart(companyObject, e, days = 1000){
           getStockStatus(key);            
       }
 
+      goingUpCompanyObject8 = {};
       goingUpCompanyObject = {};
       goingDownCompanyObject = {};
       goingFlatCompanyObject = {};
 
+      if(goingUp8.length > 0 ){
+          goingUp8.sort((a,b) => a - b);
+          goingUp8.reverse();
+          goingUp8.forEach( (CurrentPer) =>{
+            goingUpCompanyObject8[goingUpPosition8[CurrentPer]] = companyObject[goingUpPosition8[CurrentPer]];
+          })
+
+      }
       if(goingUp.length > 0 ){
           goingUp.sort((a,b) => a - b);
           goingUp.reverse();
@@ -1640,6 +1675,7 @@ function createFiveChart(companyObject, e, days = 1000){
 
     dE = e;
        addingCharts(goingUpCompanyObject, "charts", days);
+       addingCharts(goingUpCompanyObject8, "charts8", days);
        addingCharts(goingDownCompanyObject, "downcharts", days);
        addingCharts(goingFlatCompanyObject, "flatcharts", days);
        
@@ -1876,3 +1912,10 @@ function getChart() {
     // getFivePer();
        
   }
+
+  function getCharts(){
+    clearChart();
+    window.scrollTo({ left: 0, top: 0 , behavior: "smooth" });
+      createFiveChart(dCompanyObject);
+    
+    }

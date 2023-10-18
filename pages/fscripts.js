@@ -1270,11 +1270,12 @@ function setFilter2(){
 
 
 let myFunc1 = letsDebounce(setFilter,1000);
-let myFunc2 = letsDebounce(setFilter2,1000);
+let myFunc2 = letsDebounce(getCharts,800);
   
 function letsDebounce(fn,d){
       let timer;
       return function(){
+        document.getElementById("sliderminval").innerText = slidermin.value;
       clearTimeout(timer);
       timer=setTimeout(fn,d);
       }
@@ -1283,8 +1284,8 @@ function letsDebounce(fn,d){
     document.getElementById("filter").addEventListener('input', myFunc1);
 }
 
-  if(document.querySelectorAll("#filters").length > 0){
-      document.getElementById("filters").addEventListener('input', myFunc2);
+  if(document.querySelectorAll("#slidermin").length > 0){
+      document.getElementById("slidermin").addEventListener('input', myFunc2);
   }
 
   function cleanUpCompare() {

@@ -116,7 +116,10 @@
       width: 300px !important;
     }
     .downcharts{
-      background-color: rgba(210, 150, 100, 0.25);
+      background-color: rgba(210, 50, 10, 0.15);
+    }
+    .charts8{
+      background-color: rgba(50, 250, 100, 0.05);
     }
      
      canvas:not(.volume){

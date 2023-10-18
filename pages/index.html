@@ -30,7 +30,7 @@
               <!-- <a class="pagesDropDown" href="/home">Old</a> -->
               <!-- <button  id="getSector"  onclick="getsector(document.getElementById('filter').value);" type="button"><strong>Get</strong></button> -->
               <!-- <button  id="getPrevious"  onclick="" type="button"><strong>Get</strong></button> -->
-              <input type="range" min="4"   oninput="getChart();" max="81" value="81" name="slider" id="slidermin" style="width: 75%;"/>
+              <input type="range" min="4"    max="81" value="81" name="slider" id="slidermin" style="width: 75%;"/>
               <button  id="sliderminval" onclick="getFivePer(document.querySelector('#slidermin').value);" style="width: 15%  !important;">Filter</button>
         </div>
 
@@ -41,6 +41,7 @@
     <div id="comparel" class="comparel"></div>
 
       <div class="charts"></div>
+      <div class="charts8"></div>
       <div class="downcharts"></div>
       <div class="flatcharts"></div>
       <ol class="volume"> </ol>
@@ -63,7 +64,7 @@
 <script src="/fscripts.js"></script>
 <script>
 getFivePer(); 
-setInterval(getFivePer, 5000 * 60);
+// setInterval(getFivePer, 5000 * 60);
 // document.getElementById("getPrevious").onclick = () => {document.location = document.location + 'home';}
 </script>
 
