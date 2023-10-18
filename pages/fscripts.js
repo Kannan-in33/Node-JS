@@ -1406,9 +1406,18 @@ function getFiveVolumeData(){
           if(lst.length > 1){
                 Array.from(lst).forEach( (element) =>  element.remove() );
           }
-     lst = document.querySelectorAll(".downcharts div");
-          if(lst.length > 1){
-                Array.from(lst).forEach( (element) =>  element.remove() );
+   let lst1 = document.querySelectorAll(".charts8 div");
+          if(lst1.length > 1){
+                Array.from(lst1).forEach( (element) =>  element.remove() );
+          }
+     let lst2 = document.querySelectorAll(".downcharts div");
+          if(lst2.length > 1){
+                Array.from(lst2).forEach( (element) =>  element.remove() );
+          }
+
+    let lst3 = document.querySelectorAll(".flatcharts div");
+          if(lst3.length > 1){
+                Array.from(lst3).forEach( (element) =>  element.remove() );
           }
         }
 
@@ -1469,3 +1478,11 @@ function getsector(sector){
     getHTTPs(' ,' + sectorList, 1 );
 
 }
+
+
+function clearVChart(){
+  let lstv = document.querySelectorAll(".barv");
+        if(lstv.length > 1){
+              Array.from(lstv).forEach( (element) =>  element.remove() );
+        }
+      }
