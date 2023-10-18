@@ -1275,7 +1275,7 @@ let myFunc2 = letsDebounce(getCharts,800);
 function letsDebounce(fn,d){
       let timer;
       return function(){
-        document.getElementById("sliderminval").innerText = slidermin.value;
+        document.getElementById("sliderminval").innerText = 9 + Math.trunc(((slidermin.value * 5)+ 15)  / 60) + ':' + Math.trunc(((slidermin.value * 5)+ 15)  % 60);
       clearTimeout(timer);
       timer=setTimeout(fn,d);
       }
