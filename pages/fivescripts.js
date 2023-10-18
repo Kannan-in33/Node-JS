@@ -1550,11 +1550,7 @@ function getStockStatus(key){
                               }
                             }
 
-                            // console.log(key + '  ' + (cdata > cdata5) && (cdata5 > cdata6) + ' ' + (cdata) + ' ' + (cdata5)+ ' ' + (cdata6));                            
-                             
-                            
-                            // console.log(key + " " + Math.max(...[...currentPriceDataTable[key]].slice( 0, CobjLen -1)));
-                            if(cdata == Math.max(...[...currentPriceDataTable[key]].slice( 0, CobjLen -1)) ){
+                          if(cdata == Math.max(...[...currentPriceDataTable[key]].slice( 0, CobjLen -1)) ){
                               // console.log('max ' + key );
                               goingUp.push(per);
                                goingUpPosition[per] = key;
@@ -1619,6 +1615,7 @@ function createFiveChart(companyObject, e, days = 1000){
     let per = 0;
     let newCompanyObject2 ={};
     goingUp = [];
+    goingUp8 = [];
     goingDown = [];
     goingFlat = [];
 
