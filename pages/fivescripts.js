@@ -1249,13 +1249,13 @@ function createFiveChartVol(companyObject, e, days = 1000){
             let pppdata = [...currentPriceDataTable[key]][0] || 0;
 
             let cvolume= [...currentVolumeDataTable[key]][CobjLen -1] / [CobjLen -1];
-            let pvolume = [...currentVolumeDataTable[key]][CobjLen - 10] / [CobjLen - 10] || [...currentVolumeDataTable[key]][CobjLen -2] / [CobjLen -2];
+            let pvolume = [...currentVolumeDataTable[key]][CobjLen - 2] / [CobjLen - 2] ; //|| [...currentVolumeDataTable[key]][CobjLen -2] / [CobjLen -2];
 
             // if((cdata > pdata) || (cdata > ppdata) || (cdata > pppdata)) {
             if((cdata > pppdata) & cvolume > pvolume ) {
                 per = ((cdata - pppdata )/ pppdata);
                 // console.log(per);
-                if(per > 0.03){
+                if(per > 0.035){
                         positiveSort.push(per);
                         posi[per] = key;
 

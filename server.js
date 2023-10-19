@@ -443,7 +443,7 @@ else if(req.path.includes('getFivePer')) {
                     "reload": "",
                     
                 }
-                // console.log('finished');
+                // console.log(obj3);
                 res.send(obj3);
     }
     
