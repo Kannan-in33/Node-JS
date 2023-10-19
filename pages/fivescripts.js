@@ -86,6 +86,7 @@ let companyObject = {};
 let goingUpCompanyObject = {};
 let goingDownCompanyObject = {};
 let goingFlatCompanyObject = {};
+let goingUpCompanyObject8 = {}
 let Great = 0;
 
 let rupee = new Intl.NumberFormat('en-IN', {
@@ -1239,51 +1240,42 @@ function createFiveChartVol(companyObject, e, days = 1000){
 
           
     for (let key in companyObject) {
-        let CobjLen = [...currentPriceDataTable[key]].length;       
-
-        if(CobjLen >= 4){
+      let CobjLen = Math.min(document.getElementById("slidermin").value ,[...currentPriceDataTable[key]].length);
+        if(CobjLen >= 2){
             let data = [...currentPriceDataTable[key]];
             let cdata = [...currentPriceDataTable[key]][CobjLen -1];
-            let pdata = [...currentPriceDataTable[key]][CobjLen - 2];
-            let ppdata = [...currentPriceDataTable[key]][CobjLen - 3] || 0;
             let pppdata = [...currentPriceDataTable[key]][0] || 0;
 
-            let cvolume= [...currentVolumeDataTable[key]][CobjLen -1] / [CobjLen -1];
-            let pvolume = [...currentVolumeDataTable[key]][CobjLen - 2] / [CobjLen - 2] ; //|| [...currentVolumeDataTable[key]][CobjLen -2] / [CobjLen -2];
+            let cvolume = [...currentVolumeDataTable[key]][CobjLen -1] / [CobjLen -1];
+            let cvolume2 = [...currentVolumeDataTable[key]][CobjLen -2] / [CobjLen -2]  || 0;
+            let cvolume3 = [...currentVolumeDataTable[key]][CobjLen -3] / [CobjLen -3]  || 0;
+            let cvolume4 = [...currentVolumeDataTable[key]][CobjLen -4] / [CobjLen -4]  || 0;
+            let cvolume5 = [...currentVolumeDataTable[key]][CobjLen -5] / [CobjLen -5]  || 0;
+            let cvolume6 = [...currentVolumeDataTable[key]][CobjLen -6] / [CobjLen -6]  || 0;
+            let cvolume7 = [...currentVolumeDataTable[key]][CobjLen -7] / [CobjLen -7]  || 0;
+            let cvolume8 = [...currentVolumeDataTable[key]][CobjLen -8] / [CobjLen -8]  || 0;
 
-            // if((cdata > pdata) || (cdata > ppdata) || (cdata > pppdata)) {
-            if((cdata > pppdata) & cvolume > pvolume ) {
-                per = ((cdata - pppdata )/ pppdata);
-                // console.log(per);
-                if(per > 0.035){
-                        positiveSort.push(per);
-                        posi[per] = key;
+            if( (cvolume > cvolume2) || (cvolume2 > cvolume3) || (cvolume3 > cvolume4) ){
+                goingUp.push(per);
+                goingUpPosition[per] = key;
+            }
+            else if( (cvolume3 > cvolume4) || (cvolume4 > cvolume5) ){  
+              goingUp8.push(per);
+               goingUpPosition8[per] = key;
+            }
+            else if( (cvolume5 > cvolume6) || (cvolume6 > cvolume7) ){ 
+                  goingDown.push(per);
+                  goingDownPosition[per] = key;
+              }
 
+              else{
+                    goingFlat.push(per);
+                    goingFlatPosition[per] = key;
                 }
-                
-                // newCompanyObject[key] = [...companyObject[key]];
+
+              }
             }
 
-
-        }
-            
-
-
-    }
-    if(positiveSort.length > 0 ){
-      // console.log(positiveSort);
-        positiveSort.sort((a,b) => a - b);
-        positiveSort.reverse();
-        // console.log(positiveSort);
-        positiveSort.forEach( (ele) =>{
-          // console.log(ele);
-            newCompanyObject2[posi[ele]] = companyObject[posi[ele]];
-        })
-
-    }
-    // console.log(newCompanyObject2);
-
-    
   dE = e;
   let resultCount = 0;
       for (let key in newCompanyObject2) {
