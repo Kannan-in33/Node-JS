@@ -121,7 +121,7 @@ const getUpdatedPrice =  async () =>{
     const CPdata = await googleSheets.spreadsheets.values.get({
         auth,
         spreadsheetId,
-        range: 'NSE Daily!A1:C2396', 
+        range: 'NSE Daily!A1:E2396', 
     });
 
 
@@ -131,6 +131,8 @@ const getUpdatedPrice =  async () =>{
     tempArr2 = [];
             tempArr2.push(ele[1].toString());
             tempArr2.push(ele[2].toString())
+            tempArr2.push(ele[3].toString())
+            tempArr2.push(ele[4].toString())
 
    currentPriceData[ele[0]] = tempArr2;
 });

@@ -1521,6 +1521,7 @@ function getStockStatus(key){
               let cdata4 = [...currentPriceDataTable[key]][CobjLen -4] || 0;
               let cdata5 = [...currentPriceDataTable[key]][CobjLen -5] || 0;
               let cdata6 = [...currentPriceDataTable[key]][CobjLen -7] || 0;
+              console.log([CurrentPriceObj[key]]);
               
               
               let pdata = [...currentPriceDataTable[key]][CobjLen - 2];
@@ -1532,7 +1533,7 @@ function getStockStatus(key){
 
               if(!((cdata == cdata2) && (cdata == cdata5) && (cdata == cdata3) && (cdata == cdata5))) {
                     if((cdata > pppdata) ) {
-                        per = ((cdata - pppdata )/ pppdata);
+                        per = ((CurrentPriceObj[key][0] - CurrentPriceObj[key][3]  )/ CurrentPriceObj[key][3] );
                         CurrentPer = ((cdata - cdata5 )/ cdata5);
                           if(per > 0.035){
                             data.reverse();
@@ -1731,7 +1732,7 @@ function addingCharts(newCompanyObject2, location, days){
           let cplen = document.getElementById("slidermin").value; //[...currentPriceDataTable[key]].length;
           let cp = [...currentPriceDataTable[key]][cplen - 1];
           let op = [...closeOpenPriceDataObject[key]][1];
-          let currPer = (((cp - op) / op) * 100).toFixed(1);
+          let currPer =  (((CurrentPriceObj[key][0] - CurrentPriceObj[key][3]  )/ CurrentPriceObj[key][3] ) * 100).toFixed(1);
 
                   lblF.setAttribute("for", key);
                   lblF.setAttribute("value", 'favourite');
