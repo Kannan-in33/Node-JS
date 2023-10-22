@@ -102,7 +102,7 @@ const getCloseOpenPrice =  async () =>{
 }
 
 
-// UpdateBarData
+// UpdateBarData Returns currentPriceData = {}
 
 const getUpdatedPrice =  async () =>{
     const auth = new google.auth.GoogleAuth({
@@ -142,7 +142,7 @@ const getUpdatedPrice =  async () =>{
 
 
 
-// Get Five Per Data
+// Get Five Per Data FivePerData = []
 
 const getFivePercent =  async () =>{
     const auth = new google.auth.GoogleAuth({
@@ -170,18 +170,18 @@ const getFivePercent =  async () =>{
         let m = dt.getMinutes();
 
    cpvalues.forEach ( (ele, i) => {
+    FivePerData.push([ele[0]]);
+        // if(Number(d + m) > Number(0)){
+        //     if((Number(ele[1]) > 0) && (Number(ele[2]) > 0) && (Number(ele[3]) > 1)){
+        //         FivePerData.push([ele[0]]);
+        //      }
+        // }
 
-        if(Number(d + m) > Number(0)){
-            if((Number(ele[1]) > 0) && (Number(ele[2]) > 0) && (Number(ele[3]) > 3)){
-                FivePerData.push([ele[0]]);
-             }
-        }
-
-        else{
-            if((Number(ele[1]) > 0) && (Number(ele[2]) > 0) && (Number(ele[3]) > 2)){
-                FivePerData.push([ele[0]]);
-             }
-        }
+        // else{
+        //     if((Number(ele[1]) > 0) && (Number(ele[2]) > 0) && (Number(ele[3]) > 2)){
+        //         FivePerData.push([ele[0]]);
+        //      }
+        // }
         
 });
 
@@ -190,9 +190,9 @@ const getFivePercent =  async () =>{
 }
 getFivePercent();
 
-// Try Getting data from Bar
 
 
+// Try Getting data from Bar Day's Price data currentPriceDataTable = {}
 const getUpdatedPriceTable =  async () =>{
     const auth = new google.auth.GoogleAuth({
         keyFile: "credentials.json",
@@ -217,15 +217,16 @@ const getUpdatedPriceTable =  async () =>{
         for(let j = 1; j < ele.length ; j++) {
             tempArr2.push(ele[j].toString())
         }
-        // if(ele[0].toString().split(",")[0] == 'ACCELYA'){
-        //     tempArr2.reverse();
-        // }
         currentPriceDataTable[ele[0].toString().split(",")[0]] = tempArr2.reverse();
      });
 
     return GsUpdate;
 
 }
+
+
+
+// Try Getting data from Bar Day's Volume data currentVolumeDataTable = {}
 
 const getUpdatedVolomeTable =  async () =>{
     const auth = new google.auth.GoogleAuth({
@@ -382,90 +383,21 @@ if(req.path.includes('getcompare')) {
 // Get FivePer
 
 else if(req.path.includes('getFivePer')) {
-    let dd = new Date();
     let ARR = [...FivePerData];
-    let AAR2 = [];          
-    // console.log(ARR.length);
-    let foldersPath = fs.readdirSync(path.resolve(__dirname, 'src/'));
-    foldersPath.forEach( (folder, j) => {
-        //  ||  folder == '401'
-    if(folder == 'All'){  // 'All
-    const directorypath = path.join(__dirname, 'src/' + folder);
-    fs.readdir(directorypath , function (err, files) {
-    if (err) throw err;
-                for(let k = 1; k < ARR.length -1; k++){
-                        files.forEach( (file, i) => {
-                            if(file.includes(ARR[k])){
-                                AAR2.push(file.split('.')[0]);
-                            }
-                        });
-                    }
-                    // console.log(AAR2);
-    for(let j = 0; j < AAR2.length -1; j++){
-    files.forEach( (file, i) => {
-        
-        if (file.split('.')[0] == AAR2[j] ){
+                
 
-            // console.log(j , AAR2[j] , AAR2.length);
-                        
-        fs.readFile(path.join(directorypath , file), 'utf8', function (err2, data) {
-        if (err2) throw err2;
-            obj = JSON.parse(data);
-            // let j = 0;
-            company.push(file);
-            
-                if(obj['datasets'].length > 0 ){
-                    // valueList[file.split('.')[0]] = obj['datasets'][0]['values'].length
-                    max = max < obj['datasets'][0]['values'].length ? obj['datasets'][0]['values'].length : max
-                    for (let key in obj['datasets'][0]['values']) {
-                            obj2.push(obj['datasets'][0]['values'][key][1]);  
-                                volumeObj.push((obj['datasets'][1]['values'][key][1])); 
-                    }
-                    companyObject[file.split('.')[0]] = [...obj2];
-                    volumeObject[file.split('.')[0]] = [...volumeObj];
-                    obj2 =[];
-                    datesObj = [];
-                    volumeObj =[];
-            }
-            
-                if (file.split('.')[0] == AAR2[AAR2.length - 2] ){                    
-
-                    // console.log(volumeObject);
                 obj3 = { 
-                    "company" : company,
-                    "companyObject" : companyObject,
-                    "volumeObject" : volumeObject,
+                    "companyList" : FivePerData,
                     "currentPriceData": currentPriceData,
-                    "currentPriceData1": currentPriceData1,
                     "currentPriceDataTable":currentPriceDataTable,
                     "currentVolumeDataTable": currentVolumeDataTable,
-                    "closeOpenPriceDataObject": closeOpenPriceDataObject,
-                    "closeOpenPriceData":closeOpenPriceData,
-                    "ddtime": dd.getHours(),
-                    "reload": "",
                     
                 }
                 // console.log(obj3);
                 res.send(obj3);
     }
     
-    });
-    
-}
 
-
-
-
-    });
-    
-}
-
-    });
-
-}
-});  
-
-}
 
 // Get FivePer End
 

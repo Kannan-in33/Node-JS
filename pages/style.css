@@ -469,13 +469,17 @@
     .bar, .barv{
       display: flex;
       justify-content: flex-start;
-      height: 240px;
+      height: 175px;
       overflow: hidden;
       letter-spacing: -1px;
       width: 100% !important;
       position: relative;
       /* margin-top: 30px; */
       /* max-width: 280px; */
+    }
+    .stockslider{
+      width: 80%;
+      margin-right: 0;
     }
 
     .bar > div, .barv > div{

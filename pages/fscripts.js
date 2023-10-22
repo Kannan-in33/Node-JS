@@ -1270,8 +1270,7 @@ function setFilter2(){
 
 
 let myFunc1 = letsDebounce(setFilter,1000);
-let myFunc2 = letsDebounce(getCharts,800);
-  
+
 function letsDebounce(fn,d){
       let timer;
       return function(){
@@ -1284,9 +1283,7 @@ function letsDebounce(fn,d){
     document.getElementById("filter").addEventListener('input', myFunc1);
 }
 
-  if(document.querySelectorAll("#slidermin").length > 0){
-      document.getElementById("slidermin").addEventListener('input', myFunc2);
-  }
+ 
 
   function cleanUpCompare() {
     lst = document.querySelectorAll(".comparel .block1");
