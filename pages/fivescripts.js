@@ -173,7 +173,7 @@ function createFiveChartVol(companyObject,  days = 1000){
   let per = 0;
   let newCompanyObject2 ={};
     if(Object.keys(companyObject).length ){
-        document.getElementById("pages2").innerText = Object.keys(companyObject).length;
+        // document.getElementById("pages2").innerText = Object.keys(companyObject).length;
     }
     let newCompanyObject = {};
     let posi = {};
@@ -470,13 +470,16 @@ function getStockStatus(key){
               let pppdata = [...CurrentPriceObj[key]][1] || 0;
 
               let cvolume= [...currentVolumeDataTable[key]][CobjLen -1] / [CobjLen -1];
-              let pvolume = [...currentVolumeDataTable[key]][CobjLen - 10] / [CobjLen - 10] || [...currentVolumeDataTable[key]][CobjLen -2] / [CobjLen -2];
+              let pvolume2 = [...currentVolumeDataTable[key]][CobjLen - 2] / [CobjLen - 2] ;
+              let pvolume3 = [...currentVolumeDataTable[key]][CobjLen - 3] / [CobjLen - 3] ;
+              let pvolume4 = [...currentVolumeDataTable[key]][CobjLen - 4] / [CobjLen - 4] ;
+              let pvolume5 = [...currentVolumeDataTable[key]][CobjLen - 5] / [CobjLen - 5] || 0;
 
               if(!((cdata == cdata2) && (cdata == cdata5) && (cdata == cdata3) && (cdata == cdata5))) {
                     if((cdata > pppdata) ) {
                         per = ((CurrentPriceObj[key][0] - CurrentPriceObj[key][3]  )/ CurrentPriceObj[key][3] );
                         CurrentPer = ((cdata - cdata5 )/ cdata5);
-                          if(per > 0.035){
+                          if(per > 0.025){
                           // if(per > 0.0){
                             data.reverse();
                             for(let i = 1; i < CobjLen - 2; i++  ){
@@ -485,7 +488,14 @@ function getStockStatus(key){
                               }
                             }
 
-                          if(cdata == Math.max(...[...currentPriceDataTable[key]].slice( 0, CobjLen -1)) ){
+                            
+                          if(cvolume > pvolume2 ){
+                            let perv = ((cvolume - pvolume2) / pvolume2) * 100;
+                              goingUp.push(perv);
+                               goingUpPosition[perv] = key;
+                            }
+
+                          else if(cdata == Math.max(...[...currentPriceDataTable[key]].slice( 0, CobjLen -1)) ){
                               // console.log('max ' + key );
                               goingUp.push(per);
                                goingUpPosition[per] = key;
@@ -559,7 +569,7 @@ function createFiveChart(companyList,  days = 81){
       let posi = {};
       let positiveSort = [];
       if(companyList.length ){
-        document.getElementById("pages2").innerText = companyList.length;
+        // document.getElementById("pages").innerText = companyList.length;
     }
             
       for (let i = 0; i < companyList.length; i++) {
@@ -615,6 +625,11 @@ function createFiveChart(companyList,  days = 81){
                         stocksliderLst.forEach(element => {
                               element.addEventListener('input', moveChart);
                             });
+
+
+        document.querySelector("#pages").innerText = (goingDown.length + goingFlat.length + goingUp.length + goingUp8.length);
+        document.getElementById("sliderminval").innerText = 9 + Math.trunc(((slidermin.value * 5)+ 15)  / 60) + ':' + Math.trunc(((slidermin.value * 5)+ 15)  % 60);
+
        
 
 }
@@ -681,7 +696,7 @@ function createChartSection(key, location){
                 stockSlider.setAttribute("type", "range");
                 stockSlider.setAttribute("max", 81);
                 stockSlider.setAttribute("min", 2);
-                stockSlider.setAttribute("value", currentPriceDataTable[key].length);
+                stockSlider.setAttribute("value", slidermin.value);
                 stockSlider.setAttribute("id", key);
                 stockSlider.setAttribute("class", "stockslider");
 
@@ -901,10 +916,8 @@ function getFiveHTTPs(path, flag = 0) {
                       currentPriceDataTable = xhr.response.currentPriceDataTable;
                       currentVolumeDataTable = xhr.response.currentVolumeDataTable;
                       companyList = [...xhr.response.companyList];
-                      document.getElementById("pages").innerText = companyList.length;
+                      // document.getElementById("pages").innerText = companyList.length;
                         createFiveChart(companyList);
-                        
-          
                     } 
           
                     else {
@@ -931,7 +944,7 @@ function getChart() {
     window.scrollTo({ left: 0, top: 0 , behavior: "smooth" });
       // createFiveChart(dCompanyObject);
       createFiveChart(companyList, days = sliderchart.value);
-      clearVChart();
+      // clearVChart();
     }
 
     

@@ -469,7 +469,7 @@
     .bar, .barv{
       display: flex;
       justify-content: flex-start;
-      height: 175px;
+      height: 225px;
       overflow: hidden;
       letter-spacing: -1px;
       width: 100% !important;

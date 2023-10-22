@@ -1383,16 +1383,16 @@ function clearFavourits(){
 
 function getFivePer(){
   clearChart();
-  document.querySelector("#pages").classList.toggle("hide");
-  document.querySelector("#pages2").classList.toggle("hide");
+  // document.querySelector("#pages").classList.toggle("hide");
+  // document.querySelector("#pages2").classList.toggle("hide");
     getFiveHTTPs('getFivePer', 1);
     window.scrollTo({ left: 0, top: 0, behavior: "smooth" });
   }
 
 function getFiveVolumeData(){
   clearChart();
-  document.querySelector("#pages").classList.toggle("hide");
-  document.querySelector("#pages2").classList.toggle("hide");
+  // document.querySelector("#pages").classList.toggle("hide");
+  // document.querySelector("#pages2").classList.toggle("hide");
     getFiveHTTPs('getFivePer', 0);
 
 
