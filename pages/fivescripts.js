@@ -489,8 +489,10 @@ function getStockStatus(key){
                             }
 
 
-                          if((cvolume > pvolume2) || (cvolume > pvolume3) || (cvolume > pvolume4)){
+                          if((cvolume > pvolume2)){
                             let perv = ((cvolume - pvolume2) / pvolume2) * 100;
+                            console.log(key + '  '+ perv);
+                            
                               goingUp.push(perv);
                                goingUpPosition[perv] = key;
                             }
