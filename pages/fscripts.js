@@ -1235,27 +1235,46 @@ function createChartMini(companyObject, companyName, divtag0, days = 1000){
   // Search Bar Script to filter charts matching the typed text
 
   function setFilter(){
-    // let filterData = (document.querySelector("#filter").value).toUpperCase();
-    // if ( filterData.length > 0) {
-    //     var lst = Array.from(document.querySelectorAll("div"));
-    //     lst.forEach( (ele) => ele.style.display = "none" );
+    let filterData = (document.querySelector("#filter").value).toUpperCase();
+    if ( filterData.length > 0) {
+        var lst = Array.from(document.querySelectorAll(".charts > div"));
+        lst.forEach( (ele) => ele.style.display = "none" );
+        var lst = Array.from(document.querySelectorAll(".charts8 > div"));
+        lst.forEach( (ele) => ele.style.display = "none" );
+        var lst = Array.from(document.querySelectorAll(".downcharts > div"));
+        lst.forEach( (ele) => ele.style.display = "none" );
+        var lst = Array.from(document.querySelectorAll(".flatcharts > div"));
+        lst.forEach( (ele) => ele.style.display = "none" );
 
-    //     lst = Array.from(document.querySelectorAll("[id^= '" + filterData + "']"));
-    //     lst.forEach( ele => ele.style.display = "" ); 
+        lst = Array.from(document.querySelectorAll("[id^= '" + filterData + "']"));
+        lst.forEach( ele => ele.style.display = "" ); 
 
-    // }
+    }
 
-    // else{
-    //   let lst = document.querySelectorAll(".charts > div");
-    //   lst.forEach( ele => ele.style.display = "" );
-    // }
+    else{
+      var lst = Array.from(document.querySelectorAll(".charts > div"));
+        lst.forEach( (ele) => ele.style.display = "" );
+         lst = Array.from(document.querySelectorAll(".charts8 > div"));
+        lst.forEach( (ele) => ele.style.display = "" );
+         lst = Array.from(document.querySelectorAll(".downcharts > div"));
+        lst.forEach( (ele) => ele.style.display = "" );
+         lst = Array.from(document.querySelectorAll(".flatcharts > div"));
+        lst.forEach( (ele) => ele.style.display = "" );
+    }
     }
 
 function setFilter2(){
       let filterData = (document.querySelector("#filters").value).toUpperCase();
       if ( filterData.length > 0) {
-          var lst = Array.from(document.querySelectorAll(".charts > div"));
-          lst.forEach( (ele) => ele.style.display = "none" );
+        var lst = Array.from(document.querySelectorAll("c.harts > div"));
+        lst.forEach( (ele) => ele.style.display = "none" );
+         lst = Array.from(document.querySelectorAll(".charts8 > div"));
+        lst.forEach( (ele) => ele.style.display = "none" );
+         lst = Array.from(document.querySelectorAll(".downcharts > div"));
+        lst.forEach( (ele) => ele.style.display = "none" );
+         lst = Array.from(document.querySelectorAll(".flatcharts > div"));
+        lst.forEach( (ele) => ele.style.display = "none" );
+
 
           lst = Array.from(document.querySelectorAll("[id^= '" + filterData + "']"));
           lst.forEach( ele => ele.style.display = "" ); 
@@ -1263,8 +1282,14 @@ function setFilter2(){
       }
   
       else{
-        let lst = document.querySelectorAll(".charts > div");
-        lst.forEach( ele => ele.style.display = "" );
+        var lst = Array.from(document.querySelectorAll(".charts > div"));
+        lst.forEach( (ele) => ele.style.display = "" );
+         lst = Array.from(document.querySelectorAll(".charts8 > div"));
+        lst.forEach( (ele) => ele.style.display = "" );
+         lst = Array.from(document.querySelectorAll(".downcharts > div"));
+        lst.forEach( (ele) => ele.style.display = "" );
+         lst = Array.from(document.querySelectorAll(".flatcharts > div"));
+        lst.forEach( (ele) => ele.style.display = "" );
       }
       }
 

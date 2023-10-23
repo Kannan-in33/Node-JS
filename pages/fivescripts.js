@@ -445,6 +445,7 @@ let goingUp = [];
 let goingUp8 = [];
 let goingDown = [];
 let goingFlat = [];
+let goingFlatcounter = 0;
 let goingUpPosition8 = {};
 let goingUpPosition = {};
 let goingDownPosition = {};
@@ -475,7 +476,7 @@ function getStockStatus(key){
               let pvolume4 = [...currentVolumeDataTable[key]][CobjLen - 4] / [CobjLen - 4] ;
               let pvolume5 = [...currentVolumeDataTable[key]][CobjLen - 5] / [CobjLen - 5] || 0;
 
-              if(!((cdata == cdata2) && (cdata == cdata5) && (cdata == cdata3) && (cdata == cdata5))) {
+              if(!((cdata == cdata2) && (cdata == cdata4) && (cdata == cdata3) && (cdata == cdata5))) {
                     if((cdata > pppdata) ) {
                         per = ((CurrentPriceObj[key][0] - CurrentPriceObj[key][3]  )/ CurrentPriceObj[key][3] );
                         CurrentPer = ((cdata - cdata5 )/ cdata5);
@@ -524,8 +525,11 @@ function getStockStatus(key){
                             //   }
                               else{
                                 // console.log('Rest ' + key );
-                                    goingFlat.push(per);
-                                    goingFlatPosition[per] = key;
+                                    if(goingFlatcounter <  500){
+                                    goingFlatcounter++;
+                                    goingFlat.push(goingFlatcounter);
+                                    goingFlatPosition[goingFlatcounter] = key;
+                                  }
                                 }
 
                                 // if(CurrentPer > 0){
@@ -547,7 +551,11 @@ function getStockStatus(key){
                     }
                 }
                 else{
-                    goingFlat.push(key);
+                  if(goingFlatcounter <  500){
+                  goingFlatcounter++;
+                  goingFlat.push(goingFlatcounter);
+                  goingFlatPosition[goingFlatcounter] = key;
+                }
                 }
 
           }
@@ -633,7 +641,7 @@ function createFiveChart(companyList,  days = 81){
         document.getElementById("sliderminval").innerText = 9 + Math.trunc(((slidermin.value * 5)+ 15)  / 60) + ':' + Math.trunc(((slidermin.value * 5)+ 15)  % 60);
 
        
-
+        goingFlatcounter = 0;
 }
 
 
