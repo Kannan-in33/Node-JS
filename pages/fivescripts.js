@@ -489,7 +489,7 @@ function getStockStatus(key){
                             }
 
 
-                          if(cvolume > pvolume2 ){
+                          if((cvolume > pvolume2) || (cvolume > pvolume3) || (cvolume > pvolume4)){
                             let perv = ((cvolume - pvolume2) / pvolume2) * 100;
                               goingUp.push(perv);
                                goingUpPosition[perv] = key;
@@ -768,7 +768,7 @@ function addPriceChart(key, location, days){
                 xValues.reverse();
         let CobjLen = Math.min(document.getElementById("slidermin").value ,[...currentPriceDataTable[key]].length);
     
-          let currPer =  ((([...currentPriceDataTable[key]][CobjLen -1] - CurrentPriceObj[key][1] )/ CurrentPriceObj[key][1]) * 100).toFixed(1);
+          let currPer =  (((CurrentPriceObj[key][0] - CurrentPriceObj[key][3] )/ CurrentPriceObj[key][3]) * 100).toFixed(1);
          document.querySelector('[id="' + key + '"] .percent').innerText = currPer + '   ';
 
           let canvasb = document.createElement("canvas");
