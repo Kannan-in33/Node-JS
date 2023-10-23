@@ -488,7 +488,7 @@ function getStockStatus(key){
                               }
                             }
 
-                            
+
                           if(cvolume > pvolume2 ){
                             let perv = ((cvolume - pvolume2) / pvolume2) * 100;
                               goingUp.push(perv);
@@ -766,8 +766,9 @@ function addPriceChart(key, location, days){
                 }
           }
                 xValues.reverse();
-
-          let currPer =  ((([...currentPriceDataTable[key]][days -1] - CurrentPriceObj[key][1] )/ CurrentPriceObj[key][1]) * 100).toFixed(1);
+        let CobjLen = Math.min(document.getElementById("slidermin").value ,[...currentPriceDataTable[key]].length);
+    
+          let currPer =  ((([...currentPriceDataTable[key]][CobjLen -1] - CurrentPriceObj[key][1] )/ CurrentPriceObj[key][1]) * 100).toFixed(1);
          document.querySelector('[id="' + key + '"] .percent').innerText = currPer + '   ';
 
           let canvasb = document.createElement("canvas");
