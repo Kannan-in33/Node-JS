@@ -479,7 +479,7 @@ function getStockStatus(key){
                     if((cdata > pppdata) ) {
                         per = ((CurrentPriceObj[key][0] - CurrentPriceObj[key][3]  )/ CurrentPriceObj[key][3] );
                         CurrentPer = ((cdata - cdata5 )/ cdata5);
-                          if(per > 0.025){
+                          if(per > ((document.querySelector("#filter").value / 100) || 0.025)){
                           // if(per > 0.0){
                             data.reverse();
                             for(let i = 1; i < CobjLen - 2; i++  ){
@@ -491,7 +491,7 @@ function getStockStatus(key){
 
                           if((cvolume > pvolume2)){
                             let perv = ((cvolume - pvolume2) / pvolume2) * 100;
-                            console.log(key + '  '+ perv);
+                            // console.log(key + '  '+ perv);
                             
                               goingUp.push(perv);
                                goingUpPosition[perv] = key;
@@ -503,7 +503,7 @@ function getStockStatus(key){
                                goingUpPosition[per] = key;
                             }
                             else if((cdata > cdata5) && (cdata5 > cdata6)){  
-                              console.log('  ' + key + '  ' + (cdata > cdata5) && (cdata5 > cdata6) + ' ' + (cdata) + ' ' + (cdata5)+ ' ' + (cdata6));                            
+                              // console.log('  ' + key + '  ' + (cdata > cdata5) && (cdata5 > cdata6) + ' ' + (cdata) + ' ' + (cdata5)+ ' ' + (cdata6));                            
                               // console.log('Up ' + key ); 
                               goingUp8.push(per);
                                goingUpPosition8[per] = key;
@@ -523,7 +523,7 @@ function getStockStatus(key){
                             //       goingDownPosition[per] = key;
                             //   }
                               else{
-                                console.log('Rest ' + key );
+                                // console.log('Rest ' + key );
                                     goingFlat.push(per);
                                     goingFlatPosition[per] = key;
                                 }
