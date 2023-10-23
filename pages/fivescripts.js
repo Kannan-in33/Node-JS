@@ -554,7 +554,7 @@ function getStockStatus(key){
 
 
 function createFiveChart(companyList,  days = 81){
-
+  days = Math.min(currentPriceDataTable[companyList[0]].length - 1, slidermin.value);
     let chartlim = 0;
     let lst = [];
     let newPositiveSort = [];
