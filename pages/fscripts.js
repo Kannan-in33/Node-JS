@@ -1237,7 +1237,7 @@ function createChartMini(companyObject, companyName, divtag0, days = 1000){
   function setFilter(){
     let filterData = (document.querySelector("#filter").value).toUpperCase();
     if ( filterData.length > 0) {
-        var lst = Array.from(document.querySelectorAll(".charts > div"));
+        var lst = Array.from(document.querySelectorAll("div"));
         lst.forEach( (ele) => ele.style.display = "none" );
 
         lst = Array.from(document.querySelectorAll("[id^= '" + filterData + "']"));

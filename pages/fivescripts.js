@@ -771,7 +771,14 @@ function addPriceChart(key, location, days){
         let CobjLen = Math.min(document.getElementById("slidermin").value ,[...currentPriceDataTable[key]].length);
     
           let currPer =  (((CurrentPriceObj[key][0] - CurrentPriceObj[key][3] )/ CurrentPriceObj[key][3]) * 100).toFixed(1);
-         document.querySelector('[id="' + key + '"] .percent').innerText = currPer + '   ';
+          
+          let curStvalue = document.querySelector('[id="' + key + '"] [type="range"]').value
+          if (CobjLen > curStvalue ){
+                currPer =      ((( [...currentPriceDataTable[key]][curStvalue -1] - CurrentPriceObj[key][3])/ CurrentPriceObj[key][3] ) * 100).toFixed(1);
+                  }  
+           
+
+          document.querySelector('[id="' + key + '"] .percent').innerText = currPer + '   ';
 
           let canvasb = document.createElement("canvas");
                 canvasb.setAttribute("id", "bar" + key);
