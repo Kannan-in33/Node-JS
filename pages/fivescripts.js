@@ -525,7 +525,7 @@ function getStockStatus(key){
                             //   }
                               else{
                                 // console.log('Rest ' + key );
-                                    if(goingFlatcounter <  500){
+                                    if(goingFlatcounter <  100){
                                     goingFlatcounter++;
                                     goingFlat.push(goingFlatcounter);
                                     goingFlatPosition[goingFlatcounter] = key;
@@ -551,7 +551,7 @@ function getStockStatus(key){
                     }
                 }
                 else{
-                  if(goingFlatcounter <  500){
+                  if(goingFlatcounter <  100){
                   goingFlatcounter++;
                   goingFlat.push(goingFlatcounter);
                   goingFlatPosition[goingFlatcounter] = key;
