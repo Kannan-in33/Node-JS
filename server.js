@@ -28,6 +28,8 @@ let tempArr2 =[];
 let t = 0;
 let longterm =[];
 let FivePerData = [];
+let getFiveMinVolumeData = {};
+let getFiveMinVolumeValues ;
 
 
 
@@ -95,13 +97,44 @@ const getCloseOpenPrice =  async () =>{
             }
 
 });
-// console.log('lowPriceData  ' + lowPriceData.length);
-// console.log('highPriceData ' + highPriceData);
-// console.log(closeOpenPriceData);
-             }
+
+}
 }
 
+const getFiveMinVolume =  async () =>{
+    // console.log(closeOpenPriceData.length);
+             if( closeOpenPriceData.length == 0){
+                        
+                    const auth = new google.auth.GoogleAuth({
+                        keyFile: "credentials.json",
+                        scopes: "https://www.googleapis.com/auth/spreadsheets",
+                    });
+                    const client = await auth.getClient();
+                    const googleSheets = google.sheets({
+                        version: "v4",
+                        auth: client
+                    });
+                    const getFiveMinVolumeGdata = await googleSheets.spreadsheets.values.get({
+                        auth,
+                        spreadsheetId,
+                        range: '5-min-Volume!A1:E2396', 
+                    });
 
+                    getFiveMinVolumeValues = (getFiveMinVolumeGdata.data.values);   
+                    getFiveMinVolumeValues.forEach ( (ele, i) => {
+            tempArr2 = [];
+                    tempArr2.push(ele[1].toString());
+                    tempArr2.push(ele[2].toString())
+                    tempArr2.push(ele[3].toString())
+                    tempArr2.push(ele[4].toString())
+        
+                    getFiveMinVolumeData[ele[0]] = tempArr2;
+        //    console.log(ele[0] + '   '  + get5MinVolumeData[ele[0]][0] );
+        });         
+}
+}
+
+getFiveMinVolume();
 // UpdateBarData Returns currentPriceData = {}
 
 const getUpdatedPrice =  async () =>{
@@ -170,19 +203,7 @@ const getFivePercent =  async () =>{
         let m = dt.getMinutes();
 
    cpvalues.forEach ( (ele, i) => {
-    FivePerData.push([ele[0]]);
-        // if(Number(d + m) > Number(0)){
-        //     if((Number(ele[1]) > 0) && (Number(ele[2]) > 0) && (Number(ele[3]) > 1)){
-        //         FivePerData.push([ele[0]]);
-        //      }
-        // }
-
-        // else{
-        //     if((Number(ele[1]) > 0) && (Number(ele[2]) > 0) && (Number(ele[3]) > 2)){
-        //         FivePerData.push([ele[0]]);
-        //      }
-        // }
-        
+    FivePerData.push([ele[0]]);        
 });
 
 // console.log(FivePerData);
@@ -256,12 +277,13 @@ const getUpdatedVolomeTable =  async () =>{
     
         // console.log(ele[0].toString().split(",")[0]);
     for(let j = 1; j < ele.length ; j++) {
-
-        tempArr2.push(ele[j]);
-
-            // tempArr2.push(((ele[j] - ele[j +1])/1000).toString());
-        
+        tempArr2.push(ele[j]);        
     }
+
+    for(let k = 0; k < 3; k++) {
+        // tempArr2.push((getFiveMinVolumeData[ele[0]])[k]);
+    }
+
 
     currentVolumeDataTable[ele[0]] = tempArr2.reverse();
  });
@@ -391,6 +413,7 @@ else if(req.path.includes('getFivePer')) {
                     "currentPriceData": currentPriceData,
                     "currentPriceDataTable":currentPriceDataTable,
                     "currentVolumeDataTable": currentVolumeDataTable,
+                    "getFiveMinVolumeData" : getFiveMinVolumeData,
                     
                 }
                 // console.log(obj3);
@@ -1049,8 +1072,10 @@ getUpdatedVolomeTable();
 
 server.listen(port, () => {    
     console.log('Server is listening on port ' + port);
+   
     runAfterFiveMinutes();
     setInterval(runAfterFiveMinutes, 5000 * 60);
+    setInterval(getFiveMinVolume, 1000);
 
 })
 

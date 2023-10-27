@@ -90,6 +90,7 @@ let goingUpCompanyObject8 = {}
 let Great = 0;
 let companyList = [];
 let Target = {};
+let getFiveMinVolumeData = {};
 
 let rupee = new Intl.NumberFormat('en-IN', {
     style: 'currency',
@@ -457,6 +458,8 @@ function getStockStatus(key){
         
           if(CobjLen >= 2){
               let data = [...currentPriceDataTable[key]];
+              let Ldata = Math.min(...[...currentPriceDataTable[key]]);
+              // console.log(key, Ldata);
               let cdata = [...currentPriceDataTable[key]][CobjLen -1];
               let cdata2 = [...currentPriceDataTable[key]][CobjLen -2] || 0;
               let cdata3 = [...currentPriceDataTable[key]][CobjLen -3] || 0;
@@ -470,17 +473,21 @@ function getStockStatus(key){
               let ppdata = [...currentPriceDataTable[key]][CobjLen - 3] || 0;
               let pppdata = [...CurrentPriceObj[key]][1] || 0;
 
-              let cvolume= [...currentVolumeDataTable[key]][CobjLen -1] / [CobjLen -1];
-              let pvolume2 = [...currentVolumeDataTable[key]][CobjLen - 2] / [CobjLen - 2] ;
+            // console.log(key + '    ' + getFiveMinVolumeData[key]);
+              let cvolumeNew = (getFiveMinVolumeData[key][0] || 1) / [CobjLen];
+              
+              let cvolume= [...currentVolumeDataTable[key]][CobjLen -2] / [CobjLen -2];
+              let pvolume2 = [...currentVolumeDataTable[key]][CobjLen - 3] / [CobjLen - 3] ;
               let pvolume3 = [...currentVolumeDataTable[key]][CobjLen - 3] / [CobjLen - 3] ;
               let pvolume4 = [...currentVolumeDataTable[key]][CobjLen - 4] / [CobjLen - 4] ;
               let pvolume5 = [...currentVolumeDataTable[key]][CobjLen - 5] / [CobjLen - 5] || 0;
 
-              if(!((cdata == cdata2) && (cdata == cdata4) && (cdata == cdata3) && (cdata == cdata5))) {
+              if(!((cdata == cdata2) && (cdata == cdata4) && (cdata == cdata3) && (cdata == cdata5)) && cvolume > 10000 && cdata >50) {
                     if((cdata > pppdata) ) {
-                        per = ((CurrentPriceObj[key][0] - CurrentPriceObj[key][3]  )/ CurrentPriceObj[key][3] );
+                        // per = ((CurrentPriceObj[key][0] - CurrentPriceObj[key][3]  )/ CurrentPriceObj[key][3] );
+                        per = ((CurrentPriceObj[key][0] - Ldata  )/ Ldata );
                         CurrentPer = ((cdata - cdata5 )/ cdata5);
-                          if(per > ((document.querySelector("#filter").value / 100) || 0.025)){
+                          if(per > ( 0.025)){
                           // if(per > 0.0){
                             data.reverse();
                             for(let i = 1; i < CobjLen - 2; i++  ){
@@ -490,7 +497,7 @@ function getStockStatus(key){
                             }
 
 
-                          if((cvolume > pvolume2)){
+                          if((cvolumeNew > pvolume2)){
                             let perv = ((cvolume - pvolume2) / pvolume2) * 100;
                             // console.log(key + '  '+ perv);
                             
@@ -525,7 +532,7 @@ function getStockStatus(key){
                             //   }
                               else{
                                 // console.log('Rest ' + key );
-                                    if(goingFlatcounter <  100){
+                                    if(goingFlatcounter <  50){
                                     goingFlatcounter++;
                                     goingFlat.push(goingFlatcounter);
                                     goingFlatPosition[goingFlatcounter] = key;
@@ -551,11 +558,11 @@ function getStockStatus(key){
                     }
                 }
                 else{
-                  if(goingFlatcounter <  100){
-                  goingFlatcounter++;
-                  goingFlat.push(goingFlatcounter);
-                  goingFlatPosition[goingFlatcounter] = key;
-                }
+                  // if(goingFlatcounter <  50){
+                  // goingFlatcounter++;
+                  // goingFlat.push(goingFlatcounter);
+                  // goingFlatPosition[goingFlatcounter] = key;
+                // }
                 }
 
           }
@@ -897,7 +904,7 @@ datasets: [{
       pointRadius: 0,
       borderWidth : 0.5,
       borderColor: "rgba(0,0,0,0.9)",
-      data: [...newVolume].slice(0, days), // ([...currentVolumeDataTable[key]]).slice(0, days),
+      data: [...newVolume].slice(0, days + 3), // ([...currentVolumeDataTable[key]]).slice(0, days),
       }]
     },  
     options: {
@@ -933,6 +940,7 @@ function getFiveHTTPs(path, flag = 0) {
                       CurrentPriceObj = xhr.response.currentPriceData;
                       currentPriceDataTable = xhr.response.currentPriceDataTable;
                       currentVolumeDataTable = xhr.response.currentVolumeDataTable;
+                      getFiveMinVolumeData = xhr.response.getFiveMinVolumeData,
                       companyList = [...xhr.response.companyList];
                       // document.getElementById("pages").innerText = companyList.length;
                         createFiveChart(companyList);
