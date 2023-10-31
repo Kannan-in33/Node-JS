@@ -280,9 +280,9 @@ const getUpdatedVolomeTable =  async () =>{
         tempArr2.push(ele[j]);        
     }
 
-    for(let k = 0; k < 3; k++) {
+    // for(let k = 0; k < 3; k++) {
         // tempArr2.push((getFiveMinVolumeData[ele[0]])[k]);
-    }
+    // }
 
 
     currentVolumeDataTable[ele[0]] = tempArr2.reverse();
@@ -1074,8 +1074,8 @@ server.listen(port, () => {
     console.log('Server is listening on port ' + port);
    
     runAfterFiveMinutes();
-    setInterval(runAfterFiveMinutes, 5000 * 60);
-    setInterval(getFiveMinVolume, 1000);
+    setInterval(runAfterFiveMinutes, 1000 * 60);
+    // setInterval(getFiveMinVolume, 1000);
 
 })
 

@@ -25,7 +25,7 @@
           </div> -->
         
         <div class="Pagedropdown">  
-          <button id="pages3" class="pagesDropDown"  onclick="showPages();" type="button">Home<span id="Pagenumbers"></span></button>              
+          <button id="pages3" class="pagesDropDown"  onclick="showPages();" type="button" style="width: 100% !important;">Home<span id="Pagenumbers"></span></button>              
                 <div id="pagesDropdown" class="Pdrop-options ">
                   <a class="pagelink" href="/Sector">Sector</a>
                   <!-- <a class="pagelink" href="/fav">Favourite</a> -->
@@ -47,6 +47,8 @@
                   <button class="upTrend1"  onclick="getUp(1);">+1 Day <span id="results1"></span></button>
                   <button class="upTrend2"  onclick="getUp(2);">+2 Day <span id="results2"></span></button>
                   <button class="upTrend3"  onclick="getUp(3);">+3 Day <span id="results3"></span></button>                  
+                  <button class="upTrend3"  onclick="getUp(4);">+4 Day <span id="results4"></span></button>                  
+                  <button class="upTrend3"  onclick="getUp(5);">+5 Day <span id="results5"></span></button>                  
                   </div>
         </div>
 
@@ -57,6 +59,8 @@
             <button class="downTrend1"  onclick="getDown(1);">+1 Day <span id="resultsd1"></span></button>
             <button class="downTrend2"  onclick="getDown(2);">+2 Day <span id="resultsd2"></span></button>           
             <button class="downTrend3"  onclick="getDown(3);">+3 Day <span id="resultsd3"></span></button>
+            <button class="downTrend3"  onclick="getDown(4);">+4 Day <span id="resultsd4"></span></button>
+            <button class="downTrend3"  onclick="getDown(5);">+5 Day <span id="resultsd5"></span></button>
           </div>
         </div>
       <!-- <div class="page">
@@ -73,7 +77,7 @@
         <!-- <input type="text" name="min" id="mini"> -->
             <div class="search">
               <input placeholder="..Search..." type="text" id="filter" name="filter" />
-              <button id="clear" onclick="clea();" type="button"><strong>X</strong></button>
+              <button id="clear" onclick="clea();" type="button" style="margin-top: 0 !important;"><strong>X</strong></button>
               <button  id="getSector"  onclick="getsector(document.getElementById('filter').value);" type="button"><strong>Get Sector</strong></button>
               <!-- <div class="buttonbar">
                 <!-- <button id="sliderButton" class="d20" onclick="getDay(20);" type="button">Get Chart</button> -->
@@ -102,7 +106,6 @@
             <input type="range" min="50" max="1800" value="50" name="slider" id="slidermax" />
               <div>
                   <button id="getstockData" class="50" onclick="getStockData();" type="button">Get Stocks</button>
-                  <button id="getfiveperData" class="5" onclick="getFivePer();" type="button">Stocks 5%</button>
                   <button id="getdma" onclick="getDma();" type="button"><strong>Get DMA</strong></button>
               </div>
         </div>
@@ -150,11 +153,7 @@
       min-width: 150px !important;
       } */
 </style>
-<script src="/fscripts.js"></script>
-<script>
-
-getFivePer();  
-</script>
+<!-- <script src="/fscripts.js"></script> -->
 
 </body>
 </html>

@@ -1031,242 +1031,242 @@ function createChart(companyObject, e, days = 1000){
                         topDivtag.appendChild(anchortag);
                         mainBlock.appendChild(topDivtag);
                     
-                    
-                if(Object.keys(currentPriceDataTable).length > 1){
-                    let bar = document.createElement("div");
-                        bar.setAttribute("class", "bar");
-                    let canvasb = document.createElement("canvas");
-                          canvasb.setAttribute("id", "bar" + key);
-                          canvasb.setAttribute("class", "bar" + key); 
-                          canvasb.setAttribute("height", "250"); 
-                          canvasb.setAttribute("width", "600"); 
+                    // Price Chart Start
+                // if(Object.keys(currentPriceDataTable).length > 1){
+                //     let bar = document.createElement("div");
+                //         bar.setAttribute("class", "bar");
+                //     let canvasb = document.createElement("canvas");
+                //           canvasb.setAttribute("id", "bar" + key);
+                //           canvasb.setAttribute("class", "bar" + key); 
+                //           canvasb.setAttribute("height", "250"); 
+                //           canvasb.setAttribute("width", "600"); 
 
-                          let xaxisprice = [];
-                          for(let i = 1; i < 80; i++){ //[...currentPriceDataTable[key]].length - 1; i++){
-                            xaxisprice.push(i);
-                          }
+                //           let xaxisprice = [];
+                //           for(let i = 1; i < 80; i++){ //[...currentPriceDataTable[key]].length - 1; i++){
+                //             xaxisprice.push(i);
+                //           }
 
-                          bar.appendChild(canvasb);
-                              // console.log([...currentPriceDataTable[key]].reverse());
-                          new Chart(canvasb, {
-                            type: "line",
-                            data: {
-                            labels: [...xaxisprice],
-                            datasets: [{
-                                    label: 'H : ' + Math.max(...[...currentPriceDataTable[key]]) + '        C : ' + [...currentPriceDataTable[key]][[...currentPriceDataTable[key]].length - 1],
-                                    fontSize: 16,
-                                    pointRadius: 0,
-                                    borderWidth : 0.5,
-                                    borderColor: "rgba(0,0,0,0.9)",
-                                    data: [...currentPriceDataTable[key]],
-                                    }]
-                                  },  
-                                  options: {
-                                      scales: {
-                                          yAxes: [{
-                                              ticks: {
-                                                  fontSize: 15,
-                                                  family: "'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif', 'monospace'"
-                                          }
-                                      }]
-                                  }
-                                  }
+                //           bar.appendChild(canvasb);
+                //               // console.log([...currentPriceDataTable[key]].reverse());
+                //           new Chart(canvasb, {
+                //             type: "line",
+                //             data: {
+                //             labels: [...xaxisprice],
+                //             datasets: [{
+                //                     label: 'H : ' + Math.max(...[...currentPriceDataTable[key]]) + '        C : ' + [...currentPriceDataTable[key]][[...currentPriceDataTable[key]].length - 1],
+                //                     fontSize: 16,
+                //                     pointRadius: 0,
+                //                     borderWidth : 0.5,
+                //                     borderColor: "rgba(0,0,0,0.9)",
+                //                     data: [...currentPriceDataTable[key]],
+                //                     }]
+                //                   },  
+                //                   options: {
+                //                       scales: {
+                //                           yAxes: [{
+                //                               ticks: {
+                //                                   fontSize: 15,
+                //                                   family: "'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif', 'monospace'"
+                //                           }
+                //                       }]
+                //                   }
+                //                   }
 
-                            }); 
+                //             }); 
 
-                      // let preHig = 0;
-                      //   let largebar = 0;
-                      //   let smallbar = 0;
-                      //   largebar = Math.max(...[...currentPriceDataTable[key]]);
-                      //   smallbar = Math.min(...[...currentPriceDataTable[key]]);
+                //       // let preHig = 0;
+                //       //   let largebar = 0;
+                //       //   let smallbar = 0;
+                //       //   largebar = Math.max(...[...currentPriceDataTable[key]]);
+                //       //   smallbar = Math.min(...[...currentPriceDataTable[key]]);
 
 
                       
-                      // for(let i = 0 ;i  < currentPriceDataTable[key].length ;  i++){
+                //       // for(let i = 0 ;i  < currentPriceDataTable[key].length ;  i++){
 
-                      // let barc = document.createElement("div");
-                      // let barct = document.createElement("div");
-                      //   barc.setAttribute("class", "barc");
-                      //   let hig =  (Number(currentPriceDataTable[key][i])); // - (smallbar * 0.5));
-                      //   let PperDif;
-                      //   if (i == 0){
-                      //     PperDif = 0;
-                      //   }
-                      //   else{
-                      //     PperDif = (((hig - preHig)/hig)*100).toFixed(1);
-                      //   }   
-                      //     num = Number(hig);
-                      //     let unit = (100 / (largebar - smallbar)); // (largebar - smallbar))
-                      //     let barHig  = ((unit * (num - smallbar) )).toFixed(1);
+                //       // let barc = document.createElement("div");
+                //       // let barct = document.createElement("div");
+                //       //   barc.setAttribute("class", "barc");
+                //       //   let hig =  (Number(currentPriceDataTable[key][i])); // - (smallbar * 0.5));
+                //       //   let PperDif;
+                //       //   if (i == 0){
+                //       //     PperDif = 0;
+                //       //   }
+                //       //   else{
+                //       //     PperDif = (((hig - preHig)/hig)*100).toFixed(1);
+                //       //   }   
+                //       //     num = Number(hig);
+                //       //     let unit = (100 / (largebar - smallbar)); // (largebar - smallbar))
+                //       //     let barHig  = ((unit * (num - smallbar) )).toFixed(1);
 
-                      //   if(preHig >= hig){
-                      //     barc.style.backgroundColor = "rgba(255, 0,0, 0.35)";
-                      //   }
-                      //   else{
-                      //     barc.style.backgroundColor = "rgba(20, 255 ,20, 0.75)";
+                //       //   if(preHig >= hig){
+                //       //     barc.style.backgroundColor = "rgba(255, 0,0, 0.35)";
+                //       //   }
+                //       //   else{
+                //       //     barc.style.backgroundColor = "rgba(20, 255 ,20, 0.75)";
                           
-                      //   }
-                      //   preHig = hig;
-                      //   // let barHig = (hig * (100 / largebar)).toFixed(1);
-                      //   barc.style.height = "100px"; //((Number(barHig)).toString()) + 'px'; //((largebar - Number(currentPriceData1[key][i])).toFixed(1).toString() + 'px').toString();
-                      //   // barc.style.top = (100 - Number(barHig).toFixed(1).toString())+ 'px';
-                      //   // barc.style.fontSize = '14px';
-                      //   // barc.style.width = '10px';
+                //       //   }
+                //       //   preHig = hig;
+                //       //   // let barHig = (hig * (100 / largebar)).toFixed(1);
+                //       //   barc.style.height = "100px"; //((Number(barHig)).toString()) + 'px'; //((largebar - Number(currentPriceData1[key][i])).toFixed(1).toString() + 'px').toString();
+                //       //   // barc.style.top = (100 - Number(barHig).toFixed(1).toString())+ 'px';
+                //       //   // barc.style.fontSize = '14px';
+                //       //   // barc.style.width = '10px';
                         
 
-                      //   let barcspan = document.createElement("span");
-                      //   barcspan.setAttribute("class", "barcspan");
+                //       //   let barcspan = document.createElement("span");
+                //       //   barcspan.setAttribute("class", "barcspan");
 
-                      //   if(i == 0){
-                      //     barcspan.innerText = Number(CurrentPriceObj[key][1]).toFixed(1);  //perDif; 
-                      //     }
-                      //     else{
-                      //       let PreviousPrice = currentPriceDataTable[key][i -1];
-                      //       let CurrentPrice = currentPriceDataTable[key][i];
+                //       //   if(i == 0){
+                //       //     barcspan.innerText = Number(CurrentPriceObj[key][1]).toFixed(1);  //perDif; 
+                //       //     }
+                //       //     else{
+                //       //       let PreviousPrice = currentPriceDataTable[key][i -1];
+                //       //       let CurrentPrice = currentPriceDataTable[key][i];
 
-                      //       barcspan.innerText = (((CurrentPrice - PreviousPrice)/ PreviousPrice) * 100).toFixed(1);
-                      //     }                       
+                //       //       barcspan.innerText = (((CurrentPrice - PreviousPrice)/ PreviousPrice) * 100).toFixed(1);
+                //       //     }                       
                         
-                      //   barct.appendChild(barc);
-                      //   barc.appendChild(barcspan);
-                      //   bar.appendChild(barct);
-                      // }
-                      anchortag.appendChild(bar);
-                      topDivtag.appendChild(anchortag);
-                        }
-
+                //       //   barct.appendChild(barc);
+                //       //   barc.appendChild(barcspan);
+                //       //   bar.appendChild(barct);
+                //       // }
+                //       anchortag.appendChild(bar);
+                //       topDivtag.appendChild(anchortag);
+                //         }
+ // Price Chart END
                         // volume chart starts *********************************************************************************
 
-                        if(Object.keys(currentVolumeDataTable).length > 1){
-                          let barv = document.createElement("div");
-                              barv.setAttribute("class", "barv");
+                //         if(Object.keys(currentVolumeDataTable).length > 1){
+                //           let barv = document.createElement("div");
+                //               barv.setAttribute("class", "barv");
 
-                          let canvasv = document.createElement("canvas");
-                              canvasv.setAttribute("id", "barv" + key);
-                              canvasv.setAttribute("class", "barv" + key); 
-                              canvasv.setAttribute("height", "250"); 
-                              canvasv.setAttribute("width", "600");
-                              let xaxisvolume = [];
-                            let newVolume = [];
-                              for(let i = 1; i < [...currentVolumeDataTable[key]].length - 1; i++){
+                //           let canvasv = document.createElement("canvas");
+                //               canvasv.setAttribute("id", "barv" + key);
+                //               canvasv.setAttribute("class", "barv" + key); 
+                //               canvasv.setAttribute("height", "250"); 
+                //               canvasv.setAttribute("width", "600");
+                //               let xaxisvolume = [];
+                //             let newVolume = [];
+                //               for(let i = 1; i < [...currentVolumeDataTable[key]].length - 1; i++){
                         
-                                newVolume.push([...currentVolumeDataTable[key]][i]/[i]);
-                              }
+                //                 newVolume.push([...currentVolumeDataTable[key]][i]/[i]);
+                //               }
 
-                            for(let i = 1; i < 80 ; i++){
-                                xaxisvolume.push(i);
+                //             for(let i = 1; i < 80 ; i++){
+                //                 xaxisvolume.push(i);
                                 
-                              }
+                //               }
 
 
                             
-                              barv.appendChild(canvasv);
-                              let dvolumeAvg = 0;
-                              for(let v = 1; v < 6; v++){
-                                dvolumeAvg = Number(dvolumeAvg) + Number(dVolumeObject[key][dVolumeObject[key].length - v]);
-                              }
-                              dvolumeAvg = dvolumeAvg/5;
-                              // console.log([...currentPriceDataTable[key]].reverse());
-                          new Chart(canvasv, {
-                            type: "line",
-                            data: {
-                            labels: [...xaxisvolume],
-                            datasets: [{
-                                    label: 'H : ' + (Math.max(...[...currentVolumeDataTable[key]])).toLocaleString('en-IN')  +   '  P : ' + Math.trunc(Number(dvolumeAvg.toFixed(0))/80).toLocaleString('en-IN') ,
-                                    fontSize: 16,
-                                    pointRadius: 0,
-                                    borderWidth : 0.5,
-                                    borderColor: "rgba(0,0,0,0.9)",
-                                    data: [...newVolume], // ...currentVolumeDataTable[key]],
-                                    }]
-                                  },  
-                                  options: {
-                                      scales: {
-                                          yAxes: [{
-                                              ticks: {
-                                                  fontSize: 15,
-                                                  family: "'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif', 'monospace'"
-                                          }
-                                      }]
-                                  },
-                                      annotation: {
-                    annotations: [{
-                        type: 'line',
-                        mode: 'horizontal',
-                        scaleID: 'y-axis-0',
-                        value: Number(dvolumeAvg) / 80,
-                        borderColor: 'rgb(75, 192, 192)',
-                        borderWidth: 4,
-                        label: {
-                            enabled: true,
-                            content: 'Average',
-                        }
-                    }]
-                }
-                                  }
+                //               barv.appendChild(canvasv);
+                //               let dvolumeAvg = 0;
+                //               for(let v = 1; v < 6; v++){
+                //                 dvolumeAvg = Number(dvolumeAvg) + Number(dVolumeObject[key][dVolumeObject[key].length - v]);
+                //               }
+                //               dvolumeAvg = dvolumeAvg/5;
+                //               // console.log([...currentPriceDataTable[key]].reverse());
+                //           new Chart(canvasv, {
+                //             type: "line",
+                //             data: {
+                //             labels: [...xaxisvolume],
+                //             datasets: [{
+                //                     label: 'H : ' + (Math.max(...[...currentVolumeDataTable[key]])).toLocaleString('en-IN')  +   '  P : ' + Math.trunc(Number(dvolumeAvg.toFixed(0))/80).toLocaleString('en-IN') ,
+                //                     fontSize: 16,
+                //                     pointRadius: 0,
+                //                     borderWidth : 0.5,
+                //                     borderColor: "rgba(0,0,0,0.9)",
+                //                     data: [...newVolume], // ...currentVolumeDataTable[key]],
+                //                     }]
+                //                   },  
+                //                   options: {
+                //                       scales: {
+                //                           yAxes: [{
+                //                               ticks: {
+                //                                   fontSize: 15,
+                //                                   family: "'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif', 'monospace'"
+                //                           }
+                //                       }]
+                //                   },
+                //                       annotation: {
+                //     annotations: [{
+                //         type: 'line',
+                //         mode: 'horizontal',
+                //         scaleID: 'y-axis-0',
+                //         value: Number(dvolumeAvg) / 80,
+                //         borderColor: 'rgb(75, 192, 192)',
+                //         borderWidth: 4,
+                //         label: {
+                //             enabled: true,
+                //             content: 'Average',
+                //         }
+                //     }]
+                // }
+                //                   }
 
-                            }); 
+                //             }); 
 
-                            // let preHigv = 0;
-                            //   let largebarv = 0;
-                            //   let smallbarv = 0;
-                            //   largebarv = Math.max(...[...currentVolumeDataTable[key]]);
-                            //   smallbarv = Math.min(...[...currentVolumeDataTable[key]]);
+                //             // let preHigv = 0;
+                //             //   let largebarv = 0;
+                //             //   let smallbarv = 0;
+                //             //   largebarv = Math.max(...[...currentVolumeDataTable[key]]);
+                //             //   smallbarv = Math.min(...[...currentVolumeDataTable[key]]);
                 
                 
                             
-                            // for(let i =0; i < currentVolumeDataTable[key].length ;  i++){
-                            //   // console.log(i);
+                //             // for(let i =0; i < currentVolumeDataTable[key].length ;  i++){
+                //             //   // console.log(i);
                 
-                            // let barcv = document.createElement("div");
-                            // let barct = document.createElement("div");
-                            //   barcv.setAttribute("class", "barcv");
+                //             // let barcv = document.createElement("div");
+                //             // let barct = document.createElement("div");
+                //             //   barcv.setAttribute("class", "barcv");
                               
-                            //   let higv =  (Number(currentVolumeDataTable[key][i])); // - (smallbar * 0.5));
-                            //   let perDif;
-                            //   if (i == 0){
-                            //     perDif = higv;
-                            //   }
-                            //   else{
-                            //     perDif = (higv - preHigv);
-                            //     // perDif = (((higv - preHigv)/higv)*100).toFixed(1);
-                            //   }     
+                //             //   let higv =  (Number(currentVolumeDataTable[key][i])); // - (smallbar * 0.5));
+                //             //   let perDif;
+                //             //   if (i == 0){
+                //             //     perDif = higv;
+                //             //   }
+                //             //   else{
+                //             //     perDif = (higv - preHigv);
+                //             //     // perDif = (((higv - preHigv)/higv)*100).toFixed(1);
+                //             //   }     
 
                 
-                            //     numv = Number(higv);
-                            //     let unitv = (100 / (largebarv - smallbarv)); // (largebar - smallbar))
-                            //     let barHigv  = ((unitv * (numv - smallbarv) )).toFixed(1);
+                //             //     numv = Number(higv);
+                //             //     let unitv = (100 / (largebarv - smallbarv)); // (largebar - smallbar))
+                //             //     let barHigv  = ((unitv * (numv - smallbarv) )).toFixed(1);
                 
-                            //   if(preHigv >= higv){
-                            //     barcv.style.backgroundColor = "rgba(255, 0,0, 0.35)";
-                            //   }
-                            //   else{
-                            //     barcv.style.backgroundColor = "rgba(20, 255 ,20, 0.75)";
+                //             //   if(preHigv >= higv){
+                //             //     barcv.style.backgroundColor = "rgba(255, 0,0, 0.35)";
+                //             //   }
+                //             //   else{
+                //             //     barcv.style.backgroundColor = "rgba(20, 255 ,20, 0.75)";
                                 
-                            //   }
+                //             //   }
                               
-                            //   // let barHig = (hig * (100 / largebar)).toFixed(1);
-                            //   barcv.style.height = '100px'; //(Number(barHigv)).toString() + 'px'; //((largebar - Number(currentPriceData1[key][i])).toFixed(1).toString() + 'px').toString();
-                            //   // barcv.style.top = (100 - Number(barHigv).toFixed(1).toString())+ 'px';
-                            //   // barc.style.width = '10px';
+                //             //   // let barHig = (hig * (100 / largebar)).toFixed(1);
+                //             //   barcv.style.height = '100px'; //(Number(barHigv)).toString() + 'px'; //((largebar - Number(currentPriceData1[key][i])).toFixed(1).toString() + 'px').toString();
+                //             //   // barcv.style.top = (100 - Number(barHigv).toFixed(1).toString())+ 'px';
+                //             //   // barc.style.width = '10px';
                               
                 
-                            //   let barcspanv = document.createElement("span");
-                            //   barcspanv.setAttribute("class", "barcspanv");
+                //             //   let barcspanv = document.createElement("span");
+                //             //   barcspanv.setAttribute("class", "barcspanv");
                               
-                            //   barcspanv.innerText = (perDif / 1000).toFixed(0); //; Number(currentVolumeDataTable[key][i]).toFixed(0) 
+                //             //   barcspanv.innerText = (perDif / 1000).toFixed(0); //; Number(currentVolumeDataTable[key][i]).toFixed(0) 
 
-                              // barct.appendChild(barc);
-                              // barc.appendChild(barcspan);
-                              // bar.appendChild(barct);
+                //               // barct.appendChild(barc);
+                //               // barc.appendChild(barcspan);
+                //               // bar.appendChild(barct);
 
-                              // barv.appendChild(barct);
-                              // barct.appendChild(barcv);
-                              // barcv.appendChild(barcspanv);
-                              // preHigv = higv;
-                            // }
-                            topDivtag.appendChild(barv);
-                              }
+                //               // barv.appendChild(barct);
+                //               // barct.appendChild(barcv);
+                //               // barcv.appendChild(barcspanv);
+                //               // preHigv = higv;
+                //             // }
+                //             topDivtag.appendChild(barv);
+                //               }
 
 
                               // Volume chart ends }}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
@@ -1709,7 +1709,6 @@ function getHighData() {
     MasterdCompanyObjectCopy = {};
     if(flag == 0){
       dCompanyObject = {};
-      clearChart();
       
     }
     const xhr = new XMLHttpRequest();
@@ -2047,5 +2046,39 @@ function createPositiveChart(dpositive, dpositiveCompany){
       element.classList.remove('active');
       })
       updateCompanyDeatils();
+
+}
+
+
+
+function getStockData(){
+  getSectorList();
+}
+
+function getSectorList(){
+  let listOfCompanies = [];
+  listOfCompanies = Object.keys(getCompareObject);
+  let sectorList = [];
+  for(let i = 0 ; i < listOfCompanies.length -1; i++){
+    let companyPrice = (getCompareObject[listOfCompanies[i]]['Current Price']);
+    if( (companyPrice > Number(pricemin.value)) && (companyPrice < Number(pricemax.value)) ){
+      sectorList.push(listOfCompanies[i]);
+    }
+}
+    getHTTPs(' ,' + sectorList);
+}
+
+function getsector(sector){
+
+  let listOfCompanies = [];
+  listOfCompanies = Object.keys(getCompareObject);
+  let sectorList = [];
+  for(let i = 0 ; i < listOfCompanies.length -1; i++){
+    // let companyPrice = (getCompareObject[listOfCompanies[i]]['Current Price']);
+    if( listOfCompanies[i].includes(sector.toUpperCase()) ){
+      sectorList.push(listOfCompanies[i]);
+    }
+}
+    getHTTPs(' ,' + sectorList, 1 );
 
 }
