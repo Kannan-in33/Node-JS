@@ -992,28 +992,14 @@
 //   }
 
 
-function updateFavourite(){
-    for( let i = 0; i < localStorage.length; i++ ){
-if (document.querySelectorAll("#" + localStorage[i]).length > 0 ){
-   let ele =  document.querySelectorAll("#" + localStorage[i])[1];
-   //  ele.checked = true;
-   ele.classList.add("star");
-    }
-   }
-}
+
 
 
 function getKeyByValue(object, value) {
 return Object.keys(object).find(key => object[key] === value);
 }
 
-function checkPercent(tday, yday) {
-    if (tday == 0 || tday == undefined || ((Math.abs(((tday - yday) / yday) * 100)) > 25)){
-      return (Math.random() * 0.0005);
-    }
-    
-    return (((tday - yday) / yday) * 100);
-  }
+
 
   function clearcompareStocks(){
     document.querySelector(".charts").style.display = "block";   
@@ -1355,45 +1341,7 @@ function clearFavourits(){
 
 }
 
-  function setFav(event){
-    let AFL = [...Array.from(localStorage)];
-    let clr = document.querySelectorAll("#" + event.target.id.toString())[1];
-      clr.classList.toggle("star");
 
-    if(!AFL.includes(event.target.id.toString())){
-      localStorage.setItem(localStorage.length, event.target.id.toString());
-      
-    }
-    else{
-      for(let i = 0; i < localStorage.length; i++){
-
-        if(localStorage[i] == event.target.id.toString()){
-          localStorage.removeItem(i);
-          let AFL2 = [];
-
-          for(let key in localStorage){
-            if(AFL2.length < AFL.length - 1){
-              AFL2.push(localStorage[key]);
-            }
-          }
-
-          localStorage.clear();
-
-          for(let j = 0; j < AFL2.length ; j++){
-
-            if(AFL2[j] != undefined){
-              localStorage.setItem(j , AFL2[j]);
-            }
-          }
-        }
-
-      }
-    }
-    
-
-
-
-    }
 
 
     function getFav(){

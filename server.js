@@ -351,6 +351,10 @@ server.get('/style.css', (req, res) => {
     res.sendFile(path.join(__dirname, './pages/style.css'));
 
 });
+server.get('/common.js', (req, res) => {
+    res.sendFile(path.join(__dirname, './pages/common.js'));
+
+});
 server.get('/scripts.js', (req, res) => {
     res.sendFile(path.join(__dirname, './pages/scripts.js'));
 
