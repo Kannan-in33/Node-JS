@@ -11,7 +11,8 @@
     <body>
      
 
-      <div class="static">
+      <div class="static" style="height: 50px; margin-top: 5px;">
+        
         <!-- <div class="Pdropdown">
           <button id="price" class="priceDropDown"  onclick="showPrice();" type="button">Price <span id="Pnumbers"></span></button>              
                 <div id="PriceDropdown" class="drop-option ">
@@ -23,8 +24,13 @@
                     <button id="getData601" class="601" onclick="getData(601);" type="button">Stocks 601+</button>
                 </div>
           </div> -->
+          <button  id="sliderminval" onclick="getFivePer(document.querySelector('#slidermin').value);" style="width: 15%  !important; margin: 0;">Filter</button>
+          <input type="range" min="4"    max="81" value="81" name="slider" id="slidermin" style="width: 65%;"/>
+          <div id="stockslider" style="width: 12%; margin: auto;"></div>
         
-        <div class="Pagedropdown">  
+<div class="range">       
+          <div class="Pagedropdown">  
+          
           <button id="pages3" class="pagesDropDown"  onclick="showPages();" type="button" style="width: 100% !important;">Home<span id="Pagenumbers"></span></button>              
                 <div id="pagesDropdown" class="Pdrop-options ">
                   <a class="pagelink" href="/Sector">Sector</a>
@@ -70,12 +76,13 @@
 
         <!-- </div> -->
 
-    <div class="range">
+    
 
       <div class="slider">
 
         <!-- <input type="text" name="min" id="mini"> -->
             <div class="search">
+
               <input placeholder="..Search..." type="text" id="filter" name="filter" />
               <button id="clear" onclick="clea();" type="button" style="margin-top: 0 !important;"><strong>X</strong></button>
               <button  id="getSector"  onclick="getsector(document.getElementById('filter').value);" type="button"><strong>Get Sector</strong></button>
@@ -101,12 +108,13 @@
             </div>
         <div class="sliders">
             <input type="text" name="max" id="pricemin" value="21">
-            <input type="range" min="20" max="600" value="20" name="slider" id="slidermin" />
+            <input type="range" min="20" max="600" value="20" name="slider" id="slidermin2" />
             <input type="text" name="max" id="pricemax" value="50">
             <input type="range" min="50" max="1800" value="50" name="slider" id="slidermax" />
               <div>
                   <button id="getstockData" class="50"  type="button">Get Stocks</button>
                   <button id="getdma" onclick="getDma();" type="button"><strong>Get DMA</strong></button>
+                  <button id="result"  type="button"><strong></strong></button>
               </div>
         </div>
         <input type="text" name="max" id="maxi" value="6">
@@ -135,13 +143,21 @@
 <div id="rangeshow"></div>
     <div id="comparel" class="comparel"></div>
 
-      <div class="charts"></div>
+    <h2 class="best">Best Pick</h2>
+    <div class="charts"></div>
+    <h2 class="best">Good</h2>
+    <div class="charts8"></div>
+    <h2 class="best">Going Down</h2>
+    <div class="downcharts"></div>
+    <h2 class="best">Avoid</h2>
+    <div class="flatcharts"></div>
       <ol class="volume"> </ol>
 
       
 
 <script src="/common.js"></script>
-<script src="/scripts.js"></script>
+<script src="/buttons.js"></script>
+<!-- <script src="/scripts.js"></script> -->
 <link rel="stylesheet" type="text/css"  href="/style.css" >
 <style>
   .Pdropdown,  .Ddropdown, .Gdropdown, .Pagedropdown{
@@ -155,6 +171,13 @@
       } */
 </style>
 <!-- <script src="/fscripts.js"></script> -->
-
+<script>
+  document.getElementById("getstockData").addEventListener("click", getSectorList);
+</script>
+<script>
+  getFivePer(); 
+  // setInterval(getFivePer, 5000 * 60);
+  // document.getElementById("getPrevious").onclick = () => {document.location = document.location + 'home';}
+  </script>
 </body>
 </html>

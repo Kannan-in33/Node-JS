@@ -303,8 +303,8 @@ function getlongtermarray(){
     });
 }
 
-// getCloseOpenPrice();
-// getUpdatedPrice();
+getCloseOpenPrice();
+getUpdatedPrice();
 // console.log(getUpdatedPriceTable());
 // console.log(getUpdatedVolomeTable());
 // getlongtermarray();
@@ -353,6 +353,10 @@ server.get('/style.css', (req, res) => {
 });
 server.get('/common.js', (req, res) => {
     res.sendFile(path.join(__dirname, './pages/common.js'));
+
+});
+server.get('/buttons.js', (req, res) => {
+    res.sendFile(path.join(__dirname, './pages/buttons.js'));
 
 });
 server.get('/scripts.js', (req, res) => {
@@ -418,6 +422,7 @@ else if(req.path.includes('getFivePer')) {
                     "currentPriceDataTable":currentPriceDataTable,
                     "currentVolumeDataTable": currentVolumeDataTable,
                     "getFiveMinVolumeData" : getFiveMinVolumeData,
+                    "closeOpenPriceDataObject": closeOpenPriceDataObject,
                     
                 }
                 // console.log(obj3);

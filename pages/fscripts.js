@@ -999,8 +999,6 @@ function getKeyByValue(object, value) {
 return Object.keys(object).find(key => object[key] === value);
 }
 
-
-
   function clearcompareStocks(){
     document.querySelector(".charts").style.display = "block";   
     document.querySelector("#comparel").innerHTML = "";

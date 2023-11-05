@@ -5,6 +5,46 @@ let goingUpPosition = {};
 let goingDownPosition = {};
 let goingFlatPosition = {};
 
+
+
+
+function createFiveChart(companyObject, e, days = 1000){
+    let chartlim = 0;
+    let lst = [];
+    let newPositiveSort = [];
+    let per = 0;
+    let newCompanyObject2 ={};
+    goingUp = [];
+    goingDown = [];
+    goingFlat = [];
+
+      let newCompanyObject = {};
+      let posi = {};
+      let positiveSort = [];
+      if(Object.keys(companyObject).length ){
+        document.getElementById("pages2").innerText = Object.keys(companyObject).length;
+    }
+            
+      for (let key in companyObject) {
+          getStockStatus(key);            
+      }
+
+      let goingUpCompanyObject = {};
+
+      if(goingUp.length > 0 ){
+          goingUp.sort((a,b) => a - b);
+          goingUp.reverse();
+          goingUp.forEach( (CurrentPer) =>{
+            goingUpCompanyObject[goingUpPosition[CurrentPer]] = companyObject[goingUpPosition[CurrentPer]];
+          })
+
+      }
+
+    dE = e;
+       addingCharts(goingUpCompanyObject, "charts");
+
+}
+
 function getStockStatus(key){
     let CobjLen = [...currentPriceDataTable[key]].length;
           if(CobjLen >= 4){
@@ -51,44 +91,6 @@ function getStockStatus(key){
                 }
 
           }
-}
-
-
-function createFiveChart(companyObject, e, days = 1000){
-    let chartlim = 0;
-    let lst = [];
-    let newPositiveSort = [];
-    let per = 0;
-    let newCompanyObject2 ={};
-    goingUp = [];
-    goingDown = [];
-    goingFlat = [];
-
-      let newCompanyObject = {};
-      let posi = {};
-      let positiveSort = [];
-      if(Object.keys(companyObject).length ){
-        document.getElementById("pages2").innerText = Object.keys(companyObject).length;
-    }
-            
-      for (let key in companyObject) {
-          getStockStatus(key);            
-      }
-
-      let goingUpCompanyObject = {};
-
-      if(goingUp.length > 0 ){
-          goingUp.sort((a,b) => a - b);
-          goingUp.reverse();
-          goingUp.forEach( (CurrentPer) =>{
-            goingUpCompanyObject[goingUpPosition[CurrentPer]] = companyObject[goingUpPosition[CurrentPer]];
-          })
-
-      }
-
-    dE = e;
-       addingCharts(goingUpCompanyObject, "charts");
-
 }
 
 function addingCharts(newCompanyObject2, location){

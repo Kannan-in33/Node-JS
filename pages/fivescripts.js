@@ -538,10 +538,10 @@ function getStockStatus(key){
                             //   }
                               else{
                                 // console.log('Rest ' + key );
-                                    if(goingFlatcounter <  50){
-                                    goingFlatcounter++;
-                                    goingFlat.push(goingFlatcounter);
-                                    goingFlatPosition[goingFlatcounter] = key;
+                                    // if(goingFlatcounter <  30){
+                                    // goingFlatcounter++;
+                                    // goingFlat.push(goingFlatcounter);
+                                    // goingFlatPosition[goingFlatcounter] = key;
                                   }
                                 }
 
@@ -582,7 +582,7 @@ function getStockStatus(key){
 
 
 
-function createFiveChart(companyList,  days = 81){
+function createFiveChart(companyList,  days = 71){
   days = Math.min(currentPriceDataTable[companyList[0]].length - 1, slidermin.value);
   SliderRange = days;
     let chartlim = 0;

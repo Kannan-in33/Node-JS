@@ -1654,6 +1654,13 @@ var pricemax = document.getElementById("pricemax");
               pricemax.value = Number(this.value) + 5;
           }
           }
+        priceslidermin.oninput = function() {
+          pricemin.value = this.value;
+          if ((Number(this.value) + 5) >= priceslidermax.value){
+              priceslidermax.value = Number(this.value) + 5;
+              pricemax.value = Number(this.value) + 5;
+          }
+          }
         
         
         priceslidermax.oninput = function() {
