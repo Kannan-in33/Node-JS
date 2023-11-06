@@ -233,9 +233,9 @@ function createFiveChart(companyList,  days = 70){
   
         }
 
-        if(document.getElementById("filter").value < 0){
-            goingUp.reverse();
-        }
+        // if(document.getElementById("filter").value < 0){
+        //     goingUp.reverse();
+        // }
   
         if( goingDown.length > 0 ){
             goingDown.sort((a,b) => b - a);
@@ -312,9 +312,9 @@ function createFiveChart(companyList,  days = 70){
                 // per = (([...currentPriceDataTable[key]][CobjLen - 1]  - [...currentPriceDataTable[key]][0]  )/ [...currentPriceDataTable[key]][0] );
 
 
-                userInput = document.getElementById("filter").value;
+                // userInput = document.getElementById("filter").value;
                 if(userInput < 0){
-                            if(per < 0.01 && per > (userInput / 100) && pppdata > 200 && (cvolume > 10000) && ((cvolumeNew > pvolume2 || cvolumeNew === ppvolume))){
+                            if(per < 0.01  && pppdata > 200 && (cvolume > 10000) && ((cvolumeNew > pvolume2 || cvolumeNew === ppvolume))){
                                 goingUp.push(per);
                                 goingUpPosition[per] = key;
                             }
@@ -330,7 +330,7 @@ function createFiveChart(companyList,  days = 70){
                           
   
                           CurrentPer = ((cdata - cdata5 )/ cdata5);
-                            if(per > ( userInput || 0.015)){
+                            if(per > ( 0.015)){
                             // if(per > 0.0){
                               data.reverse();
                               for(let i = 1; i < CobjLen - 2; i++  ){
@@ -350,8 +350,8 @@ function createFiveChart(companyList,  days = 70){
   
                             else if(cdata == Math.max(...[...currentPriceDataTable[key]].slice( 0, CobjLen -1)) ){
                                 // console.log('max ' + key );
-                                goingUp8.push(per);
-                                 goingUpPosition8[per] = key;
+                                goingUp.push(per);
+                                 goingUpPosition[per] = key;
                               }
                             //   else if((cdata > cdata5) && (cdata5 > cdata6)){  
                             //     // console.log('  ' + key + '  ' + (cdata > cdata5) && (cdata5 > cdata6) + ' ' + (cdata) + ' ' + (cdata5)+ ' ' + (cdata6));                            
@@ -2466,8 +2466,8 @@ function createPositiveChart(dpositive, dpositiveCompany){
                               });
   
   
-          document.querySelector("#result").innerText = (goingDown.length + goingFlat.length + goingUp.length + goingUp8.length);
-          document.getElementById("sliderminval").innerText = 9 + Math.trunc(((slidermin.value * 5)+ 15)  / 60) + ':' + Math.trunc(((slidermin.value * 5)+ 15)  % 60);
+          // document.querySelector("#result").innerText = (goingDown.length + goingFlat.length + goingUp.length + goingUp8.length);
+          // document.getElementById("sliderminval").innerText = 9 + Math.trunc(((slidermin.value * 5)+ 15)  / 60) + ':' + Math.trunc(((slidermin.value * 5)+ 15)  % 60);
   
 
   
