@@ -266,8 +266,8 @@ function createFiveChart(companyList,  days = 70){
                               });
   
   
-          document.querySelector("#result").innerText = (goingDown.length + goingFlat.length + goingUp.length + goingUp8.length);
-          document.getElementById("sliderminval").innerText = 9 + Math.trunc(((slidermin.value * 5)+ 15)  / 60) + ':' + Math.trunc(((slidermin.value * 5)+ 15)  % 60);
+          // document.querySelector("#result").innerText = (goingDown.length + goingFlat.length + goingUp.length + goingUp8.length);
+          // document.getElementById("sliderminval").innerText = 9 + Math.trunc(((slidermin.value * 5)+ 15)  / 60) + ':' + Math.trunc(((slidermin.value * 5)+ 15)  % 60);
   
          
           goingFlatcounter = 0;
@@ -305,31 +305,44 @@ function createFiveChart(companyList,  days = 70){
                 let pvolume5 = [...currentVolumeDataTable[key]][CobjLen - 5] / [CobjLen - 5] || 0;
                 let ppvolume = Math.max(...[...currentVolumeDataTable[key]]);
                 
-                per = ((CurrentPriceObj[key][0] - CurrentPriceObj[key][3]  )/ CurrentPriceObj[key][3] );
+                // per = ((CurrentPriceObj[key][0] - CurrentPriceObj[key][3]  )/ CurrentPriceObj[key][3] );
+                
                 // 
 
                 // per = ((CurrentPriceObj[key][0] - pppdata  )/ pppdata );
-                // per = (([...currentPriceDataTable[key]][CobjLen - 1]  - [...currentPriceDataTable[key]][0]  )/ [...currentPriceDataTable[key]][0] );
+                per = (([...currentPriceDataTable[key]][CobjLen - 1]  - [...currentPriceDataTable[key]][0]  )/ [...currentPriceDataTable[key]][0] );
 
 
                 // userInput = document.getElementById("filter").value;
-                if(userInput < 0){
-                            if(per < 0.01  && pppdata > 200 && (cvolume > 10000) && ((cvolumeNew > pvolume2 || cvolumeNew === ppvolume))){
-                                goingUp.push(per);
-                                goingUpPosition[per] = key;
-                            }
-                                
-                    
+                let w = window.location.toString();
+                if(w.includes("sell")){
+                  let pervv = ((cvolume - pvolume2) / pvolume2) * 100;
+                  if( (per < (- 0.015) ) && (cvolume > 5000) && (cdata > 150)){
+                   
+                    if((cdata == Math.min(...[...currentPriceDataTable[key]].slice( 0, CobjLen -1))) && cdata != cdata5 ){
+                        goingUp.push(per);
+                        goingUpPosition[per] = key;
+
+                    }
+                    else{
+                      if(((cdata + 1 <= cdata2) && (cdata + 1 < cdata4) && (cdata + 1 <= cdata3) && (cdata < cdata5)) ){
+                        goingUp.push(per);
+                        goingUpPosition[per] = key;
+                      }
+                    } 
+                  }
+
+                   
                 }
   
                 else{
-                    if(!((cdata == cdata2) && (cdata == cdata4) && (cdata == cdata3) && (cdata == cdata5)) && (cvolume > 5000) && (cdata > 150) ){
+                    if(!((cdata == cdata2) && (cdata == cdata4) && (cdata == cdata3) && (cdata == cdata5)) && (cvolume > 10000) && (cdata > 150) ){
   
                  
                       if((cdata > Ldata) ) {
                           
   
-                          CurrentPer = ((cdata - cdata5 )/ cdata5);
+                          CurrentPer = ((cdata - cdata4 )/ cdata4);
                             if(per > ( 0.015)){
                             // if(per > 0.0){
                               data.reverse();
@@ -398,7 +411,7 @@ function createFiveChart(companyList,  days = 70){
                       }
                   }
                 }
-                //   else{
+                  // else{
                     // if(goingFlatcounter <  50 && cvolume > 10000 && (cdata >50)){
   
                     //             goingUp.push(per);

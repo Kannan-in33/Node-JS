@@ -319,6 +319,11 @@ res.sendFile(path.join(__dirname, './pages/index.html'));
 
 });
 
+server.get('/sell', (req, res) => {
+
+    res.sendFile(path.join(__dirname, './pages/sell.html'));
+
+});
 server.get('/home', (req, res) => {
 
     res.sendFile(path.join(__dirname, './pages/home.html'));
