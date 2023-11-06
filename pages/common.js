@@ -184,7 +184,7 @@ let positiveSort = [];
 // New Chart Group starts here
 let userInput = "";
 function createFiveChart(companyList,  days = 70){
-    // days = Math.min(currentPriceDataTable[companyList[0]].length - 1, slidermin.value);
+    days = Math.min(currentPriceDataTable[companyList[0]].length - 1, slidermin.value);
     SliderRange = days;
       let chartlim = 0;
       let lst = [];
@@ -198,6 +198,7 @@ function createFiveChart(companyList,  days = 70){
   
         let newCompanyObject = {};
         let posi = {};
+       
         let positiveSort = [];
         if(companyList.length ){
           // document.getElementById("pages").innerText = companyList.length;
