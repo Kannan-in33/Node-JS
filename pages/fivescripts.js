@@ -542,7 +542,7 @@ function getStockStatus(key){
                                     // goingFlatcounter++;
                                     // goingFlat.push(goingFlatcounter);
                                     // goingFlatPosition[goingFlatcounter] = key;
-                                  }
+                                  // }
                                 }
 
                                 // if(CurrentPer > 0){
@@ -562,7 +562,7 @@ function getStockStatus(key){
                           }
                         
                     }
-                }
+              }
                 else{
                   // if(goingFlatcounter <  50 && cvolume > 10000 && (cdata >50)){
 

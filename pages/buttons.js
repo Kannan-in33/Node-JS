@@ -484,11 +484,15 @@ function movingAddingCharts(key, location, days){
                       
               
               var priceslidermin = document.querySelector('#slidermin');
+              var favButton = document.querySelector('#result');
               var priceslidermin2 = document.querySelector('#slidermin2');
               var priceslidermax = document.querySelector('#slidermax');
               var pricemin = document.getElementById("pricemin");
               var pricemax = document.getElementById("pricemax");
+
+
                       
+
                       priceslidermin.oninput = function() {
                         pricemin.value = this.value;
                         if ((Number(this.value) + 5) >= priceslidermax.value){
@@ -520,3 +524,25 @@ function movingAddingCharts(key, location, days){
                             slider.value = this.value;   
                               
                             }
+
+function getFavNew(){
+    days = Math.min(currentPriceDataTable[companyList[0]].length - 1, slidermin.value);
+    clearChart();
+    SliderRange = days;
+    let FavcompareList = [...Array.from(localStorage)].sort();
+
+            goingUpCompanyObject = {};      
+        for (let i = 0; i < FavcompareList.length; i++) {  
+            // goingUpCompanyObject[FavcompareList[i]] = currentPriceDataTable[FavcompareList[i]];   
+            let key =FavcompareList[i];
+            createChartSection(key, "charts", days);
+    
+            addPriceChart(key, "charts", days);        
+
+            addVolumeChart(key, "charts", days);    
+}
+
+}
+favButton.onclick = function() {
+                getFavNew();
+}

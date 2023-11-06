@@ -2451,23 +2451,6 @@ function createPositiveChart(dpositive, dpositiveCompany){
 }
 
 
-function getFavNew(){
-    days = Math.min(currentPriceDataTable[companyList[0]].length - 1, slidermin.value);
-    clearChart();
-    SliderRange = days;
-    let FavcompareList = [...Array.from(localStorage)].sort();
-
-         goingUpCompanyObject = {};      
-        for (let i = 0; i < FavcompareList.length; i++) {  
-            // goingUpCompanyObject[FavcompareList[i]] = currentPriceDataTable[FavcompareList[i]];   
-            let key =FavcompareList[i];
-            createChartSection(key, "charts", days);
-  
-            addPriceChart(key, "charts", days);        
-
-            addVolumeChart(key, "charts", days);    
-        }
-  
 
        
 
@@ -2486,4 +2469,4 @@ function getFavNew(){
           document.getElementById("sliderminval").innerText = 9 + Math.trunc(((slidermin.value * 5)+ 15)  / 60) + ':' + Math.trunc(((slidermin.value * 5)+ 15)  % 60);
   
 
-  }
+  
