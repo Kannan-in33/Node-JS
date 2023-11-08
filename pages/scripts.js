@@ -1,110 +1,110 @@
-// let dCompanyObject = {};
-// let dVolumeObject = {};
-// let dCompanyDateObject = {};
-// let x10dCompanyObject = {};
-// let dE;
-// let BuyObject40 = {};
-// let BuyObject30 = {};
-// let BuyObject20 = {};
-// let BuyObject3Avg = {};
-// let compareList =[];
-// let companyDetails = [];
-// let positive0 = []; 
-// let positiveCompany0 = {};
-// let positive1 = [];
-// let positiveCompany1 = {};
-// let negativeList1 = [];
-// let negativeCompany1 = {};
-// let negativeList0 = [];
-// let negativeCompany0 = {};
-// let positive2 = [];
-// let positiveCompany2 = {};
-// let negativeList2 = [];
-// let negativeCompany2 = {};
-// let positive3 = [];
-// let positiveCompany3 = {};
-// let negativeList3 = [];
-// let negativeCompany3 = {};
-// let positive4 = [];
-// let positiveCompany4 = {};
-// let negativeList4 = [];
-// let negativeCompany4 = {};
-// let positive5 = [];
-// let positiveCompany5 = {};
-// let negativeList5 = [];
-// let negativeCompany5 = {};
-// let CurrentPriceObj = {};
-// let currentPriceData1 = {};
-// let currentPriceDataMid = {};
-// let currentPriceDataTable = {};
-// let currentVolumeDataTable = {};
-// let positive = [];
-// let positiveCompany = {};
-// let Masterpositive = [];
-// let MasterpositiveCompany = {};
-// let Masterpositive1 = [];
-// let MasterpositiveCompany1 = {};
-// let Masterpositive2 = [];
-// let MasterpositiveCompany2 = {};
-// let Masterpositive3 = [];
-// let MasterpositiveCompany3 = {};
-// let MasterdCompanyObject = {};
-// let MasterdCompanyObjectCopy = {};
-// let longtermData = [];
-// let MasterNegative = [];
-// let MasterNegativeCompany = {};
-// let MasterNegative1 = [];
-// let MasterNegativeCompany1 = {};
-// let MasterNegative2 = [];
-// let MasterNegativeCompany2 = {};
-// let MasterNegative3 = [];
-// let MasterNegativeCompany3 = {};
-// let positiveCompanyObject = {};
-// let DAmFlag = 0;
-// let negative = [];
-// let negativeCompany = {};
-// let upvalue0 = 0;
-// let downvalue0 = 0;
-// let upvalue1 = 0;
-// let downvalue1 = 0;
-// let upvalue2 = 0;
-// let downvalue2 = 0;
-// let upvalue3 = 0;
-// let downvalue3 = 0;
-// let upvalue4 = 0;
-// let downvalue4 = 0;
-// let upvalue5 = 0;
-// let downvalue5 = 0;
-// let checknum = 0;
-// let closeOpenPriceData = [];
-// let closeOpenPriceDataObject = {};
-// let getCompareObject = {};
-// let highPriceData = [];
-// let lowPriceData = [];
-// let BuyObject52High = {};
+let dCompanyObject = {};
+let dVolumeObject = {};
+let dCompanyDateObject = {};
+let x10dCompanyObject = {};
+let dE;
+let BuyObject40 = {};
+let BuyObject30 = {};
+let BuyObject20 = {};
+let BuyObject3Avg = {};
+let compareList =[];
+let companyDetails = [];
+let positive0 = []; 
+let positiveCompany0 = {};
+let positive1 = [];
+let positiveCompany1 = {};
+let negativeList1 = [];
+let negativeCompany1 = {};
+let negativeList0 = [];
+let negativeCompany0 = {};
+let positive2 = [];
+let positiveCompany2 = {};
+let negativeList2 = [];
+let negativeCompany2 = {};
+let positive3 = [];
+let positiveCompany3 = {};
+let negativeList3 = [];
+let negativeCompany3 = {};
+let positive4 = [];
+let positiveCompany4 = {};
+let negativeList4 = [];
+let negativeCompany4 = {};
+let positive5 = [];
+let positiveCompany5 = {};
+let negativeList5 = [];
+let negativeCompany5 = {};
+let CurrentPriceObj = {};
+let currentPriceData1 = {};
+let currentPriceDataMid = {};
+let currentPriceDataTable = {};
+let currentVolumeDataTable = {};
+let positive = [];
+let positiveCompany = {};
+let Masterpositive = [];
+let MasterpositiveCompany = {};
+let Masterpositive1 = [];
+let MasterpositiveCompany1 = {};
+let Masterpositive2 = [];
+let MasterpositiveCompany2 = {};
+let Masterpositive3 = [];
+let MasterpositiveCompany3 = {};
+let MasterdCompanyObject = {};
+let MasterdCompanyObjectCopy = {};
+let longtermData = [];
+let MasterNegative = [];
+let MasterNegativeCompany = {};
+let MasterNegative1 = [];
+let MasterNegativeCompany1 = {};
+let MasterNegative2 = [];
+let MasterNegativeCompany2 = {};
+let MasterNegative3 = [];
+let MasterNegativeCompany3 = {};
+let positiveCompanyObject = {};
+let DAmFlag = 0;
+let negative = [];
+let negativeCompany = {};
+let upvalue0 = 0;
+let downvalue0 = 0;
+let upvalue1 = 0;
+let downvalue1 = 0;
+let upvalue2 = 0;
+let downvalue2 = 0;
+let upvalue3 = 0;
+let downvalue3 = 0;
+let upvalue4 = 0;
+let downvalue4 = 0;
+let upvalue5 = 0;
+let downvalue5 = 0;
+let checknum = 0;
+let closeOpenPriceData = [];
+let closeOpenPriceDataObject = {};
+let getCompareObject = {};
+let highPriceData = [];
+let lowPriceData = [];
+let BuyObject52High = {};
 
-// let rupee = new Intl.NumberFormat('en-IN', {
-//     style: 'currency',
-//     currency: 'INR',
-//     maximumSignificantDigits: 3,
+let rupee = new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency: 'INR',
+    maximumSignificantDigits: 3,
     
-// });
+});
 
-// function getCompare() {
-//   const xhr = new XMLHttpRequest();
-//   xhr.open("GET", "/getcompare");
-//   xhr.send();
-//   xhr.responseType = "json";
-//   xhr.onload = () => {
-//   if (xhr.readyState == 4 && xhr.status == 200) {
-//       getCompareObject = xhr.response;
-//   } 
-//   else {
-//       console.log(`Error: ${xhr.status}`);
-//       }
-//   };
-// }
-// getCompare();
+function getCompare() {
+  const xhr = new XMLHttpRequest();
+  xhr.open("GET", "/getcompare");
+  xhr.send();
+  xhr.responseType = "json";
+  xhr.onload = () => {
+  if (xhr.readyState == 4 && xhr.status == 200) {
+      getCompareObject = xhr.response;
+  } 
+  else {
+      console.log(`Error: ${xhr.status}`);
+      }
+  };
+}
+getCompare();
 
 
 function updateCompanyDeatils(){
@@ -1032,108 +1032,108 @@ function createChart(companyObject, e, days = 1000){
                         mainBlock.appendChild(topDivtag);
                     
                     // Price Chart Start
-                // if(Object.keys(currentPriceDataTable).length > 1){
-                //     let bar = document.createElement("div");
-                //         bar.setAttribute("class", "bar");
-                //     let canvasb = document.createElement("canvas");
-                //           canvasb.setAttribute("id", "bar" + key);
-                //           canvasb.setAttribute("class", "bar" + key); 
-                //           canvasb.setAttribute("height", "250"); 
-                //           canvasb.setAttribute("width", "600"); 
+                if(Object.keys(currentPriceDataTable).length > 1){
+                    let bar = document.createElement("div");
+                        bar.setAttribute("class", "bar");
+                    let canvasb = document.createElement("canvas");
+                          canvasb.setAttribute("id", "bar" + key);
+                          canvasb.setAttribute("class", "bar" + key); 
+                          canvasb.setAttribute("height", "250"); 
+                          canvasb.setAttribute("width", "600"); 
 
-                //           let xaxisprice = [];
-                //           for(let i = 1; i < 80; i++){ //[...currentPriceDataTable[key]].length - 1; i++){
-                //             xaxisprice.push(i);
-                //           }
+                          let xaxisprice = [];
+                          for(let i = 1; i < 80; i++){ //[...currentPriceDataTable[key]].length - 1; i++){
+                            xaxisprice.push(i);
+                          }
 
-                //           bar.appendChild(canvasb);
-                //               // console.log([...currentPriceDataTable[key]].reverse());
-                //           new Chart(canvasb, {
-                //             type: "line",
-                //             data: {
-                //             labels: [...xaxisprice],
-                //             datasets: [{
-                //                     label: 'H : ' + Math.max(...[...currentPriceDataTable[key]]) + '        C : ' + [...currentPriceDataTable[key]][[...currentPriceDataTable[key]].length - 1],
-                //                     fontSize: 16,
-                //                     pointRadius: 0,
-                //                     borderWidth : 0.5,
-                //                     borderColor: "rgba(0,0,0,0.9)",
-                //                     data: [...currentPriceDataTable[key]],
-                //                     }]
-                //                   },  
-                //                   options: {
-                //                       scales: {
-                //                           yAxes: [{
-                //                               ticks: {
-                //                                   fontSize: 15,
-                //                                   family: "'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif', 'monospace'"
-                //                           }
-                //                       }]
-                //                   }
-                //                   }
+                          bar.appendChild(canvasb);
+                              // console.log([...currentPriceDataTable[key]].reverse());
+                          new Chart(canvasb, {
+                            type: "line",
+                            data: {
+                            labels: [...xaxisprice],
+                            datasets: [{
+                                    label: 'H : ' + Math.max(...[...currentPriceDataTable[key]]) + '        C : ' + [...currentPriceDataTable[key]][[...currentPriceDataTable[key]].length - 1],
+                                    fontSize: 16,
+                                    pointRadius: 0,
+                                    borderWidth : 0.5,
+                                    borderColor: "rgba(0,0,0,0.9)",
+                                    data: [...currentPriceDataTable[key]],
+                                    }]
+                                  },  
+                                  options: {
+                                      scales: {
+                                          yAxes: [{
+                                              ticks: {
+                                                  fontSize: 15,
+                                                  family: "'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif', 'monospace'"
+                                          }
+                                      }]
+                                  }
+                                  }
 
-                //             }); 
+                            }); 
 
-                //       // let preHig = 0;
-                //       //   let largebar = 0;
-                //       //   let smallbar = 0;
-                //       //   largebar = Math.max(...[...currentPriceDataTable[key]]);
-                //       //   smallbar = Math.min(...[...currentPriceDataTable[key]]);
+                      // let preHig = 0;
+                      //   let largebar = 0;
+                      //   let smallbar = 0;
+                      //   largebar = Math.max(...[...currentPriceDataTable[key]]);
+                      //   smallbar = Math.min(...[...currentPriceDataTable[key]]);
 
 
                       
-                //       // for(let i = 0 ;i  < currentPriceDataTable[key].length ;  i++){
+                      // for(let i = 0 ;i  < currentPriceDataTable[key].length ;  i++){
 
-                //       // let barc = document.createElement("div");
-                //       // let barct = document.createElement("div");
-                //       //   barc.setAttribute("class", "barc");
-                //       //   let hig =  (Number(currentPriceDataTable[key][i])); // - (smallbar * 0.5));
-                //       //   let PperDif;
-                //       //   if (i == 0){
-                //       //     PperDif = 0;
-                //       //   }
-                //       //   else{
-                //       //     PperDif = (((hig - preHig)/hig)*100).toFixed(1);
-                //       //   }   
-                //       //     num = Number(hig);
-                //       //     let unit = (100 / (largebar - smallbar)); // (largebar - smallbar))
-                //       //     let barHig  = ((unit * (num - smallbar) )).toFixed(1);
+                      // let barc = document.createElement("div");
+                      // let barct = document.createElement("div");
+                      //   barc.setAttribute("class", "barc");
+                      //   let hig =  (Number(currentPriceDataTable[key][i])); // - (smallbar * 0.5));
+                      //   let PperDif;
+                      //   if (i == 0){
+                      //     PperDif = 0;
+                      //   }
+                      //   else{
+                      //     PperDif = (((hig - preHig)/hig)*100).toFixed(1);
+                      //   }   
+                      //     num = Number(hig);
+                      //     let unit = (100 / (largebar - smallbar)); // (largebar - smallbar))
+                      //     let barHig  = ((unit * (num - smallbar) )).toFixed(1);
 
-                //       //   if(preHig >= hig){
-                //       //     barc.style.backgroundColor = "rgba(255, 0,0, 0.35)";
-                //       //   }
-                //       //   else{
-                //       //     barc.style.backgroundColor = "rgba(20, 255 ,20, 0.75)";
+                      //   if(preHig >= hig){
+                      //     barc.style.backgroundColor = "rgba(255, 0,0, 0.35)";
+                      //   }
+                      //   else{
+                      //     barc.style.backgroundColor = "rgba(20, 255 ,20, 0.75)";
                           
-                //       //   }
-                //       //   preHig = hig;
-                //       //   // let barHig = (hig * (100 / largebar)).toFixed(1);
-                //       //   barc.style.height = "100px"; //((Number(barHig)).toString()) + 'px'; //((largebar - Number(currentPriceData1[key][i])).toFixed(1).toString() + 'px').toString();
-                //       //   // barc.style.top = (100 - Number(barHig).toFixed(1).toString())+ 'px';
-                //       //   // barc.style.fontSize = '14px';
-                //       //   // barc.style.width = '10px';
+                      //   }
+                      //   preHig = hig;
+                      //   // let barHig = (hig * (100 / largebar)).toFixed(1);
+                      //   barc.style.height = "100px"; //((Number(barHig)).toString()) + 'px'; //((largebar - Number(currentPriceData1[key][i])).toFixed(1).toString() + 'px').toString();
+                      //   // barc.style.top = (100 - Number(barHig).toFixed(1).toString())+ 'px';
+                      //   // barc.style.fontSize = '14px';
+                      //   // barc.style.width = '10px';
                         
 
-                //       //   let barcspan = document.createElement("span");
-                //       //   barcspan.setAttribute("class", "barcspan");
+                      //   let barcspan = document.createElement("span");
+                      //   barcspan.setAttribute("class", "barcspan");
 
-                //       //   if(i == 0){
-                //       //     barcspan.innerText = Number(CurrentPriceObj[key][1]).toFixed(1);  //perDif; 
-                //       //     }
-                //       //     else{
-                //       //       let PreviousPrice = currentPriceDataTable[key][i -1];
-                //       //       let CurrentPrice = currentPriceDataTable[key][i];
+                      //   if(i == 0){
+                      //     barcspan.innerText = Number(CurrentPriceObj[key][1]).toFixed(1);  //perDif; 
+                      //     }
+                      //     else{
+                      //       let PreviousPrice = currentPriceDataTable[key][i -1];
+                      //       let CurrentPrice = currentPriceDataTable[key][i];
 
-                //       //       barcspan.innerText = (((CurrentPrice - PreviousPrice)/ PreviousPrice) * 100).toFixed(1);
-                //       //     }                       
+                      //       barcspan.innerText = (((CurrentPrice - PreviousPrice)/ PreviousPrice) * 100).toFixed(1);
+                      //     }                       
                         
-                //       //   barct.appendChild(barc);
-                //       //   barc.appendChild(barcspan);
-                //       //   bar.appendChild(barct);
-                //       // }
-                //       anchortag.appendChild(bar);
-                //       topDivtag.appendChild(anchortag);
-                //         }
+                      //   barct.appendChild(barc);
+                      //   barc.appendChild(barcspan);
+                      //   bar.appendChild(barct);
+                      // }
+                      anchortag.appendChild(bar);
+                      topDivtag.appendChild(anchortag);
+                        }
  // Price Chart END
                         // volume chart starts *********************************************************************************
 
@@ -1601,83 +1601,83 @@ createPositiveChart(positive, positiveCompany);
   
 
   
-var slider = document.querySelector('#slider');
-var mini = document.getElementById("mini");
-var maxi = document.getElementById("maxi");
-// mini.value = maxi.value = slider.value;
-maxi.value = slider.value;
+// var slider = document.querySelector('#slider');
+// var mini = document.getElementById("mini");
+// var maxi = document.getElementById("maxi");
+// // mini.value = maxi.value = slider.value;
+// maxi.value = slider.value;
 
-slider.oninput = function() {
-  // if (slider.value < 0){
-  //   mini.value = 248 - this.value;
-  //   maxi.value = 0;
-  // }
-  // else{
-    maxi.value = this.value;
-  //   mini.value = 0;
-  // }
+// slider.oninput = function() {
+//   // if (slider.value < 0){
+//   //   mini.value = 248 - this.value;
+//   //   maxi.value = 0;
+//   // }
+//   // else{
+//     maxi.value = this.value;
+//   //   mini.value = 0;
+//   // }
     
-  }
+//   }
 
-  // mini.oninput = function() {
-  //   slider.value = this.value;   
+//   // mini.oninput = function() {
+//   //   slider.value = this.value;   
       
-  //   }
-    maxi.oninput = function() {
-      slider.value = this.value;   
+//   //   }
+//     maxi.oninput = function() {
+//       slider.value = this.value;   
         
-      }
+//       }
 
-      function resetSlider(){
-        maxi.value = 0;
-        slider.value = 0;
-        getDay(20);
-      }
+//       function resetSlider(){
+//         maxi.value = 0;
+//         slider.value = 0;
+//         getDay(20);
+//       }
 
-      document.onscroll = function(){
-        document.querySelector(".range").classList.add("hide");
-        }
-        document.querySelector("#rangeshow").onclick = function(){
-          document.querySelector(".range").classList.toggle("hide");
-        }
-        
-
-var priceslidermin = document.querySelector('#slidermin');
-var priceslidermax = document.querySelector('#slidermax');
-var pricemin = document.getElementById("pricemin");
-var pricemax = document.getElementById("pricemax");
-        
-        priceslidermin.oninput = function() {
-          pricemin.value = this.value;
-          if ((Number(this.value) + 5) >= priceslidermax.value){
-              priceslidermax.value = Number(this.value) + 5;
-              pricemax.value = Number(this.value) + 5;
-          }
-          }
-        priceslidermin.oninput = function() {
-          pricemin.value = this.value;
-          if ((Number(this.value) + 5) >= priceslidermax.value){
-              priceslidermax.value = Number(this.value) + 5;
-              pricemax.value = Number(this.value) + 5;
-          }
-          }
-        
-        
-        priceslidermax.oninput = function() {
-          pricemax.value = this.value;
-          priceslidermin.max = Number(this.value) - 5;
-          if (Number(this.value)  <= (Number(pricemin.value) + 5)){
-            pricemin.value = Number(this.value) -5;
-            priceslidermin.value = Number(this.value) - 5;
-        }
-
-          }
+//       document.onscroll = function(){
+//         document.querySelector(".range").classList.add("hide");
+//         }
+//         document.querySelector("#rangeshow").onclick = function(){
+//           document.querySelector(".range").classList.toggle("hide");
+//         }
         
 
-            maxi.oninput = function() {
-              slider.value = this.value;   
+// var priceslidermin = document.querySelector('#slidermin');
+// var priceslidermax = document.querySelector('#slidermax');
+// var pricemin = document.getElementById("pricemin");
+// var pricemax = document.getElementById("pricemax");
+        
+//         priceslidermin.oninput = function() {
+//           pricemin.value = this.value;
+//           if ((Number(this.value) + 5) >= priceslidermax.value){
+//               priceslidermax.value = Number(this.value) + 5;
+//               pricemax.value = Number(this.value) + 5;
+//           }
+//           }
+//         priceslidermin.oninput = function() {
+//           pricemin.value = this.value;
+//           if ((Number(this.value) + 5) >= priceslidermax.value){
+//               priceslidermax.value = Number(this.value) + 5;
+//               pricemax.value = Number(this.value) + 5;
+//           }
+//           }
+        
+        
+//         priceslidermax.oninput = function() {
+//           pricemax.value = this.value;
+//           priceslidermin.max = Number(this.value) - 5;
+//           if (Number(this.value)  <= (Number(pricemin.value) + 5)){
+//             pricemin.value = Number(this.value) -5;
+//             priceslidermin.value = Number(this.value) - 5;
+//         }
+
+//           }
+        
+
+//             maxi.oninput = function() {
+//               slider.value = this.value;   
                 
-              }
+//               }
 
 
 
@@ -2046,11 +2046,11 @@ function createPositiveChart(dpositive, dpositiveCompany){
           }
 
         }
-      document.getElementById("results0").innerText = resultCount.toString();
+      // document.getElementById("results0").innerText = resultCount.toString();
       let idlst = document.querySelectorAll("[id^='getData']");
       idlst.forEach( element => {
-      element.innerText = "Stocks " + element.classList[0] +'+';
-      element.classList.remove('active');
+      // element.innerText = "Stocks " + element.classList[0] +'+';
+      // element.classList.remove('active');
       })
       updateCompanyDeatils();
 
@@ -2090,4 +2090,43 @@ function getsector(sector){
 
 }
 
-document.getElementById("getstockData").addEventListener("click", getSectorList);
+// document.getElementById("getstockData").addEventListener("click", getSectorList);
+
+function updateFavourite(){
+  for( let i = 0; i < localStorage.length; i++ ){
+if (document.querySelectorAll("#" + localStorage[i]).length > 0 ){
+  let ele =  document.querySelectorAll("#" + localStorage[i])[1];
+  //  ele.checked = true;
+  ele.classList.add("star");
+  }
+  }
+}
+
+function setFilter(){
+  let filterData = (document.querySelector("#filter").value).toUpperCase();
+  if ( filterData.length > 0) {
+      var lst = Array.from(document.querySelectorAll(".charts > div"));
+      lst.forEach( (ele) => ele.style.display = "none" );
+      var lst = Array.from(document.querySelectorAll(".charts8 > div"));
+      lst.forEach( (ele) => ele.style.display = "none" );
+      var lst = Array.from(document.querySelectorAll(".downcharts > div"));
+      lst.forEach( (ele) => ele.style.display = "none" );
+      var lst = Array.from(document.querySelectorAll(".flatcharts > div"));
+      lst.forEach( (ele) => ele.style.display = "none" );
+
+      lst = Array.from(document.querySelectorAll("[id^= '" + filterData + "']"));
+      lst.forEach( ele => ele.style.display = "" ); 
+
+  }
+
+  else{
+    var lst = Array.from(document.querySelectorAll(".charts > div"));
+      lst.forEach( (ele) => ele.style.display = "" );
+       lst = Array.from(document.querySelectorAll(".charts8 > div"));
+      lst.forEach( (ele) => ele.style.display = "" );
+       lst = Array.from(document.querySelectorAll(".downcharts > div"));
+      lst.forEach( (ele) => ele.style.display = "" );
+       lst = Array.from(document.querySelectorAll(".flatcharts > div"));
+      lst.forEach( (ele) => ele.style.display = "" );
+  }
+}

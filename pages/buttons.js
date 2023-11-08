@@ -546,3 +546,25 @@ function getFavNew(){
 // favButton.onclick = function() {
 //                 getFavNew();
 // }
+
+
+// Clearing all the charts 
+function clearChart(){
+  let lst = document.querySelectorAll(".charts div");
+        if(lst.length > 1){
+              Array.from(lst).forEach( (element) =>  element.remove() );
+        }
+ let lst1 = document.querySelectorAll(".charts8 div");
+        if(lst1.length > 1){
+              Array.from(lst1).forEach( (element) =>  element.remove() );
+        }
+   let lst2 = document.querySelectorAll(".downcharts div");
+        if(lst2.length > 1){
+              Array.from(lst2).forEach( (element) =>  element.remove() );
+        }
+
+  let lst3 = document.querySelectorAll(".flatcharts div");
+        if(lst3.length > 1){
+              Array.from(lst3).forEach( (element) =>  element.remove() );
+        }
+      }

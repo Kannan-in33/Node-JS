@@ -319,6 +319,16 @@ res.sendFile(path.join(__dirname, './pages/index.html'));
 
 });
 
+server.get('/allp', (req, res) => {
+
+    res.sendFile(path.join(__dirname, './pages/allp.html'));
+
+});
+server.get('/alln', (req, res) => {
+
+    res.sendFile(path.join(__dirname, './pages/alln.html'));
+
+});
 server.get('/sell', (req, res) => {
 
     res.sendFile(path.join(__dirname, './pages/sell.html'));
@@ -846,7 +856,7 @@ else if(req.path == '/All') {
             }
             // console.log(k)
             
-                if (i >= 800 && flag == 0){
+                if (i >= 500 && flag == 0){
                     flag = 1;
                 obj3 = { 
                     "company" : company,

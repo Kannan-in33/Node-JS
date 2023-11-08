@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Stocks</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
+  
+   </head>
+    <body>
+     
+
+      <div class="static" style="height: 50px; margin-top: 5px;">
+        
+        <!-- <div class="Pdropdown">
+          <button id="price" class="priceDropDown"  onclick="showPrice();" type="button">Price <span id="Pnumbers"></span></button>              
+                <div id="PriceDropdown" class="drop-option ">
+                    <button id="getData5" class="5" onclick="getFivePer();" type="button">Stocks 5+ %</button>
+                    <button id="getData50" class="50" onclick="getData(50);" type="button">Stocks 50+</button>
+                    <button id="getData101" class="101" onclick="getData(101);" type="button">Stocks 101+</button>
+                    <button id="getData201" class="201" onclick="getData(201);" type="button">Stocks 201+</button>
+                    <button id="getData401" class="401" onclick="getData(401);" type="button">Stocks 401+</button>
+                    <button id="getData601" class="601" onclick="getData(601);" type="button">Stocks 601+</button>
+                </div>
+          </div> -->
+          <button  id="sliderminval" onclick="getFivePer(document.querySelector('#slidermin').value);" style="width: 15%  !important; margin: 0;">Filter</button>
+          <input type="range" min="4"    max="81" value="81" name="slider" id="slidermin" style="width: 65%;"/>
+          <div id="stockslider" style="width: 12%; margin: auto;"></div>
+        
+
+
+  <!-- <button id="days50" class="d50"  onclick="getDay(50);" type="button">50 Days</button>
+  <button id="days70" class="d20" onclick="getDay(70);" type="button">70 Days</button>
+  <button id="days100" class="100"  onclick="getDay(100);" type="button">100 Days</button>
+  <button id="days300" class="300"  onclick="getDay(365);" type="button">365 Days</button> -->
+
+  
+  
+  
+</div>
+
+</div>
+
+<!-- <a href="/compare">Favourits</a> -->
+
+
+
+<div id="rangeshow"></div>
+    <div id="comparel" class="comparel"></div>
+
+    <h2 class="best">Best Pick</h2>
+    <div class="charts"></div>
+    <h2 class="best">Good</h2>
+    <div class="charts8"></div>
+    <h2 class="best">Going Down</h2>
+    <div class="downcharts"></div>
+    <h2 class="best">Avoid</h2>
+    <div class="flatcharts"></div>
+      <ol class="volume"> </ol>
+
+      
+
+<script src="/common.js"></script>
+<script src="/buttons.js"></script>
+<!-- <script src="/scripts.js"></script> -->
+<link rel="stylesheet" type="text/css"  href="/style.css" >
+<style>
+  .Pdropdown,  .Ddropdown, .Gdropdown, .Pagedropdown{
+  width: 20% !important;
+}
+  /* .range {
+        margin-top: 60px !important;
+      }
+  #filter, #filters {
+      min-width: 150px !important;
+      } */
+</style>
+<!-- <script src="/fscripts.js"></script> -->
+<script>
+  // document.getElementById("getstockData").addEventListener("click", getSectorList);
+</script>
+<script>
+  getFivePer(); 
+  // setInterval(getFivePer, 5000 * 60);
+  // document.getElementById("getPrevious").onclick = () => {document.location = document.location + 'home';}
+  </script>
+</body>
+</html>

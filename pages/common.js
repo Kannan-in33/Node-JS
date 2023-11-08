@@ -224,9 +224,6 @@ function createFiveChart(companyList,  days = 70){
         if(goingUp.length > 0 ){
             goingUp.sort((a,b) => a - b);
             goingUp.reverse();
-            if(userInput < 0 ){
-                goingUp.reverse(); 
-            }
             goingUp.forEach( (CurrentPer) =>{
               goingUpCompanyObject[goingUpPosition[CurrentPer]] = currentPriceDataTable[goingUpPosition[CurrentPer]];
             })
@@ -315,7 +312,27 @@ function createFiveChart(companyList,  days = 70){
 
                 // userInput = document.getElementById("filter").value;
                 let w = window.location.toString();
-                if(w.includes("sell")){
+                    if(w.includes("allp")){  
+                        if(per > 0.05 )  {
+                              goingUp.push(per);
+                              goingUpPosition[per] = key;
+
+                        }   
+
+                   
+                    }
+
+                    else if(w.includes("alln")){  
+                      if(per < -0.03)  {
+                            goingUp.push(per);
+                            goingUpPosition[per] = key;
+
+                      }   
+
+                 
+                  }
+
+                  else if(w.includes("sell")){
                   let pervv = ((cvolume - pvolume2) / pvolume2) * 100;
                   if( (per < (- 0.015) ) && (cvolume > 5000) && (cdata > 150)){
                    
@@ -2395,26 +2412,7 @@ function getFiveVolumeData(){
         getFiveHTTPs('getFivePer', 0);
 }
 
-// Clearing all the charts 
-function clearChart(){
-        let lst = document.querySelectorAll(".charts div");
-              if(lst.length > 1){
-                    Array.from(lst).forEach( (element) =>  element.remove() );
-              }
-       let lst1 = document.querySelectorAll(".charts8 div");
-              if(lst1.length > 1){
-                    Array.from(lst1).forEach( (element) =>  element.remove() );
-              }
-         let lst2 = document.querySelectorAll(".downcharts div");
-              if(lst2.length > 1){
-                    Array.from(lst2).forEach( (element) =>  element.remove() );
-              }
-    
-        let lst3 = document.querySelectorAll(".flatcharts div");
-              if(lst3.length > 1){
-                    Array.from(lst3).forEach( (element) =>  element.remove() );
-              }
-            }
+
     
 function getDma(){
     
