@@ -295,7 +295,8 @@ function createFiveChart(companyList,  days = 70){
                 let cvolumeNew = Math.max(([...currentVolumeDataTable[key]][0] || 1) / [CobjLen], [...currentVolumeDataTable[key]][CobjLen -1] / [CobjLen -1]);
                 
                 let volume = [...currentVolumeDataTable[key]][CobjLen -2] ;
-                let cvolume= [...currentVolumeDataTable[key]][CobjLen -1] / [CobjLen -1];
+                let cvolume = [...currentVolumeDataTable[key]][CobjLen -1] / [CobjLen -1];
+                let cvolume1 = [...currentVolumeDataTable[key]][CobjLen -2] / [CobjLen -2];
                 let pvolume2 = [...currentVolumeDataTable[key]][CobjLen - 3] / [CobjLen - 3] ;
                 let pvolume3 = [...currentVolumeDataTable[key]][CobjLen - 3] / [CobjLen - 3] ;
                 let pvolume4 = [...currentVolumeDataTable[key]][CobjLen - 4] / [CobjLen - 4] ;
@@ -312,6 +313,16 @@ function createFiveChart(companyList,  days = 70){
 
                 // userInput = document.getElementById("filter").value;
                 let w = window.location.toString();
+                    if(w.includes("allv")){  
+                        if(cvolume > (cvolume1 + 5) && cvolume > 5000 )  {
+                          per =((cvolume - cvolume1)/cvolume1)
+                              goingUp.push(per);
+                              goingUpPosition[per] = key;
+
+                        }   
+
+                   
+                    }
                     if(w.includes("allp")){  
                         if(per > 0.05 )  {
                               goingUp.push(per);

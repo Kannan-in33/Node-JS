@@ -319,6 +319,11 @@ res.sendFile(path.join(__dirname, './pages/index.html'));
 
 });
 
+server.get('/allv', (req, res) => {
+
+    res.sendFile(path.join(__dirname, './pages/allv.html'));
+
+});
 server.get('/allp', (req, res) => {
 
     res.sendFile(path.join(__dirname, './pages/allp.html'));
