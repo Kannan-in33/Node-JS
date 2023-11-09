@@ -314,7 +314,7 @@ function createFiveChart(companyList,  days = 70){
                 // userInput = document.getElementById("filter").value;
                 let w = window.location.toString();
                     if(w.includes("allv")){  
-                        if(cvolume > (cvolume1 + 5) && cvolume > 5000 )  {
+                        if(cvolume > (cvolume1 * 1.05) && cvolume > 5000 )  {
                           per =((cvolume - cvolume1)/cvolume1)
                               goingUp.push(per);
                               goingUpPosition[per] = key;
