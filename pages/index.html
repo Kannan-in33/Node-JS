@@ -12,18 +12,15 @@
      
 
       <div class="static"  style="margin:auto;">
-       
-        
-
-        <div class="nsearch" style="margin:auto; margin-left: 0; width:100%" >
-          <div class="nPagedropdown" width="10%"  style="margin-left: 20px;">  
-            <button id="pages" class="pagesDropDown"  onclick="getFivePer();" type="button" style="padding-top: 12px; margin-left: 20px;">Home<span id="Pagenumbers"></span></button>              
-            
-            <!-- <button id="pages2" class="pagesDropDown"  onclick="getFiveVolumeData();" type="button" style="width: 100% !important; padding-top: 12px;">Volume<span id="Pagenumbers"></span></button>               -->
-                  <!-- <div id="pagesDropdown" class="Pdrop-options "> -->
-                    <!-- <a class="pagelink" href="/Sector">Sector</a> -->
-                    <!-- <button class="pagelink"  onclick="getFavData([...Array.from(localStorage)].sort());">Favourite</button> -->
-                  </div>
+          <div class="nsearch" style="margin:auto; margin-left: 0; width:100%" >
+              <div class="nPagedropdown" width="10%"  style="margin-left: 20px;">  
+                <button id="pages" class="pagesDropDown"  onclick="getHTTPs(' ,' +(document.getElementById('filter').innerText));" type="button" style="padding-top: 12px; margin-left: 20px;">Home<span id="Pagenumbers"></span></button>              
+                
+                        <!-- <button id="pages2" class="pagesDropDown"  onclick="getFiveVolumeData();" type="button" style="width: 100% !important; padding-top: 12px;">Volume<span id="Pagenumbers"></span></button>               -->
+                        <!-- <div id="pagesDropdown" class="Pdrop-options "> -->
+                        <!-- <a class="pagelink" href="/Sector">Sector</a> -->
+                        <!-- <button class="pagelink"  onclick="getFavData([...Array.from(localStorage)].sort());">Favourite</button> -->
+              </div>
           </div>
               <input placeholder="..Search..." type="text" id="filter" name="filter" width="60%" style="margin: 10px; margin-left: 20px;"/>
               <button id="clear" onclick="clea();" type="button"><strong>X</strong></button>
@@ -32,7 +29,7 @@
               <!-- <button  id="getPrevious"  onclick="" type="button"><strong>Get</strong></button> -->
               <button  id="sliderminval" onclick="getFivePer(document.querySelector('#slidermin').value);" style="width: 15%  !important; margin-left: 20px;">Filter</button>
              <input type="range" min="4"    max="81" value="81" name="slider" id="slidermin" style="width: 75%;"/>
-               </div>
+      </div>
 
     </div>  
 

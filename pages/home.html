@@ -11,36 +11,25 @@
     <body>
      
 
-      <div class="static" style="height: 50px; margin-top: 5px;">
-        
-        <!-- <div class="Pdropdown">
-          <button id="price" class="priceDropDown"  onclick="showPrice();" type="button">Price <span id="Pnumbers"></span></button>              
-                <div id="PriceDropdown" class="drop-option ">
-                    <button id="getData5" class="5" onclick="getFivePer();" type="button">Stocks 5+ %</button>
-                    <button id="getData50" class="50" onclick="getData(50);" type="button">Stocks 50+</button>
-                    <button id="getData101" class="101" onclick="getData(101);" type="button">Stocks 101+</button>
-                    <button id="getData201" class="201" onclick="getData(201);" type="button">Stocks 201+</button>
-                    <button id="getData401" class="401" onclick="getData(401);" type="button">Stocks 401+</button>
-                    <button id="getData601" class="601" onclick="getData(601);" type="button">Stocks 601+</button>
-                </div>
-          </div> -->
-          <button  id="sliderminval" onclick="getFavNew();" style="width: 15%  !important; margin: 0;">Buy</button>
-          <input type="range" min="4"    max="81" value="81" name="slider" id="slidermin" style="width: 65%;"/>
-          <div id="stockslider" style="width: 12%; margin: auto;"></div>
-        
-
-
-  <!-- <button id="days50" class="d50"  onclick="getDay(50);" type="button">50 Days</button>
-  <button id="days70" class="d20" onclick="getDay(70);" type="button">70 Days</button>
-  <button id="days100" class="100"  onclick="getDay(100);" type="button">100 Days</button>
-  <button id="days300" class="300"  onclick="getDay(365);" type="button">365 Days</button> -->
-
-  
-  
-  
-</div>
-
-</div>
+      <div class="static"  style="margin:auto;">
+        <div class="nsearch" style="margin:auto; margin-left: 0; width:100%" >
+            <div class="nPagedropdown" width="10%"  style="margin-left: 20px;">  
+              <button id="pages" class="pagesDropDown"  onclick="getHTTPs(' ,' +(document.getElementById('filter').innerText));" type="button" style="padding-top: 12px; margin-left: 20px;">Home<span id="Pagenumbers"></span></button>              
+              
+                      <!-- <button id="pages2" class="pagesDropDown"  onclick="getFiveVolumeData();" type="button" style="width: 100% !important; padding-top: 12px;">Volume<span id="Pagenumbers"></span></button>               -->
+                      <!-- <div id="pagesDropdown" class="Pdrop-options "> -->
+                      <!-- <a class="pagelink" href="/Sector">Sector</a> -->
+                      <!-- <button class="pagelink"  onclick="getFavData([...Array.from(localStorage)].sort());">Favourite</button> -->
+            </div>
+        </div>
+            <input placeholder="..Search..." type="text" id="filter" name="filter" width="60%" style="margin: 10px; margin-left: 20px;"/>
+            <button id="clear" onclick="clea();" type="button"><strong>X</strong></button>
+            <!-- <a class="pagesDropDown" href="/home">Old</a> -->
+            <!-- <button  id="getSector"  onclick="getsector(document.getElementById('filter').value);" type="button"><strong>Get</strong></button> -->
+            <!-- <button  id="getPrevious"  onclick="" type="button"><strong>Get</strong></button> -->
+            <button  id="sliderminval" onclick="getFavNew();" style="width: 15%  !important; margin-left: 20px;">Filter</button>
+           <input type="range" min="4"    max="81" value="81" name="slider" id="slidermin" style="width: 75%;"/>
+    </div>
 
 <!-- <a href="/compare">Favourits</a> -->
 
@@ -73,8 +62,9 @@
         margin-top: 60px !important;
       }
   #filter, #filters {
-      min-width: 150px !important;
-      } */
+      min-width: 150px !important; 
+      } */ 
+      
 </style>
 <!-- <script src="/fscripts.js"></script> -->
 <script>

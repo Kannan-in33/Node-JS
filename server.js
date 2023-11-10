@@ -47,6 +47,9 @@ let volumeObj =[];
 let volumeObject = {};    
 let max = 0;
 let  companyObject2 ={};
+let lastFiveOpenClose = {};
+let getFiveDayCloseOpenValues;
+let test = 0;
 
 const spreadsheetId = "13BOxMT5cUoScurImRrDK0PwwLYAtV7qJiI75Knw44kQ";
 
@@ -99,6 +102,41 @@ const getCloseOpenPrice =  async () =>{
 });
 
 }
+}
+
+// Last Five Close Open Data
+const getLastCloseOpenPrice =  async () =>{
+                       
+                    const auth = new google.auth.GoogleAuth({
+                        keyFile: "credentials.json",
+                        scopes: "https://www.googleapis.com/auth/spreadsheets",
+                    });
+                    const client = await auth.getClient();
+                    const googleSheets = google.sheets({
+                        version: "v4",
+                        auth: client
+                    });
+                    const lastFiveCloseOpenPrice = await googleSheets.spreadsheets.values.get({
+                        auth,
+                        spreadsheetId,
+                        range: 'Open-Close!A1:L2396',
+                    });
+
+                    getFiveDayCloseOpenValues = (lastFiveCloseOpenPrice.data.values);   
+                    getFiveDayCloseOpenValues.forEach ( (ele, i) => {
+            tempArr2 = [];
+           
+                    tempArr2.push((((ele[2] - ele[3])/ele[3]) * 100).toFixed(1));
+                    tempArr2.push((((ele[4] - ele[5])/ele[5]) * 100).toFixed(1));
+                    tempArr2.push((((ele[6] - ele[7])/ele[7]) * 100).toFixed(1));
+                    tempArr2.push((((ele[8] - ele[9])/ele[9]) * 100).toFixed(1));
+                    tempArr2.push((((ele[10] - ele[11])/ele[11]) * 100).toFixed(1));
+        
+                    lastFiveOpenClose[ele[0]] = tempArr2;
+
+                } );
+
+
 }
 
 const getFiveMinVolume =  async () =>{
@@ -443,6 +481,7 @@ else if(req.path.includes('getFivePer')) {
                     "currentVolumeDataTable": currentVolumeDataTable,
                     "getFiveMinVolumeData" : getFiveMinVolumeData,
                     "closeOpenPriceDataObject": closeOpenPriceDataObject,
+                    "lastFiveOpenClose":lastFiveOpenClose,
                     
                 }
                 // console.log(obj3);
@@ -937,6 +976,7 @@ else if(req.path.includes(',')) {
                                             "currentPriceDataTable":currentPriceDataTable,
                                             "currentVolumeDataTable": currentVolumeDataTable,
                                             "closeOpenPriceDataObject": closeOpenPriceDataObject,
+                                            "lastFiveOpenClose": lastFiveOpenClose,
                                         }
                                         res.send(obj3);
                                         return;
@@ -1104,6 +1144,7 @@ server.listen(port, () => {
    
     runAfterFiveMinutes();
     setInterval(runAfterFiveMinutes, 1000 * 60);
+    getLastCloseOpenPrice();
     // setInterval(getFiveMinVolume, 1000);
 
 })

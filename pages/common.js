@@ -92,6 +92,7 @@ let goingUpPosition = {};
 let goingDownPosition = {};
 let goingFlatPosition = {};
 let days = 0;
+let lastFiveOpenClose ={};
 
 let rupee = new Intl.NumberFormat('en-IN', {
     style: 'currency',
@@ -152,6 +153,7 @@ function getHTTPs(path){
         CurrentPriceObj = xhr.response.currentPriceData;
         getFiveMinVolumeData = xhr.response.getFiveMinVolumeData,
         companyObject = xhr.response.companyObject;
+        lastFiveOpenClose = xhr.response.lastFiveOpenClose;
         
         if( path == "getFivePer"){
             companyList = [...xhr.response.companyList];
@@ -364,7 +366,7 @@ function createFiveChart(companyList,  days = 70){
                 }
   
                 else{
-                    if(!((cdata == cdata2) && (cdata == cdata4) && (cdata == cdata3) && (cdata == cdata5)) && (cvolume > 10000) && (cdata > 150) ){
+                    if(!((cdata == cdata2) && (cdata == cdata4) && (cdata == cdata3) && (cdata == cdata5)) && (cvolume > 10000) && (cdata > 150) && (cdata < 750)){
   
                  
                       if((cdata > Ldata) ) {
@@ -526,6 +528,19 @@ function createFiveChart(companyList,  days = 70){
                   let barv = document.createElement("div");
                   barv.setAttribute("class", "barv");
                   topDivtag.appendChild(barv);
+
+                  let LastFive = document.createElement("div");   
+                      LastFive.setAttribute("class", "LastFive");
+                      for(let i = 0; i < 5; i++){
+                        let LastFiveChild = document.createElement("div");   
+                          LastFiveChild.setAttribute("class", "LastFiveChild");
+                          // LastFiveChild.innerText = lastFiveOpenClose[key][i];
+                          console.log(key , lastFiveOpenClose[key][i]);
+                          LastFive.appendChild(LastFiveChild);
+
+                      }
+
+                  
   }
   
   function addingCharts(newCompanyObject2, location, days){
@@ -716,7 +731,7 @@ function createFiveChart(companyList,  days = 70){
   data: {
   labels: [...xaxisprice],
   datasets: [{
-        label: 'L : ' + Math.min(...[...newVolume].slice(0, days)).toFixed(0) + '   H : ' + Math.max(...[...newVolume].slice(20, days)).toFixed(0) + '        C : ' + [...[...newVolume]][days -3].toFixed(0),
+        label: 'L : ' + Math.min(...[...newVolume].slice(0, days)).toFixed(0) + '   H : ' + Math.max(...[...newVolume].slice(20, days)).toFixed(0) + '        C : ' + [...[...newVolume]][days -1].toFixed(0),
         fontSize: 16,
         pointRadius: 0,
         borderWidth : 0.5,
