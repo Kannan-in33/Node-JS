@@ -316,7 +316,7 @@ function createFiveChart(companyList,  days = 70){
                 // userInput = document.getElementById("filter").value;
                 let w = window.location.toString();
                     if(w.includes("allv")){  
-                        if(cvolume > (cvolume1 * 1.05) && cvolume > 5000 )  {
+                        if((((cvolume - cvolume1)/ cvolume1) * 100 ) > 2  && cvolume > 5000 && cdata > 120 && cdata < 600 )  {
                           per =((cvolume - cvolume1)/cvolume1)
                               goingUp.push(per);
                               goingUpPosition[per] = key;
@@ -514,6 +514,22 @@ function createFiveChart(companyList,  days = 70){
             let bar = document.createElement("div");
                   bar.setAttribute("class", "bar");
                   anchortag.appendChild(bar);
+
+                  let LastFive = document.createElement("div");   
+                      LastFive.setAttribute("class", "LastFive");
+                      for(let i = 0; i < 5; i++){
+                        let LastFiveChild = document.createElement("div");   
+                          LastFiveChild.setAttribute("class", "LastFiveChild");
+                          let trend = lastFiveOpenClose[key][i];
+
+                          LastFiveChild.innerText = trend;
+                          if (trend > 0){
+                            LastFiveChild.classList.add("upTrends");
+                          }
+                          LastFive.appendChild(LastFiveChild);
+
+                      }
+                      topDivtag.appendChild(LastFive);
     
                   let stockSlider = document.createElement("input");
                   stockSlider.setAttribute("type", "range");
@@ -529,16 +545,7 @@ function createFiveChart(companyList,  days = 70){
                   barv.setAttribute("class", "barv");
                   topDivtag.appendChild(barv);
 
-                  let LastFive = document.createElement("div");   
-                      LastFive.setAttribute("class", "LastFive");
-                      for(let i = 0; i < 5; i++){
-                        let LastFiveChild = document.createElement("div");   
-                          LastFiveChild.setAttribute("class", "LastFiveChild");
-                          // LastFiveChild.innerText = lastFiveOpenClose[key][i];
-                          console.log(key , lastFiveOpenClose[key][i]);
-                          LastFive.appendChild(LastFiveChild);
-
-                      }
+                  
 
                   
   }
@@ -564,6 +571,10 @@ function createFiveChart(companyList,  days = 70){
   
   
   function addPriceChart(key, location, days){
+        if(document.querySelectorAll('#count').length > 0){
+              document.getElementById("count").innerText = goingUp.length;
+        }
+
                         if(document.querySelectorAll('[id="' + key + '"] canvas').length > 0 ){
                           document.querySelector('[id="' + key + '"] canvas').remove();
                         }

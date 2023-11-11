@@ -186,7 +186,7 @@
         width: 12px;
         content: '\25b2';
         padding-right: 0.5em;
-        color: green;
+        color: RGB(0, 200, 0);
 
       }
 
@@ -476,6 +476,14 @@
       position: relative;
       /* margin-top: 30px; */
       /* max-width: 280px; */
+    }
+    .LastFive{
+      display: flex;
+      width: 100%;
+    }
+    .LastFiveChild {
+      width: 20%;
+      margin-top: 10px;
     }
     .stockslider{
       width: 80%;

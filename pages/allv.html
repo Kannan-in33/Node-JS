@@ -10,10 +10,11 @@
    </head>
     <body>
      
-
-      <div class="static" style="height: 50px; margin-top: 5px;">       
+      <div class="static" id="count" style="text-align: center;" ></div> 
+      <div class="static" style="height: 50px; margin-top: 15px;">  
+            
        
-          <button  id="sliderminval" onclick="getFivePer(document.querySelector('#slidermin').value);" style="width: 15%  !important; margin: 0;">Volume</button>
+          <button  id="sliderminval" onclick="getFavNew();" style="width: 15%  !important; margin: 0;">Volume</button>
           <input type="range" min="4"    max="81" value="81" name="slider" id="slidermin" style="width: 65%;"/>
           <div id="stockslider" style="width: 12%; margin: auto;"></div>
 
@@ -43,7 +44,7 @@
 </script>
 <script>
   getFivePer(); 
-  setInterval(getFivePer, 5000 * 60);
+  // setInterval(getFivePer, 5000 * 60);
   </script>
 </body>
 </html>

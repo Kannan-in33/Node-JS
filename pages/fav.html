@@ -9,9 +9,21 @@
   
    </head>
     <body>
-     
+      <div class="static" style="height: 50px; margin-top: 5px;">       
+       
+        <button  id="sliderminval" onclick="getFavNew();" style="width: 15%  !important; margin: 0;">Volume</button>
+        <input type="range" min="4"    max="81" value="81" name="slider" id="slidermin" style="width: 65%;"/>
+        <div id="stockslider" style="width: 12%; margin: auto;"></div>
 
-      <div class="static">
+
+</div>
+
+</div>
+
+<div id="rangeshow"></div>
+  <div class="charts"></div>
+
+      <!-- <div class="static">
         
         <div class="Pagedropdown">  
           <button id="pages" class="pagesDropDown"  onclick="showPages();" type="button">Favourite <span id="Pagenumbers"></span></button>              
@@ -66,7 +78,7 @@
       </div>
 
   <button id="sliderButton" class="d20" onclick="getDay(20);" type="button">Get Chart</button>
-  <button id="sliderReset" onclick="resetSlider();" type="button">Reset</button>
+  <button id="sliderReset" onclick="getFavNew();" type="button">Reset</button>
   <div class="dropdown">
     <button id="daysbuy" class="buy-main"  onclick="getBuyMain();" type="button">Buy List</button>
     <div id="BuyDropdown" class="drop-options">
@@ -75,7 +87,7 @@
       <button id="daysbuy20" class="buy"  onclick="getBuy(20);" type="button">20% +</button>
       <button id="daysbuyAvg" class="buy"  onclick="getBuy(60);" type="button">30d Avg +</button>
       </div>
-</div>
+</div> -->
 
   <!-- <button id="days50" class="d50"  onclick="getDay(50);" type="button">50 Days</button>
   <button id="days70" class="d20" onclick="getDay(70);" type="button">70 Days</button>
@@ -97,12 +109,17 @@
       <div class="charts"></div>
       <ol class="volume"> </ol>
 
-<script src="/scripts.js"></script>
+<!-- <script src="/scripts.js"></script> -->
 <link rel="stylesheet" type="text/css"  href="/style.css" >
+
+<!-- <script src="/fscripts.js"></script> -->
+<!-- <script src="/fivescripts.js"></script> -->
+<script src="/common.js"></script>
+<script src="/buttons.js"></script>
 <script>
-    getFavData([...Array.from(localStorage)].sort());
+  getFavData([...Array.from(localStorage)].sort());
+  getFivePer(); 
+  
 </script>
-<script src="/fscripts.js"></script>
-<script src="/fivescripts.js"></script>
 </body>
 </html>

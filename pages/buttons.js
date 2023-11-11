@@ -421,7 +421,7 @@ function getChart() {
   function moveChart(event){
     let settimer;
     let sliderValue = event.target.value;
-    document.getElementById("stockslider").innerText = event.target.value;
+    // document.getElementById("stockslider").innerText = event.target.value;
     // console.log(event.target.id, event.target.value);
     days = event.target.value;
     let cnewCompanyObject2 = {};
