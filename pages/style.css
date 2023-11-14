@@ -215,6 +215,11 @@
       .difference.up {
         background-color: #65f050f9;
       }
+      .VolumeChange{
+        display: flex;
+        /* margin-top: -50px; */
+        flex-wrap: wrap;
+      }
 
       .difference.down {
         background-color: #ff5e00b2;
@@ -480,6 +485,7 @@
     .LastFive{
       display: flex;
       width: 100%;
+      /* margin-top: -70px; */
     }
     .LastFiveChild {
       width: 20%;
@@ -488,6 +494,8 @@
     .stockslider{
       width: 80%;
       margin-right: 0;
+      z-index: 1000;
+      position: relative;
     }
 
     .bar > div, .barv > div{

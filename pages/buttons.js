@@ -434,8 +434,27 @@ function getChart() {
 
 
 function movingAddingCharts(key, location, days){    
+                              
                               addPriceChart(key, location, days);
                               addVolumeChart(key, location, days)
+                              document.querySelector('[id=' + key + '] .VolumeChange').innerHTML = ""
+
+                              let CobjLen = Math.min(document.querySelector('[type="range"][id=' + key + ']').value ,[...currentPriceDataTable[key]].length);
+                              let VolumeChange = document.querySelector('[id="' + key + '"] .VolumeChange');
+                              for(let p = 0; p < CobjLen ; p++){
+                                          let VolumeChangeChild = document.createElement("div");   
+                                          VolumeChangeChild.setAttribute("class", "VolumeChangeChild");
+                                            
+                                              // if(((([...currentVolumeDataTable[key]][p + 1] - [...currentVolumeDataTable[key]][p] )/ [...currentVolumeDataTable[key]][p]) * 100 ) > 5){
+                                                VolumeChangeChild.innerText = (((([...currentVolumeDataTable[key]][ p + 1] - [...currentVolumeDataTable[key]][p] )/ [...currentVolumeDataTable[key]][p]) * 100 )).toFixed(0) + " ,";
+                                                VolumeChange.appendChild(VolumeChangeChild); 
+                                              // }
+                                              // else{
+                                              //   VolumeChangeChild.innerText = ".";
+                                              //   VolumeChange.appendChild(VolumeChangeChild);
+                                              // }
+                                          
+                              }   
                 }
 
                 if(document.querySelectorAll("#slidermin").length > 0){

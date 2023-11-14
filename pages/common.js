@@ -93,6 +93,7 @@ let goingDownPosition = {};
 let goingFlatPosition = {};
 let days = 0;
 let lastFiveOpenClose ={};
+let dict = {};
 
 let rupee = new Intl.NumberFormat('en-IN', {
     style: 'currency',
@@ -274,13 +275,16 @@ function createFiveChart(companyList,  days = 70){
   
   function getStockStatus(key){
     Great = 0;
-      let CobjLen = Math.min(document.getElementById("slidermin").value ,[...currentPriceDataTable[key]].length);
-          
-            if(CobjLen >= 2){
-                let data = [...currentPriceDataTable[key]];
-                let Ldata = Math.min(...[...currentPriceDataTable[key]]);
+        
+      let CobjLen = Math.min(document.getElementById("slidermin").value ,[...currentPriceDataTable[key]].length - 1);
+      let data = [...currentPriceDataTable[key]];
+      let cdata = [...currentPriceDataTable[key]][CobjLen -1];  
+      let SlciedData = [...currentVolumeDataTable[key]].slice( 0, CobjLen -1);
+            if(CobjLen >= 2 && cdata > 120 && cdata < 600){
+
+              let Ldata = Math.min(...[...currentPriceDataTable[key]]);
                 // console.log(key, Ldata);
-                let cdata = [...currentPriceDataTable[key]][CobjLen -1];
+                
                 let cdata2 = [...currentPriceDataTable[key]][CobjLen -2] || 0;
                 let cdata3 = [...currentPriceDataTable[key]][CobjLen -3] || 0;
                 let cdata4 = [...currentPriceDataTable[key]][CobjLen -4] || 0;
@@ -292,11 +296,12 @@ function createFiveChart(companyList,  days = 70){
                 let pdata = [...currentPriceDataTable[key]][CobjLen - 2];
                 let ppdata = [...currentPriceDataTable[key]][CobjLen - 3] || 0;
                 let pppdata = [...CurrentPriceObj[key]][1] || 0;
+                
   
               // console.log(key + '    ' + getFiveMinVolumeData[key]);
                 let cvolumeNew = Math.max(([...currentVolumeDataTable[key]][0] || 1) / [CobjLen], [...currentVolumeDataTable[key]][CobjLen -1] / [CobjLen -1]);
                 
-                let volume = [...currentVolumeDataTable[key]][CobjLen -2] ;
+                let volume = [...currentVolumeDataTable[key]][CobjLen] ;
                 let cvolume = [...currentVolumeDataTable[key]][CobjLen -1] / [CobjLen -1];
                 let cvolume1 = [...currentVolumeDataTable[key]][CobjLen -2] / [CobjLen -2];
                 let pvolume2 = [...currentVolumeDataTable[key]][CobjLen - 3] / [CobjLen - 3] ;
@@ -310,22 +315,35 @@ function createFiveChart(companyList,  days = 70){
                 // 
 
                 // per = ((CurrentPriceObj[key][0] - pppdata  )/ pppdata );
-                per = (([...currentPriceDataTable[key]][CobjLen - 1]  - [...currentPriceDataTable[key]][0]  )/ [...currentPriceDataTable[key]][0] );
+                per = (([...currentPriceDataTable[key]][CobjLen]  - [...currentPriceDataTable[key]][0]  )/ [...currentPriceDataTable[key]][0] );
+               
 
 
                 // userInput = document.getElementById("filter").value;
                 let w = window.location.toString();
                     if(w.includes("allv")){  
-                        if((((cvolume - cvolume1)/ cvolume1) * 100 ) > 2  && cvolume > 5000 && cdata > 120 && cdata < 600 )  {
-                          per =((cvolume - cvolume1)/cvolume1)
-                              goingUp.push(per);
-                              goingUpPosition[per] = key;
+                            let k = 0;
+                            if((((cvolume - cvolume1)/ cvolume1) * 100 ) > 2  && cvolume > 5000 && cdata > 120 && cdata < 600 )  {
 
-                        }   
+                                        if(Math.max(...[...SlciedData]) == ( volume)  || (Math.max(...[...SlciedData]) * 0.6 ) <= ( volume) ){
+                                                // per =(  (([...currentVolumeDataTable[key]][CobjLen] - [...currentVolumeDataTable[key]][CobjLen -1])/ [...currentVolumeDataTable[key]][CobjLen -1]) * 100   );
+                                                // console.log(key , per);
+                                                per = ((cvolume - cvolume1)/ cvolume1);
+                                                goingUp.push(per);
+                                                goingUpPosition[per] = key;
+                                                    for(let p = 0; p < [...currentVolumeDataTable[key]].length -1 ; p++){
+                                                        if(((([...currentVolumeDataTable[key]][CobjLen - p] - [...currentVolumeDataTable[key]][CobjLen - (p + 1)] )/ [...currentVolumeDataTable[key]][CobjLen - (p + 1)]) * 100 ) > 2){
+                                                            k++;  
+                                                        }
+
+                                                    }
+                                                dict[key] = k;  
+                                        }
+                              }   
 
                    
                     }
-                    if(w.includes("allp")){  
+                    else if(w.includes("allp")){  
                         if(per > 0.05 )  {
                               goingUp.push(per);
                               goingUpPosition[per] = key;
@@ -514,8 +532,27 @@ function createFiveChart(companyList,  days = 70){
             let bar = document.createElement("div");
                   bar.setAttribute("class", "bar");
                   anchortag.appendChild(bar);
+                  let CobjLen = Math.min(document.getElementById("slidermin").value ,[...currentPriceDataTable[key]].length -1);
+                  let VolumeChange = document.createElement("div");   
+                  VolumeChange.setAttribute("class", "VolumeChange");
+                  for(let p = 0; p < CobjLen ; p++){
+                              let VolumeChangeChild = document.createElement("div");   
+                              VolumeChangeChild.setAttribute("class", "VolumeChangeChild");
+                                
+                                  // if(((([...currentVolumeDataTable[key]][p + 1] - [...currentVolumeDataTable[key]][p] )/ [...currentVolumeDataTable[key]][p]) * 100 ) > 0){
+                                    VolumeChangeChild.innerText = (((([...currentVolumeDataTable[key]][ p + 1] - [...currentVolumeDataTable[key]][p] )/ [...currentVolumeDataTable[key]][p]) * 100 )).toFixed(0) + " ,";
+                                    VolumeChange.appendChild(VolumeChangeChild); 
+                                  
+                                    // }
+                                  // else{
+                                  //   VolumeChangeChild.innerText = ".";
+                                  //   VolumeChange.appendChild(VolumeChangeChild);
+                                  // }
+                              
+                  }   
+                      
 
-                  let LastFive = document.createElement("div");   
+                      let LastFive = document.createElement("div");   
                       LastFive.setAttribute("class", "LastFive");
                       for(let i = 0; i < 5; i++){
                         let LastFiveChild = document.createElement("div");   
@@ -530,6 +567,7 @@ function createFiveChart(companyList,  days = 70){
 
                       }
                       topDivtag.appendChild(LastFive);
+                      
     
                   let stockSlider = document.createElement("input");
                   stockSlider.setAttribute("type", "range");
@@ -544,6 +582,7 @@ function createFiveChart(companyList,  days = 70){
                   let barv = document.createElement("div");
                   barv.setAttribute("class", "barv");
                   topDivtag.appendChild(barv);
+                  topDivtag.appendChild(VolumeChange);
 
                   
 
@@ -567,8 +606,7 @@ function createFiveChart(companyList,  days = 70){
   
       }
   }
-  
-  
+    
   
   function addPriceChart(key, location, days){
         if(document.querySelectorAll('#count').length > 0){
@@ -596,7 +634,8 @@ function createFiveChart(companyList,  days = 70){
             
             
             if (days < currentPriceDataTable[key].length){
-              for(let y = (currentPriceDataTable[key].length - days)  ; y <  currentPriceDataTable[key].length ; y++){
+              // for(let y = (currentPriceDataTable[key].length - days)  ; y <  currentPriceDataTable[key].length ; y++){
+              for(let y = 0 ; y <  days ; y++){
                 yValues2[y] =  yValues[y] ;
               }
                   for (let i = days ; i < days ; i++) {
@@ -621,7 +660,8 @@ function createFiveChart(companyList,  days = 70){
         yValues2.forEach( num => {
             sum += Number(num);
             })
-            avg = (sum / (days)).toFixed(1);
+            avg = Math.max(...yValues2) - Math.min(...yValues2);
+            // avg = (sum / (days)).toFixed(1);
 
                   xValues.reverse();
         //   let CobjLen = Math.min(Math.min(document.getElementById("slidermin").value ,[...currentPriceDataTable[key]].length), document.getElementById("stockslider").innerText);
@@ -655,7 +695,7 @@ function createFiveChart(companyList,  days = 70){
                     data: {
                     labels: [...xaxisprice],
                     datasets: [{
-                            label: 'C : ' + ([...currentPriceDataTable[key]][days -1]) + '  Avg : ' + avg ,
+                            label: 'C : ' + ([...currentPriceDataTable[key]][days -1]) + '  Dif : ' + avg.toFixed(1) ,
                             // label: 'L : ' + Math.min(...[...currentPriceDataTable[key]].slice(0, days)) + '   H : ' + Math.max(...[...currentPriceDataTable[key]].slice(0, days)) + '        C : ' + [...currentPriceDataTable[key]][days -1],
                             fontSize: 16,
                             pointRadius: 0,
@@ -2086,7 +2126,7 @@ function createChartFive(companyObject, days = 1000){
               for (let key in companyObject) {
                 if(!(key.includes('undefined') || key == 0) ){
                 resultCount++;
-                console.log(key);
+                // console.log(key);
                     let yValues  = [];
                     let volumeValues = [];
                     yValues  = [...companyObject[key]];
