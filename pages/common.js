@@ -535,21 +535,21 @@ function createFiveChart(companyList,  days = 70){
                   let CobjLen = Math.min(document.getElementById("slidermin").value ,[...currentPriceDataTable[key]].length -1);
                   let VolumeChange = document.createElement("div");   
                   VolumeChange.setAttribute("class", "VolumeChange");
-                  for(let p = 0; p < CobjLen ; p++){
-                              let VolumeChangeChild = document.createElement("div");   
-                              VolumeChangeChild.setAttribute("class", "VolumeChangeChild");
+                  // for(let p = 0; p < CobjLen ; p++){
+                  //             let VolumeChangeChild = document.createElement("div");   
+                  //             VolumeChangeChild.setAttribute("class", "VolumeChangeChild");
                                 
-                                  // if(((([...currentVolumeDataTable[key]][p + 1] - [...currentVolumeDataTable[key]][p] )/ [...currentVolumeDataTable[key]][p]) * 100 ) > 0){
-                                    VolumeChangeChild.innerText = (((([...currentVolumeDataTable[key]][ p + 1] - [...currentVolumeDataTable[key]][p] )/ [...currentVolumeDataTable[key]][p]) * 100 )).toFixed(0) + " ,";
-                                    VolumeChange.appendChild(VolumeChangeChild); 
+                  //                 // if(((([...currentVolumeDataTable[key]][p + 1] - [...currentVolumeDataTable[key]][p] )/ [...currentVolumeDataTable[key]][p]) * 100 ) > 0){
+                  //                   VolumeChangeChild.innerText = (((([...currentVolumeDataTable[key]][ p + 1] - [...currentVolumeDataTable[key]][p] )/ [...currentVolumeDataTable[key]][p]) * 100 )).toFixed(0) + " ,";
+                  //                   VolumeChange.appendChild(VolumeChangeChild); 
                                   
-                                    // }
-                                  // else{
-                                  //   VolumeChangeChild.innerText = ".";
-                                  //   VolumeChange.appendChild(VolumeChangeChild);
-                                  // }
+                  //                   // }
+                  //                 // else{
+                  //                 //   VolumeChangeChild.innerText = ".";
+                  //                 //   VolumeChange.appendChild(VolumeChangeChild);
+                  //                 // }
                               
-                  }   
+                  // }   
                       
 
                       let LastFive = document.createElement("div");   
