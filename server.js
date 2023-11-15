@@ -119,7 +119,7 @@ const getLastCloseOpenPrice =  async () =>{
                     const lastFiveCloseOpenPrice = await googleSheets.spreadsheets.values.get({
                         auth,
                         spreadsheetId,
-                        range: 'Open-Close!A1:L2396',
+                        range: 'Open-Close!A1:V2396',
                     });
 
                     getFiveDayCloseOpenValues = (lastFiveCloseOpenPrice.data.values);   
@@ -131,6 +131,11 @@ const getLastCloseOpenPrice =  async () =>{
                     tempArr2.push((((ele[6] - ele[7])/ele[7]) * 100).toFixed(1));
                     tempArr2.push((((ele[8] - ele[9])/ele[9]) * 100).toFixed(1));
                     tempArr2.push((((ele[10] - ele[11])/ele[11]) * 100).toFixed(1));
+                    tempArr2.push((((ele[12] - ele[11])/ele[13]) * 100).toFixed(1));
+                    tempArr2.push((((ele[14] - ele[11])/ele[15]) * 100).toFixed(1));
+                    tempArr2.push((((ele[16] - ele[11])/ele[17]) * 100).toFixed(1));
+                    tempArr2.push((((ele[18] - ele[11])/ele[19]) * 100).toFixed(1));
+                    tempArr2.push((((ele[20] - ele[11])/ele[21]) * 100).toFixed(1));
         
                     lastFiveOpenClose[ele[0]] = tempArr2;
 
