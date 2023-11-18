@@ -324,11 +324,9 @@ function createFiveChart(companyList,  days = 80){
                 let w = window.location.toString();
                     if(w.includes("allv")){  
                             let k = 0;
-                            // if((volume - volume1) > 30000 && cdata > 120 && cdata < 600 && per > 0 )  {
-                            //   console.log(key, volume, volume1);
-                            if((((cvolume - cvolume1)/ cvolume1) * 100 ) > 2  && cvolume > 20000 && cdata > 120 && cdata < 600 )  {
+                            if((((cvolume - cvolume1)/ cvolume1) * 100 ) > 2  && cvolume > 5000 && cdata > 120 && cdata < 600 && cdata >  [...currentPriceDataTable[key]][0])  {
 
-                                        if(Math.max(...[...SlciedData]) == ( volume)  || (Math.max(...[...SlciedData]) * 0.6 ) <= ( volume) ){
+                                        if((Math.max(...[...SlciedData]) * 0.75 ) <= ( volume) ){
                                                 // per =(  (([...currentVolumeDataTable[key]][CobjLen] - [...currentVolumeDataTable[key]][CobjLen -1])/ [...currentVolumeDataTable[key]][CobjLen -1]) * 100   );
                                                 // console.log(key , per);
                                                 per = ((cvolume - cvolume1)/ cvolume1);
@@ -539,26 +537,21 @@ function createFiveChart(companyList,  days = 80){
                   let CobjLen = Math.min(document.getElementById("slidermin").value ,[...currentPriceDataTable[key]].length -1);
                   let VolumeChange = document.createElement("div");   
                   VolumeChange.setAttribute("class", "VolumeChange");
+
+
+                  
                   // for(let p = 0; p < CobjLen ; p++){
                   //             let VolumeChangeChild = document.createElement("div");   
                   //             VolumeChangeChild.setAttribute("class", "VolumeChangeChild");
-                                
-                  //                 // if(((([...currentVolumeDataTable[key]][p + 1] - [...currentVolumeDataTable[key]][p] )/ [...currentVolumeDataTable[key]][p]) * 100 ) > 0){
                   //                   VolumeChangeChild.innerText = (((([...currentVolumeDataTable[key]][ p + 1] - [...currentVolumeDataTable[key]][p] )/ [...currentVolumeDataTable[key]][p]) * 100 )).toFixed(0) + " ,";
                   //                   VolumeChange.appendChild(VolumeChangeChild); 
-                                  
-                  //                   // }
-                  //                 // else{
-                  //                 //   VolumeChangeChild.innerText = ".";
-                  //                 //   VolumeChange.appendChild(VolumeChangeChild);
-                  //                 // }
-                              
+         
                   // }   
                       
 
                       let LastFive = document.createElement("div");   
                       LastFive.setAttribute("class", "LastFive");
-                      for(let i = 0; i < 5; i++){
+                      for(let i = 0; i < 10; i++){
                         let LastFiveChild = document.createElement("div");   
                           LastFiveChild.setAttribute("class", "LastFiveChild");
                           let trend = lastFiveOpenClose[key][i];
