@@ -362,6 +362,11 @@ server.get('/allv', (req, res) => {
     res.sendFile(path.join(__dirname, './pages/allv.html'));
 
 });
+server.get('/store', (req, res) => {
+
+    res.sendFile(path.join(__dirname, './pages/store.html'));
+
+});
 server.get('/allp', (req, res) => {
 
     res.sendFile(path.join(__dirname, './pages/allp.html'));
@@ -911,6 +916,7 @@ else if(req.path == '/All') {
                     "currentPriceDataTable":currentPriceDataTable,
                     "currentVolumeDataTable": currentVolumeDataTable,
                     "closeOpenPriceDataObject": closeOpenPriceDataObject,
+                    "lastFiveOpenClose": lastFiveOpenClose,
                 }
                 res.send(obj3);
                 
@@ -1007,7 +1013,7 @@ else if(req.path.includes(',')) {
 else if(req.path.includes('.')) {
     companyObject = {};
     let ARR = ([...req.path.replaceAll('/','').split('.')]); 
-    // console.log(ARR); 
+    console.log(ARR[1]); 
     let AAR2 = [];      
     // req.params()
     let foldersPath = fs.readdirSync(path.resolve(__dirname, 'src/'));
@@ -1018,11 +1024,12 @@ else if(req.path.includes('.')) {
     fs.readdir(directorypath , function (err, files) {
     if (err) throw err;
     files.forEach( (file, i) => {
+        console.log(file);
         if(file.includes(ARR[1])){
             AAR2.push(file.split('.')[0]);
         }
     });
-    // console.log(AAR2.length);
+    console.log(AAR2.length);
     for(let j = 0; j < AAR2.length -2 ; j++){
     files.forEach( (file, i) => {
         // console.log(i , AAR2[j]);
@@ -1057,6 +1064,7 @@ else if(req.path.includes('.')) {
                     "currentPriceDataTable":currentPriceDataTable,
                     "currentVolumeDataTable": currentVolumeDataTable,
                     "closeOpenPriceDataObject": closeOpenPriceDataObject,
+                    "lastFiveOpenClose": lastFiveOpenClose,
                 }
                 // console.log(obj3);
                 res.send(obj3);

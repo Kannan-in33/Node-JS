@@ -9,11 +9,17 @@
   
    </head>
     <body>
-     
-      <div class="static" id="count" style="text-align: center;" ></div> 
-      <div class="static" style="height: 50px; margin-top: 15px;">  
+     <div style="display: flex;">
+          <input placeholder="..Search..." type="text" id="filter" name="filter" width="60%" style="margin-top: 0px; margin-left: 10px;"/>
+          
+          <button  id="count" onclick="getStock();" style="width: 15%  !important; margin: 0;">Get</button>
+          <div class="" id="count" style="text-align: center;" ></div> 
+     </div>
+      
+      
+      <div class="static" style="height: 50px; margin-top: 5px; top:40px;">  
             
-       
+
           <button  id="sliderminval" onclick="getFavNew();" style="width: 15%  !important; margin: 0;">Volume</button>
           <input type="range" min="4"    max="81" value="80" name="slider" id="slidermin" style="width: 65%;"/>
           <div id="stockslider" style="width: 12%; margin: auto;"></div>

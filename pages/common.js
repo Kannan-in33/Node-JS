@@ -156,15 +156,15 @@ function getHTTPs(path){
         companyObject = xhr.response.companyObject;
         lastFiveOpenClose = xhr.response.lastFiveOpenClose;
         
-        if( path == "getFivePer"){
+        // if( path == "getFivePer"){
             companyList = [...xhr.response.companyList];
             createFiveChart(companyList);
              
-        }
-        else{
-            createChart( xhr.response.companyObject );
-            updateCompanyDeatils();  
-        }
+        // }
+        // else{
+        //     createChart( xhr.response.companyObject );
+        //     updateCompanyDeatils();  
+        // }
         
       } 
       else {
@@ -186,7 +186,7 @@ let posi = {};
 let positiveSort = [];
 // New Chart Group starts here
 let userInput = "";
-function createFiveChart(companyList,  days = 70){
+function createFiveChart(companyList,  days = 80){
     days = Math.min(currentPriceDataTable[companyList[0]].length - 1, slidermin.value);
     SliderRange = days;
       let chartlim = 0;
@@ -302,6 +302,7 @@ function createFiveChart(companyList,  days = 70){
                 let cvolumeNew = Math.max(([...currentVolumeDataTable[key]][0] || 1) / [CobjLen], [...currentVolumeDataTable[key]][CobjLen -1] / [CobjLen -1]);
                 
                 let volume = [...currentVolumeDataTable[key]][CobjLen] ;
+                let volume1 = [...currentVolumeDataTable[key]][CobjLen - 1] ;
                 let cvolume = [...currentVolumeDataTable[key]][CobjLen -1] / [CobjLen -1];
                 let cvolume1 = [...currentVolumeDataTable[key]][CobjLen -2] / [CobjLen -2];
                 let pvolume2 = [...currentVolumeDataTable[key]][CobjLen - 3] / [CobjLen - 3] ;
@@ -323,7 +324,9 @@ function createFiveChart(companyList,  days = 70){
                 let w = window.location.toString();
                     if(w.includes("allv")){  
                             let k = 0;
-                            if((((cvolume - cvolume1)/ cvolume1) * 100 ) > 2  && cvolume > 5000 && cdata > 120 && cdata < 600 )  {
+                            // if((volume - volume1) > 30000 && cdata > 120 && cdata < 600 && per > 0 )  {
+                            //   console.log(key, volume, volume1);
+                            if((((cvolume - cvolume1)/ cvolume1) * 100 ) > 2  && cvolume > 20000 && cdata > 120 && cdata < 600 )  {
 
                                         if(Math.max(...[...SlciedData]) == ( volume)  || (Math.max(...[...SlciedData]) * 0.6 ) <= ( volume) ){
                                                 // per =(  (([...currentVolumeDataTable[key]][CobjLen] - [...currentVolumeDataTable[key]][CobjLen -1])/ [...currentVolumeDataTable[key]][CobjLen -1]) * 100   );
@@ -331,6 +334,7 @@ function createFiveChart(companyList,  days = 70){
                                                 per = ((cvolume - cvolume1)/ cvolume1);
                                                 goingUp.push(per);
                                                 goingUpPosition[per] = key;
+                                                localStorage.setItem(key,  localStorage.getItem(key) + 1 || 1)
                                                     for(let p = 0; p < [...currentVolumeDataTable[key]].length -1 ; p++){
                                                         if(((([...currentVolumeDataTable[key]][CobjLen - p] - [...currentVolumeDataTable[key]][CobjLen - (p + 1)] )/ [...currentVolumeDataTable[key]][CobjLen - (p + 1)]) * 100 ) > 2){
                                                             k++;  
@@ -2559,3 +2563,9 @@ function createPositiveChart(dpositive, dpositiveCompany){
   
 
   
+          function  getStock(){
+            clearChart();
+              let stock = document.getElementById("filter").value;
+              getHTTPs( '.' + stock);
+      
+            }
