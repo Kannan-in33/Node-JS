@@ -20,8 +20,8 @@
       <div class="static" style="height: 50px; margin-top: 5px; top:40px;">  
             
 
-          <button  id="sliderminval" onclick="addingCharts(localStorage, 'charts');" style="width: 15%  !important; margin: 0;">Volume</button>
-          <input type="range" min="4"    max="81" value="80" name="slider" id="slidermin" style="width: 65%;"/>
+          <button  id="sliderminval" onclick="getStorageV(); " style="width: 15%  !important; margin: 0;">Volume</button>
+          <input type="range" min="4"    max="78" value="76" name="slider" id="slidermin" style="width: 65%;"/>
           <div id="stockslider" style="width: 12%; margin: auto;"></div>
 
   
@@ -50,8 +50,9 @@
 </script>
 <script>
     getFivePer(); 
-//    addingCharts(localStorage, "charts"); 
+//    addingCharts(JSON.parse.setItem("VolumeHigh"), "charts"); 
   // setInterval(getFivePer, 5000 * 60);
+  
   </script>
 </body>
 </html>

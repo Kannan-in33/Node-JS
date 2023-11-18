@@ -71,7 +71,7 @@ const getCloseOpenPrice =  async () =>{
                     const closeOpenPrice = await googleSheets.spreadsheets.values.get({
                         auth,
                         spreadsheetId,
-                        range: 'DailyGainers!A2:F2396', 
+                        range: 'DailyGainers!A2:V2396', 
                     });
                     highPriceData =[];
         copvalues = (closeOpenPrice.data.values);    

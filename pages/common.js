@@ -94,6 +94,7 @@ let goingFlatPosition = {};
 let days = 0;
 let lastFiveOpenClose ={};
 let dict = {};
+let lsData = {};
 
 let rupee = new Intl.NumberFormat('en-IN', {
     style: 'currency',
@@ -184,6 +185,7 @@ let goingUpCompanyObject = {};
 let newCompanyObject = {};
 let posi = {};
 let positiveSort = [];
+
 // New Chart Group starts here
 let userInput = "";
 function createFiveChart(companyList,  days = 80){
@@ -206,7 +208,9 @@ function createFiveChart(companyList,  days = 80){
         if(companyList.length ){
           // document.getElementById("pages").innerText = companyList.length;
       }
-              
+      if(localStorage.getItem("VolumeHigh") != null){
+        lsData = JSON.parse(localStorage.getItem("VolumeHigh"));
+      }
         for (let i = 0; i < companyList.length; i++) {
             getStockStatus(companyList[i]);            
         }
@@ -269,17 +273,39 @@ function createFiveChart(companyList,  days = 80){
           // document.querySelector("#result").innerText = (goingDown.length + goingFlat.length + goingUp.length + goingUp8.length);
           // document.getElementById("sliderminval").innerText = 9 + Math.trunc(((slidermin.value * 5)+ 15)  / 60) + ':' + Math.trunc(((slidermin.value * 5)+ 15)  % 60);
   
-         
+          localStorage.setItem("VolumeHigh",  JSON.stringify(lsData));
           goingFlatcounter = 0;
   }
+
+  function getStorageV(){
+    let ldNewData = JSON.parse(localStorage.getItem("VolumeHigh"));
+    let ldNewData2 ={};
+    clearChart();
+
+    for(let i = 30; i > 1; i--){
+
+        for(key in ldNewData){
+
+            if(ldNewData[key] == i){
+              ldNewData2[key] = i;
+            }
+        }
+      
+    }
+    
+    addingCharts(ldNewData2 , 'charts');
+
+  }
+  
   
   function getStockStatus(key){
     Great = 0;
         
       let CobjLen = Math.min(document.getElementById("slidermin").value ,[...currentPriceDataTable[key]].length - 1);
       let data = [...currentPriceDataTable[key]];
-      let cdata = [...currentPriceDataTable[key]][CobjLen -1];  
-      let SlciedData = [...currentVolumeDataTable[key]].slice( 0, CobjLen -1);
+      let cdata = [...currentPriceDataTable[key]][CobjLen];  
+      let cdata1 = [...currentPriceDataTable[key]][CobjLen - 1];  
+      let SlciedData = [...currentVolumeDataTable[key]].slice( 0, CobjLen);
             if(CobjLen >= 2 && cdata > 120 && cdata < 600){
 
               let Ldata = Math.min(...[...currentPriceDataTable[key]]);
@@ -321,27 +347,44 @@ function createFiveChart(companyList,  days = 80){
 
 
                 // userInput = document.getElementById("filter").value;
-                let w = window.location.toString();
-                    if(w.includes("allv")){  
-                            let k = 0;
-                            if((((cvolume - cvolume1)/ cvolume1) * 100 ) > 2  && cvolume > 5000 && cdata > 120 && cdata < 600 && cdata >  [...currentPriceDataTable[key]][0])  {
+let w = window.location.toString();
+if(w.includes("allv")){  
+let k = 0;
+// if((((cvolume - cvolume1)/ cvolume1) * 100 ) > 2  && cvolume > 5000 && cdata > 120 && cdata < 600 && cdata >  [...currentPriceDataTable[key]][0]  && cdata > cdata1 ){
+if((((cvolume - cvolume1)/ cvolume1) * 100 ) > 2  && cvolume > 10000 && cdata > 120 && cdata < 600 && cdata >  [...currentPriceDataTable[key]][0]  && (cdata > cdata1 || cdata > cdata2 || cdata > cdata3 || cdata > cdata4 )){
 
-                                        if((Math.max(...[...SlciedData]) * 0.75 ) <= ( volume) ){
-                                                // per =(  (([...currentVolumeDataTable[key]][CobjLen] - [...currentVolumeDataTable[key]][CobjLen -1])/ [...currentVolumeDataTable[key]][CobjLen -1]) * 100   );
-                                                // console.log(key , per);
-                                                per = ((cvolume - cvolume1)/ cvolume1);
-                                                goingUp.push(per);
-                                                goingUpPosition[per] = key;
-                                                localStorage.setItem(key,  localStorage.getItem(key) + 1 || 1)
-                                                    for(let p = 0; p < [...currentVolumeDataTable[key]].length -1 ; p++){
-                                                        if(((([...currentVolumeDataTable[key]][CobjLen - p] - [...currentVolumeDataTable[key]][CobjLen - (p + 1)] )/ [...currentVolumeDataTable[key]][CobjLen - (p + 1)]) * 100 ) > 2){
-                                                            k++;  
-                                                        }
+if((Math.max(...[...SlciedData]) * 0.75 ) <= ( volume) ){
+// per =(  (([...currentVolumeDataTable[key]][CobjLen] - [...currentVolumeDataTable[key]][CobjLen -1])/ [...currentVolumeDataTable[key]][CobjLen -1]) * 100   );
+// console.log(key , per);
+per = ((cvolume - cvolume1)/ cvolume1);
+goingUp.push(per);
+goingUpPosition[per] = key;
 
-                                                    }
-                                                dict[key] = k;  
-                                        }
-                              }   
+console.log(key[0], cdata, cdata1);
+
+
+
+if(lsData[key[0]] == undefined){
+
+  lsData[key[0]] = 1;
+
+} 
+else{
+  lsData[key[0]] = lsData[key[0]] + 1;
+}
+
+
+
+
+for(let p = 0; p < [...currentVolumeDataTable[key]].length -1 ; p++){
+if(((([...currentVolumeDataTable[key]][CobjLen - p] - [...currentVolumeDataTable[key]][CobjLen - (p + 1)] )/ [...currentVolumeDataTable[key]][CobjLen - (p + 1)]) * 100 ) > 2){
+k++;  
+}
+
+}
+dict[key] = k;  
+}
+}   
 
                    
                     }
@@ -593,6 +636,10 @@ function createFiveChart(companyList,  days = 80){
             if(document.querySelectorAll('[id="' + key + '"] input[type="range"]').length > 0){
                 days = document.querySelector('[id="' + key + '"] input[type="range"]').value;
             }
+
+            if(days == undefined){
+              days = [...currentVolumeDataTable[key]].length - 1;
+            }
               createChartSection(key, location, days);
   
               addPriceChart(key, location, days);        
@@ -602,6 +649,7 @@ function createFiveChart(companyList,  days = 80){
         }
   
       }
+      
   }
     
   
