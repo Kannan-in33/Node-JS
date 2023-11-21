@@ -14,6 +14,7 @@ let currentPriceDataMid = {};
 let currentPriceDataArray = {};
 let currentPriceDataTable ={};
 let currentVolumeDataTable = {};
+let previousDayVolumeDataTable = {};
 let timestamp = new Date().getHours();
 let cpvalues;
 let cvvalues;
@@ -335,6 +336,51 @@ const getUpdatedVolomeTable =  async () =>{
 
 }
 
+
+const getPreviousUpdatedVolomeTable =  async () =>{
+    const auth = new google.auth.GoogleAuth({
+        keyFile: "credentials.json",
+        scopes: "https://www.googleapis.com/auth/drive",
+    });
+
+    const client = await auth.getClient();
+    const googleSheets = google.sheets({
+        version: "v4",
+        auth: client
+    });
+
+
+    //  Capturing Volume Data
+
+    const CVVdataP = await googleSheets.spreadsheets.values.get({
+        auth,
+        spreadsheetId,
+        range: 'Pre Volume!A1:BX2396', 
+    });
+    // console.log('log: ' + CVVdata);
+
+   cvvalues = (CVVdataP.data.values);
+    cvvalues.forEach ( (ele, i) => {
+    tempArr2 = [];
+    
+        // console.log(ele[0].toString().split(",")[0]);
+    for(let j = 1; j < ele.length ; j++) {
+        tempArr2.push(ele[j]);        
+    }
+
+    // for(let k = 0; k < 3; k++) {
+        // tempArr2.push((getFiveMinVolumeData[ele[0]])[k]);
+    // }
+
+
+    previousDayVolumeDataTable[ele[0]] = tempArr2.reverse();
+ });
+
+ return CVVdataP;
+
+}
+
+
 function getlongtermarray(){
     const directorypath = path.join(__dirname, 'SectorData');
     fs.readFile(path.join(directorypath , 'ComparisonVolume.json'), 'utf8', function (err2, data) {
@@ -492,6 +538,7 @@ else if(req.path.includes('getFivePer')) {
                     "getFiveMinVolumeData" : getFiveMinVolumeData,
                     "closeOpenPriceDataObject": closeOpenPriceDataObject,
                     "lastFiveOpenClose":lastFiveOpenClose,
+                    "previousDayVolumeDataTable": previousDayVolumeDataTable,
                     
                 }
                 // console.log(obj3);
@@ -922,6 +969,7 @@ else if(req.path == '/All') {
                     "currentVolumeDataTable": currentVolumeDataTable,
                     "closeOpenPriceDataObject": closeOpenPriceDataObject,
                     "lastFiveOpenClose": lastFiveOpenClose,
+                    "previousDayVolumeDataTable": previousDayVolumeDataTable,
                 }
                 res.send(obj3);
                 
@@ -988,6 +1036,7 @@ else if(req.path.includes(',')) {
                                             "currentVolumeDataTable": currentVolumeDataTable,
                                             "closeOpenPriceDataObject": closeOpenPriceDataObject,
                                             "lastFiveOpenClose": lastFiveOpenClose,
+                                            "previousDayVolumeDataTable": previousDayVolumeDataTable,
                                         }
                                         res.send(obj3);
                                         return;
@@ -1070,6 +1119,7 @@ else if(req.path.includes('.')) {
                     "currentVolumeDataTable": currentVolumeDataTable,
                     "closeOpenPriceDataObject": closeOpenPriceDataObject,
                     "lastFiveOpenClose": lastFiveOpenClose,
+                    "previousDayVolumeDataTable": previousDayVolumeDataTable,
                 }
                 // console.log(obj3);
                 res.send(obj3);
@@ -1132,6 +1182,7 @@ fs.readdir(directorypath , function (err, files) {
                 "currentPriceDataTable":currentPriceDataTable,
                 "currentVolumeDataTable":currentVolumeDataTable,
                 "closeOpenPriceDataObject": closeOpenPriceDataObject,
+                "previousDayVolumeDataTable": previousDayVolumeDataTable,
                 }
                 res.send(obj3);
                 }
@@ -1154,7 +1205,7 @@ getUpdatedVolomeTable();
 
 server.listen(port, () => {    
     console.log('Server is listening on port ' + port);
-   
+    getPreviousUpdatedVolomeTable();
     runAfterFiveMinutes();
     setInterval(runAfterFiveMinutes, 1000 * 60);
     getLastCloseOpenPrice();

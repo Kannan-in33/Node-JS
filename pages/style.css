@@ -121,6 +121,9 @@
     .charts8{
       background-color: rgba(50, 250, 100, 0.05);
     }
+    .barvP{
+      background-color: rgba(50, 250, 100, 0.05);
+    }
      
      canvas:not(.volume){
         margin: 15px 0;

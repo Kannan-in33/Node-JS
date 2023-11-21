@@ -38,6 +38,7 @@ let currentPriceData1 = {};
 let currentPriceDataMid = {};
 let currentPriceDataTable = {};
 let currentVolumeDataTable = {};
+let previousDayVolumeDataTable = {};
 let positive = [];
 let positiveCompany = {};
 let Masterpositive = [];
@@ -156,6 +157,7 @@ function getHTTPs(path){
         getFiveMinVolumeData = xhr.response.getFiveMinVolumeData,
         companyObject = xhr.response.companyObject;
         lastFiveOpenClose = xhr.response.lastFiveOpenClose;
+        previousDayVolumeDataTable = xhr.response.previousDayVolumeDataTable;
         
         // if( path == "getFivePer"){
             companyList = [...xhr.response.companyList];
@@ -351,7 +353,9 @@ let w = window.location.toString();
 if(w.includes("allv")){  
 let k = 0;
 // if((((cvolume - cvolume1)/ cvolume1) * 100 ) > 2  && cvolume > 5000 && cdata > 120 && cdata < 600 && cdata >  [...currentPriceDataTable[key]][0]  && cdata > cdata1 ){
-if((((cvolume - cvolume1)/ cvolume1) * 100 ) > 2  && cvolume > 10000 && cdata > 120 && cdata < 600 && cdata >  [...currentPriceDataTable[key]][0]  && (cdata > cdata1 || cdata > cdata2 || cdata > cdata3 || cdata > cdata4 )){
+if((((cvolume - cvolume1)/ cvolume1) * 100 ) > 2  &&  cdata > 200 && cdata < 600 && cdata >  [...currentPriceDataTable[key]][0]  && (cdata > cdata1 || cdata > cdata2 || cdata > cdata3 || cdata > cdata4 )){
+
+if((CobjLen < 8 && cvolume > 20000) ||     (CobjLen >= 8 && cvolume > 10000)    ){
 
 if((Math.max(...[...SlciedData]) * 0.75 ) <= ( volume) ){
 // per =(  (([...currentVolumeDataTable[key]][CobjLen] - [...currentVolumeDataTable[key]][CobjLen -1])/ [...currentVolumeDataTable[key]][CobjLen -1]) * 100   );
@@ -384,6 +388,7 @@ k++;
 }
 dict[key] = k;  
 }
+} // cvolume > 10000 condition end
 }   
 
                    
@@ -622,7 +627,13 @@ dict[key] = k;
                   let barv = document.createElement("div");
                   barv.setAttribute("class", "barv");
                   topDivtag.appendChild(barv);
-                  topDivtag.appendChild(VolumeChange);
+                  // topDivtag.appendChild(VolumeChange);
+
+                  let barvP = document.createElement("div");
+                  barvP.setAttribute("class", "barvP");
+                  topDivtag.appendChild(barvP);
+
+
 
                   
 
@@ -645,6 +656,8 @@ dict[key] = k;
               addPriceChart(key, location, days);        
   
               addVolumeChart(key, location, days);
+
+              addVolumeChartP(key, location, days);
          
         }
   
@@ -781,16 +794,6 @@ dict[key] = k;
   yValues.reverse();
   
   
-  // if (days < currentVolumeDataTable[key].length){
-  // for(let y = days ; y < currentVolumeDataTable[key].length ; y++){
-  // yValues2[y] =  yValues[y] ;
-  // }
-  // for (let i = days ; i < currentVolumeDataTable[key].length ; i++) {
-  // xValues.push(i);
-  // }
-  // }
-  // else{
-  
   for(let y = 0; y < Math.min(currentVolumeDataTable[key].length, days) ; y++){
   yValues2[y] =  yValues[y] / (y + 1);
   }
@@ -852,6 +855,86 @@ dict[key] = k;
 
 
 // New Chart Group ends here
+
+// Previous Volume Chart
+
+function addVolumeChartP(key, location, days){
+  days = previousDayVolumeDataTable[key].length
+  if(document.querySelectorAll('[id="' + key + '"] .barvP canvas').length > 0 ){
+    document.querySelector('[id="' + key + '"] .barvP canvas').remove();
+  }
+  if(document.querySelectorAll('[id="' + key + '"] .barvP .chartjs-size-monitor').length > 0 ){
+    document.querySelector('[id="' + key + '"]  .barvP .chartjs-size-monitor').remove();
+  }
+
+
+let yValues  = [];
+yValues  = [...previousDayVolumeDataTable[key]];
+let xValues = [];
+let yValues2 = [];
+yValues.reverse();
+
+
+for(let y = 0; y < Math.min(previousDayVolumeDataTable[key].length, days) ; y++){
+yValues2[y] =  yValues[y] / (y + 1);
+}
+
+let newVolume = [];
+for(let i = 0; i < Math.min(previousDayVolumeDataTable[key].length, days); i++){                    
+  newVolume.push([...previousDayVolumeDataTable[key]][i || 1]/[i || 1]);
+  
+}
+
+
+for (let i = 0; i < Math.min(previousDayVolumeDataTable[key].length, days) ; i++) {
+xValues.push(i);
+}
+// }
+xValues.reverse();
+
+
+let canvasb = document.createElement("canvas");
+canvasb.setAttribute("id", "barvP" + key);
+canvasb.setAttribute("class", "barvP" + key); 
+canvasb.setAttribute("height", "250"); 
+canvasb.setAttribute("width", "600"); 
+
+let xaxisprice = [];
+for(let i = 1; i < previousDayVolumeDataTable[key].length - 2 ; i++){ //[...currentPriceDataTable[key]].length - 1; i++){
+xaxisprice.push(i);
+}
+
+document.querySelector('[id="' + key + '"] .barvP').appendChild(canvasb);
+// console.log([...currentPriceDataTable[key]].reverse());
+new Chart(canvasb, {
+type: "line",
+data: {
+labels: [...xaxisprice],
+datasets: [{
+      label: 'L : ' + Math.min(...[...newVolume].slice(0, days)).toFixed(0) + '   H : ' + Math.max(...[...newVolume].slice(20, days)).toFixed(0) + '        C : ' + [...[...newVolume]][days -1].toFixed(0),
+      fontSize: 16,
+      pointRadius: 0,
+      borderWidth : 0.5,
+      borderColor: "rgba(0,0,0,0.9)",
+      data: [...newVolume].slice(0, days + 3), // ([...currentVolumeDataTable[key]]).slice(0, days),
+      }]
+    },  
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    fontSize: 15,
+                    family: "'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif', 'monospace'"
+            }
+        }]
+    }
+    }
+
+}); 
+
+}
+
+// Previous Volume Chart End
 function updateCompanyDeatils(){
 
 
