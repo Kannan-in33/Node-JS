@@ -2732,9 +2732,10 @@ function createPositiveChart(dpositive, dpositiveCompany){
           function  getStock(){
             clearChart();
               let stock = document.getElementById("filter").value;
-             let newCompanyList = companyList.map( ele => {
+             let newCompanyList = [];
+             companyList.forEach( ele => {
                 if( ele[0].includes(stock.toUpperCase())){
-                  return ele[0];
+                  newCompanyList.push(ele[0]);
                 }
 
              });
