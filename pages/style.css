@@ -122,7 +122,10 @@
       background-color: rgba(50, 250, 100, 0.05);
     }
     .barvP{
-      background-color: rgba(50, 250, 100, 0.05);
+      background-color: rgba(50, 250, 100, 0.10);
+    }
+    .favouritsection{
+      margin-top: 80px;
     }
      
      canvas:not(.volume){

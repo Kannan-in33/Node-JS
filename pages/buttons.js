@@ -356,47 +356,58 @@ function setFav(event){
     let clr = document.querySelectorAll("#" + event.target.id.toString())[1];
       clr.classList.toggle("star");
 
-    if(!AFL.includes(event.target.id.toString())){
-      localStorage.setItem(localStorage.length, event.target.id.toString());
+    // if(!AFL.includes(event.target.id.toString())){
+      if((localStorage.getItem(event.target.id.toString())) == null) {
+      localStorage.setItem(event.target.id.toString(), event.target.id.toString());
       
     }
     else{
-      for(let i = 0; i < localStorage.length; i++){
-
-        if(localStorage[i] == event.target.id.toString()){
-          localStorage.removeItem(i);
-          let AFL2 = [];
-
-          for(let key in localStorage){
-            if(AFL2.length < AFL.length - 1){
-              AFL2.push(localStorage[key]);
-            }
-          }
-
-          localStorage.clear();
-
-          for(let j = 0; j < AFL2.length ; j++){
-
-            if(AFL2[j] != undefined){
-              localStorage.setItem(j , AFL2[j]);
-            }
-          }
+        if((localStorage.getItem(event.target.id.toString())) != null) {
+          localStorage.removeItem(event.target.id.toString());
         }
 
-      }
+      // for(let i = 0; i < localStorage.length; i++){
+
+        // if(localStorage[i] == event.target.id.toString()){
+        //   localStorage.removeItem(i);
+        //   let AFL2 = [];
+
+        //   for(let key in localStorage){
+        //     if(AFL2.length < AFL.length - 1){
+        //       AFL2.push(localStorage[key]);
+        //     }
+        //   }
+
+        //   localStorage.clear();
+
+        //   for(let j = 0; j < AFL2.length ; j++){
+
+        //     if(AFL2[j] != undefined){
+        //       localStorage.setItem(j , AFL2[j]);
+        //     }
+        //   }
+        // }
+
+      // }
     }
     
 
     }
 function updateFavourite(){
-        for( let i = 0; i < localStorage.length; i++ ){
-    if (document.querySelectorAll("#" + localStorage[i]).length > 0 ){
-        let ele =  document.querySelectorAll("#" + localStorage[i])[1];
-        //  ele.checked = true;
-        ele.classList.add("star");
+        // for( let i = 0; i < localStorage.length; i++ ){
+
+        Object.keys(localStorage).forEach( key => {
+
+          if (document.querySelectorAll("#" + key).length > 0 ){
+            let ele =  document.querySelectorAll("#" + key)[1];
+            //  ele.checked = true;
+            ele.classList.add("star");
+            }
+
+        });
+   
         }
-        }
-    }
+    // }
 // Favourite section update end
 
 var sliderchart = document.querySelector('#slidermin');

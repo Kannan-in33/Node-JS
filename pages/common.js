@@ -210,9 +210,17 @@ function createFiveChart(companyList,  days = 80){
         if(companyList.length ){
           // document.getElementById("pages").innerText = companyList.length;
       }
+
       if(localStorage.getItem("VolumeHigh") != null){
         lsData = JSON.parse(localStorage.getItem("VolumeHigh"));
       }
+
+      // Adding Faviourit
+
+      if(localStorage.getItem("Favourite") != null){
+        favData = JSON.parse(localStorage.getItem("Favourite"));
+      }
+
         for (let i = 0; i < companyList.length; i++) {
             getStockStatus(companyList[i]);            
         }
@@ -296,8 +304,44 @@ function createFiveChart(companyList,  days = 80){
     }
     
     addingCharts(ldNewData2 , 'charts');
+    let stocksliderLst = document.querySelectorAll(".stockslider");
+                          stocksliderLst.forEach(element => {
+                                element.addEventListener('input', moveChart);
+                              });
+
+
+    let FavList = Object.keys(localStorage).map( keya =>  keya);
+
+    FavList.forEach( key => {
+
+
+      if(!(key.includes('VolumeHigh')) ){
+      if(document.querySelectorAll('[id="' + key + '"] input[type="range"]').length > 0){
+        days = document.querySelector('[id="' + key + '"] input[type="range"]').value;
+    }
+
+    if(days == undefined){
+      days = [...currentVolumeDataTable[key]].length - 1;
+    }
+    let location = "favouritsection" ;
+      createChartSection(key, location, days);
+
+      addPriceChart(key, location, days);        
+
+      addVolumeChart(key, location, days);
+
+      addVolumeChartP(key, location, days);
+
+      
 
   }
+
+    })
+    updateFavourite();
+
+  }
+  
+
   
   
   function getStockStatus(key){
@@ -353,43 +397,36 @@ let w = window.location.toString();
 if(w.includes("allv")){  
 let k = 0;
 // if((((cvolume - cvolume1)/ cvolume1) * 100 ) > 2  && cvolume > 5000 && cdata > 120 && cdata < 600 && cdata >  [...currentPriceDataTable[key]][0]  && cdata > cdata1 ){
-if((((cvolume - cvolume1)/ cvolume1) * 100 ) > 2  &&  cdata > 200 && cdata < 600 && cdata >  [...currentPriceDataTable[key]][0]  && (cdata > cdata1 || cdata > cdata2 || cdata > cdata3 || cdata > cdata4 )){
+            if((((cvolume - cvolume1)/ cvolume1) * 100 ) > 2  &&  cdata > 200 && cdata < 600 && cdata >  [...currentPriceDataTable[key]][0]  && (cdata > cdata1 || cdata > cdata2 || cdata > cdata3 || cdata > cdata4 )){
 
-if((CobjLen < 8 && cvolume > 20000) ||     (CobjLen >= 8 && cvolume > 10000)    ){
+                          if((CobjLen < 8 && cvolume > 20000) ||     (CobjLen >= 8 && cvolume > 10000)    ){
 
-if((Math.max(...[...SlciedData]) * 0.75 ) <= ( volume) ){
-// per =(  (([...currentVolumeDataTable[key]][CobjLen] - [...currentVolumeDataTable[key]][CobjLen -1])/ [...currentVolumeDataTable[key]][CobjLen -1]) * 100   );
-// console.log(key , per);
-per = ((cvolume - cvolume1)/ cvolume1);
-goingUp.push(per);
-goingUpPosition[per] = key;
-
-console.log(key[0], cdata, cdata1);
+                                        if((Math.max(...[...SlciedData]) * 0.75 ) <= ( volume) ){
+                                        // per =(  (([...currentVolumeDataTable[key]][CobjLen] - [...currentVolumeDataTable[key]][CobjLen -1])/ [...currentVolumeDataTable[key]][CobjLen -1]) * 100   );
+                                        // console.log(key , per);
+                                        per = ((cvolume - cvolume1)/ cvolume1);
+                                        goingUp.push(per);
+                                        goingUpPosition[per] = key;
 
 
+                                                if(lsData[key[0]] == undefined){
 
-if(lsData[key[0]] == undefined){
+                                                  lsData[key[0]] = 1;
 
-  lsData[key[0]] = 1;
+                                                } 
+                                                else{
+                                                  lsData[key[0]] = lsData[key[0]] + 1;
+                                                }
 
-} 
-else{
-  lsData[key[0]] = lsData[key[0]] + 1;
-}
-
-
-
-
-for(let p = 0; p < [...currentVolumeDataTable[key]].length -1 ; p++){
-if(((([...currentVolumeDataTable[key]][CobjLen - p] - [...currentVolumeDataTable[key]][CobjLen - (p + 1)] )/ [...currentVolumeDataTable[key]][CobjLen - (p + 1)]) * 100 ) > 2){
-k++;  
-}
-
-}
-dict[key] = k;  
-}
-} // cvolume > 10000 condition end
-}   
+                                              for(let p = 0; p < [...currentVolumeDataTable[key]].length -1 ; p++){
+                                                        if(((([...currentVolumeDataTable[key]][CobjLen - p] - [...currentVolumeDataTable[key]][CobjLen - (p + 1)] )/ [...currentVolumeDataTable[key]][CobjLen - (p + 1)]) * 100 ) > 2){
+                                                        k++;  
+                                                        }
+                                              }
+                                        dict[key] = k;  
+                                        }
+                          } // cvolume > 10000 condition end
+            }   
 
                    
                     }
@@ -753,9 +790,9 @@ dict[key] = k;
                     data: {
                     labels: [...xaxisprice],
                     datasets: [{
-                            label: 'C : ' + ([...currentPriceDataTable[key]][days -1]) + '  Dif : ' + avg.toFixed(1) ,
+                            label: '   C : ' + ([...currentPriceDataTable[key]][days -1]) + '     + ' + avg.toFixed(0),
                             // label: 'L : ' + Math.min(...[...currentPriceDataTable[key]].slice(0, days)) + '   H : ' + Math.max(...[...currentPriceDataTable[key]].slice(0, days)) + '        C : ' + [...currentPriceDataTable[key]][days -1],
-                            fontSize: 16,
+                            fontSize: 20,
                             pointRadius: 0,
                             borderWidth : 0.5,
                             borderColor: "rgba(0,0,0,0.9)",
@@ -765,9 +802,10 @@ dict[key] = k;
                           options: {
                               scales: {
                                   yAxes: [{
+
                                       ticks: {
-                                          fontSize: 15,
-                                          family: "'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif', 'monospace'"
+                                          fontSize: 16,
+                                          family: "'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif', 'monospace'",
                                   }
                               }]
                           }
@@ -804,6 +842,7 @@ dict[key] = k;
     
   }
   
+  days = Math.min(currentVolumeDataTable[key].length, days);
   
   for (let i = 0; i < Math.min(currentVolumeDataTable[key].length, days) ; i++) {
   xValues.push(i);
@@ -824,18 +863,21 @@ dict[key] = k;
   }
   
   document.querySelector('[id="' + key + '"] .barv').appendChild(canvasb);
+  if(days == undefined || days == 0){
+    days = [...currentVolumeDataTable[key]].length - 1;
+  }
   // console.log([...currentPriceDataTable[key]].reverse());
   new Chart(canvasb, {
   type: "line",
   data: {
   labels: [...xaxisprice],
   datasets: [{
-        label: 'L : ' + Math.min(...[...newVolume].slice(0, days)).toFixed(0) + '   H : ' + Math.max(...[...newVolume].slice(20, days)).toFixed(0) + '        C : ' + [...[...newVolume]][days -1].toFixed(0),
+        label: key + '    '  + '  C : ' + ([...[...newVolume]][days -1].toFixed(0)).toLocaleString(),
         fontSize: 16,
         pointRadius: 0,
         borderWidth : 0.5,
         borderColor: "rgba(0,0,0,0.9)",
-        data: [...newVolume].slice(0, days + 3), // ([...currentVolumeDataTable[key]]).slice(0, days),
+        data: [...newVolume].slice(0, days + 1), // ([...currentVolumeDataTable[key]]).slice(0, days),
         }]
       },  
       options: {
@@ -911,7 +953,7 @@ type: "line",
 data: {
 labels: [...xaxisprice],
 datasets: [{
-      label: 'L : ' + Math.min(...[...newVolume].slice(0, days)).toFixed(0) + '   H : ' + Math.max(...[...newVolume].slice(20, days)).toFixed(0) + '        C : ' + [...[...newVolume]][days -1].toFixed(0),
+      label: key + '    '  +  'L : ' + Math.min(...[...newVolume].slice(0, days)).toFixed(0) + '   H : ' + Math.max(...[...newVolume].slice(20, days)).toFixed(0) ,
       fontSize: 16,
       pointRadius: 0,
       borderWidth : 0.5,
@@ -2690,6 +2732,26 @@ function createPositiveChart(dpositive, dpositiveCompany){
           function  getStock(){
             clearChart();
               let stock = document.getElementById("filter").value;
-              getHTTPs( '.' + stock);
+             let newCompanyList = companyList.map( ele => {
+                if( ele[0].includes(stock.toUpperCase())){
+                  return ele[0];
+                }
+
+             });
+             let location = "charts";
+             days = document.querySelector("#slidermin").value;
+             newCompanyList.forEach( key =>{
+
+              createChartSection(key, location, days);
+  
+              addPriceChart(key, location, days);        
+  
+              addVolumeChart(key, location, days);
+
+             })
       
+            }
+
+            function volumeStorageClear() {
+              localStorage.VolumeHigh = {};
             }
