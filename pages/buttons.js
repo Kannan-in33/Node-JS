@@ -448,7 +448,7 @@ function movingAddingCharts(key, location, days){
                               
                               addPriceChart(key, location, days);
                               addVolumeChart(key, location, days)
-                              document.querySelector('[id=' + key + '] .VolumeChange').innerHTML = ""
+                              // document.querySelector('[id=' + key + '] .VolumeChange').innerHTML = ""
 
                               let CobjLen = Math.min(document.querySelector('[type="range"][id=' + key + ']').value ,[...currentPriceDataTable[key]].length);
                               let VolumeChange = document.querySelector('[id="' + key + '"] .VolumeChange');

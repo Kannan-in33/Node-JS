@@ -273,7 +273,7 @@ const getUpdatedPriceTable =  async () =>{
     const GsUpdate = await googleSheets.spreadsheets.values.get({
         auth,
         spreadsheetId,
-        range: "Bar!A1:CD2396",
+        range: "Bar!A1:BZ2396",
     });
 
     cpvaluesTable = (GsUpdate.data.values);
@@ -311,7 +311,7 @@ const getUpdatedVolomeTable =  async () =>{
     const CVVdata = await googleSheets.spreadsheets.values.get({
         auth,
         spreadsheetId,
-        range: 'Daily Volume!A1:CD2396', 
+        range: 'Daily Volume!A1:BZ2396', 
     });
     // console.log('log: ' + CVVdata);
 
@@ -355,7 +355,7 @@ const getPreviousUpdatedVolomeTable =  async () =>{
     const CVVdataP = await googleSheets.spreadsheets.values.get({
         auth,
         spreadsheetId,
-        range: 'Pre Volume!A1:BX2396', 
+        range: 'Pre Volume!A1:BZ2396', 
     });
     // console.log('log: ' + CVVdata);
 
@@ -411,6 +411,11 @@ res.sendFile(path.join(__dirname, './pages/index.html'));
 server.get('/allv', (req, res) => {
 
     res.sendFile(path.join(__dirname, './pages/allv.html'));
+
+});
+server.get('/all8', (req, res) => {
+
+    res.sendFile(path.join(__dirname, './pages/all8.html'));
 
 });
 server.get('/store', (req, res) => {

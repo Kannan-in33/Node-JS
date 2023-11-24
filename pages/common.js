@@ -352,7 +352,7 @@ function createFiveChart(companyList,  days = 80){
       let cdata = [...currentPriceDataTable[key]][CobjLen];  
       let cdata1 = [...currentPriceDataTable[key]][CobjLen - 1];  
       let SlciedData = [...currentVolumeDataTable[key]].slice( 0, CobjLen);
-            if(CobjLen >= 2 && cdata > 120 && cdata < 600){
+            if(CobjLen >= 2 && cdata > 200 && cdata < 1200){
 
               let Ldata = Math.min(...[...currentPriceDataTable[key]]);
                 // console.log(key, Ldata);
@@ -361,13 +361,14 @@ function createFiveChart(companyList,  days = 80){
                 let cdata3 = [...currentPriceDataTable[key]][CobjLen -3] || 0;
                 let cdata4 = [...currentPriceDataTable[key]][CobjLen -4] || 0;
                 let cdata5 = [...currentPriceDataTable[key]][CobjLen -5] || 0;
-                let cdata6 = [...currentPriceDataTable[key]][CobjLen -7] || 0;
+                let cdata6 = [...currentPriceDataTable[key]][CobjLen -6] || 0;
                 // console.log([CurrentPriceObj[key]]);
                 
                 
                 let pdata = [...currentPriceDataTable[key]][CobjLen - 2];
                 let ppdata = [...currentPriceDataTable[key]][CobjLen - 3] || 0;
-                let pppdata = [...CurrentPriceObj[key]][1] || 0;
+                // let pppdata = [...CurrentPriceObj[key]][1] || 0;
+                let pppdata = [...currentPriceDataTable[key]][0] || 0;
                 
   
               // console.log(key + '    ' + getFiveMinVolumeData[key]);
@@ -376,6 +377,9 @@ function createFiveChart(companyList,  days = 80){
                 let volume = [...currentVolumeDataTable[key]][CobjLen] ;
                 let volume1 = [...currentVolumeDataTable[key]][CobjLen - 1] ;
                 let cvolume = [...currentVolumeDataTable[key]][CobjLen -1] / [CobjLen -1];
+                // [...previousDayVolumeDataTable[key]]
+                let Precvolume = [...previousDayVolumeDataTable[key]][CobjLen -1] / [CobjLen -1];
+
                 let cvolume1 = [...currentVolumeDataTable[key]][CobjLen -2] / [CobjLen -2];
                 let pvolume2 = [...currentVolumeDataTable[key]][CobjLen - 3] / [CobjLen - 3] ;
                 let pvolume3 = [...currentVolumeDataTable[key]][CobjLen - 3] / [CobjLen - 3] ;
@@ -397,17 +401,40 @@ let w = window.location.toString();
 if(w.includes("allv")){  
 let k = 0;
 // if((((cvolume - cvolume1)/ cvolume1) * 100 ) > 2  && cvolume > 5000 && cdata > 120 && cdata < 600 && cdata >  [...currentPriceDataTable[key]][0]  && cdata > cdata1 ){
-            if((((cvolume - cvolume1)/ cvolume1) * 100 ) > 2  &&  cdata > 200 && cdata < 600 && cdata >  [...currentPriceDataTable[key]][0]  && (cdata > cdata1 || cdata > cdata2 || cdata > cdata3 || cdata > cdata4 )){
+            if((((cvolume - cvolume1)/ cvolume1) * 100 ) > 2  &&  cdata > 200 && cdata < 600 && cdata >  [...currentPriceDataTable[key]][0]  && (cdata > cdata1 || cdata > cdata2 || cdata > cdata3 || cdata > cdata4  )){
 
-                          if((CobjLen >= 5 && cvolume > 25000) ||     (CobjLen >= 10 && cvolume > 20000)    ){
+                          if((CobjLen >= 2 && cvolume > 25000) ||     (CobjLen >= 10 && cvolume > 25000)    ){
 
-                                        if((Math.max(...[...SlciedData]) * 0.75 ) <= ( volume) ){
+                                        if(((Math.max(...[...SlciedData]) * 0.7 ) <= ( volume)) &&  (cvolume >= (Precvolume * 1.5 )) && ((cdata - pppdata) >= 4)){
                                         // per =(  (([...currentVolumeDataTable[key]][CobjLen] - [...currentVolumeDataTable[key]][CobjLen -1])/ [...currentVolumeDataTable[key]][CobjLen -1]) * 100   );
-                                        // console.log(key , per);
-                                        per = ((cvolume - cvolume1)/ cvolume1);
-                                        goingUp.push(per);
-                                        goingUpPosition[per] = key;
+                                        data.reverse();
+                                        for(let i = 0; i < CobjLen - 1; i++  ){
+                                          if(data[i] >= data[i + 1]){
+                                            Great++;
+                                          }
+                                        }
+                                        if((CobjLen < 8 )){
+                                            per = ((cvolume - cvolume1)/ cvolume1);
+                                            goingUp.push(per);
+                                            goingUpPosition[per] = key;
+                                            console.log(key[0] , cdata , pppdata);
+                                        }
+                                        else if(CobjLen <= 20 && (Great >= (CobjLen - 2  ))){
 
+                                          per = ((cvolume - cvolume1)/ cvolume1);
+                                          goingUp.push(per);
+                                          goingUpPosition[per] = key;
+                                          console.log(key[0] , cdata , pppdata);
+
+                                        }
+                                        else if(CobjLen > 20 && (Great >= (CobjLen * 0.80 ))){
+
+                                          per = ((cvolume - cvolume1)/ cvolume1);
+                                          goingUp.push(per);
+                                          goingUpPosition[per] = key;
+                                          console.log(key[0] , cdata , pppdata);
+
+                                        }
 
                                                 if(lsData[key[0]] == undefined){
 
@@ -430,6 +457,67 @@ let k = 0;
 
                    
                     }
+
+                   else if(w.includes("all8")){  
+                      let k = 0;
+                      // if((((cvolume - cvolume1)/ cvolume1) * 100 ) > 2  && cvolume > 5000 && cdata > 120 && cdata < 600 && cdata >  [...currentPriceDataTable[key]][0]  && cdata > cdata1 ){
+                                  if((((cvolume - cvolume1)/ cvolume1) * 100 ) > 2  &&  cdata > 600 && cdata < 1200 && cdata >  [...currentPriceDataTable[key]][0]  && (cdata > cdata1 || cdata > cdata2 || cdata > cdata3 || cdata > cdata4  )){
+                      
+                                                if((CobjLen >= 2 && cvolume > 25000) ||     (CobjLen >= 10 && cvolume > 20000)    ){
+                      
+                                                              if(((Math.max(...[...SlciedData]) * 0.7 ) <= ( volume)) &&  (cvolume >= (Precvolume * 1.5 )) && ((cdata - pppdata) >= 4)){
+                                                              // per =(  (([...currentVolumeDataTable[key]][CobjLen] - [...currentVolumeDataTable[key]][CobjLen -1])/ [...currentVolumeDataTable[key]][CobjLen -1]) * 100   );
+                                                              data.reverse();
+                                                              for(let i = 0; i < CobjLen - 1; i++  ){
+                                                                if(data[i] >= data[i + 1]){
+                                                                  Great++;
+                                                                }
+                                                              }
+                                                              if((CobjLen < 8 )){
+                                                                  per = ((cvolume - cvolume1)/ cvolume1);
+                                                                  goingUp.push(per);
+                                                                  goingUpPosition[per] = key;
+                                                                  console.log(key[0] , cdata , pppdata);
+                                                              }
+                                                              else if(CobjLen <= 20 && (Great >= (CobjLen - 2  ))){
+                      
+                                                                per = ((cvolume - cvolume1)/ cvolume1);
+                                                                goingUp.push(per);
+                                                                goingUpPosition[per] = key;
+                                                                console.log(key[0] , cdata , pppdata);
+                      
+                                                              }
+                                                              else if(CobjLen > 20 && (Great >= (CobjLen * 0.80 ))){
+                      
+                                                                per = ((cvolume - cvolume1)/ cvolume1);
+                                                                goingUp.push(per);
+                                                                goingUpPosition[per] = key;
+                                                                console.log(key[0] , cdata , pppdata);
+                      
+                                                              }
+                      
+                                                                      if(lsData[key[0]] == undefined){
+                      
+                                                                        lsData[key[0]] = 1;
+                      
+                                                                      } 
+                                                                      else{
+                                                                        lsData[key[0]] = lsData[key[0]] + 1;
+                                                                      }
+                      
+                                                                    for(let p = 0; p < [...currentVolumeDataTable[key]].length -1 ; p++){
+                                                                              if(((([...currentVolumeDataTable[key]][CobjLen - p] - [...currentVolumeDataTable[key]][CobjLen - (p + 1)] )/ [...currentVolumeDataTable[key]][CobjLen - (p + 1)]) * 100 ) > 2){
+                                                                              k++;  
+                                                                              }
+                                                                    }
+                                                              dict[key] = k;  
+                                                              }
+                                                } // cvolume > 10000 condition end
+                                  }   
+                      
+                                         
+                                          }
+
                     else if(w.includes("allp")){  
                         if(per > 0.05 )  {
                               goingUp.push(per);
@@ -750,12 +838,17 @@ let k = 0;
 
             let sum = 0;
             let avg = 0;
+            let avgMin = 0;
+            let avgMax = 0;
 
 // calculate sum using forEach() method
         yValues2.forEach( num => {
             sum += Number(num);
             })
-            avg = Math.max(...yValues2) - Math.min(...yValues2);
+            avgMax = Math.max(...yValues2) ;
+            avgMin =  Math.min(...yValues2);
+
+            avg = (avgMax - avgMin);
             // avg = (sum / (days)).toFixed(1);
 
                   xValues.reverse();

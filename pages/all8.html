@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>8 Stocks</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
+  
+   </head>
+    <body>
+     <div style="display: flex;">
+          <input placeholder="..Search..." type="text" id="filter" name="filter" width="60%" style="margin-top: 0px; margin-left: 10px;"/>
+          
+          <button  id="count" onclick="getStock();" style="width: 15%  !important; margin: 0;">Get</button>
+          <button  id="count" onclick="clearVolume();" style="width: 15%  !important; margin: 0;">Remove Volume</button>
+          <div class="" id="count" style="text-align: center;" ></div> 
+     </div>
+      
+      
+      <div class="static" style="height: 50px; margin-top: 5px; top:40px;">  
+            
+
+          <button  id="sliderminval" onclick="getStorageV();" style="width: 15%  !important; margin: 0;">Volume</button>
+          <input type="range" min="4"    max="81" value="80" name="slider" id="slidermin" style="width: 65%;"/>
+          <div id="stockslider" style="width: 12%; margin: auto;"></div>
+
+  
+</div>
+
+</div>
+
+<div id="rangeshow"></div>
+    <div class="favouritsection"></div>
+    <div class="charts"></div>
+
+
+      
+
+<script src="/common.js"></script>
+<script src="/buttons.js"></script>
+<!-- <script src="/scripts.js"></script> -->
+<link rel="stylesheet" type="text/css"  href="/style.css" >
+<style>
+  .Pdropdown,  .Ddropdown, .Gdropdown, .Pagedropdown{
+  width: 20% !important;
+}
+
+</style>
+
+<script>
+</script>
+<script>
+  getFivePer(); 
+  // setInterval(getFivePer, 5000 * 60);
+  </script>
+</body>
+</html>
