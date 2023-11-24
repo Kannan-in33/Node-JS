@@ -399,7 +399,7 @@ let k = 0;
 // if((((cvolume - cvolume1)/ cvolume1) * 100 ) > 2  && cvolume > 5000 && cdata > 120 && cdata < 600 && cdata >  [...currentPriceDataTable[key]][0]  && cdata > cdata1 ){
             if((((cvolume - cvolume1)/ cvolume1) * 100 ) > 2  &&  cdata > 200 && cdata < 600 && cdata >  [...currentPriceDataTable[key]][0]  && (cdata > cdata1 || cdata > cdata2 || cdata > cdata3 || cdata > cdata4 )){
 
-                          if((CobjLen < 8 && cvolume > 20000) ||     (CobjLen >= 8 && cvolume > 10000)    ){
+                          if((CobjLen >= 5 && cvolume > 25000) ||     (CobjLen >= 10 && cvolume > 20000)    ){
 
                                         if((Math.max(...[...SlciedData]) * 0.75 ) <= ( volume) ){
                                         // per =(  (([...currentVolumeDataTable[key]][CobjLen] - [...currentVolumeDataTable[key]][CobjLen -1])/ [...currentVolumeDataTable[key]][CobjLen -1]) * 100   );
