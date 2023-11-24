@@ -598,4 +598,8 @@ function clearChart(){
               Array.from(lst3).forEach( (element) =>  element.remove() );
         }
       }
+function clearVolume(){
 
+localStorage.removeItem("VolumeHigh");
+
+}
