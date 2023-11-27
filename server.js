@@ -86,6 +86,7 @@ const getCloseOpenPrice =  async () =>{
                 }
             }
 
+            
             let currentPrice = ele[2];
             let highPrice = ele[4];
             let lowPrice = ele[5];
@@ -212,6 +213,7 @@ const getUpdatedPrice =  async () =>{
             tempArr2.push(ele[4].toString())
 
    currentPriceData[ele[0]] = tempArr2;
+//    console.log(currentPriceData);
 });
 
 
@@ -397,7 +399,7 @@ getUpdatedPrice();
 // console.log(getUpdatedPriceTable());
 // console.log(getUpdatedVolomeTable());
 // getlongtermarray();
-
+console.log(currentPriceData);
 server.get('/favicon.ico', (req, res) => {
     res.sendFile(path.join(__dirname, './pages/favicon.ico'));
 

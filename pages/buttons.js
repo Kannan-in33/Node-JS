@@ -277,6 +277,7 @@ let myFunc1 = letsDebounce(setFilter,1000);
 function letsDebounce(fn,d){
           let timer;
           return function(){
+            document.getElementById("slidermin").value = slidermin.value;
             document.getElementById("sliderminval").innerText = 9 + Math.trunc(((slidermin.value * 5)+ 15)  / 60) + ':' + Math.trunc(((slidermin.value * 5)+ 15)  % 60);
           clearTimeout(timer);
           timer=setTimeout(fn,d);
@@ -602,4 +603,14 @@ function clearVolume(){
 
 localStorage.removeItem("VolumeHigh");
 
+}
+
+function addOne(){
+  let slidermin = document.getElementById("slidermin")
+
+  if(slidermin.value != slidermin.max){
+    let inc = Number(slidermin.value) + 1;
+    document.getElementById("slidermin").value = inc;
+    myFunc2();
+  }
 }

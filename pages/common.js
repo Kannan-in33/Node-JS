@@ -403,7 +403,7 @@ let k = 0;
 // if((((cvolume - cvolume1)/ cvolume1) * 100 ) > 2  && cvolume > 5000 && cdata > 120 && cdata < 600 && cdata >  [...currentPriceDataTable[key]][0]  && cdata > cdata1 ){
             if((((cvolume - cvolume1)/ cvolume1) * 100 ) > 2  &&  cdata > 200 && cdata < 600 && cdata >  [...currentPriceDataTable[key]][0]  && (cdata > cdata1 || cdata > cdata2 || cdata > cdata3 || cdata > cdata4  )){
 
-                          if((CobjLen >= 2 && cvolume > 25000) ||     (CobjLen >= 10 && cvolume > 25000)    ){
+                          if((CobjLen >= 2 && cvolume > 25000) ||     (CobjLen >= 20 && cvolume > 20000)    ){
 
                                         if(((Math.max(...[...SlciedData]) * 0.7 ) <= ( volume)) &&  (cvolume >= (Precvolume * 1.5 )) && ((cdata - pppdata) >= 4)){
                                         // per =(  (([...currentVolumeDataTable[key]][CobjLen] - [...currentVolumeDataTable[key]][CobjLen -1])/ [...currentVolumeDataTable[key]][CobjLen -1]) * 100   );
@@ -2743,6 +2743,12 @@ function getFivePer(){
         // getFiveHTTPs('getFivePer', 1);
         getHTTPs('getFivePer', 1);
         window.scrollTo({ left: 0, top: 0, behavior: "smooth" });
+
+    
+        // if(currentPriceDataTable['BSOFT'].length > 0) {
+          // document.getElementById("slidermin").value = currentPriceDataTable['BSOFT'].length;
+          // let myFunc1 = letsDebounce(setFilter,1000);
+        // }
 }
     
 function getFiveVolumeData(){
