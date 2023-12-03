@@ -430,9 +430,19 @@ server.get('/allp', (req, res) => {
     res.sendFile(path.join(__dirname, './pages/allp.html'));
 
 });
+server.get('/tlow', (req, res) => {
+
+    res.sendFile(path.join(__dirname, './pages/tlow.html'));
+
+});
 server.get('/alln', (req, res) => {
 
     res.sendFile(path.join(__dirname, './pages/alln.html'));
+
+});
+server.get('/vup', (req, res) => {
+
+    res.sendFile(path.join(__dirname, './pages/vup.html'));
 
 });
 server.get('/sell', (req, res) => {

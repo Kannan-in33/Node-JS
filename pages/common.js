@@ -190,8 +190,8 @@ let positiveSort = [];
 
 // New Chart Group starts here
 let userInput = "";
-function createFiveChart(companyList,  days = 80){
-    days = Math.min(currentPriceDataTable[companyList[0]].length - 1, slidermin.value);
+function createFiveChart(companyList){
+    days = Math.min(currentPriceDataTable[companyList[0]].length , slidermin.value);
     SliderRange = days;
       let chartlim = 0;
       let lst = [];
@@ -347,7 +347,7 @@ function createFiveChart(companyList,  days = 80){
   function getStockStatus(key){
     Great = 0;
         
-      let CobjLen = Math.min(document.getElementById("slidermin").value ,[...currentPriceDataTable[key]].length - 1);
+      let CobjLen = Math.min(document.getElementById("slidermin").value ,[...currentPriceDataTable[key]].length) -1;
       let data = [...currentPriceDataTable[key]];
       let cdata = [...currentPriceDataTable[key]][CobjLen];  
       let cdata1 = [...currentPriceDataTable[key]][CobjLen - 1];  
@@ -376,12 +376,13 @@ function createFiveChart(companyList,  days = 80){
                 
                 let volume = [...currentVolumeDataTable[key]][CobjLen] ;
                 let volume1 = [...currentVolumeDataTable[key]][CobjLen - 1] ;
-                let cvolume = [...currentVolumeDataTable[key]][CobjLen -1] / [CobjLen -1];
+                let cvolume = [...currentVolumeDataTable[key]][CobjLen ] / [CobjLen ];
                 // [...previousDayVolumeDataTable[key]]
                 let Precvolume = [...previousDayVolumeDataTable[key]][CobjLen -1] / [CobjLen -1];
+                let PrecvolumeHigh = Math.max(...[...previousDayVolumeDataTable[key]]) / 70;
 
-                let cvolume1 = [...currentVolumeDataTable[key]][CobjLen -2] / [CobjLen -2];
-                let pvolume2 = [...currentVolumeDataTable[key]][CobjLen - 3] / [CobjLen - 3] ;
+                let cvolume1 = [...currentVolumeDataTable[key]][CobjLen -1] / [CobjLen -1];
+                let pvolume2 = [...currentVolumeDataTable[key]][CobjLen - 2] / [CobjLen - 2] ;
                 let pvolume3 = [...currentVolumeDataTable[key]][CobjLen - 3] / [CobjLen - 3] ;
                 let pvolume4 = [...currentVolumeDataTable[key]][CobjLen - 4] / [CobjLen - 4] ;
                 let pvolume5 = [...currentVolumeDataTable[key]][CobjLen - 5] / [CobjLen - 5] || 0;
@@ -405,7 +406,7 @@ let k = 0;
 
                           if((CobjLen >= 2 && cvolume > 25000) ||     (CobjLen >= 20 && cvolume > 20000)    ){
 
-                                        if(((Math.max(...[...SlciedData]) * 0.7 ) <= ( volume)) &&  (cvolume >= (Precvolume * 1.5 )) && ((cdata - pppdata) >= 4)){
+                                        if( (cvolume >= (Precvolume * 1.25 )) && ((cdata - pppdata) >= 8)){ // ((Math.max(...[...SlciedData]) * 0.7 ) <= ( volume)) && 
                                         // per =(  (([...currentVolumeDataTable[key]][CobjLen] - [...currentVolumeDataTable[key]][CobjLen -1])/ [...currentVolumeDataTable[key]][CobjLen -1]) * 100   );
                                         data.reverse();
                                         for(let i = 0; i < CobjLen - 1; i++  ){
@@ -417,29 +418,20 @@ let k = 0;
                                             per = ((cvolume - cvolume1)/ cvolume1);
                                             goingUp.push(per);
                                             goingUpPosition[per] = key;
-                                            console.log(key[0] , cdata , pppdata);
                                         }
                                         else if(CobjLen <= 20 && (Great >= (CobjLen - 2  ))){
-
                                           per = ((cvolume - cvolume1)/ cvolume1);
                                           goingUp.push(per);
                                           goingUpPosition[per] = key;
-                                          console.log(key[0] , cdata , pppdata);
-
                                         }
                                         else if(CobjLen > 20 && (Great >= (CobjLen * 0.80 ))){
-
                                           per = ((cvolume - cvolume1)/ cvolume1);
                                           goingUp.push(per);
                                           goingUpPosition[per] = key;
-                                          console.log(key[0] , cdata , pppdata);
-
                                         }
 
                                                 if(lsData[key[0]] == undefined){
-
                                                   lsData[key[0]] = 1;
-
                                                 } 
                                                 else{
                                                   lsData[key[0]] = lsData[key[0]] + 1;
@@ -457,6 +449,29 @@ let k = 0;
 
                    
                     }
+
+
+
+
+                    else if(w.includes("tlow")){  
+                                  if((   cdata > 400 && cdata < 800 && ( cvolume * 5) < (Precvolume) && cvolume > 5000)){
+                                            console.log(Math.max(...[...previousDayVolumeDataTable[key]]), key);
+                                                                  per = ((cvolume - cvolume1)/ cvolume1);
+                                                                  goingUp.push(per);
+                                                                  goingUpPosition[per] = key;
+                                                              }
+
+                                                      }
+                    else if(w.includes("vup")){  
+                     
+                                  if(  cvolume > 10000 && ( cvolume ) > (Precvolume * 6) && cdata > 200 && cdata < 800 ){
+                                                                  per = ((cvolume - cvolume1)/ cvolume1);
+                                                                  goingUp.push(per);
+                                                                  goingUpPosition[per] = key;
+                                                                  
+                                                              }
+
+                                                      }
 
                    else if(w.includes("all8")){  
                       let k = 0;
@@ -496,10 +511,8 @@ let k = 0;
                       
                                                               }
                       
-                                                                      if(lsData[key[0]] == undefined){
-                      
-                                                                        lsData[key[0]] = 1;
-                      
+                                                                      if(lsData[key[0]] == undefined){                      
+                                                                        lsData[key[0]] = 1;                      
                                                                       } 
                                                                       else{
                                                                         lsData[key[0]] = lsData[key[0]] + 1;
@@ -2847,6 +2860,11 @@ function createPositiveChart(dpositive, dpositiveCompany){
               addPriceChart(key, location, days);        
   
               addVolumeChart(key, location, days);
+
+              let stocksliderLst = document.querySelectorAll(".stockslider");
+                          stocksliderLst.forEach(element => {
+                                element.addEventListener('input', moveChart);
+                              });             
 
              })
       
