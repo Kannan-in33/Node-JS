@@ -464,7 +464,7 @@ let k = 0;
                                                       }
                     else if(w.includes("vup")){  
                      
-                                  if(  cvolume > 10000 && ( cvolume ) > (Precvolume * 6) && cdata > 200 && cdata < 800 ){
+                                  if(  cvolume > 20000 && ( cvolume ) > (Precvolume * 6) && cdata > 200 && cdata < 800 ){
                                                                   per = ((cvolume - cvolume1)/ cvolume1);
                                                                   goingUp.push(per);
                                                                   goingUpPosition[per] = key;
