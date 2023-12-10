@@ -473,6 +473,7 @@ let k = 0;
                                                                   goingUp.push(per);
                                                                   goingUpPosition[per] = key;
                                                               }
+                                                            }
                     else if(w.includes("more")){  
                                 let closePrice = CurrentPriceObj[key][3];
                                 let openPrice =  CurrentPriceObj[key][1];
