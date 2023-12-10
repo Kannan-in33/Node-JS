@@ -402,12 +402,15 @@ let w = window.location.toString();
 if(w.includes("allv")){  
 let k = 0;
 // if((((cvolume - cvolume1)/ cvolume1) * 100 ) > 2  && cvolume > 5000 && cdata > 120 && cdata < 600 && cdata >  [...currentPriceDataTable[key]][0]  && cdata > cdata1 ){
-            if((((cvolume - cvolume1)/ cvolume1) * 100 ) > 2  &&  cdata > 200 && cdata < 900 && cdata >  [...currentPriceDataTable[key]][0]  && (cdata > cdata1 || cdata > cdata2 || cdata > cdata3 || cdata > cdata4  ) && (per > 0.02) ){
+            if((((cvolume - cvolume1)/ cvolume1) * 100 ) > 2  &&  cdata > 200 && cdata < 1600 && cdata >  [...currentPriceDataTable[key]][0]  && (cdata > cdata1 || cdata > cdata2 || cdata > cdata3 || cdata > cdata4  ) && (per > 0.02) ){
 
-                          if((CobjLen >= 2 && cvolume > 25000) ||     (CobjLen >= 20 && cvolume > 20000)    ){
+                          // if(  (CobjLen >= 2 && cvolume > 25000) ||     (CobjLen >= 20 && cvolume > 20000)   || ( CobjLen >= 10 && cvolume > cvolume1  && cvolume > 10000) ){
+
+                          if( (CobjLen >= 2 && cvolume > 25000) || ( CobjLen >= 6 && cvolume > cvolume1 && cvolume > 10000 ) ){ // 
 
                                         if( (cvolume >= (Precvolume * 1.25 )) && ((cdata - pppdata) >= 8)){ // ((Math.max(...[...SlciedData]) * 0.7 ) <= ( volume)) && 
                                         // per =(  (([...currentVolumeDataTable[key]][CobjLen] - [...currentVolumeDataTable[key]][CobjLen -1])/ [...currentVolumeDataTable[key]][CobjLen -1]) * 100   );
+                                        console.log(key);
                                         data.reverse();
                                         for(let i = 0; i < CobjLen - 1; i++  ){
                                           if(data[i] >= data[i + 1]){
@@ -419,12 +422,12 @@ let k = 0;
                                             goingUp.push(per);
                                             goingUpPosition[per] = key;
                                         }
-                                        else if(CobjLen <= 20 && (Great >= (CobjLen - 2  ))){
+                                        else if(CobjLen <= 20 && (Great >= (CobjLen - 4  ))){
                                           per = ((cvolume - cvolume1)/ cvolume1);
                                           goingUp.push(per);
                                           goingUpPosition[per] = key;
                                         }
-                                        else if(CobjLen > 20 && (Great >= (CobjLen * 0.80 ))){
+                                        else if(CobjLen > 20 && (Great >= (CobjLen * 0.50 ))){
                                           per = ((cvolume - cvolume1)/ cvolume1);
                                           goingUp.push(per);
                                           goingUpPosition[per] = key;
@@ -462,12 +465,23 @@ let k = 0;
                                                               }
 
                                                       }
+                    else if(w.includes("more")){  
+                                let closePrice = CurrentPriceObj[key][3];
+                                let openPrice =  CurrentPriceObj[key][1];
+                                per = ((openPrice - closePrice)/ closePrice) * 100;
+                                  if((   cdata > 400 && cdata < 1600 && per > 8)){
+                                                                  goingUp.push(per);
+                                                                  goingUpPosition[per] = key;
+                                                              }
+
+                                                      }
                     else if(w.includes("vup")){  
                      
-                                  if(  cvolume > 20000 && ( cvolume ) > (Precvolume * 6) && cdata > 200 && cdata < 800 ){
+                                  if(   (cvolume > 15000 && cdata > 200 && cdata < 800 && cdata > cdata1 )  && ( ( ( CobjLen <= 8 && ( cvolume ) > (Precvolume * 6) && cdata > cdata1 && cdata > cdata2 ) )  || (( Number(lastFiveOpenClose[key][0]) > 4 && (cvolume  > Precvolume * 3)) ) || (CobjLen > 8 && (cvolume > cvolume1))) ){
                                                                   per = ((cvolume - cvolume1)/ cvolume1);
                                                                   goingUp.push(per);
                                                                   goingUpPosition[per] = key;
+                                                                  console.log(key, Number(lastFiveOpenClose[key][0]));
                                                                   
                                                               }
 

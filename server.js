@@ -430,6 +430,11 @@ server.get('/allp', (req, res) => {
     res.sendFile(path.join(__dirname, './pages/allp.html'));
 
 });
+server.get('/more', (req, res) => {
+
+    res.sendFile(path.join(__dirname, './pages/more.html'));
+
+});
 server.get('/tlow', (req, res) => {
 
     res.sendFile(path.join(__dirname, './pages/tlow.html'));
