@@ -402,7 +402,7 @@ let w = window.location.toString();
 if(w.includes("allv")){  
 let k = 0;
 // if((((cvolume - cvolume1)/ cvolume1) * 100 ) > 2  && cvolume > 5000 && cdata > 120 && cdata < 600 && cdata >  [...currentPriceDataTable[key]][0]  && cdata > cdata1 ){
-            if((((cvolume - cvolume1)/ cvolume1) * 100 ) > 2  &&  cdata > 200 && cdata < 1600 && cdata >  [...currentPriceDataTable[key]][0]  && (cdata > cdata1 || cdata > cdata2 || cdata > cdata3 || cdata > cdata4  ) && (per > 0.02) ){
+            if((((cvolume - cvolume1)/ cvolume1) * 100 ) >= 2  &&  cdata > 200 && cdata < 1600 && cdata >  [...currentPriceDataTable[key]][0]  && (cdata > cdata1 || cdata > cdata2 || cdata > cdata3 || cdata > cdata4  ) && (per > 0.02) ){
 
                           // if(  (CobjLen >= 2 && cvolume > 25000) ||     (CobjLen >= 20 && cvolume > 20000)   || ( CobjLen >= 10 && cvolume > cvolume1  && cvolume > 10000) ){
 
@@ -465,11 +465,19 @@ let k = 0;
                                                               }
 
                                                       }
+                    else if(w.includes("oup")){  
+                                let closePrice = CurrentPriceObj[key][3];
+                                let openPrice =  CurrentPriceObj[key][1];
+                                per = ((openPrice - closePrice)/ closePrice) * 100;
+                                  if((   cdata > 200 && cdata < 1600 && per > 3)){
+                                                                  goingUp.push(per);
+                                                                  goingUpPosition[per] = key;
+                                                              }
                     else if(w.includes("more")){  
                                 let closePrice = CurrentPriceObj[key][3];
                                 let openPrice =  CurrentPriceObj[key][1];
                                 per = ((openPrice - closePrice)/ closePrice) * 100;
-                                  if((   cdata > 400 && cdata < 1600 && per > 8)){
+                                  if((   cdata > 200 && cdata < 1600 && per > 5)){
                                                                   goingUp.push(per);
                                                                   goingUpPosition[per] = key;
                                                               }

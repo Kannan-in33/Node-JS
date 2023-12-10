@@ -450,6 +450,11 @@ server.get('/vup', (req, res) => {
     res.sendFile(path.join(__dirname, './pages/vup.html'));
 
 });
+server.get('/oup', (req, res) => {
+
+    res.sendFile(path.join(__dirname, './pages/oup.html'));
+
+});
 server.get('/sell', (req, res) => {
 
     res.sendFile(path.join(__dirname, './pages/sell.html'));
