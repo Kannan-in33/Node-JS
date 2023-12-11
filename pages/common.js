@@ -352,7 +352,9 @@ function createFiveChart(companyList){
       let cdata = [...currentPriceDataTable[key]][CobjLen];  
       let cdata1 = [...currentPriceDataTable[key]][CobjLen - 1];  
       let SlciedData = [...currentVolumeDataTable[key]].slice( 0, CobjLen);
-            if(CobjLen >= 2 && cdata > 200 && cdata < 1200){
+
+
+            if(cdata > 200 && cdata < 1200){
 
               let Ldata = Math.min(...[...currentPriceDataTable[key]]);
                 // console.log(key, Ldata);
@@ -402,11 +404,11 @@ let w = window.location.toString();
 if(w.includes("allv")){  
 let k = 0;
 // if((((cvolume - cvolume1)/ cvolume1) * 100 ) > 2  && cvolume > 5000 && cdata > 120 && cdata < 600 && cdata >  [...currentPriceDataTable[key]][0]  && cdata > cdata1 ){
-            if((((cvolume - cvolume1)/ cvolume1) * 100 ) >= 2  &&  cdata > 200 && cdata < 1600 && cdata >  [...currentPriceDataTable[key]][0]  && (cdata > cdata1 || cdata > cdata2 || cdata > cdata3 || cdata > cdata4  ) && (per > 0.02) ){
+            if(CobjLen >= 2 && (((cvolume - cvolume1)/ cvolume1) * 100 ) >= 2  &&  cdata > 200 && cdata < 1600 && cdata >  [...currentPriceDataTable[key]][0]  && (cdata > cdata1 || cdata > cdata2 || cdata > cdata3 || cdata > cdata4  ) && (per > 0.02) ){
 
                           // if(  (CobjLen >= 2 && cvolume > 25000) ||     (CobjLen >= 20 && cvolume > 20000)   || ( CobjLen >= 10 && cvolume > cvolume1  && cvolume > 10000) ){
 
-                          if( (CobjLen >= 2 && cvolume > 25000) || ( CobjLen >= 6 && cvolume > cvolume1 && cvolume > 10000 ) ){ // 
+                          if( (CobjLen >= 2 && cvolume > 25000) || ( CobjLen >= 6 && cvolume > cvolume1 && cvolume > 20000 )  || ( CobjLen >= 18 && cvolume > cvolume1 && cvolume > 15000 ) || ( CobjLen >= 38 && cvolume > cvolume1 && cvolume > 10000 )){ // 
 
                                         if( (cvolume >= (Precvolume * 1.25 )) && ((cdata - pppdata) >= 8)){ // ((Math.max(...[...SlciedData]) * 0.7 ) <= ( volume)) && 
                                         // per =(  (([...currentVolumeDataTable[key]][CobjLen] - [...currentVolumeDataTable[key]][CobjLen -1])/ [...currentVolumeDataTable[key]][CobjLen -1]) * 100   );
