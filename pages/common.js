@@ -96,6 +96,7 @@ let days = 0;
 let lastFiveOpenClose ={};
 let dict = {};
 let lsData = {};
+let dCompanyVObject = {};
 
 let rupee = new Intl.NumberFormat('en-IN', {
     style: 'currency',
@@ -130,7 +131,8 @@ let sortKey = [];
   xhr.onload = () => {
     if (xhr.readyState == 4 && xhr.status == 200) {
       
-      dCompanyObject = xhr.response;
+      dCompanyObject = xhr.response.companyObject;
+      dCompanyVObject = xhr.response.companyVObject;
      
       let lst = document.querySelectorAll(".charts2 div");
       if(lst.length > 1){
@@ -190,15 +192,27 @@ function analysisChart( key , location, path){
                   topDivtag.appendChild(anchortag);
                   mainBlock.appendChild(topDivtag);
   
-            let bar = document.createElement("div");
-                  bar.setAttribute("class", "bar");
-                  anchortag.appendChild(bar);
+let bar = document.createElement("div");
+bar.setAttribute("class", "bar");
+anchortag.appendChild(bar);
 
   let canvasb = document.createElement("canvas");
   canvasb.setAttribute("id", "bar" + key);
   canvasb.setAttribute("class", "bar" + key); 
   canvasb.setAttribute("height", "250"); 
   canvasb.setAttribute("width", "600"); 
+  document.querySelector('[id="' + key + '"] .bar').appendChild(canvasb);
+
+let barv = document.createElement("div");
+barv.setAttribute("class", "barv");
+anchortag.appendChild(barv);
+
+  let canvasv = document.createElement("canvas");
+      canvasv.setAttribute("id", "barv" + key);
+      canvasv.setAttribute("class", "barv" + key); 
+      canvasv.setAttribute("height", "250"); 
+      canvasv.setAttribute("width", "600"); 
+  document.querySelector('[id="' + key + '"] .barv').appendChild(canvasv);
 
   let xaxisprice = [];
   for(let i = 1; i < 77 ; i++){ //[...currentPriceDataTable[key]].length - 1; i++){
@@ -210,7 +224,7 @@ function analysisChart( key , location, path){
   let stockmin = Math.min(...[...dCompanyObject[key]]);
   let stockmax = Math.max(...[...dCompanyObject[key]]);
 
-  document.querySelector('[id="' + key + '"] .bar').appendChild(canvasb);
+  
       // console.log([...currentPriceDataTable[key]].reverse());
   new Chart(canvasb, {
     type: "line",
@@ -224,6 +238,50 @@ function analysisChart( key , location, path){
             borderWidth : 0.5,
             borderColor: "rgba(0,0,0,0.9)",
             data: ([...dCompanyObject[key]]).reverse(),
+            }]
+          },  
+          options: {
+              scales: {
+                  yAxes: [{
+
+                      ticks: {
+                          fontSize: 16,
+                          family: "'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif', 'monospace'",
+                  }
+              }]
+          }
+          }
+
+    }); 
+
+
+console.log(key);
+
+  
+
+  let newVolume2 = [...dCompanyVObject[key]];
+  newVolume2.reverse();
+  let newVolume = [];
+  for(let i =  0 ; i < 77 ; i++){                    
+    newVolume.push([...newVolume2][i || 1]/[i || 1]);
+    
+  }
+
+
+  let stockVmax = Math.max(...[...newVolume].slice(5,76));
+
+  new Chart(canvasv, {
+    type: "line",
+    data: {
+    labels: [...xaxisprice],
+    datasets: [{
+            label:     'H : ' + parseInt(stockVmax),
+            // label: 'L : ' + Math.min(...[...currentPriceDataTable[key]].slice(0, days)) + '   H : ' + Math.max(...[...currentPriceDataTable[key]].slice(0, days)) + '        C : ' + [...currentPriceDataTable[key]][days -1],
+            fontSize: 20,
+            pointRadius: 0,
+            borderWidth : 0.5,
+            borderColor: "rgba(0,0,0,0.9)",
+            data: newVolume,
             }]
           },  
           options: {

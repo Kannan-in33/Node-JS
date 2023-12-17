@@ -537,15 +537,12 @@ server.get('/lt', (req, res) => {
 
 server.use( (req, res)=>{
 
-console.log(req.path);
-
-
-
 
 if(req.path.includes('analyse')) {
     let stock = req.path.split("=")[1];
     companyObject = {};
-        const directorypath = path.join(__dirname, 'JSON');
+    let companyVObject = {};
+    const directorypath = path.join(__dirname, 'JSON');
 
     fs.readdir(directorypath , function (err, files) {
     if (err) throw err;
@@ -555,12 +552,36 @@ if(req.path.includes('analyse')) {
         fs.readFile(path.join(directorypath , file), 'utf8', function (err2, data) {
             if (err2) throw err2;
             obj = JSON.parse(data);
-            // console.log([...obj['FACT']]);
             companyObject[file.split('.')[0]] = [...obj[stock]];
             
             if( i == files.length -1 ){
-                res.send(companyObject);
-            }
+
+                const directorypath2 = path.join(__dirname, 'JSON-Volume');
+
+                fs.readdir(directorypath2 , function (err, files2) {
+                if (err) throw err;
+            
+                files2.forEach( (file2, i) => {
+            
+                    fs.readFile(path.join(directorypath2 , file2), 'utf8', function (err2, data) {
+                        if (err2) throw err2;
+                        obj = JSON.parse(data);
+                        companyVObject[file2.split('.')[0]] = [...obj[stock]];
+                        
+                        if( i == files2.length -1 ){
+                            obj3 = { 
+                                "companyObject" : companyObject,
+                                "companyVObject": companyVObject,                                
+                            }
+                            // console.log(obj3)
+                            res.send(obj3);
+
+                        }
+                    });
+                });
+            });
+        }
+
             
         });
         });
