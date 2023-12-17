@@ -537,12 +537,39 @@ server.get('/lt', (req, res) => {
 
 server.use( (req, res)=>{
 
-// console.log(req.path);
+console.log(req.path);
 
 
 
 
-if(req.path.includes('getcompare')) {
+if(req.path.includes('analyse')) {
+    let stock = req.path.split("=")[1];
+    companyObject = {};
+        const directorypath = path.join(__dirname, 'JSON');
+
+    fs.readdir(directorypath , function (err, files) {
+    if (err) throw err;
+
+    files.forEach( (file, i) => {
+
+        fs.readFile(path.join(directorypath , file), 'utf8', function (err2, data) {
+            if (err2) throw err2;
+            obj = JSON.parse(data);
+            // console.log([...obj['FACT']]);
+            companyObject[file.split('.')[0]] = [...obj[stock]];
+            
+            if( i == files.length -1 ){
+                res.send(companyObject);
+            }
+            
+        });
+        });
+    });
+
+    
+}
+
+else if(req.path.includes('getcompare')) {
         const directorypath = path.join(__dirname, 'SectorData');
         fs.readFile(path.join(directorypath , 'Comparison.json'), 'utf8', function (err2, data) {
             if (err2) throw err2;

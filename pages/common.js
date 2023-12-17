@@ -120,6 +120,128 @@ function getCompare() {
 }
 getCompare();
 
+function getAnalysis(e){
+let path = e.target.id;
+let sortKey = [];
+  const xhr = new XMLHttpRequest();
+  xhr.open("GET", "/analyse=" +  path )  ;
+  xhr.send();
+  xhr.responseType = "json";
+  xhr.onload = () => {
+    if (xhr.readyState == 4 && xhr.status == 200) {
+      
+      dCompanyObject = xhr.response;
+     
+      let lst = document.querySelectorAll(".charts2 div");
+      if(lst.length > 1){
+            Array.from(lst).forEach( (element) =>  element.remove() );
+      }
+
+      Object.keys(dCompanyObject).forEach( key => {
+        sortKey.push(key);
+       } );
+
+       sortKey.sort((a,b) => a - b);
+      //  sortKey.reverse();
+
+       sortKey.forEach( key => analysisChart( key , "charts2", path));
+       document.querySelector(".charts2").style.display = "block";
+
+      
+    } 
+    else {
+      console.log(`Error: ${xhr.status}`);
+      }
+    };
+}
+
+function analysisChart( key , location, path){
+
+
+  let mainBlock = document.createElement("div");   
+              mainBlock.setAttribute("class", "mainBlock");
+  
+          let topDivtag = document.createElement("div"); 
+            topDivtag.setAttribute("class", "topDivtag");
+  
+            let divtagMain = document.createElement("div"); 
+                divtagMain.setAttribute("id", key);
+                divtagMain.appendChild(mainBlock); 
+                document.querySelector("." + location).appendChild(divtagMain);
+             
+
+            let lblF = document.createElement("label");
+                    lblF.setAttribute("for", key);
+                    lblF.setAttribute("value", 'favourite');
+            topDivtag.appendChild(lblF);
+              let checkBoxF = document.createElement("input");
+                      checkBoxF.setAttribute("type", "checkbox");
+                      checkBoxF.setAttribute("class", 'favourite');
+  
+  
+                      checkBoxF.setAttribute("id",  key);
+                      // checkBoxF.setAttribute("value", "favourite");
+                      checkBoxF.addEventListener("click", setFav);
+                      topDivtag.appendChild(checkBoxF);
+                      
+            let anchortag = document.createElement("a");
+                  anchortag.setAttribute("href", "https://www.screener.in/company/" + key + "/");
+                  anchortag.setAttribute("target", "_blank");
+                  topDivtag.appendChild(anchortag);
+                  mainBlock.appendChild(topDivtag);
+  
+            let bar = document.createElement("div");
+                  bar.setAttribute("class", "bar");
+                  anchortag.appendChild(bar);
+
+  let canvasb = document.createElement("canvas");
+  canvasb.setAttribute("id", "bar" + key);
+  canvasb.setAttribute("class", "bar" + key); 
+  canvasb.setAttribute("height", "250"); 
+  canvasb.setAttribute("width", "600"); 
+
+  let xaxisprice = [];
+  for(let i = 1; i < 77 ; i++){ //[...currentPriceDataTable[key]].length - 1; i++){
+    xaxisprice.push(i);
+  }
+
+  let stockOpen = [...dCompanyObject[key]][76];
+  let stockClose = [...dCompanyObject[key]][0];
+  let stockmin = Math.min(...[...dCompanyObject[key]]);
+  let stockmax = Math.max(...[...dCompanyObject[key]]);
+
+  document.querySelector('[id="' + key + '"] .bar').appendChild(canvasb);
+      // console.log([...currentPriceDataTable[key]].reverse());
+  new Chart(canvasb, {
+    type: "line",
+    data: {
+    labels: [...xaxisprice],
+    datasets: [{
+            label:     key + ' : ' + path + ' C : ' + parseInt(stockClose- stockOpen) + '  V : ' + parseInt(stockmax- stockmin),
+            // label: 'L : ' + Math.min(...[...currentPriceDataTable[key]].slice(0, days)) + '   H : ' + Math.max(...[...currentPriceDataTable[key]].slice(0, days)) + '        C : ' + [...currentPriceDataTable[key]][days -1],
+            fontSize: 20,
+            pointRadius: 0,
+            borderWidth : 0.5,
+            borderColor: "rgba(0,0,0,0.9)",
+            data: ([...dCompanyObject[key]]).reverse(),
+            }]
+          },  
+          options: {
+              scales: {
+                  yAxes: [{
+
+                      ticks: {
+                          fontSize: 16,
+                          family: "'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif', 'monospace'",
+                  }
+              }]
+          }
+          }
+
+    }); 
+
+}
+
 function getHTTPs(path){
     companyDetails = [];
     dCompanyObject = {};
@@ -718,7 +840,7 @@ let k = 0;
   
                       checkBoxF.setAttribute("id",  key);
                       // checkBoxF.setAttribute("value", "favourite");
-                      checkBoxF.addEventListener("click", setFav);
+                      checkBoxF.addEventListener("click", getAnalysis);
                       topDivtag.appendChild(checkBoxF);
                       companyDetails.push(key);
                       

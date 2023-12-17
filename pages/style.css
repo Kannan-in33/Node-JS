@@ -91,6 +91,7 @@
     .charts > div{
         display: block;
         width:100%;
+        margin:auto;
         margin-top: 25px;
       }
       
@@ -100,6 +101,21 @@
       }
       .bottomDivTag{
         display: flex;
+      }
+      .charts2{
+        display: none;
+        width: 100%;
+        height : auto;
+        top: 100px;
+        position: absolute;
+        opacity: 1;
+        background-color: #f0fdff;
+        z-index: 2099;
+      }
+
+      .charts2 > div{
+        max-width: 320px;
+        margin: auto;
       }
 
      .right{
