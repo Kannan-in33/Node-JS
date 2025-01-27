@@ -341,6 +341,7 @@ function getHTTPs(path){
         
         // if( path == "getFivePer"){
             companyList = [...xhr.response.companyList];
+          console.log(companyList)
             createFiveChart(companyList);
              
         // }
