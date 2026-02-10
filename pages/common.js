@@ -337,7 +337,7 @@ function getHTTPs(path){
         companyObject = xhr.response.companyObject;
         lastFiveOpenClose = xhr.response.lastFiveOpenClose;
         previousDayVolumeDataTable = xhr.response.previousDayVolumeDataTable;
-        
+         
         // if( path == "getFivePer"){
             companyList = [...xhr.response.companyList];
           console.log(companyList)
