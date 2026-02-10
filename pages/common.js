@@ -333,7 +333,6 @@ function getHTTPs(path){
         highPriceData = xhr.response.highPriceData;
         closeOpenPriceDataObject = xhr.response.closeOpenPriceDataObject;
         closeOpenPriceData = xhr.response.closeOpenPriceData;
-        CurrentPriceObj = xhr.response.currentPriceData;
         getFiveMinVolumeData = xhr.response.getFiveMinVolumeData,
         companyObject = xhr.response.companyObject;
         lastFiveOpenClose = xhr.response.lastFiveOpenClose;
@@ -343,7 +342,9 @@ function getHTTPs(path){
             companyList = [...xhr.response.companyList];
           console.log(companyList)
             createFiveChart(companyList);
-             
+             if(currentPriceDataTable.ITC.length > 0){
+                document.getElementById("slidermin").value = currentPriceDataTable.ITC.length -1;
+             }
         // }
         // else{
         //     createChart( xhr.response.companyObject );
