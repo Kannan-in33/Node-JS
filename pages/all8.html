@@ -276,7 +276,7 @@ var hirect=[];
 
 
   const  stockName = ["aartiind","aartipharm","aavas","abslamc","adanigreen","adaniports","aether","affle","ambujacem","anantraj","anuras","apollopipe","apollotyre","ashapurmin","asterdm","astramicro","atulauto","aubank","aurionpro","auropharma","avadhsugar","avantifeed","axisbank","bajajcon","balramchin","bancoindia","bergepaint","bfutilitie","biocon","bororenew","bpcl","brigade","bsoft","cdsl","cgpower","chalet","chamblfert","chennpetro","choicein","cieindia","cipla","coalindia","cochinship","concor","creditacc","csbbank","cyient","dabur","deepakfert","delhivery","dlf","dredgecorp","eidparry","elecon","elgiequip","emamiltd","emudhra","fincables","fivestar","fortis","gabriel","ganecos","geship","gicre","gmdcltd","gna","gnfc","godrejcp","gokex","granules","graphite","gujgasltd","havells","hcltech","hdfcbank","hdfclife","heg","hginfra","hindalco","hindcopper","hindpetro","hindzinc","homefirst","hscl","icicibank","icicipruli","ideaforge","iifl","indhotel","indiacem","indiaglyco","indianb","indigopnts","indramedco","indusindbk","industower","intellect","irctc","jbma","jindalpoly","jindalstel","jindrill","jktyre","jsl","jsll","jswenergy","jswsteel","jublfood","jublingrea","justdial","kajariacer","kalyankjil","kfintech","kiriindus","kirloseng","kpigreen","kpittech","kprmill","kscl","lauruslabs","lichsgfin","lici","lloydsme","lodha","m&mfin","mahlog","maninds","manyavar","marico","maxhealth","mbapl","medplus","mindacorp","motilalofs","nam","natcopharm","nationalum","nava","newgen","nitinspin","ntpc","oberoirlty","olectra","optiemus","orchpharma","paras","patanjali","paytm","pfc","pgel","pnbhousing","pocl","policybzr","polymed","poonawalla","premexpln","prestige","pricolltd","pvrinox","rainbow","ramcocem","ramcosys","ramky","rategain","rkforge","route","sardaen","sbicard","sbin","shaktipump","shardacrop","sirca","skipper","smspharma","sonacoms","starhealth","sumichem","sunteck","suntv","symphony","syngene","syrma","tanla","tatachem","tatacomm","tataconsum","tatapower","tdpowersys","techm","tejasnet","thyrocare","titagarh","triturbine","triveni","unominda","ushamart","varroc","vbl","vedl","voltas","vtl","wabag","welcorp","whirlpool","wockpharma","zensartech","zentec","zyduslife","360one","63moons","bajfinance","cams","coforge","drreddy","kims","kotakbank","krishnadef","lalpathlab","naukri","nestleind","pidilitind","raymond","reliance","shriramfin","tatainvest","vmart","zyduswell","prajind","atgl","deepakntr","torntpower","luxind","hirect"]
- 
+  
 
   stockName.forEach( ele => ele = new Array())
 
@@ -323,6 +323,18 @@ var hirect=[];
 
         }
         
+        
+      })
+
+      data.forEach((row, index) => {
+
+        try{
+
+          window[row[1]].push(row[3]);
+        }
+        catch(e){
+
+        }
       })
       createChartSection();
 
@@ -336,10 +348,13 @@ var hirect=[];
   function createChartSection(){
 
     let xaxisprice =[]
-    for(let i = 0; i < window[stockName[1]].length / 2; i++){
+    for(let i = 0; i < window[stockName[1]].length / 3; i++){
       xaxisprice.push(i);
     }
-
+    let len = window[stockName[1]].length
+  let len1 = window[stockName[1]].length/3
+  let len2 = len1 * 2
+  let len3 = len2 + len1
 
     let main = document.getElementById("main");
     stockName.forEach(ele => {
@@ -350,34 +365,51 @@ var hirect=[];
               main.appendChild(mainBlock)
 
 
+
               new Chart(mainBlock, {
   type: "line",
   data: {
   labels: [...xaxisprice],
   datasets: [{
         label: ele ,
-        fontSize: 16,
+        fontSize: 24,
         pointRadius: 0,
         // borderWidth : 0.5,
         borderColor: "rgba(200,100,0,0.9)",
-        data: [...window[ele]].slice(0, window[stockName[1]].length / 2), // ([...currentVolumeDataTable[key]]).slice(0, days),
+        data: [...window[ele]].slice(0, len1), // ([...currentVolumeDataTable[key]]).slice(0, days),
+        yAxisID: 'y', 
         },
       {
         pointRadius: 0,
         borderColor: 'rgb(0, 0, 152)',
         backgroundColor: 'rgba(255, 99, 132, 0.2)',
-        data: [...window[ele]].slice(window[stockName[1]].length / 2, window[stockName[1]].length),
+        data: [...window[ele]].slice(len1, len2),
+        yAxisID: 'y', 
+      },
+      {
+        pointRadius: 0,
+        borderColor: 'rgb(255, 165, 0)',
+        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+        data: [...window[ele]].slice(len2, len),
+        yAxisID: 'y1',
       }
       ]
-      },  
+      }
+      ,  
       options: {
           scales: {
-              yAxes: [{
-                  ticks: {
-                      fontSize: 15,
-                      family: "'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif', 'monospace'"
-              }
-          }]
+         yAxes: [
+						{
+							type: 'linear',
+							position: 'left',
+							id: 'y',
+						},
+						{
+							type: 'linear',
+							position: 'right',
+							id: 'y1',
+						},
+					]
       }
       }
   
@@ -390,16 +422,7 @@ catch{
 
     })
   
-          
-  
-          
-           
-
-
-
-                  
-
-                  
+              
   }
   
 
