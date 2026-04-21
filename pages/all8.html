@@ -25,6 +25,7 @@
       max-width: 90%;
       display: flex;
       flex-wrap: wrap;
+      margin: auto;
     }
 	#main > div{
 		margin-bottom: 20px;
@@ -48,7 +49,7 @@
   <table id="outputTable"></table>
 <div id="main"></div>
   <script>
-    var aartiind=[];
+var aartiind=[];
 var aartipharm=[];
 var aavas=[];
 var abslamc=[];
@@ -290,12 +291,16 @@ var hirect=[];
 
 
     document.getElementById('fileInput').addEventListener('change', function(e) {
+      document.getElementById("main").innerHTML = "";
+      stockName.forEach( ele => window[ele] = new Array())
+      
       const file = e.target.files[0];
       if (!file) return;
 
       const reader = new FileReader();
 
       reader.onload = function(event) {
+        
         const text = event.target.result;
         const rows = text.split('\n').map(row => row.split(','));
 
@@ -369,14 +374,18 @@ var hirect=[];
       // console.log(ele)
       try{
 		  let nameBlock =  document.createElement("div"); 
+      nameBlock.setAttribute("id", ele)
 		  nameBlock.innerText = ele;
 		  main.appendChild(nameBlock)
 		  
       let mainBlock =  document.createElement("canvas");  
               mainBlock.setAttribute("class", ele);
-              main.appendChild(mainBlock)
+              nameBlock.appendChild(mainBlock)
 
-
+        let PArray = [...window[ele]].slice(len2, len).map(Number);
+        let MaxNum = Math.max(...PArray);
+        let MinNum = Math.min(...PArray);
+        let labl = parseInt(MaxNum - MinNum);
 
               new Chart(mainBlock, {
   type: "line",
@@ -393,7 +402,7 @@ var hirect=[];
         yAxisID: 'y', 
         },
       {
-        label: "",
+        label: labl,
         pointRadius: 0,
         borderColor: 'rgb(0, 0, 152)',
         backgroundColor: 'rgba(255, 99, 132, 0.0)',
@@ -443,6 +452,40 @@ catch{
 
 </script>
 
+
+<script>
+
+  function setFilter(){
+        let filterData = (document.querySelector("#filter").value).toLowerCase();
+        if ( filterData.length > 0) {
+            var lst = Array.from(document.querySelectorAll("#main > div"));
+            lst.forEach( (ele) => ele.style.display = "none" );
+    
+            lst = Array.from(document.querySelectorAll("[id^= '" + filterData + "']"));
+            lst.forEach( ele => ele.style.display = "" ); 
+    
+        }
+    
+        else{
+          var lst = Array.from(document.querySelectorAll("#main > div"));
+            lst.forEach( (ele) => ele.style.display = "" );
+ 
+        }
+}
+ 
+ let myFunc1 = letsDebounce(setFilter,1000);
+    
+function letsDebounce(fn,d){
+          let timer;
+          return function(){
+          clearTimeout(timer);
+          timer=setTimeout(fn,d);
+          }
+      }
+
+document.getElementById("filter").addEventListener('input', myFunc1);
+
+</script>
 
 </body>
 </html>
