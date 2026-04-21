@@ -43,6 +43,8 @@
   <h2>Upload and Parse CSV</h2>
   <input type="file" id="fileInput" accept=".csv" />
 
+  <input type="text" id="filter" />
+
   <table id="outputTable"></table>
 <div id="main"></div>
   <script>
@@ -381,7 +383,7 @@ var hirect=[];
   data: {
   labels: [...xaxisprice],
   datasets: [{
-        label: ele ,
+        label: [window[ele][len1-1]] ,
         fontSize: 24,
         pointRadius: 0,
         // borderWidth : 0.5,
@@ -391,6 +393,7 @@ var hirect=[];
         yAxisID: 'y', 
         },
       {
+        label: "",
         pointRadius: 0,
         borderColor: 'rgb(0, 0, 152)',
         backgroundColor: 'rgba(255, 99, 132, 0.0)',
@@ -398,6 +401,7 @@ var hirect=[];
         yAxisID: 'y', 
       },
       {
+        label: [window[ele][len-1]] ,
         pointRadius: 0,
         borderColor: 'rgb(255, 165, 0)',
         backgroundColor: 'rgba(255, 99, 132, 0.0)',
