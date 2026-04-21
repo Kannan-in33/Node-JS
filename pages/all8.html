@@ -365,6 +365,10 @@ var hirect=[];
     stockName.forEach(ele => {
       // console.log(ele)
       try{
+		  let nameBlock =  document.createElement("div"); 
+		  nameBlock.innerText = ele;
+		  main.appendChild(nameBlock)
+		  
       let mainBlock =  document.createElement("canvas");  
               mainBlock.setAttribute("class", ele);
               main.appendChild(mainBlock)
@@ -380,21 +384,21 @@ var hirect=[];
         fontSize: 24,
         pointRadius: 0,
         // borderWidth : 0.5,
-        borderColor: "rgba(200,100,0,0.9)",
+        borderColor: "rgba(200,100,0,0.0)",
         data: [...window[ele]].slice(0, len1), // ([...currentVolumeDataTable[key]]).slice(0, days),
         yAxisID: 'y', 
         },
       {
         pointRadius: 0,
         borderColor: 'rgb(0, 0, 152)',
-        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+        backgroundColor: 'rgba(255, 99, 132, 0.0)',
         data: [...window[ele]].slice(len1, len2),
         yAxisID: 'y', 
       },
       {
         pointRadius: 0,
         borderColor: 'rgb(255, 165, 0)',
-        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+        backgroundColor: 'rgba(255, 99, 132, 0.0)',
         data: [...window[ele]].slice(len2, len),
         yAxisID: 'y1',
       }
