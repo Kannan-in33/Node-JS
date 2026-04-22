@@ -349,10 +349,8 @@ var hirect=[];
 
         }
       })
+      createChartSection();
 
-		document.getElementById("main").innerText = "hi";
-		createChartSection();
-document.getElementById("main").innerText = "done";
     }
   </script>
 
@@ -361,32 +359,21 @@ document.getElementById("main").innerText = "done";
 <script>
 
   function createChartSection(){
-
-	  document.getElementById("main").innerText = "hi2";
-
-      let len = window[stockName[1]].length
+	  let main = document.getElementById("main")
+let len = window[stockName[1]].length
   let len1 = window[stockName[1]].length/3
   let len2 = len1 * 2
   let len3 = len2 + len1
-
-	  document.getElementById("main").innerText = "hi3";
-
+main.innerText = len;
+	  main.innerText = [window[ele][len1-1]] ;
 	  
-      let Dfcur= parseInt(window[ele][len1-1])
-let Dncur = parseInt([window[ele][len2-1]])
-	  document.getElementById("main").innerText = len:
-
-     // if((Dfcur/Dncur) >= 0.8){
-
-        
-
     let xaxisprice =[]
     for(let i = 0; i < window[stockName[1]].length / 3; i++){
       xaxisprice.push(i);
     }
     
 
-    let main = document.getElementById("main");
+    ;
     stockName.forEach(ele => {
       // console.log(ele)
       try{
@@ -463,7 +450,7 @@ catch{
 
     })
   
-    //  }       
+              
   }
   
 
