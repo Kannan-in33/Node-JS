@@ -40,7 +40,7 @@
    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 </head>
 <body>
-
+<div id="count"></div>
   <h2>Upload and Parse CSV</h2>
   <input type="file" id="fileInput" accept=".csv" />
 
@@ -364,8 +364,7 @@ let len = window[stockName[1]].length
   let len1 = window[stockName[1]].length/3
   let len2 = len1 * 2
   let len3 = len2 + len1
-main.innerText = len;
-	  main.innerText = [window[stockName[1]][len1-1]] ;
+let counter = 0
 	  
     let xaxisprice =[]
     for(let i = 0; i < window[stockName[1]].length / 3; i++){
@@ -377,7 +376,8 @@ main.innerText = len;
     
       try{
 		  if((parseInt(window[ele][len1-1]) / parseInt(window[ele][len2-1])) > 0.8){
-		  let nameBlock =  document.createElement("div"); 
+		  document.getElementById("count").innerText = ++counter;
+			  let nameBlock =  document.createElement("div"); 
       nameBlock.setAttribute("id", ele)
 		  nameBlock.innerText = ele;
 		  main.appendChild(nameBlock)
