@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CSV Reader</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    table {
+      border-collapse: collapse;
+      margin-top: 20px;
+      width: 100%;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f4f4f4;
+    }
+    #main{
+      max-width: 90%;
+      display: flex;
+      flex-wrap: wrap;
+      margin: auto;
+    }
+	#main > div{
+		margin-bottom: 20px;
+      text-transform: uppercase;
+      width: 100%;
+      text-align: center;
+    }
+    canvas{
+      width: 300px;
+    }
+  </style>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+</head>
+<body>
+<div id="count"></div>
+  <h2>Upload and Parse CSV</h2>
+  <input type="file" id="fileInput" accept=".csv" />
+
+  <input type="text" id="filter" />
+	<input type="text" id="fil" />
+
+  <table id="outputTable"></table>
+<div id="main"></div>
+  <script>
+var aartiind=[];
+var aartipharm=[];
+var aavas=[];
+var abslamc=[];
+var adanigreen=[];
+var adaniports=[];
+var aether=[];
+var affle=[];
+var ambujacem=[];
+var anantraj=[];
+var anuras=[];
+var apollopipe=[];
+var apollotyre=[];
+var ashapurmin=[];
+var asterdm=[];
+var astramicro=[];
+var atulauto=[];
+var aubank=[];
+var aurionpro=[];
+var auropharma=[];
+var avadhsugar=[];
+var avantifeed=[];
+var axisbank=[];
+var bajajcon=[];
+var balramchin=[];
+var bancoindia=[];
+var bergepaint=[];
+var bfutilitie=[];
+var biocon=[];
+var bororenew=[];
+var bpcl=[];
+var brigade=[];
+var bsoft=[];
+var cdsl=[];
+var cgpower=[];
+var chalet=[];
+var chamblfert=[];
+var chennpetro=[];
+var choicein=[];
+var cieindia=[];
+var cipla=[];
+var coalindia=[];
+var cochinship=[];
+var concor=[];
+var creditacc=[];
+var csbbank=[];
+var cyient=[];
+var dabur=[];
+var deepakfert=[];
+var delhivery=[];
+var dlf=[];
+var dredgecorp=[];
+var eidparry=[];
+var elecon=[];
+var elgiequip=[];
+var emamiltd=[];
+var emudhra=[];
+var fincables=[];
+var fivestar=[];
+var fortis=[];
+var gabriel=[];
+var ganecos=[];
+var geship=[];
+var gicre=[];
+var gmdcltd=[];
+var gna=[];
+var gnfc=[];
+var godrejcp=[];
+var gokex=[];
+var granules=[];
+var graphite=[];
+var gujgasltd=[];
+var havells=[];
+var hcltech=[];
+var hdfcbank=[];
+var hdfclife=[];
+var heg=[];
+var hginfra=[];
+var hindalco=[];
+var hindcopper=[];
+var hindpetro=[];
+var hindzinc=[];
+var homefirst=[];
+var hscl=[];
+var icicibank=[];
+var icicipruli=[];
+var ideaforge=[];
+var iifl=[];
+var indhotel=[];
+var indiacem=[];
+var indiaglyco=[];
+var indianb=[];
+var indigopnts=[];
+var indramedco=[];
+var indusindbk=[];
+var industower=[];
+var intellect=[];
+var irctc=[];
+var jbma=[];
+var jindalpoly=[];
+var jindalstel=[];
+var jindrill=[];
+var jktyre=[];
+var jsl=[];
+var jsll=[];
+var jswenergy=[];
+var jswsteel=[];
+var jublfood=[];
+var jublingrea=[];
+var justdial=[];
+var kajariacer=[];
+var kalyankjil=[];
+var kfintech=[];
+var kiriindus=[];
+var kirloseng=[];
+var kpigreen=[];
+var kpittech=[];
+var kprmill=[];
+var kscl=[];
+var lauruslabs=[];
+var lichsgfin=[];
+var lici=[];
+var lloydsme=[];
+var lodha=[];
+var mmfin=[];
+var mahlog=[];
+var maninds=[];
+var manyavar=[];
+var marico=[];
+var maxhealth=[];
+var mbapl=[];
+var medplus=[];
+var mindacorp=[];
+var motilalofs=[];
+var nam=[];
+var natcopharm=[];
+var nationalum=[];
+var nava=[];
+var newgen=[];
+var nitinspin=[];
+var ntpc=[];
+var oberoirlty=[];
+var olectra=[];
+var optiemus=[];
+var orchpharma=[];
+var paras=[];
+var patanjali=[];
+var paytm=[];
+var pfc=[];
+var pgel=[];
+var pnbhousing=[];
+var pocl=[];
+var policybzr=[];
+var polymed=[];
+var poonawalla=[];
+var premexpln=[];
+var prestige=[];
+var pricolltd=[];
+var pvrinox=[];
+var rainbow=[];
+var ramcocem=[];
+var ramcosys=[];
+var ramky=[];
+var rategain=[];
+var rkforge=[];
+var route=[];
+var sardaen=[];
+var sbicard=[];
+var sbin=[];
+var shaktipump=[];
+var shardacrop=[];
+var sirca=[];
+var skipper=[];
+var smspharma=[];
+var sonacoms=[];
+var starhealth=[];
+var sumichem=[];
+var sunteck=[];
+var suntv=[];
+var symphony=[];
+var syngene=[];
+var syrma=[];
+var tanla=[];
+var tatachem=[];
+var tatacomm=[];
+var tataconsum=[];
+var tatapower=[];
+var tdpowersys=[];
+var techm=[];
+var tejasnet=[];
+var thyrocare=[];
+var titagarh=[];
+var triturbine=[];
+var triveni=[];
+var unominda=[];
+var ushamart=[];
+var varroc=[];
+var vbl=[];
+var vedl=[];
+var voltas=[];
+var vtl=[];
+var wabag=[];
+var welcorp=[];
+var whirlpool=[];
+var wockpharma=[];
+var zensartech=[];
+var zentec=[];
+var zyduslife=[];
+var one=[];
+var moons=[];
+var bajfinance=[];
+var cams=[];
+var coforge=[];
+var drreddy=[];
+var kims=[];
+var kotakbank=[];
+var krishnadef=[];
+var lalpathlab=[];
+var naukri=[];
+var nestleind=[];
+var pidilitind=[];
+var raymond=[];
+var reliance=[];
+var shriramfin=[];
+var tatainvest=[];
+var vmart=[];
+var zyduswell=[];
+var prajind=[];
+var atgl=[];
+var deepakntr=[];
+var torntpower=[];
+var luxind=[];
+var hirect=[];
+
+
+  const  stockName = ["aartiind","aartipharm","aavas","abslamc","adanigreen","adaniports","aether","affle","ambujacem","anantraj","anuras","apollopipe","apollotyre","ashapurmin","asterdm","astramicro","atulauto","aubank","aurionpro","auropharma","avadhsugar","avantifeed","axisbank","bajajcon","balramchin","bancoindia","bergepaint","bfutilitie","biocon","bororenew","bpcl","brigade","bsoft","cdsl","cgpower","chalet","chamblfert","chennpetro","choicein","cieindia","cipla","coalindia","cochinship","concor","creditacc","csbbank","cyient","dabur","deepakfert","delhivery","dlf","dredgecorp","eidparry","elecon","elgiequip","emamiltd","emudhra","fincables","fivestar","fortis","gabriel","ganecos","geship","gicre","gmdcltd","gna","gnfc","godrejcp","gokex","granules","graphite","gujgasltd","havells","hcltech","hdfcbank","hdfclife","heg","hginfra","hindalco","hindcopper","hindpetro","hindzinc","homefirst","hscl","icicibank","icicipruli","ideaforge","iifl","indhotel","indiacem","indiaglyco","indianb","indigopnts","indramedco","indusindbk","industower","intellect","irctc","jbma","jindalpoly","jindalstel","jindrill","jktyre","jsl","jsll","jswenergy","jswsteel","jublfood","jublingrea","justdial","kajariacer","kalyankjil","kfintech","kiriindus","kirloseng","kpigreen","kpittech","kprmill","kscl","lauruslabs","lichsgfin","lici","lloydsme","lodha","m&mfin","mahlog","maninds","manyavar","marico","maxhealth","mbapl","medplus","mindacorp","motilalofs","nam","natcopharm","nationalum","nava","newgen","nitinspin","ntpc","oberoirlty","olectra","optiemus","orchpharma","paras","patanjali","paytm","pfc","pgel","pnbhousing","pocl","policybzr","polymed","poonawalla","premexpln","prestige","pricolltd","pvrinox","rainbow","ramcocem","ramcosys","ramky","rategain","rkforge","route","sardaen","sbicard","sbin","shaktipump","shardacrop","sirca","skipper","smspharma","sonacoms","starhealth","sumichem","sunteck","suntv","symphony","syngene","syrma","tanla","tatachem","tatacomm","tataconsum","tatapower","tdpowersys","techm","tejasnet","thyrocare","titagarh","triturbine","triveni","unominda","ushamart","varroc","vbl","vedl","voltas","vtl","wabag","welcorp","whirlpool","wockpharma","zensartech","zentec","zyduslife","360one","63moons","bajfinance","cams","coforge","drreddy","kims","kotakbank","krishnadef","lalpathlab","naukri","nestleind","pidilitind","raymond","reliance","shriramfin","tatainvest","vmart","zyduswell","prajind","atgl","deepakntr","torntpower","luxind","hirect"]
+  
+
+  stockName.forEach( ele => ele = new Array())
+
+
+    document.getElementById('fileInput').addEventListener('change', function(e) {
+      document.getElementById("main").innerHTML = "";
+      stockName.forEach( ele => window[ele] = new Array())
+      
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+
+      reader.onload = function(event) {
+        
+        const text = event.target.result;
+        const rows = text.split('\n').map(row => row.split(','));
+
+        displayTable(rows);
+      };
+
+      reader.readAsText(file);
+    });
+
+    function displayTable(data) {
+      const table = document.getElementById('outputTable');
+      table.innerHTML = '';
+
+      data.forEach((row, index) => {
+
+        try{
+
+          window[row[1]].push(row[12]);
+        }
+        catch(e){
+
+        }
+        
+      })
+
+      data.forEach((row, index) => {
+
+        try{
+
+          window[row[1]].push(row[14]);
+        }
+        catch(e){
+
+        }
+        
+        
+      })
+
+      data.forEach((row, index) => {
+
+        try{
+
+          window[row[1]].push(row[3]);
+        }
+        catch(e){
+
+        }
+      })
+      createChartSection();
+
+    }
+  </script>
+
+
+
+<script>
+
+  function createChartSection(){
+
+	  let fil = 0.5
+	  if(document.getElementById("fil").value != ""){
+		  fil = parseFloat(document.getElementById("fil").value)
+
+	  }
+		 
+		 let main = document.getElementById("main")
+let len = window[stockName[1]].length
+  let len1 = window[stockName[1]].length/3
+  let len2 = len1 * 2
+  let len3 = len2 + len1
+let counter = 0
+	  
+    let xaxisprice =[]
+    for(let i = 0; i < window[stockName[1]].length / 3; i++){
+      xaxisprice.push(i);
+    }
+
+
+    stockName.forEach(ele => {
+    
+      try{
+		  if((parseInt(window[ele][len1-1]) / parseInt(window[ele][len2-1])) >= fil){
+		  document.getElementById("count").innerText = (document.querySelector("#fil").value).length;
+			  let nameBlock =  document.createElement("div"); 
+      nameBlock.setAttribute("id", ele)
+		  nameBlock.innerText = ele;
+		  main.appendChild(nameBlock)
+		  
+      let mainBlock =  document.createElement("canvas");  
+              mainBlock.setAttribute("class", ele);
+              nameBlock.appendChild(mainBlock)
+
+        let PArray = [...window[ele]].slice(len2, len).map(Number);
+        let MaxNum = Math.max(...PArray);
+        let MinNum = Math.min(...PArray);
+        let labl = parseInt(MaxNum - MinNum);
+
+              new Chart(mainBlock, {
+  type: "line",
+  data: {
+  labels: [...xaxisprice],
+  datasets: [{
+        label: [window[ele][len1-1]] ,
+        fontSize: 24,
+        pointRadius: 0,
+        // borderWidth : 0.5,
+        borderColor: "rgba(200,100,0)",
+	  	backgroundColor: 'rgba(255, 99, 132, 0.0)',
+        data: [...window[ele]].slice(0, len1), // ([...currentVolumeDataTable[key]]).slice(0, days),
+        yAxisID: 'y', 
+        },
+      {
+        label: labl,
+        pointRadius: 0,
+        borderColor: 'rgb(0, 0, 152)',
+        backgroundColor: 'rgba(255, 99, 132, 0.0)',
+        data: [...window[ele]].slice(len1, len2),
+        yAxisID: 'y', 
+      },
+      {
+        label: [window[ele][len-1]] ,
+        pointRadius: 0,
+        borderColor: 'rgb(255, 165, 0)',
+        backgroundColor: 'rgba(255, 99, 132, 0.0)',
+        data: [...window[ele]].slice(len2, len),
+        yAxisID: 'y1',
+      }
+      ]
+      }
+      ,  
+      options: {
+          scales: {
+         yAxes: [
+						{
+							type: 'linear',
+							position: 'left',
+							id: 'y',
+						},
+						{
+							type: 'linear',
+							position: 'right',
+							id: 'y1',
+						},
+					]
+      }
+      }
+  
+  });
+
+}
+
+}
+catch{
+  console.log(ele)
+}
+
+    })
+  
+              
+  }
+  
+
+</script>
+
+
+<script>
+
+  function setFilter(){
+        let filterData = (document.querySelector("#filter").value).toLowerCase();
+        if ( filterData.length > 0) {
+            var lst = Array.from(document.querySelectorAll("#main > div"));
+            lst.forEach( (ele) => ele.style.display = "none" );
+    
+            lst = Array.from(document.querySelectorAll("[id^= '" + filterData + "']"));
+            lst.forEach( ele => ele.style.display = "" ); 
+    
+        }
+    
+        else{
+          var lst = Array.from(document.querySelectorAll("#main > div"));
+            lst.forEach( (ele) => ele.style.display = "" );
+ 
+        }
+
+
+	  function setFilter2(){
+        let filterData = (document.querySelector("#fil").value);
+        if ( filterData.length > 2) {
+            
+    createChartSection()
+        }
+    
+        
+	  }
+}
+ 
+ let myFunc1 = letsDebounce(setFilter,1000);
+
+    
+function letsDebounce(fn,d){
+          let timer;
+          return function(){
+          clearTimeout(timer);
+          timer=setTimeout(fn,d);
+          }
+      }
+
+document.getElementById("filter").addEventListener('input', myFunc1);
+
+
+</script>
+
+</body>
+</html>
