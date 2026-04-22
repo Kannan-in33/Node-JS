@@ -374,7 +374,7 @@ main.innerText = len;
 
 
     stockName.forEach(ele => {
-    main.innerText = (parseInt(window[ele][len1-1]) / parseInt(window[ele][len2-1])) 
+    
       try{
 		  let nameBlock =  document.createElement("div"); 
       nameBlock.setAttribute("id", ele)
@@ -389,7 +389,7 @@ main.innerText = len;
         let MaxNum = Math.max(...PArray);
         let MinNum = Math.min(...PArray);
         let labl = parseInt(MaxNum - MinNum);
-if((parseInt(window[ele][len1-1]) / parseInt(window[ele][len2-1])) > 0.5){
+if((parseInt(window[ele][len1-1]) / parseInt(window[ele][len2-1])) > 0.01){
               new Chart(mainBlock, {
   type: "line",
   data: {
@@ -441,6 +441,7 @@ if((parseInt(window[ele][len1-1]) / parseInt(window[ele][len2-1])) > 0.5){
       }
   
   });
+
 }
 
 }
