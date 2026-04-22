@@ -489,8 +489,9 @@ catch{
 
 	  function setFilter(){
         let filterData = (document.getElementById("fil").value);
-        if ( filterData.length > 2) {
-            document.getElementById("count").innerText = "hi";
+		  document.getElementById("count").innerText = filterData 
+			  if ( filterData.length > 2) {
+            
     createChartSection();
         }
     
