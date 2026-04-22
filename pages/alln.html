@@ -469,7 +469,7 @@ catch{
 
 <script>
 
-  function setFilter(){
+  function setFilter2(){
         let filterData = (document.querySelector("#filter").value).toLowerCase();
         if ( filterData.length > 0) {
             var lst = Array.from(document.querySelectorAll("#main > div"));
@@ -487,7 +487,7 @@ catch{
         }
 
 
-	  function setFilter2(){
+	  function setFilter(){
         let filterData = (document.getElementById("fil").value);
         if ( filterData.length > 2) {
             document.getElementById("count").innerText = "hi";
@@ -500,7 +500,7 @@ catch{
  
  //let myFunc1 = letsDebounce(setFilter,1000);
 
-	let myFunc2 = letsDebounce(setFilter2,1000);
+	let myFunc2 = letsDebounce(setFilter,1000);
     
 function letsDebounce(fn,d){
           let timer;
