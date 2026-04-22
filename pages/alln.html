@@ -45,6 +45,7 @@
   <input type="file" id="fileInput" accept=".csv" />
 
   <input type="text" id="filter" />
+	<input type="text" id="fil" />
 
   <table id="outputTable"></table>
 <div id="main"></div>
@@ -359,7 +360,14 @@ var hirect=[];
 <script>
 
   function createChartSection(){
-	  let main = document.getElementById("main")
+
+	  let fil = 0.5
+	  if(document.getElementById("fil").value != ""){
+		  fil = parseFloat(document.getElementById("fil").value)
+
+	  }
+		 
+		 let main = document.getElementById("main")
 let len = window[stockName[1]].length
   let len1 = window[stockName[1]].length/3
   let len2 = len1 * 2
@@ -375,7 +383,7 @@ let counter = 0
     stockName.forEach(ele => {
     
       try{
-		  if((parseInt(window[ele][len1-1]) / parseInt(window[ele][len2-1])) > 0.8){
+		  if((parseInt(window[ele][len1-1]) / parseInt(window[ele][len2-1])) >= fil){
 		  document.getElementById("count").innerText = ++counter;
 			  let nameBlock =  document.createElement("div"); 
       nameBlock.setAttribute("id", ele)
