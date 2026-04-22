@@ -371,7 +371,7 @@ main.innerText = len;
     for(let i = 0; i < window[stockName[1]].length / 3; i++){
       xaxisprice.push(i);
     }
-    main.innerText = window[stockName[1]].length / 3;
+
 
     stockName.forEach(ele => {
       main.innerText = ele;
@@ -389,7 +389,7 @@ main.innerText = len;
         let MaxNum = Math.max(...PArray);
         let MinNum = Math.min(...PArray);
         let labl = parseInt(MaxNum - MinNum);
-
+if((parseInt(window[ele][len1-1]) / parseInt(window[ele][len2-1])) > 0.5){
               new Chart(mainBlock, {
   type: "line",
   data: {
@@ -440,7 +440,8 @@ main.innerText = len;
       }
       }
   
-  }); 
+  });
+}
 
 }
 catch{
