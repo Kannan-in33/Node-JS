@@ -374,7 +374,7 @@ main.innerText = len;
 
 
     stockName.forEach(ele => {
-      main.innerText = ele;
+    main.innerText = (parseInt(window[ele][len1-1]) / parseInt(window[ele][len2-1])) 
       try{
 		  let nameBlock =  document.createElement("div"); 
       nameBlock.setAttribute("id", ele)
