@@ -488,7 +488,7 @@ catch{
 
 
 	  function setFilter2(){
-        let filterData = (document.querySelector("#fil").value).toLowerCase();
+        let filterData = (document.querySelector("#fil").value);
         if ( filterData.length > 2) {
             
     createChartSection()
@@ -511,6 +511,7 @@ function letsDebounce(fn,d){
       }
 
 document.getElementById("filter").addEventListener('input', myFunc1);
+	document.getElementById("fil").addEventListener('input', myFunc2);
 
 </script>
 
