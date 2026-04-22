@@ -365,10 +365,12 @@ var hirect=[];
   let len2 = len1 * 2
   let len3 = len2 + len1
 
+	  
       let Dfcur= parseInt([window[ele][len1-1]])
 let Dncur = parseInt([window[ele][len2-1]])
+	  document.getElementById("main").innerText = Dfcur;
 
-      if(Dfcur / Dncur > 0.8){
+      if((Dfcur/Dncur) >= 0.8){
 
         
 
