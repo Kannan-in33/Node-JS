@@ -384,7 +384,7 @@ let counter = 0
     
       try{
 		  if((parseInt(window[ele][len1-1]) / parseInt(window[ele][len2-1])) >= fil){
-		  document.getElementById("count").innerText = (document.querySelector("#fil").value).length;
+		  document.getElementById("count").innerText = ++counter;
 			  let nameBlock =  document.createElement("div"); 
       nameBlock.setAttribute("id", ele)
 		  nameBlock.innerText = ele;
@@ -490,13 +490,13 @@ catch{
 	  function setFilter2(){
         let filterData = (document.getElementById("fil").value);
         if ( filterData.length > 2) {
-            
-    createChartSection()
+            //document.getElementById("count").innerText = "hi";
+    createChartSection();
         }
     
         
 	  }
-}
+
  
  //let myFunc1 = letsDebounce(setFilter,1000);
 
