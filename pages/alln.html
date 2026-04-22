@@ -485,6 +485,8 @@ catch{
             lst.forEach( (ele) => ele.style.display = "" );
  
         }
+  }
+
 
 
 	  function setFilter(){
@@ -501,7 +503,7 @@ catch{
  
  //let myFunc1 = letsDebounce(setFilter,1000);
 
-	let myFunc2 = letsDebounce(setFilter,1000);
+	let myFunc1 = letsDebounce(setFilter,1000);
     
 function letsDebounce(fn,d){
           let timer;
@@ -512,7 +514,7 @@ function letsDebounce(fn,d){
       }
 
 //document.getElementById("filter").addEventListener('input', myFunc1);
-	document.getElementById("fil").addEventListener('input', myFunc2);
+	document.getElementById("fil").addEventListener('input', myFunc1);
 
 </script>
 
