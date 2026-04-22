@@ -493,7 +493,7 @@ catch{
         let filterData = (document.getElementById("fil").value);
 		  document.getElementById("count").innerText = filterData 
 			  if ( filterData.length > 2) {
-            
+           document.getElementById("main").innerHTML = "";
     createChartSection();
         }
     
@@ -501,7 +501,7 @@ catch{
 	  }
 
  
- //let myFunc1 = letsDebounce(setFilter,1000);
+ let myFunc2 = letsDebounce(setFilter2,1000);
 
 	let myFunc1 = letsDebounce(setFilter,1000);
     
@@ -513,7 +513,7 @@ function letsDebounce(fn,d){
           }
       }
 
-//document.getElementById("filter").addEventListener('input', myFunc1);
+document.getElementById("filter").addEventListener('input', myFunc2);
 	document.getElementById("fil").addEventListener('input', myFunc1);
 
 </script>
