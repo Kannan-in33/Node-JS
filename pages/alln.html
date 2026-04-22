@@ -384,7 +384,7 @@ let counter = 0
     
       try{
 		  if((parseInt(window[ele][len1-1]) / parseInt(window[ele][len2-1])) >= fil){
-		  document.getElementById("count").innerText = ++counter;
+		  document.getElementById("count").innerText = (document.querySelector("#fil").value).length;
 			  let nameBlock =  document.createElement("div"); 
       nameBlock.setAttribute("id", ele)
 		  nameBlock.innerText = ele;
