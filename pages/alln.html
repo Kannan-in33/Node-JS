@@ -22,20 +22,28 @@
       background-color: #f4f4f4;
     }
     #main{
-      max-width: 90%;
-      display: flex;
-      flex-wrap: wrap;
+      max-width: 95%;
       margin: auto;
     }
-	#main > div{
+    
+	#main div{
 		margin-bottom: 20px;
       text-transform: uppercase;
       width: 100%;
       text-align: center;
+      display: flex;
+      flex-wrap: wrap;
+      margin: auto;
     }
     canvas{
-      width: 300px;
+      max-width: 750px;
+      margin:auto;
     }
+    @media screen and (max-width: 768px) {
+    canvas{
+      max-width: 100%;
+    }
+}
   </style>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 </head>
@@ -43,6 +51,7 @@
 <div id="count"></div>
   <h2>Upload and Parse CSV</h2>
   <input type="file" id="fileInput" accept=".csv" />
+  <!-- <input type="file" id="fileInput2" accept=".csv" /> -->
 
   <input type="text" id="filter" />
 	<input type="text" id="fil" />
@@ -283,16 +292,19 @@ var deepakntr=[];
 var torntpower=[];
 var luxind=[];
 var hirect=[];
+var sbcl=[];
+var shreepushk=[];
+var gujalkali=[];
 
 
-  const  stockName = ["aartiind","aartipharm","aavas","abslamc","adanigreen","adaniports","aether","affle","ambujacem","anantraj","anuras","apollopipe","apollotyre","ashapurmin","asterdm","astramicro","atulauto","aubank","aurionpro","auropharma","avadhsugar","avantifeed","axisbank","bajajcon","balramchin","bancoindia","bergepaint","bfutilitie","biocon","bororenew","bpcl","brigade","bsoft","cdsl","cgpower","chalet","chamblfert","chennpetro","choicein","cieindia","cipla","coalindia","cochinship","concor","creditacc","csbbank","cyient","dabur","deepakfert","delhivery","dlf","dredgecorp","eidparry","elecon","elgiequip","emamiltd","emudhra","fincables","fivestar","fortis","gabriel","ganecos","geship","gicre","gmdcltd","gna","gnfc","godrejcp","gokex","granules","graphite","gujgasltd","havells","hcltech","hdfcbank","hdfclife","heg","hginfra","hindalco","hindcopper","hindpetro","hindzinc","homefirst","hscl","icicibank","icicipruli","ideaforge","iifl","indhotel","indiacem","indiaglyco","indianb","indigopnts","indramedco","indusindbk","industower","intellect","irctc","jbma","jindalpoly","jindalstel","jindrill","jktyre","jsl","jsll","jswenergy","jswsteel","jublfood","jublingrea","justdial","kajariacer","kalyankjil","kfintech","kiriindus","kirloseng","kpigreen","kpittech","kprmill","kscl","lauruslabs","lichsgfin","lici","lloydsme","lodha","m&mfin","mahlog","maninds","manyavar","marico","maxhealth","mbapl","medplus","mindacorp","motilalofs","nam","natcopharm","nationalum","nava","newgen","nitinspin","ntpc","oberoirlty","olectra","optiemus","orchpharma","paras","patanjali","paytm","pfc","pgel","pnbhousing","pocl","policybzr","polymed","poonawalla","premexpln","prestige","pricolltd","pvrinox","rainbow","ramcocem","ramcosys","ramky","rategain","rkforge","route","sardaen","sbicard","sbin","shaktipump","shardacrop","sirca","skipper","smspharma","sonacoms","starhealth","sumichem","sunteck","suntv","symphony","syngene","syrma","tanla","tatachem","tatacomm","tataconsum","tatapower","tdpowersys","techm","tejasnet","thyrocare","titagarh","triturbine","triveni","unominda","ushamart","varroc","vbl","vedl","voltas","vtl","wabag","welcorp","whirlpool","wockpharma","zensartech","zentec","zyduslife","360one","63moons","bajfinance","cams","coforge","drreddy","kims","kotakbank","krishnadef","lalpathlab","naukri","nestleind","pidilitind","raymond","reliance","shriramfin","tatainvest","vmart","zyduswell","prajind","atgl","deepakntr","torntpower","luxind","hirect"]
+  const  stockName = ["aartiind","aartipharm","aavas","abslamc","adanigreen","adaniports","aether","affle","ambujacem","anantraj","anuras","apollopipe","apollotyre","ashapurmin","asterdm","astramicro","atulauto","aubank","aurionpro","auropharma","avadhsugar","avantifeed","axisbank","bajajcon","balramchin","bancoindia","bergepaint","bfutilitie","biocon","bororenew","bpcl","brigade","bsoft","cdsl","cgpower","chalet","chamblfert","chennpetro","choicein","cieindia","cipla","coalindia","cochinship","concor","creditacc","csbbank","cyient","dabur","deepakfert","delhivery","dlf","dredgecorp","eidparry","elecon","elgiequip","emamiltd","emudhra","fincables","fivestar","fortis","gabriel","ganecos","geship","gicre","gmdcltd","gna","gnfc","godrejcp","gokex","granules","graphite","gujgasltd","havells","hcltech","hdfcbank","hdfclife","heg","hginfra","hindalco","hindcopper","hindpetro","hindzinc","homefirst","hscl","icicibank","icicipruli","ideaforge","iifl","indhotel","indiacem","indiaglyco","indianb","indigopnts","indramedco","indusindbk","industower","intellect","irctc","jbma","jindalpoly","jindalstel","jindrill","jktyre","jsl","jsll","jswenergy","jswsteel","jublfood","jublingrea","justdial","kajariacer","kalyankjil","kfintech","kiriindus","kirloseng","kpigreen","kpittech","kprmill","kscl","lauruslabs","lichsgfin","lici","lloydsme","lodha","m&mfin","mahlog","maninds","manyavar","marico","maxhealth","mbapl","medplus","mindacorp","motilalofs","nam","natcopharm","nationalum","nava","newgen","nitinspin","ntpc","oberoirlty","olectra","optiemus","orchpharma","paras","patanjali","paytm","pfc","pgel","pnbhousing","pocl","policybzr","polymed","poonawalla","premexpln","prestige","pricolltd","pvrinox","rainbow","ramcocem","ramcosys","ramky","rategain","rkforge","route","sardaen","sbicard","sbin","shaktipump","shardacrop","sirca","skipper","smspharma","sonacoms","starhealth","sumichem","sunteck","suntv","symphony","syngene","syrma","tanla","tatachem","tatacomm","tataconsum","tatapower","tdpowersys","techm","tejasnet","thyrocare","titagarh","triturbine","triveni","unominda","ushamart","varroc","vbl","vedl","voltas","vtl","wabag","welcorp","whirlpool","wockpharma","zensartech","zentec","zyduslife","360one","63moons","bajfinance","cams","coforge","drreddy","kims","kotakbank","krishnadef","lalpathlab","naukri","nestleind","pidilitind","raymond","reliance","shriramfin","tatainvest","vmart","zyduswell","prajind","atgl","deepakntr","torntpower","luxind","hirect","sbcl","shreepushk","gujalkali"]
   
 
   stockName.forEach( ele => ele = new Array())
 
 
     document.getElementById('fileInput').addEventListener('change', function(e) {
-      document.getElementById("main").innerHTML = "";
+      
       stockName.forEach( ele => window[ele] = new Array())
       
       const file = e.target.files[0];
@@ -305,15 +317,33 @@ var hirect=[];
         const text = event.target.result;
         const rows = text.split('\n').map(row => row.split(','));
 
-        displayTable(rows);
+        displayTable(rows, "left");
       };
 
       reader.readAsText(file);
     });
 
-    function displayTable(data) {
-      const table = document.getElementById('outputTable');
-      table.innerHTML = '';
+    // document.getElementById('fileInput2').addEventListener('change', function(e) {
+      
+    //   stockName.forEach( ele => window[ele] = new Array())
+      
+    //   const file = e.target.files[0];
+    //   if (!file) return;
+
+    //   const reader = new FileReader();
+
+    //   reader.onload = function(event) {
+        
+    //     const text = event.target.result;
+    //     const rows = text.split('\n').map(row => row.split(','));
+
+    //     displayTable(rows,"right");
+    //   };
+
+    //   reader.readAsText(file);
+    // });
+
+    function displayTable(data, direction) {
 
       data.forEach((row, index) => {
 
@@ -350,7 +380,19 @@ var hirect=[];
 
         }
       })
-      createChartSection();
+
+      data.forEach((row, index) => {
+
+        try{
+
+          window[row[1]].push(parseInt(row[12])/parseInt(row[9]));
+        }
+        catch(e){
+
+        }
+      })
+      
+      CreatChart(direction)
 
     }
   </script>
@@ -358,8 +400,42 @@ var hirect=[];
 
 
 <script>
-
   function createChartSection(){
+let main = document.getElementById("main")
+document.getElementById("main").innerHTML = "";
+ stockName.forEach(ele => {
+    
+      try{
+		  
+		    let subBlock =  document.createElement("div"); 
+        subBlock.setAttribute("id", ele)
+        subBlock.innerText = ele;
+			  let nameBlock =  document.createElement("div"); 
+        
+        
+
+        let leftBlock =  document.createElement("canvas");  
+              leftBlock.setAttribute("class", 'leftBlock');
+              nameBlock.appendChild(leftBlock)
+
+      let rightBlock =  document.createElement("canvas");  
+              rightBlock.setAttribute("class", "rightBlock");
+              nameBlock.appendChild(rightBlock)
+
+              main.appendChild(subBlock)
+              subBlock.appendChild(nameBlock)
+
+
+      }
+      catch(e){
+        console.log(e)
+      }
+
+  })
+
+  }
+
+  function CreatChart(Direction){
 
 	  let fil = -3.0
 	  if(document.getElementById("fil").value != ""){
@@ -368,14 +444,16 @@ var hirect=[];
 	  }
 		 
 		 let main = document.getElementById("main")
-let len = window[stockName[1]].length
-  let len1 = window[stockName[1]].length/3
+         let numofColumns = 4
+    let len = window[stockName[1]].length
+  let len1 = window[stockName[1]].length/numofColumns
   let len2 = len1 * 2
   let len3 = len2 + len1
+  let len4 = len3 + len1
 let counter = 0
 	  
     let xaxisprice =[]
-    for(let i = 0; i < window[stockName[1]].length / 3; i++){
+    for(let i = 0; i < window[stockName[1]].length / numofColumns; i++){
       xaxisprice.push(i);
     }
 
@@ -383,21 +461,23 @@ let counter = 0
     stockName.forEach(ele => {
     
       try{
+      document.querySelector("#"+ ele + " .rightBlock").innerHTML = "";
+        let mainBlock = document.querySelector("#"+ ele + " .leftBlock");
 		  if((parseInt(window[ele][len1-1]) / parseInt(window[ele][len2-1])) >= fil){
 		  document.getElementById("count").innerText = ++counter;
-			  let nameBlock =  document.createElement("div"); 
-      nameBlock.setAttribute("id", ele)
-		  nameBlock.innerText = ele;
-		  main.appendChild(nameBlock)
-		  
-      let mainBlock =  document.createElement("canvas");  
-              mainBlock.setAttribute("class", ele);
-              nameBlock.appendChild(mainBlock)
+			
+      if(Direction != "left"){
+        
+         mainBlock = document.querySelector("#"+ ele + " .rightBlock");
+      }
+      
 
-        let PArray = [...window[ele]].slice(len2, len).map(Number);
+        let PArray = [...window[ele]].slice(len2, len3).map(Number);
         let MaxNum = Math.max(...PArray);
         let MinNum = Math.min(...PArray);
         let labl = parseInt(MaxNum - MinNum);
+
+         mainBlock = document.querySelector("#"+ ele + " .leftBlock");
 
               new Chart(mainBlock, {
   type: "line",
@@ -422,11 +502,11 @@ let counter = 0
         yAxisID: 'y', 
       },
       {
-        label: [window[ele][len-1]] ,
+        label: [window[ele][len3-1]] ,
         pointRadius: 0,
         borderColor: 'rgb(255, 165, 0)',
         backgroundColor: 'rgba(255, 99, 132, 0.0)',
-        data: [...window[ele]].slice(len2, len),
+        data: [...window[ele]].slice(len2, len3),
         yAxisID: 'y1',
       }
       ]
@@ -454,11 +534,39 @@ let counter = 0
   
   });
 
+
+  mainBlock = document.querySelector("#"+ ele + " .rightBlock");
+
+  new Chart(mainBlock, {
+  type: "line",
+  data: {
+  labels: [...xaxisprice],
+  datasets: [
+    
+      {
+        label: [window[ele][len-1]] ,
+        pointRadius: 0,
+        borderColor: 'rgb(255, 165, 0)',
+        backgroundColor: 'rgba(255, 99, 132, 0.0)',
+        data: [...window[ele]].slice(len3, len),
+        
+      }
+      ]
+      }
+      ,  
+     
+  });
+
+
+
+}
+else{
+    document.querySelector("#"+ ele).innerHTML = ""
 }
 
 }
-catch{
-  console.log(ele)
+catch(e){
+  console.log(e)
 }
 
     })
@@ -466,7 +574,7 @@ catch{
               
   }
   
-
+createChartSection();
 </script>
 
 
@@ -495,9 +603,11 @@ catch{
 	  function setFilter(){
         let filterData = (document.getElementById("fil").value);
 		  document.getElementById("count").innerText = filterData 
-			  if ( filterData.length > 2) {
+			  if ( filterData.length > 2 || filterData.length == 0) {
            document.getElementById("main").innerHTML = "";
-    createChartSection();
+           createChartSection()
+  
+    CreatChart("right");
         }
     
         
