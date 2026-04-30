@@ -25,6 +25,9 @@
       max-width: 95%;
       margin: auto;
     }
+    input[type="text"]{
+      width: 50px;
+    }
     
 	#main div{
 		margin-bottom: 20px;
@@ -394,6 +397,31 @@ var gujalkali=[];
 
         }
       })
+
+      data.forEach((row, index) => {
+
+        try{
+
+          window[row[1]].push(parseFloat(row[16]));
+        }
+        catch(e){
+
+        }
+      })
+
+      data.forEach((row, index) => {
+
+        try{
+
+          window[row[1]].push(parseFloat(row[17]));
+        }
+        catch(e){
+
+        }
+      })
+
+
+      
       
       CreatChart(direction)
 
@@ -447,12 +475,15 @@ document.getElementById("main").innerHTML = "";
 	  }
 		 
 		 let main = document.getElementById("main")
-         let numofColumns = 4
+         let numofColumns = 6
     let len = window[stockName[1]].length
   let len1 = window[stockName[1]].length/numofColumns
   let len2 = len1 * 2
   let len3 = len2 + len1
   let len4 = len3 + len1
+  let len5 = len4 + len1
+  let len6 = len5 + len1
+
 let counter = 0
 	  
     let xaxisprice =[]
@@ -511,7 +542,25 @@ let counter = 0
         backgroundColor: 'rgba(255, 99, 132, 0.0)',
         data: [...window[ele]].slice(len2, len3),
         yAxisID: 'y1',
-      }
+      },
+      {
+        label: [window[ele][len6-1]] ,
+        pointRadius: 0,
+        borderColor: 'rgb(50, 50, 50)',
+        borderWidth: 2,
+        backgroundColor: 'rgba(50, 59, 52, 0.0)',
+        data: [...window[ele]].slice(len4, len5),
+        yAxisID: 'y1',
+      },
+      {
+        label: [window[ele][len-1]] ,
+        pointRadius: 0,
+        borderColor: 'rgb(0, 5, 5)',
+        borderWidth: 2,
+        backgroundColor: 'rgba(0, 9, 1, 0.0)',
+        data: [...window[ele]].slice(len5, len6),
+        yAxisID: 'y1',
+      },
       ]
       }
       ,  
@@ -551,7 +600,7 @@ let counter = 0
         pointRadius: 0,
         borderColor: 'rgb(255, 165, 0)',
         backgroundColor: 'rgba(255, 99, 132, 0.0)',
-        data: [...window[ele]].slice(len3, len),
+        data: [...window[ele]].slice(len3, len4),
         
       }
       ]
@@ -591,12 +640,14 @@ createChartSection();
 	  }
 		 
 		 let main = document.getElementById("main")
-         let numofColumns = 4
+         let numofColumns = 6
     let len = window[stockName[1]].length
   let len1 = window[stockName[1]].length/numofColumns
-  let len2 = len1 * 2
+  let len2 = len1 + len1
   let len3 = len2 + len1
   let len4 = len3 + len1
+  let len5 = len4 + len1
+  let len6 = len5 + len1
 let counter = 0
 	  
     let xaxisprice =[]
@@ -652,6 +703,22 @@ let counter = 0
         backgroundColor: 'rgba(255, 99, 132, 0.0)',
         data: [...window[ele]].slice(len2, len3),
         yAxisID: 'y1',
+      },
+      {
+        label: [window[ele][len3-1]] ,
+        pointRadius: 0,
+        borderColor: 'rgb(255, 165, 0)',
+        backgroundColor: 'rgba(255, 99, 132, 0.0)',
+        data: [...window[ele]].slice(len5, len6),
+        yAxisID: 'y1',
+      },
+      {
+        label: [window[ele][len3-1]] ,
+        pointRadius: 0,
+        borderColor: 'rgb(255, 165, 0)',
+        backgroundColor: 'rgba(255, 99, 132, 0.0)',
+        data: [...window[ele]].slice(len6, len),
+        yAxisID: 'y1',
       }
       ]
       }
@@ -692,7 +759,7 @@ let counter = 0
         pointRadius: 0,
         borderColor: 'rgb(255, 165, 0)',
         backgroundColor: 'rgba(255, 99, 132, 0.0)',
-        data: [...window[ele]].slice(len3, len),
+        data: [...window[ele]].slice(len3, len4),
         
       }
       ]
