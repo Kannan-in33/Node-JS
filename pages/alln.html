@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>CSV Reader</title>
+  <title>All-L</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -52,9 +52,12 @@
   <h2>Upload and Parse CSV</h2>
   <input type="file" id="fileInput" accept=".csv" />
   <!-- <input type="file" id="fileInput2" accept=".csv" /> -->
-
+  <label for="text">Text</label>
   <input type="text" id="filter" />
+  <label for="price">Price</label>
 	<input type="text" id="fil" />
+  <label for="four">Four</label>
+	<input type="text" id="four" />
 
   <table id="outputTable"></table>
 <div id="main"></div>
@@ -577,6 +580,147 @@ catch(e){
 createChartSection();
 </script>
 
+<script>
+
+  function UpdateChart(){
+
+	  let fil = -3.0
+	  if(document.getElementById("four").value != ""){
+		  fil = parseFloat(document.getElementById("four").value)
+
+	  }
+		 
+		 let main = document.getElementById("main")
+         let numofColumns = 4
+    let len = window[stockName[1]].length
+  let len1 = window[stockName[1]].length/numofColumns
+  let len2 = len1 * 2
+  let len3 = len2 + len1
+  let len4 = len3 + len1
+let counter = 0
+	  
+    let xaxisprice =[]
+    for(let i = 0; i < window[stockName[1]].length / numofColumns; i++){
+      xaxisprice.push(i);
+    }
+
+
+    stockName.forEach(ele => {
+    
+      try{
+      document.querySelector("#"+ ele + " .rightBlock").innerHTML = "";
+        let mainBlock = document.querySelector("#"+ ele + " .leftBlock");
+		  if((parseFloat(window[ele][len-1])) >= fil){
+		  document.getElementById("count").innerText = ++counter;
+			
+
+      
+
+        let PArray = [...window[ele]].slice(len2, len3).map(Number);
+        let MaxNum = Math.max(...PArray);
+        let MinNum = Math.min(...PArray);
+        let labl = parseInt(MaxNum - MinNum);
+
+         mainBlock = document.querySelector("#"+ ele + " .leftBlock");
+
+              new Chart(mainBlock, {
+  type: "line",
+  data: {
+  labels: [...xaxisprice],
+  datasets: [{
+        label: [window[ele][len1-1]] ,
+        fontSize: 24,
+        pointRadius: 0,
+        // borderWidth : 0.5,
+        borderColor: "rgba(200,100,0)",
+	  	backgroundColor: 'rgba(255, 99, 132, 0.0)',
+        data: [...window[ele]].slice(0, len1), // ([...currentVolumeDataTable[key]]).slice(0, days),
+        yAxisID: 'y', 
+        },
+      {
+        label: labl,
+        pointRadius: 0,
+        borderColor: 'rgb(0, 0, 152)',
+        backgroundColor: 'rgba(255, 99, 132, 0.0)',
+        data: [...window[ele]].slice(len1, len2),
+        yAxisID: 'y', 
+      },
+      {
+        label: [window[ele][len3-1]] ,
+        pointRadius: 0,
+        borderColor: 'rgb(255, 165, 0)',
+        backgroundColor: 'rgba(255, 99, 132, 0.0)',
+        data: [...window[ele]].slice(len2, len3),
+        yAxisID: 'y1',
+      }
+      ]
+      }
+      ,  
+      options: {
+          scales: {
+         yAxes: [
+			 	{
+							type: 'linear',
+							position: 'left',
+							id: 'y',
+				 
+						},
+						{
+							type: 'linear',
+							position: 'right',
+							id: 'y1',
+						},
+					]
+			  
+		  }
+      
+      }
+  
+  });
+
+
+  mainBlock = document.querySelector("#"+ ele + " .rightBlock");
+
+  new Chart(mainBlock, {
+  type: "line",
+  data: {
+  labels: [...xaxisprice],
+  datasets: [
+    
+      {
+        label: [window[ele][len-1]] ,
+        pointRadius: 0,
+        borderColor: 'rgb(255, 165, 0)',
+        backgroundColor: 'rgba(255, 99, 132, 0.0)',
+        data: [...window[ele]].slice(len3, len),
+        
+      }
+      ]
+      }
+      ,  
+     
+  });
+
+
+
+}
+else{
+    document.querySelector("#"+ ele).innerHTML = ""
+}
+
+}
+catch(e){
+  console.log(e)
+}
+
+    })
+  
+              
+  }
+  
+
+
+</script>
 
 <script>
 
@@ -613,7 +757,20 @@ createChartSection();
         
 	  }
 
- 
+    function setFilter3(){
+        let filterData = (document.getElementById("four").value);
+		  document.getElementById("count").innerText = filterData 
+			  if ( filterData.length > 2 || filterData.length == 0) {
+           document.getElementById("main").innerHTML = "";
+           createChartSection()
+           UpdateChart()
+  
+        }
+    
+        
+	  }
+
+  let myFunc3 = letsDebounce(setFilter3,1000);
  let myFunc2 = letsDebounce(setFilter2,1000);
 
 	let myFunc1 = letsDebounce(setFilter,1000);
@@ -626,8 +783,11 @@ function letsDebounce(fn,d){
           }
       }
 
-document.getElementById("filter").addEventListener('input', myFunc2);
+
+
 	document.getElementById("fil").addEventListener('input', myFunc1);
+  document.getElementById("filter").addEventListener('input', myFunc2);
+  document.getElementById("four").addEventListener('input', myFunc3);
 
 </script>
 
