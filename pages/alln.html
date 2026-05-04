@@ -928,7 +928,7 @@ function letsDebounce(fn,d){
 let counter = 0
 	  
     let xaxisprice =[]
-    for(let i = 0; i < len ; i++){
+    for(let i = 0; i < 230 ; i++){
       xaxisprice.push(i);
     }
 
@@ -996,10 +996,10 @@ for(let i = 0; i < 12; i++){
       
 
         
-		  if(   (parseInt(window[ele][Dataposition]) / parseInt(window[ele][len1 + Dataposition]))  >= fil && !Added.includes(ele)  ){
+		  if(   (parseInt(window[ele][Dataposition]) / parseInt(window[ele][len1 + Dataposition]))  >= fil && !Added.includes(ele) &&  window[ele][Dataposition] > 50000){
         Added.push(ele)
         
-		  document.getElementById("count").innerText = Dataposition //  ++counter;
+		  document.getElementById("count").innerText = Dataposition.toString() + " ------   " + len //  ++counter;
 
       let subBlock =  document.createElement("div"); 
         subBlock.setAttribute("id", ele)
@@ -1084,7 +1084,17 @@ for(let i = 0; i < 12; i++){
   type: "line",
   data: {
   labels: [...xaxisprice],
-  datasets: [{
+  datasets: [
+
+    {
+        label: labl,
+        pointRadius: 0,
+        borderColor: 'rgb(0, 0, 152)',
+        backgroundColor: 'rgba(255, 99, 132, 0.0)',
+        data: [...Dn],
+        yAxisID: 'y', 
+      },
+    {
         label: [window[ele][ Dataposition -1]] ,
         fontSize: 24,
         pointRadius: 0,
@@ -1094,14 +1104,7 @@ for(let i = 0; i < 12; i++){
         data: [...window[ele]].slice(0, Dataposition), // ([...currentVolumeDataTable[key]]).slice(0, days),
         yAxisID: 'y', 
         },
-      {
-        label: labl,
-        pointRadius: 0,
-        borderColor: 'rgb(0, 0, 152)',
-        backgroundColor: 'rgba(255, 99, 132, 0.0)',
-        data: Dn,
-        yAxisID: 'y', 
-      },
+      
       {
         label: [window[ele][len2 + Dataposition -1]] ,
         pointRadius: 0,
@@ -1145,7 +1148,19 @@ for(let i = 0; i < 12; i++){
 							position: 'right',
 							id: 'y1',
 						},
-					]
+            
+					],
+
+
+    xAxes: {
+      type: 'linear', // Required for numerical ranges
+      min: 1,
+      max: 230,
+      ticks: {
+        stepSize: 1 // Optional: forces specific intervals
+      }
+    },
+  
 			  
 		  }
       
