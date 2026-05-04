@@ -458,16 +458,63 @@ var gujalkali=[];
 
 
 <script>
-  function createChartSection(){
-let main = document.getElementById("main")
-document.getElementById("main").innerHTML = "";
- stockName.forEach(ele => {
+
+
+ function CreatChart(){ 
+    let Dataposition = 4
+  if(parseInt(slideBar.value) > 5){
+     Dataposition = parseInt(slideBar.value) 
+
+  }
+  else{
+     Dataposition = window[stockName[1]].length / 6
+
+  }
+  
+	let Added = new Array()
+  let numofColumns = 6
+		 
+		 let main = document.getElementById("main")
+     main.innerHTML = ""
+     let main1 = document.getElementById("main1")
+     main1.innerHTML = ""
+
+     let OffsetValue = (window[stockName[1]].length / numofColumns) - Dataposition
+         
+
+    
+    let len =  window[stockName[1]].length / numofColumns    // Dataposition 600
+  let len1 = len  // Dataposition //window[stockName[1]].length/numofColumns
+  let len2 = len * 2
+  let len3 = len * 3
+  let len4 = len * 4
+  let len5 = len * 5
+  let len6 = len * 6
+
+
+
+let counter = 0
+	  
+    let xaxisprice =[]
+    for(let i = 0; i < 230 ; i++){
+      xaxisprice.push(i);
+    }
+    let fil = parseFloat(document.getElementById("fil").value)
+
+    stockName.forEach(ele => {
     
       try{
-		  
-		    let subBlock =  document.createElement("div"); 
+      
+        
+        
+		  if(   (parseFloat(window[ele][Dataposition -1]) / parseFloat(window[ele][len + Dataposition -1]))  >= fil && !Added.includes(ele) &&  window[ele][Dataposition -1] > 4000){
+        Added.push(ele)
+        
+		  document.getElementById("count").innerText = Dataposition.toString() + " ------   " + len //  ++counter;
+
+      let subBlock =  document.createElement("div"); 
         subBlock.setAttribute("id", ele)
-        subBlock.innerText = ele;
+        subBlock.innerText = ele + " " + fil;
 			  let nameBlock =  document.createElement("div"); 
         
         
@@ -479,88 +526,85 @@ document.getElementById("main").innerHTML = "";
       let rightBlock =  document.createElement("canvas");  
               rightBlock.setAttribute("class", "rightBlock");
               nameBlock.appendChild(rightBlock)
-
-              main.appendChild(subBlock)
+              
+              
               subBlock.appendChild(nameBlock)
 
-
-      }
-      catch(e){
-        console.log(e)
-      }
-
-  })
-
-  }
-
-  function CreatChart(Direction){
-
-	  let fil = -3.0
-	  if(document.getElementById("fil").value != ""){
-		  fil = parseFloat(document.getElementById("fil").value)
-
-	  }
-		 
-		 let main = document.getElementById("main")
-         let numofColumns = 6
-    let len = window[stockName[1]].length
-  let len1 = window[stockName[1]].length/numofColumns
-  let len2 = len1 * 2
-  let len3 = len2 + len1
-  let len4 = len3 + len1
-  let len5 = len4 + len1
-  let len6 = len5 + len1
-
-let counter = 0
-	  
-    let xaxisprice =[]
-    for(let i = 0; i < window[stockName[1]].length / numofColumns; i++){
-      xaxisprice.push(i);
-    }
+              main.appendChild(subBlock)
 
 
-    stockName.forEach(ele => {
-    
-      try{
-      document.querySelector("#"+ ele + " .rightBlock").innerHTML = "";
-        let mainBlock = document.querySelector("#"+ ele + " .leftBlock");
-		  if((parseInt(window[ele][len1-1]) / parseInt(window[ele][len2-1])) >= fil){
-		  document.getElementById("count").innerText = ++counter;
-			
-      if(Direction != "left"){
+
+
+              // declaration for right side block
+
+              let subBlock1 =  document.createElement("div"); 
+        subBlock1.setAttribute("id", ele)
+        subBlock1.innerText = ele + " " + fil;
+			  let nameBlock1 =  document.createElement("div"); 
         
-         mainBlock = document.querySelector("#"+ ele + " .rightBlock");
-      }
+        
+
+        let leftBlock1 =  document.createElement("canvas");  
+              leftBlock1.setAttribute("class", 'leftBlock1');
+              nameBlock1.appendChild(leftBlock1)
+
+      let rightBlock1 =  document.createElement("canvas");  
+              rightBlock1.setAttribute("class", "rightBlock1");
+              nameBlock1.appendChild(rightBlock1)
+              
+              
+              subBlock1.appendChild(nameBlock1)
+
+              main1.appendChild(subBlock1)
+
+              
+        let HighValue = [...window[ele]].slice(len4, len4 + Dataposition)
+        let LowValue =[...window[ele]].slice(len5, len5 + Dataposition)
+
+        if(HighValue[Dataposition -1] < 10 || LowValue[Dataposition -1] < 10){
+          HighValue = [...window[ele]].slice(len2, len2 + Dataposition)
+          LowValue = [...window[ele]].slice(len2, len2 + Dataposition)
+
+        }
+			
+
       
 
-        let PArray = [...window[ele]].slice(len2, len3).map(Number);
+        let PArray = [...window[ele]].slice(len2, len2 + Dataposition).map(Number);
         let MaxNum = Math.max(...PArray);
         let MinNum = Math.min(...PArray);
         let labl = parseInt(MaxNum - MinNum);
+        
+        let Dn = [...window[ele]].slice(len1, len1 + Dataposition)
+        if(Dn.length < 230){
+          let DnValue = parseInt(Dn[Dataposition-1])
+          for(let i = Dataposition; i < 230; i++){
 
-        let HighValue = [...window[ele]].slice(len4, len5)
-        let LowValue =[...window[ele]].slice(len5, len6)
+            Dn[i] = DnValue
+            DnValue =  parseInt(DnValue * 1.01)
 
-        if(HighValue[2] < 10){
-          HighValue = [...window[ele]].slice(len2, len3)
-          LowValue = [...window[ele]].slice(len2, len3)
+            
+          }
 
+    
         }
 
          mainBlock = document.querySelector("#"+ ele + " .leftBlock");
 
+
+
               new Chart(mainBlock, {
   type: "line",
   data: {
   labels: [...xaxisprice],
   datasets: [{
-        label: [window[ele][len1-1]] ,
+        label: [window[ele][ Dataposition -1]] ,
         fontSize: 24,
         pointRadius: 0,
         // borderWidth : 0.5,
         borderColor: "rgba(200,100,0)",
 	  	backgroundColor: 'rgba(255, 99, 132, 0.0)',
-        data: [...window[ele]].slice(0, len1), // ([...currentVolumeDataTable[key]]).slice(0, days),
+        data: [...window[ele]].slice(0, Dataposition), 
         yAxisID: 'y', 
         },
       {
@@ -568,35 +612,33 @@ let counter = 0
         pointRadius: 0,
         borderColor: 'rgb(0, 0, 152)',
         backgroundColor: 'rgba(255, 99, 132, 0.0)',
-        data: [...window[ele]].slice(len1, len2),
+        data: [...window[ele]].slice(len1, len1 + Dataposition),
         yAxisID: 'y', 
       },
       {
-        label: [window[ele][len3-1]] ,
+        label: [window[ele][len2 + Dataposition -1]] ,
         pointRadius: 0,
         borderColor: 'rgb(255, 165, 0)',
         backgroundColor: 'rgba(255, 99, 132, 0.0)',
-        data: [...window[ele]].slice(len2, len3),
+        data: [...window[ele]].slice(len2, len2 + Dataposition),
         yAxisID: 'y1',
       },
       {
-        label: [window[ele][len6-1]] ,
+        label: [window[ele][len4 + Dataposition -1 ]] ,
         pointRadius: 0,
-        borderColor: 'rgb(50, 50, 50)',
-        borderWidth: 2,
-        backgroundColor: 'rgba(50, 59, 52, 0.0)',
+        borderColor: 'rgb(255, 165, 0)',
+        backgroundColor: 'rgba(255, 99, 132, 0.0)',
         data: HighValue,
         yAxisID: 'y1',
       },
       {
-        label: [window[ele][len-1]] ,
+        label: [window[ele][len5 +  Dataposition -1 ]] ,
         pointRadius: 0,
-        borderColor: 'rgb(0, 5, 5)',
-        borderWidth: 2,
-        backgroundColor: 'rgba(0, 9, 1, 0.0)',
+        borderColor: 'rgb(255, 165, 0)',
+        backgroundColor: 'rgba(255, 99, 132, 0.0)',
         data: LowValue,
         yAxisID: 'y1',
-      },
+      }
       ]
       }
       ,  
@@ -632,7 +674,111 @@ let counter = 0
   datasets: [
     
       {
-        label: [window[ele][len-1]] ,
+        label: parseFloat([window[ele][len3 + Dataposition -1]]) ,
+        pointRadius: 0,
+        borderColor: 'rgb(255, 165, 0)',
+        backgroundColor: 'rgba(255, 99, 132, 0.0)',
+        data: [...window[ele]].slice(len3, len3 + Dataposition),
+        
+      }
+      ]
+      }
+      ,  
+     
+  });
+
+//  Chart for rightside block
+ PArray = [...window[ele]].slice(len2, len3).map(Number);
+         MaxNum = Math.max(...PArray);
+         MinNum = Math.min(...PArray);
+         labl = parseInt(MaxNum - MinNum);
+
+  
+
+mainBlock = document.querySelector("#"+ ele + " .leftBlock1");
+
+              new Chart(mainBlock, {
+  type: "line",
+  data: {
+  labels: [...xaxisprice],
+  datasets: [{
+        label: [window[ele][ len1 -1]] ,
+        fontSize: 24,
+        pointRadius: 0,
+        // borderWidth : 0.5,
+        borderColor: "rgba(200,100,0)",
+	  	backgroundColor: 'rgba(255, 99, 132, 0.0)',
+        data: [...window[ele]].slice(0, len1), // ([...currentVolumeDataTable[key]]).slice(0, days),
+        yAxisID: 'y', 
+        },
+      {
+        label: labl,
+        pointRadius: 0,
+        borderColor: 'rgb(0, 0, 152)',
+        backgroundColor: 'rgba(255, 99, 132, 0.0)',
+        data: [...window[ele]].slice(len1, len2),
+        yAxisID: 'y', 
+      },
+      {
+        label: [window[ele][len3-1]] ,
+        pointRadius: 0,
+        borderColor: 'rgb(255, 165, 0)',
+        backgroundColor: 'rgba(255, 99, 132, 0.0)',
+        data: [...window[ele]].slice(len2, len3),
+        yAxisID: 'y1',
+      },
+      {
+        label: [window[ele][len5 -1 ]] ,
+        pointRadius: 0,
+        borderColor: 'rgb(255, 165, 0)',
+        backgroundColor: 'rgba(255, 99, 132, 0.0)',
+        data: HighValue,
+        yAxisID: 'y1',
+      },
+      {
+        label: [window[ele][len6 -1 ]] ,
+        pointRadius: 0,
+        borderColor: 'rgb(255, 165, 0)',
+        backgroundColor: 'rgba(255, 99, 132, 0.0)',
+        data: LowValue,
+        yAxisID: 'y1',
+      }
+      ]
+      }
+      ,  
+      options: {
+          scales: {
+         yAxes: [
+			 	{
+							type: 'linear',
+							position: 'left',
+							id: 'y',
+				 
+						},
+						{
+							type: 'linear',
+							position: 'right',
+							id: 'y1',
+						},
+					]
+			  
+		  }
+      
+      }
+  
+  });
+
+
+  mainBlock = document.querySelector("#"+ ele + " .rightBlock1");
+
+  new Chart(mainBlock, {
+  type: "line",
+  data: {
+  labels: [...xaxisprice],
+  datasets: [
+    
+      {
+        label: parseFloat([window[ele][len4-1]]) ,
         pointRadius: 0,
         borderColor: 'rgb(255, 165, 0)',
         backgroundColor: 'rgba(255, 99, 132, 0.0)',
@@ -646,11 +792,8 @@ let counter = 0
   });
 
 
+}
 
-}
-else{
-    document.querySelector("#"+ ele).innerHTML = ""
-}
 
 }
 catch(e){
@@ -660,34 +803,54 @@ catch(e){
     })
   
               
+
   }
-  
-// createChartSection();
+
+
+
+
+
 </script>
 
 <script>
 
-  function UpdateChart(){
+ function UpdateChart(){ 
+    let Dataposition = 4
+  if(parseInt(slideBar.value) > 5){
+     Dataposition = parseInt(slideBar.value) 
 
-	  let fil = -3.0
-	  if(document.getElementById("four").value != ""){
-		  fil = parseFloat(document.getElementById("four").value)
+  }
+  else{
+     Dataposition = window[stockName[1]].length / 6
 
-	  }
+  }
+  
+	let Added = new Array()
+  let numofColumns = 6
 		 
 		 let main = document.getElementById("main")
-         let numofColumns = 6
-    let len = window[stockName[1]].length
-  let len1 = window[stockName[1]].length/numofColumns
-  let len2 = len1 + len1
-  let len3 = len2 + len1
-  let len4 = len3 + len1
-  let len5 = len4 + len1
-  let len6 = len5 + len1
+     main.innerHTML = ""
+     let main1 = document.getElementById("main1")
+     main1.innerHTML = ""
+
+     let OffsetValue = (window[stockName[1]].length / numofColumns) - Dataposition
+         
+
+    
+    let len =  window[stockName[1]].length / numofColumns    // Dataposition 600
+  let len1 = len  // Dataposition //window[stockName[1]].length/numofColumns
+  let len2 = len * 2
+  let len3 = len * 3
+  let len4 = len * 4
+  let len5 = len * 5
+  let len6 = len * 6
+
+
+
 let counter = 0
 	  
     let xaxisprice =[]
-    for(let i = 0; i < window[stockName[1]].length / numofColumns; i++){
+    for(let i = 0; i < 230 ; i++){
       xaxisprice.push(i);
     }
 
@@ -695,33 +858,107 @@ let counter = 0
     stockName.forEach(ele => {
     
       try{
-      document.querySelector("#"+ ele + " .rightBlock").innerHTML = "";
-        let mainBlock = document.querySelector("#"+ ele + " .leftBlock");
-		  if((parseFloat(window[ele][len-1])) >= fil){
-		  document.getElementById("count").innerText = ++counter;
+      
+        let fil = parseFloat(document.getElementById("four").value)
+        
+		  if(   (parseFloat(window[ele][len3 + Dataposition -1]))  >= fil && !Added.includes(ele) &&  window[ele][Dataposition -1] > 4000){
+        Added.push(ele)
+        
+		  document.getElementById("count").innerText = Dataposition.toString() + " ------   " + len //  ++counter;
+
+      let subBlock =  document.createElement("div"); 
+        subBlock.setAttribute("id", ele)
+        subBlock.innerText = ele + " " + fil;
+			  let nameBlock =  document.createElement("div"); 
+        
+        
+
+        let leftBlock =  document.createElement("canvas");  
+              leftBlock.setAttribute("class", 'leftBlock');
+              nameBlock.appendChild(leftBlock)
+
+      let rightBlock =  document.createElement("canvas");  
+              rightBlock.setAttribute("class", "rightBlock");
+              nameBlock.appendChild(rightBlock)
+              
+              
+              subBlock.appendChild(nameBlock)
+
+              main.appendChild(subBlock)
+
+
+
+
+              // declaration for right side block
+
+              let subBlock1 =  document.createElement("div"); 
+        subBlock1.setAttribute("id", ele)
+        subBlock1.innerText = ele + " " + fil;
+			  let nameBlock1 =  document.createElement("div"); 
+        
+        
+
+        let leftBlock1 =  document.createElement("canvas");  
+              leftBlock1.setAttribute("class", 'leftBlock1');
+              nameBlock1.appendChild(leftBlock1)
+
+      let rightBlock1 =  document.createElement("canvas");  
+              rightBlock1.setAttribute("class", "rightBlock1");
+              nameBlock1.appendChild(rightBlock1)
+              
+              
+              subBlock1.appendChild(nameBlock1)
+
+              main1.appendChild(subBlock1)
+
+              
+        let HighValue = [...window[ele]].slice(len4, len4 + Dataposition)
+        let LowValue =[...window[ele]].slice(len5, len5 + Dataposition)
+
+        if(HighValue[Dataposition -1] < 10 || LowValue[Dataposition -1] < 10){
+          HighValue = [...window[ele]].slice(len2, len2 + Dataposition)
+          LowValue = [...window[ele]].slice(len2, len2 + Dataposition)
+
+        }
 			
 
       
 
-        let PArray = [...window[ele]].slice(len2, len3).map(Number);
+        let PArray = [...window[ele]].slice(len2, len2 + Dataposition).map(Number);
         let MaxNum = Math.max(...PArray);
         let MinNum = Math.min(...PArray);
         let labl = parseInt(MaxNum - MinNum);
+        
+        let Dn = [...window[ele]].slice(len1, len1 + Dataposition)
+        if(Dn.length < 230){
+          let DnValue = parseInt(Dn[Dataposition-1])
+          for(let i = Dataposition; i < 230; i++){
+
+            Dn[i] = DnValue
+            DnValue =  parseInt(DnValue * 1.01)
+
+            
+          }
+
+    
+        }
 
          mainBlock = document.querySelector("#"+ ele + " .leftBlock");
+
+
 
               new Chart(mainBlock, {
   type: "line",
   data: {
   labels: [...xaxisprice],
   datasets: [{
-        label: [window[ele][len1-1]] ,
+        label: [window[ele][ Dataposition -1]] ,
         fontSize: 24,
         pointRadius: 0,
         // borderWidth : 0.5,
         borderColor: "rgba(200,100,0)",
 	  	backgroundColor: 'rgba(255, 99, 132, 0.0)',
-        data: [...window[ele]].slice(0, len1), // ([...currentVolumeDataTable[key]]).slice(0, days),
+        data: [...window[ele]].slice(0, Dataposition), 
         yAxisID: 'y', 
         },
       {
@@ -729,31 +966,31 @@ let counter = 0
         pointRadius: 0,
         borderColor: 'rgb(0, 0, 152)',
         backgroundColor: 'rgba(255, 99, 132, 0.0)',
-        data: [...window[ele]].slice(len1, len2),
+        data: [...window[ele]].slice(len1, len1 + Dataposition),
         yAxisID: 'y', 
       },
       {
-        label: [window[ele][len3-1]] ,
+        label: [window[ele][len2 + Dataposition -1]] ,
         pointRadius: 0,
         borderColor: 'rgb(255, 165, 0)',
         backgroundColor: 'rgba(255, 99, 132, 0.0)',
-        data: [...window[ele]].slice(len2, len3),
+        data: [...window[ele]].slice(len2, len2 + Dataposition),
         yAxisID: 'y1',
       },
       {
-        label: [window[ele][len3-1]] ,
+        label: [window[ele][len4 + Dataposition -1 ]] ,
         pointRadius: 0,
         borderColor: 'rgb(255, 165, 0)',
         backgroundColor: 'rgba(255, 99, 132, 0.0)',
-        data: [...window[ele]].slice(len5, len6),
+        data: HighValue,
         yAxisID: 'y1',
       },
       {
-        label: [window[ele][len3-1]] ,
+        label: [window[ele][len5 +  Dataposition -1 ]] ,
         pointRadius: 0,
         borderColor: 'rgb(255, 165, 0)',
         backgroundColor: 'rgba(255, 99, 132, 0.0)',
-        data: [...window[ele]].slice(len6, len),
+        data: LowValue,
         yAxisID: 'y1',
       }
       ]
@@ -791,7 +1028,111 @@ let counter = 0
   datasets: [
     
       {
-        label: [window[ele][len-1]] ,
+        label: parseFloat([window[ele][len3 + Dataposition -1]]) ,
+        pointRadius: 0,
+        borderColor: 'rgb(255, 165, 0)',
+        backgroundColor: 'rgba(255, 99, 132, 0.0)',
+        data: [...window[ele]].slice(len3, len3 + Dataposition),
+        
+      }
+      ]
+      }
+      ,  
+     
+  });
+
+//  Chart for rightside block
+ PArray = [...window[ele]].slice(len2, len3).map(Number);
+         MaxNum = Math.max(...PArray);
+         MinNum = Math.min(...PArray);
+         labl = parseInt(MaxNum - MinNum);
+
+  
+
+mainBlock = document.querySelector("#"+ ele + " .leftBlock1");
+
+              new Chart(mainBlock, {
+  type: "line",
+  data: {
+  labels: [...xaxisprice],
+  datasets: [{
+        label: [window[ele][ len1 -1]] ,
+        fontSize: 24,
+        pointRadius: 0,
+        // borderWidth : 0.5,
+        borderColor: "rgba(200,100,0)",
+	  	backgroundColor: 'rgba(255, 99, 132, 0.0)',
+        data: [...window[ele]].slice(0, len1), // ([...currentVolumeDataTable[key]]).slice(0, days),
+        yAxisID: 'y', 
+        },
+      {
+        label: labl,
+        pointRadius: 0,
+        borderColor: 'rgb(0, 0, 152)',
+        backgroundColor: 'rgba(255, 99, 132, 0.0)',
+        data: [...window[ele]].slice(len1, len2),
+        yAxisID: 'y', 
+      },
+      {
+        label: [window[ele][len3-1]] ,
+        pointRadius: 0,
+        borderColor: 'rgb(255, 165, 0)',
+        backgroundColor: 'rgba(255, 99, 132, 0.0)',
+        data: [...window[ele]].slice(len2, len3),
+        yAxisID: 'y1',
+      },
+      {
+        label: [window[ele][len5 -1 ]] ,
+        pointRadius: 0,
+        borderColor: 'rgb(255, 165, 0)',
+        backgroundColor: 'rgba(255, 99, 132, 0.0)',
+        data: HighValue,
+        yAxisID: 'y1',
+      },
+      {
+        label: [window[ele][len6 -1 ]] ,
+        pointRadius: 0,
+        borderColor: 'rgb(255, 165, 0)',
+        backgroundColor: 'rgba(255, 99, 132, 0.0)',
+        data: LowValue,
+        yAxisID: 'y1',
+      }
+      ]
+      }
+      ,  
+      options: {
+          scales: {
+         yAxes: [
+			 	{
+							type: 'linear',
+							position: 'left',
+							id: 'y',
+				 
+						},
+						{
+							type: 'linear',
+							position: 'right',
+							id: 'y1',
+						},
+					]
+			  
+		  }
+      
+      }
+  
+  });
+
+
+  mainBlock = document.querySelector("#"+ ele + " .rightBlock1");
+
+  new Chart(mainBlock, {
+  type: "line",
+  data: {
+  labels: [...xaxisprice],
+  datasets: [
+    
+      {
+        label: parseFloat([window[ele][len4-1]]) ,
         pointRadius: 0,
         borderColor: 'rgb(255, 165, 0)',
         backgroundColor: 'rgba(255, 99, 132, 0.0)',
@@ -805,11 +1146,8 @@ let counter = 0
   });
 
 
+}
 
-}
-else{
-    document.querySelector("#"+ ele).innerHTML = ""
-}
 
 }
 catch(e){
@@ -819,8 +1157,8 @@ catch(e){
     })
   
               
+
   }
-  
 
 
 </script>
@@ -830,7 +1168,7 @@ catch(e){
   function setFilter2(){
         let filterData = (document.querySelector("#filter").value).toLowerCase();
         if ( filterData.length > 0) {
-            var lst = Array.from(document.querySelectorAll("#main > div"));
+            var lst = Array.from(document.querySelectorAll("[id^='main'] > div"));
             lst.forEach( (ele) => ele.style.display = "none" );
     
             lst = Array.from(document.querySelectorAll("[id^= '" + filterData + "']"));
@@ -839,7 +1177,7 @@ catch(e){
         }
     
         else{
-          var lst = Array.from(document.querySelectorAll("#main > div"));
+          var lst = Array.from(document.querySelectorAll("[id^='main'] > div"));
             lst.forEach( (ele) => ele.style.display = "" );
  
         }
@@ -850,11 +1188,16 @@ catch(e){
 	  function setFilter(){
         let filterData = (document.getElementById("fil").value);
 		  document.getElementById("count").innerText = filterData 
-			  if ( filterData.length > 2 || filterData.length == 0) {
+			  if ( filterData.length > 0 ) {
            document.getElementById("main").innerHTML = "";
-           createChartSection()
-  
-    CreatChart("right");
+           document.getElementById("main1").innerHTML = "";
+          CreatChart()
+        }
+        
+        else if(filterData.length == 0){
+          document.getElementById("main").innerHTML = "";
+           document.getElementById("main1").innerHTML = "";
+          UpdateChartValues()
         }
     
         
@@ -863,11 +1206,17 @@ catch(e){
     function setFilter3(){
         let filterData = (document.getElementById("four").value);
 		  document.getElementById("count").innerText = filterData 
-			  if ( filterData.length > 2 || filterData.length == 0) {
+			  if ( filterData.length > 2) {
            document.getElementById("main").innerHTML = "";
-           createChartSection()
+           document.getElementById("main1").innerHTML = "";
+          //  createChartSection()
            UpdateChart()
   
+        }
+        else if(filterData.length == 0){
+          document.getElementById("main").innerHTML = "";
+           document.getElementById("main1").innerHTML = "";
+          UpdateChartValues()
         }
     
         
@@ -902,7 +1251,16 @@ function letsDebounce(fn,d){
   
 
   function UpdateChartValues(){ 
-  let Dataposition = parseInt(slideBar.value) -1
+    let Dataposition = 4
+  if(parseInt(slideBar.value) > 5){
+     Dataposition = parseInt(slideBar.value) 
+
+  }
+  else{
+     Dataposition = window[stockName[1]].length / 6
+
+  }
+  
 	let Added = new Array()
   let numofColumns = 6
 		 
@@ -996,7 +1354,7 @@ for(let i = 0; i < 12; i++){
       
 
         
-		  if(   (parseInt(window[ele][Dataposition]) / parseInt(window[ele][len1 + Dataposition]))  >= fil && !Added.includes(ele) &&  window[ele][Dataposition] > 50000){
+		  if(   (parseInt(window[ele][Dataposition -1]) / parseInt(window[ele][len + Dataposition -1]))  >= fil && !Added.includes(ele) &&  window[ele][Dataposition -1] > 4000){
         Added.push(ele)
         
 		  document.getElementById("count").innerText = Dataposition.toString() + " ------   " + len //  ++counter;
@@ -1080,13 +1438,23 @@ for(let i = 0; i < 12; i++){
 
          mainBlock = document.querySelector("#"+ ele + " .leftBlock");
 
+
+
               new Chart(mainBlock, {
   type: "line",
   data: {
   labels: [...xaxisprice],
-  datasets: [
-
-    {
+  datasets: [{
+        label: [window[ele][ Dataposition -1]] ,
+        fontSize: 24,
+        pointRadius: 0,
+        // borderWidth : 0.5,
+        borderColor: "rgba(200,100,0)",
+	  	backgroundColor: 'rgba(255, 99, 132, 0.0)',
+        data: [...window[ele]].slice(0, Dataposition), 
+        yAxisID: 'y', 
+        },
+      {
         label: labl,
         pointRadius: 0,
         borderColor: 'rgb(0, 0, 152)',
@@ -1094,17 +1462,6 @@ for(let i = 0; i < 12; i++){
         data: [...Dn],
         yAxisID: 'y', 
       },
-    {
-        label: [window[ele][ Dataposition -1]] ,
-        fontSize: 24,
-        pointRadius: 0,
-        // borderWidth : 0.5,
-        borderColor: "rgba(200,100,0)",
-	  	backgroundColor: 'rgba(255, 99, 132, 0.0)',
-        data: [...window[ele]].slice(0, Dataposition), // ([...currentVolumeDataTable[key]]).slice(0, days),
-        yAxisID: 'y', 
-        },
-      
       {
         label: [window[ele][len2 + Dataposition -1]] ,
         pointRadius: 0,
@@ -1114,19 +1471,17 @@ for(let i = 0; i < 12; i++){
         yAxisID: 'y1',
       },
       {
-        label: [window[ele][len4 + Dataposition -1]] ,
+        label: [window[ele][len4 + Dataposition -1 ]] ,
         pointRadius: 0,
-        borderColor: 'rgb(25, 25, 25)',
-        borderWidth:2,
+        borderColor: 'rgb(255, 165, 0)',
         backgroundColor: 'rgba(255, 99, 132, 0.0)',
         data: HighValue,
         yAxisID: 'y1',
       },
       {
-        label: [window[ele][len5 + Dataposition -1]] ,
+        label: [window[ele][len5 +  Dataposition -1 ]] ,
         pointRadius: 0,
-        borderWidth:2,
-        borderColor: 'rgb(25, 25, 25)',
+        borderColor: 'rgb(255, 165, 0)',
         backgroundColor: 'rgba(255, 99, 132, 0.0)',
         data: LowValue,
         yAxisID: 'y1',
@@ -1148,19 +1503,7 @@ for(let i = 0; i < 12; i++){
 							position: 'right',
 							id: 'y1',
 						},
-            
-					],
-
-
-    xAxes: {
-      type: 'linear', // Required for numerical ranges
-      min: 1,
-      max: 230,
-      ticks: {
-        stepSize: 1 // Optional: forces specific intervals
-      }
-    },
-  
+					]
 			  
 		  }
       
@@ -1187,9 +1530,7 @@ for(let i = 0; i < 12; i++){
       }
       ]
       }
-      , 
-      
-      
+      ,  
      
   });
 
@@ -1310,8 +1651,7 @@ catch(e){
   
               
   }
-   console.log(Added.length)
- console.log(Added)
+
   }
 
 </script>
