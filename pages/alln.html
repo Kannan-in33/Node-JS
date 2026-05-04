@@ -447,7 +447,7 @@ var gujalkali=[];
         }
       })
 
-
+      slideBar.setAttribute("value", window[stockName[1]].length / 6 )
       UpdateChartValues()
       
       // CreatChart(direction)
@@ -892,15 +892,17 @@ function letsDebounce(fn,d){
   document.getElementById("filter").addEventListener('input', myFunc2);
   document.getElementById("four").addEventListener('input', myFunc3);
 
-</script>
 
-<script>
   let slideBar = document.querySelector('#slidermin');
+   
   slideBar.addEventListener('input', UpdateChartValues);
+  let fullen =  window[stockName[1]].length
 
+ 
+  
 
   function UpdateChartValues(){ 
-    let Dataposition = parseInt(slideBar.value)
+  let Dataposition = parseInt(slideBar.value) -1
 	let Added = new Array()
   let numofColumns = 6
 		 
@@ -912,7 +914,7 @@ function letsDebounce(fn,d){
      let OffsetValue = (window[stockName[1]].length / numofColumns) - Dataposition
          
 
-    let fullen =  window[stockName[1]].length
+    
     let len =  window[stockName[1]].length / numofColumns    // Dataposition 600
   let len1 = len  // Dataposition //window[stockName[1]].length/numofColumns
   let len2 = len * 2
@@ -994,8 +996,9 @@ for(let i = 0; i < 12; i++){
       
 
         
-		  if(   (parseInt(window[ele][Dataposition]) / parseInt(window[ele][len1 + Dataposition]))  >= fil && !Added.includes(ele) && (parseInt(window[ele][Dataposition])) > 50000 ){
+		  if(   (parseInt(window[ele][Dataposition]) / parseInt(window[ele][len1 + Dataposition]))  >= fil && !Added.includes(ele)  ){
         Added.push(ele)
+        
 		  document.getElementById("count").innerText = Dataposition //  ++counter;
 
       let subBlock =  document.createElement("div"); 
@@ -1082,7 +1085,7 @@ for(let i = 0; i < 12; i++){
   data: {
   labels: [...xaxisprice],
   datasets: [{
-        label: [window[ele][ Dataposition]] ,
+        label: [window[ele][ Dataposition -1]] ,
         fontSize: 24,
         pointRadius: 0,
         // borderWidth : 0.5,
@@ -1100,7 +1103,7 @@ for(let i = 0; i < 12; i++){
         yAxisID: 'y', 
       },
       {
-        label: [window[ele][len2 + Dataposition]] ,
+        label: [window[ele][len2 + Dataposition -1]] ,
         pointRadius: 0,
         borderColor: 'rgb(255, 165, 0)',
         backgroundColor: 'rgba(255, 99, 132, 0.0)',
@@ -1108,7 +1111,7 @@ for(let i = 0; i < 12; i++){
         yAxisID: 'y1',
       },
       {
-        label: [window[ele][len4 + Dataposition]] ,
+        label: [window[ele][len4 + Dataposition -1]] ,
         pointRadius: 0,
         borderColor: 'rgb(25, 25, 25)',
         borderWidth:2,
@@ -1117,7 +1120,7 @@ for(let i = 0; i < 12; i++){
         yAxisID: 'y1',
       },
       {
-        label: [window[ele][len5 + Dataposition]] ,
+        label: [window[ele][len5 + Dataposition -1]] ,
         pointRadius: 0,
         borderWidth:2,
         borderColor: 'rgb(25, 25, 25)',
@@ -1160,7 +1163,7 @@ for(let i = 0; i < 12; i++){
   datasets: [
     
       {
-        label: parseFloat([window[ele][len3 + Dataposition]]) ,
+        label: parseFloat([window[ele][len3 + Dataposition -1]]) ,
         pointRadius: 0,
         borderColor: 'rgb(255, 165, 0)',
         backgroundColor: 'rgba(255, 99, 132, 0.0)',
@@ -1292,7 +1295,8 @@ catch(e){
   
               
   }
-  
+   console.log(Added.length)
+ console.log(Added)
   }
 
 </script>
